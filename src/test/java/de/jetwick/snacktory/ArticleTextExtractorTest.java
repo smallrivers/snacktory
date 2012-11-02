@@ -1,11 +1,9 @@
 package de.jetwick.snacktory;
 
-import static org.junit.Assert.*;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Arrays;
-
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -108,7 +106,7 @@ public class ArticleTextExtractorTest {
         // http://www.yomiuri.co.jp/e-japan/gifu/news/20110410-OYT8T00124.htm
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("yomiuri.html")));
         assertEquals("色とりどりのチューリップ : 岐阜 : 地域 : YOMIURI ONLINE（読売新聞）", res.getTitle());
-        assertTrue("yomiuri:" + res.getText(), res.getText().startsWith("　海津市海津町の国営木曽三川公園で、チューリップが見頃を迎えている。２０日までは「チューリップ祭」が開かれており、大勢の人たちが多彩な色や形を鑑賞している＝写真＝"));
+        assertTrue("yomiuri:" + res.getText(), res.getText().contains("海津市海津町の国営木曽三川公園で、チューリップが見頃を迎えている。２０日までは「チューリップ祭」が開かれており、大勢の人たちが多彩な色や形を鑑賞している＝写真＝"));
         assertEquals(Arrays.asList("読売新聞", "地域"), res.getKeywords());
     }
 
@@ -561,6 +559,43 @@ public class ArticleTextExtractorTest {
                 article.getImageUrl());
         assertEquals("//en.wikipedia.org/apple-touch-icon.png",
                 article.getFaviconUrl());
+    }
+
+    @Test
+    public void testWikipedia2() throws Exception {
+        // http://en.wikipedia.org/wiki/President_of_the_United_States
+        JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wikipedia_president.html")));
+        assertTrue(article.getText(), article.getText().startsWith("The President of the United States of America (acronym: POTUS)[6] is the head of state and head of government"));
+    }
+
+    @Test
+    public void testWikipedia3() throws Exception {
+        // http://en.wikipedia.org/wiki/Muhammad
+        JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wikipedia_muhammad.html")));
+        assertTrue(article.getText(), article.getText().startsWith("Muhammad (c. 570 – c. 8 June 632);[1] also transliterated as Mohammad, Mohammed, or Muhammed; Arabic: محمد‎, full name: Abū al-Qāsim Muḥammad"));
+    }
+
+    @Test
+    public void testWikipedia4() throws Exception {
+        // http://de.wikipedia.org/wiki/Henne_Strand
+        JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wikipedia_Henne_Strand.html")));
+        assertTrue(article.getText(), article.getText().startsWith("Der dänische Ort Henne Strand befindet sich in Südwest-Jütland und gehört zur Kommune Varde"));
+    }
+
+    @Test
+    public void testWikipedia5() throws Exception {
+        // http://de.wikipedia.org/wiki/Java
+        JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wikipedia_java.html")));
+        assertTrue(article.getText(), article.getText().startsWith("Java (Indonesian: Jawa) is an island of Indonesia. With a population of 135 million"));
+    }
+
+    @Test
+    public void testWikipedia6() throws Exception {
+        // http://de.wikipedia.org/wiki/Knight_Rider
+        JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wikipedia-knight_rider_de.html")));
+        assertTrue(article.getText(), article.getText().startsWith("Knight Rider ist eine US-amerikanische Fernsehserie, "
+                + "die von 1982 bis 1986 produziert wurde. Knight Rider ist eine Krimi-Action-Serie mit futuristischen Komponenten "
+                + "und hat weltweit Kultstatus erlangt."));
     }
 
     @Test

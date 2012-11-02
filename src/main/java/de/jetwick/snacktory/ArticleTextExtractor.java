@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -27,25 +26,18 @@ public class ArticleTextExtractor {
 
     private static final Logger logger = LoggerFactory.getLogger(ArticleTextExtractor.class);
     // Interessting nodes
-    private static final Pattern NODES =
-            Pattern.compile("p|div|td|h1|h2|article|section");
+    private static final Pattern NODES = Pattern.compile("p|div|td|h1|h2|article|section");
     // Unlikely candidates
-    private static final Pattern UNLIKELY =
-            Pattern.compile("^(com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
-            + "header|menu|re(mark|ply)|rss|sh(are|outbox)|sponsor"
-            + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
-            + "login|si(debar|gn|ngle))");
+    private String unlikelyStr;
+    private Pattern UNLIKELY;
     // Most likely positive candidates
-    private static final Pattern POSITIVE =
-            Pattern.compile("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-            + "|arti(cle|kel)|instapaper_body");
+    private String positiveStr;
+    private Pattern POSITIVE;
     // Most likely negative candidates
-    private static final Pattern NEGATIVE =
-            Pattern.compile("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
-            + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
-            + "sidebar|sponsor|tags|tool|widget|player|disclaimer");
-    private static final Pattern NEGATIVE_STYLE = Pattern.compile("hidden|display: ?none");
-    private static final String IMAGE_CAPTION = "caption";
+    private String negativeStr;
+    private Pattern NEGATIVE;
+    private static final Pattern NEGATIVE_STYLE =
+            Pattern.compile("hidden|display: ?none|font-size: ?small");
     private static final Set<String> IGNORED_TITLE_PARTS = new LinkedHashSet<String>() {
         {
             add("hacker news");
@@ -53,6 +45,54 @@ public class ArticleTextExtractor {
         }
     };
     private static final OutputFormatter DEFAULT_FORMATTER = new OutputFormatter();
+    private OutputFormatter formatter = DEFAULT_FORMATTER;
+
+    public ArticleTextExtractor() {
+        setUnlikely("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
+                + "header|menu|re(mark|ply)|rss|sh(are|outbox)|sponsor"
+                + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
+                + "login|si(debar|gn|ngle)");
+        setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
+                + "|arti(cle|kel)|instapaper_body");
+        setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
+                + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
+                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard");
+    }
+
+    public ArticleTextExtractor setUnlikely(String unlikelyStr) {
+        this.unlikelyStr = unlikelyStr;
+        UNLIKELY = Pattern.compile(unlikelyStr);
+        return this;
+    }
+
+    public ArticleTextExtractor addUnlikely(String unlikelyMatches) {
+        return setUnlikely(unlikelyStr + "|" + unlikelyMatches);
+    }
+
+    public ArticleTextExtractor setPositive(String positiveStr) {
+        this.positiveStr = positiveStr;
+        POSITIVE = Pattern.compile(positiveStr);
+        return this;
+    }
+
+    public ArticleTextExtractor addPositive(String pos) {
+        return setPositive(positiveStr + "|" + pos);
+    }
+
+    public ArticleTextExtractor setNegative(String negativeStr) {
+        this.negativeStr = negativeStr;
+        NEGATIVE = Pattern.compile(negativeStr);
+        return this;
+    }
+
+    public ArticleTextExtractor addNegative(String neg) {
+        setNegative(negativeStr + "|" + neg);
+        return this;
+    }
+
+    public void setOutputFormatter(OutputFormatter formatter) {
+        this.formatter = formatter;
+    }
 
     /**
      * @param html extracts article text from given html string. wasn't tested with improper HTML,
@@ -64,7 +104,7 @@ public class ArticleTextExtractor {
     }
 
     public JResult extractContent(JResult res, String html) throws Exception {
-        return extractContent(res, html, DEFAULT_FORMATTER);
+        return extractContent(res, html, formatter);
     }
 
     public JResult extractContent(JResult res, String html, OutputFormatter formatter) throws Exception {
@@ -80,9 +120,7 @@ public class ArticleTextExtractor {
             throw new NullPointerException("missing document");
 
         res.setTitle(extractTitle(doc));
-
         res.setDescription(extractDescription(doc));
-
         res.setCanonicalUrl(extractCanonicalUrl(doc));
 
         // now remove the clutter
@@ -125,13 +163,9 @@ public class ArticleTextExtractor {
         }
 
         res.setRssUrl(extractRssUrl(doc));
-
         res.setVideoUrl(extractVideoUrl(doc));
-
         res.setFaviconUrl(extractFaviconUrl(doc));
-
         res.setKeywords(extractKeywords(doc));
-
         return res;
     }
 
@@ -143,6 +177,9 @@ public class ArticleTextExtractor {
                 title = SHelper.innerTrim(doc.select("head meta[name=title]").attr("content"));
                 if (title.isEmpty()) {
                     title = SHelper.innerTrim(doc.select("head meta[property=og:title]").attr("content"));
+                    if (title.isEmpty()) {
+                        title = SHelper.innerTrim(doc.select("head meta[name=twitter:title]").attr("content"));
+                    }
                 }
             }
         }
@@ -153,6 +190,9 @@ public class ArticleTextExtractor {
         String url = SHelper.replaceSpaces(doc.select("head link[rel=canonical]").attr("href"));
         if (url.isEmpty()) {
             url = SHelper.replaceSpaces(doc.select("head meta[property=og:url]").attr("content"));
+            if (url.isEmpty()) {
+                url = SHelper.replaceSpaces(doc.select("head meta[name=twitter:url]").attr("content"));
+            }
         }
         return url;
     }
@@ -161,6 +201,9 @@ public class ArticleTextExtractor {
         String description = SHelper.innerTrim(doc.select("head meta[name=description]").attr("content"));
         if (description.isEmpty()) {
             description = SHelper.innerTrim(doc.select("head meta[property=og:description]").attr("content"));
+            if (description.isEmpty()) {
+                description = SHelper.innerTrim(doc.select("head meta[name=twitter:description]").attr("content"));
+            }
         }
         return description;
     }
@@ -173,29 +216,28 @@ public class ArticleTextExtractor {
                 content = content.substring(1, content.length() - 1);
 
             String[] split = content.split("\\s*,\\s*");
-
-            if (split.length > 1 || !split[0].equals(""))
+            if (split.length > 1 || (split.length > 0 && !"".equals(split[0])))
                 return Arrays.asList(split);
         }
-
         return Collections.emptyList();
     }
 
     /**
-     * *
      * Tries to extract an image url from metadata if determineImageSource failed
      *
-     * @param doc
      * @return image url or empty str
      */
     protected String extractImageUrl(Document doc) {
         // use open graph tag to get image
         String imageUrl = SHelper.replaceSpaces(doc.select("head meta[property=og:image]").attr("content"));
         if (imageUrl.isEmpty()) {
-            // prefer link over thumbnail-meta if empty
-            imageUrl = SHelper.replaceSpaces(doc.select("link[rel=image_src]").attr("href"));
+            imageUrl = SHelper.replaceSpaces(doc.select("head meta[name=twitter:image]").attr("content"));
             if (imageUrl.isEmpty()) {
-                imageUrl = SHelper.replaceSpaces(doc.select("head meta[name=thumbnail]").attr("content"));
+                // prefer link over thumbnail-meta if empty
+                imageUrl = SHelper.replaceSpaces(doc.select("link[rel=image_src]").attr("href"));
+                if (imageUrl.isEmpty()) {
+                    imageUrl = SHelper.replaceSpaces(doc.select("head meta[name=thumbnail]").attr("content"));
+                }
             }
         }
         return imageUrl;
@@ -225,7 +267,102 @@ public class ArticleTextExtractor {
      * @param e Element to weight, along with child nodes
      */
     protected int getWeight(Element e) {
-        Integer weight = 0;
+        int weight = calcWeight(e);
+        weight += (int) Math.round(e.ownText().length() / 100.0 * 10);
+        weight += weightChildNodes(e);
+        return weight;
+    }
+
+    /**
+     * Weights a child nodes of given Element. During tests some difficulties were met. For
+     * instanance, not every single document has nested paragraph tags inside of the major article
+     * tag. Sometimes people are adding one more nesting level. So, we're adding 4 points for every
+     * 100 symbols contained in tag nested inside of the current weighted element, but only 3 points
+     * for every element that's nested 2 levels deep. This way we give more chances to extract the
+     * element that has less nested levels, increasing probability of the correct extraction.
+     *
+     * @param rootEl Element, who's child nodes will be weighted
+     */
+    protected int weightChildNodes(Element rootEl) {
+        int weight = 0;
+        Element caption = null;
+        List<Element> pEls = new ArrayList<Element>(5);
+        for (Element child : rootEl.children()) {
+            String ownText = child.ownText();
+            int ownTextLength = ownText.length();
+            if (ownTextLength < 20)
+                continue;
+
+            if (ownTextLength > 200)
+                weight += Math.max(50, ownTextLength / 10);
+
+            if (child.tagName().equals("h1") || child.tagName().equals("h2")) {
+                weight += 30;
+            } else if (child.tagName().equals("div") || child.tagName().equals("p")) {
+                weight += calcWeightForChild(child, ownText);
+                if (child.tagName().equals("p") && ownTextLength > 50)
+                    pEls.add(child);
+
+                if (child.className().toLowerCase().equals("caption"))
+                    caption = child;
+            }
+        }
+
+        // use caption and image
+        if (caption != null)
+            weight += 30;
+
+        if (pEls.size() >= 2) {
+            for (Element subEl : rootEl.children()) {
+                if ("h1;h2;h3;h4;h5;h6".contains(subEl.tagName())) {
+                    weight += 20;
+                    // headerEls.add(subEl);
+                } else if ("table;li;td;th".contains(subEl.tagName())) {
+                    addScore(subEl, -30);
+                }
+
+                if ("p".contains(subEl.tagName()))
+                    addScore(subEl, 30);
+            }
+        }
+        return weight;
+    }
+
+    public void addScore(Element el, int score) {
+        int old = getScore(el);
+        setScore(el, score + old);
+    }
+
+    public int getScore(Element el) {
+        int old = 0;
+        try {
+            old = Integer.parseInt(el.attr("gravityScore"));
+        } catch (Exception ex) {
+        }
+        return old;
+    }
+
+    public void setScore(Element el, int score) {
+        el.attr("gravityScore", Integer.toString(score));
+    }
+
+    private int calcWeightForChild(Element child, String ownText) {
+        int c = SHelper.count(ownText, "&quot;");
+        c += SHelper.count(ownText, "&lt;");
+        c += SHelper.count(ownText, "&gt;");
+        c += SHelper.count(ownText, "px");
+        int val;
+        if (c > 5)
+            val = -30;
+        else
+            val = (int) Math.round(ownText.length() / 25.0);
+
+        addScore(child, val);
+        return val;
+    }
+
+    private int calcWeight(Element e) {
+        int weight = 0;
         if (POSITIVE.matcher(e.className()).find())
             weight += 35;
 
@@ -247,102 +384,7 @@ public class ArticleTextExtractor {
         String style = e.attr("style");
         if (style != null && !style.isEmpty() && NEGATIVE_STYLE.matcher(style).find())
             weight -= 50;
-
-        weight += (int) Math.round(e.ownText().length() / 100.0 * 10);
-        weight += weightChildNodes(e);
         return weight;
-    }
-
-    /**
-     * Weights a child nodes of given Element. During tests some difficulties were met. For
-     * instanance, not every single document has nested paragraph tags inside of the major article
-     * tag. Sometimes people are adding one more nesting level. So, we're adding 4 points for every
-     * 100 symbols contained in tag nested inside of the current weighted element, but only 3 points
-     * for every element that's nested 2 levels deep. This way we give more chances to extract the
-     * element that has less nested levels, increasing probability of the correct extraction.
-     *
-     * @param e Element, who's child nodes will be weighted
-     */
-    protected int weightChildNodes(Element e) {
-        int weight = 0;
-        Element caption = null;
-        List<Element> headerEls = new ArrayList<Element>(5);
-        List<Element> pEls = new ArrayList<Element>(5);
-
-        for (Element child : e.children()) {
-            String ownText = child.ownText();
-            int ownTextLength = ownText.length();
-            if (ownTextLength < 20)
-                continue;
-
-            if (ownTextLength > 200)
-                weight += Math.max(50, ownTextLength / 10);
-
-            if (e.id().contains(IMAGE_CAPTION) || e.className().contains(IMAGE_CAPTION))
-                weight += 30;
-
-            if (child.tagName().equals("h1") || child.tagName().equals("h2")) {
-                weight += 30;
-            } else if (child.tagName().equals("div") || child.tagName().equals("p")) {
-                weight += calcWeightForChild(child, e, ownText);
-                if (child.tagName().equals("p") && ownTextLength > 50)
-                    pEls.add(child);
-
-                if (child.className().toLowerCase().equals("caption"))
-                    caption = child;
-            }
-        }
-
-        // use caption and image
-        if (caption != null)
-            weight += 30;
-
-        if (pEls.size() >= 2) {
-            for (Element subEl : e.children()) {
-                if ("h1;h2;h3;h4;h5;h6".contains(subEl.tagName())) {
-                    weight += 20;
-                    headerEls.add(subEl);
-                }
-
-                if ("p".contains(subEl.tagName()))
-                    addScore(subEl, 30);
-            }
-            weight += 60;
-        }
-        return weight;
-    }
-
-    public int getScore(Element el) {
-        int old = 0;
-        try {
-            old = Integer.parseInt(el.attr("gravityScore"));
-        } catch (Exception ex) {
-        }
-        return old;
-    }
-
-    public void addScore(Element el, int score) {
-        int old = getScore(el);
-        setScore(el, score + old);
-    }
-
-    public void setScore(Element el, int score) {
-        el.attr("gravityScore", Integer.toString(score));
-    }
-
-    public int calcWeightForChild(Element child, Element e, String ownText) {
-        int c = SHelper.count(ownText, "&quot;");
-        c += SHelper.count(ownText, "&lt;");
-        c += SHelper.count(ownText, "&gt;");
-        c += SHelper.count(ownText, "px");
-        int val;
-        if (c > 5)
-            val = -30;
-        else
-            val = (int) Math.round(ownText.length() / 25.0);
-
-        addScore(child, val);
-        return val;
     }
 
     public Element determineImageSource(Element el) {
