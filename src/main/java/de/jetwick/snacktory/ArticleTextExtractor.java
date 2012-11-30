@@ -56,7 +56,7 @@ public class ArticleTextExtractor {
                 + "|arti(cle|kel)|instapaper_body");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
-                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard");
+                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|avatar|follow-me-twitter");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -397,7 +397,7 @@ public class ArticleTextExtractor {
         double score = 1;
         for (Element e : els) {
             String sourceUrl = e.attr("src");
-            if (sourceUrl.isEmpty() || isAdImage(sourceUrl))
+            if (sourceUrl.isEmpty() || isAdImage(sourceUrl) || isAvatarImage(sourceUrl))
                 continue;
 
             int weight = 0;
@@ -502,6 +502,10 @@ public class ArticleTextExtractor {
 
     private boolean isAdImage(String imageUrl) {
         return SHelper.count(imageUrl, "ad") >= 2;
+    }
+    
+    private boolean isAvatarImage(String imageUrl) {
+        return SHelper.count(imageUrl, "avatar") >= 1;
     }
 
     /**

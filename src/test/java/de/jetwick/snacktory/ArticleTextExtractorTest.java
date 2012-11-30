@@ -325,6 +325,15 @@ public class ArticleTextExtractorTest {
         assertTrue(article.getText(), article.getText().startsWith("Washington (CNN) -- Democrats pledged "));
         assertEquals(article.getImageUrl(), "http://i.cdn.turner.com/cnn/2010/POLITICS/08/13/democrats.social.security/story.kaine.gi.jpg");
     }
+    
+    @Test
+    public void testHealthcareitnews() throws Exception {
+        // http://www.healthcareitnews.com/news/kansas-hie-share-data-cdc-system-population-health-monitoring-goal
+        JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("healthcareitnews.html")));
+        assertEquals("Kansas HIE to share data with CDC, population health tracking the goal", article.getTitle());
+        assertTrue(article.getText(), article.getText().startsWith("Officials at the Kansas Health Information Network (KHIN)"));
+        assertEquals(article.getImageUrl(), "");
+    }
 
     @Test
     public void testBusinessweek2() throws Exception {
