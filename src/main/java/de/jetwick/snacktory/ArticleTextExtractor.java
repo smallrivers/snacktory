@@ -26,7 +26,7 @@ public class ArticleTextExtractor {
 
     private static final Logger logger = LoggerFactory.getLogger(ArticleTextExtractor.class);
     // Interessting nodes
-    private static final Pattern NODES = Pattern.compile("p|div|td|h1|h2|article|section");
+    private static final Pattern NODES = Pattern.compile("p|div|article|section");
     // Unlikely candidates
     private String unlikelyStr;
     private Pattern UNLIKELY;
@@ -305,6 +305,8 @@ public class ArticleTextExtractor {
 
                 if (child.className().toLowerCase().equals("caption"))
                     caption = child;
+            } else if (child.tagName().toLowerCase().equals("strong")) {
+                weight -= 100;
             }
         }
 

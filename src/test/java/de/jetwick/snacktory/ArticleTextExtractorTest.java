@@ -82,6 +82,15 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testBBCNoCSS() throws Exception {
+        // http://www.bbc.co.uk/news/magazine-21206964
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("bbc_nocss.html")));
+        assertEquals("BBC News - Digital artists inspired by the GIF's resurgence", res.getTitle());
+        assertEquals("http://news.bbcimg.co.uk/media/images/65563000/jpg/_65563005_65562996.jpg", res.getImageUrl());
+        assertTrue("bbc no css:" + res.getText(), res.getText().startsWith("They were created in the late-1980s, but recent years have seen a resurgence in popularity of GIF animated files."));
+    }
+
+    @Test
     public void testCaltonCaldwell() throws Exception {
         // http://daltoncaldwell.com/dear-mark-zuckerberg (html5)
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("daltoncaldwell.html")));
@@ -104,7 +113,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("golem.html")));
 //        System.out.println("firefox:" + res.getText());
 //        assertTrue(res.getText(), res.getText().startsWith("Unter dem Namen \"Aurora\" hat Firefox einen"));
-        assertTrue(res.getText(), res.getText().startsWith("Mozilla hat Firefox 5.0a2 veröffentlicht und zugleich eine erste Entwicklerversion von Firefox 6 freigegeben."));
+        assertTrue(res.getText(), res.getText().startsWith("Unter dem Namen \"Aurora\" hat Firefox"));
         assertEquals("http://scr3.golem.de/screenshots/1104/Firefox-Aurora/thumb480/aurora-nighly-beta-logos.png", res.getImageUrl());
 //        assertEquals("http://www.golem.de/1104/82797-9183-i.png", res.getImageUrl());
         assertEquals("Mozilla: Vorabversionen von Firefox 5 und 6 veröffentlicht - Golem.de", res.getTitle());
