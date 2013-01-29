@@ -73,6 +73,15 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testBBCNoCSS() throws Exception {
+        // http://www.bbc.co.uk/news/magazine-21206964
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("bbc_nocss.html")));
+        assertEquals("BBC News - Digital artists inspired by the GIF's resurgence", res.getTitle());
+        assertEquals("http://news.bbcimg.co.uk/media/images/65563000/jpg/_65563005_65562996.jpg", res.getImageUrl());
+        assertTrue("bbc no css:" + res.getText(), res.getText().startsWith("They were created in the late-1980s, but recent years have seen a resurgence in popularity of GIF animated files."));
+    }
+
+    @Test
     public void testCaltonCaldwell() throws Exception {
         // http://daltoncaldwell.com/dear-mark-zuckerberg (html5)
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("daltoncaldwell.html")));
