@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class is thread safe.
+ * Class for content extraction from string form of webpage
+ * 'extractContent' is main call from external programs/classes
  *
  * @author Alex P (ifesdjeen from jreadability)
  * @author Peter Karich
@@ -40,6 +42,8 @@ public class ArticleTextExtractor {
     private Pattern NEGATIVE;
     private static final Pattern NEGATIVE_STYLE =
             Pattern.compile("hidden|display: ?none|font-size: ?small");
+	private static final Pattern IGNORE_AUTHOR_PARTS =
+        Pattern.compile("by|name|author|posted|twitter|handle|news", Pattern.CASE_INSENSITIVE);
     private static final Set<String> IGNORED_TITLE_PARTS = new LinkedHashSet<String>() {
         {
             add("hacker news");
@@ -48,6 +52,8 @@ public class ArticleTextExtractor {
     };
     private static final OutputFormatter DEFAULT_FORMATTER = new OutputFormatter();
     private OutputFormatter formatter = DEFAULT_FORMATTER;
+
+	private static final int MIN_AUTHOR_NAME_LENGTH = 4;
 
     public ArticleTextExtractor() {
         setUnlikely("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
@@ -117,21 +123,11 @@ public class ArticleTextExtractor {
         return extractContent(res, Jsoup.parse(html), formatter);
     }
 
-    public JResult extractContent(JResult res, Document doc, OutputFormatter formatter) throws Exception {
-        if (doc == null)
-            throw new NullPointerException("missing document");
-
-        res.setTitle(extractTitle(doc));
-        res.setDescription(extractDescription(doc));
-        res.setCanonicalUrl(extractCanonicalUrl(doc));
-
-        // now remove the clutter
-        prepareDocument(doc);
-
-        // init elements
-        Collection<Element> nodes = getNodes(doc);
-        int maxWeight = 0;
-        Element bestMatchElement = null;
+    // Returns the best node match based on the weights (see getWeight for strategy)
+	private Element getBestMatchElement(Collection<Element> nodes){
+		int maxWeight = -200;        // why -200 now instead of 0?
+		Element bestMatchElement = null;
+		
         for (Element entry : nodes) {
             int currentWeight = getWeight(entry);
             if (currentWeight > maxWeight) {
@@ -141,7 +137,32 @@ public class ArticleTextExtractor {
                     break;
             }
         }
+		
+		return bestMatchElement;
+	}
 
+    // main workhorse
+    public JResult extractContent(JResult res, Document doc, OutputFormatter formatter) throws Exception {
+        if (doc == null)
+            throw new NullPointerException("missing document");
+
+        // get the easy stuff
+        res.setTitle(extractTitle(doc));
+        res.setDescription(extractDescription(doc));
+        res.setCanonicalUrl(extractCanonicalUrl(doc));
+
+        // get author information
+        res.setAuthorName(extractAuthorName(doc));
+        res.setAuthorDescription(extractAuthorDescription(doc, res.getAuthorName()));
+
+        // now remove the clutter
+        prepareDocument(doc);
+
+        // init elements and get the one with highest weight (see getWeight for strategy)
+        Collection<Element> nodes = getNodes(doc);
+        Element bestMatchElement = getBestMatchElement(nodes);
+
+        // do extraction from the best element
         if (bestMatchElement != null) {
             List<ImageResult> images = new ArrayList<ImageResult>();
             Element imgEl = determineImageSource(bestMatchElement, images);
@@ -159,8 +180,16 @@ public class ArticleTextExtractor {
             // this fails for short facebook post and probably tweets: text.length() > res.getDescription().length()
             if (text.length() > res.getTitle().length()) {
                 res.setText(text);
-//                print("best element:", bestMatchElement);
+                //                print("best element:", bestMatchElement);
             }
+
+            // extract links from the same best element
+            Elements children = bestMatchElement.select("a[href]"); // a with href = link
+            for (Element child : children) {
+                res.addLink(child.attr("abs:href"), child.text());
+                //                System.out.println("    str: " + child.toString());
+            }
+
         }
 
         if (res.getImageUrl().isEmpty()) {
@@ -212,6 +241,75 @@ public class ArticleTextExtractor {
         }
         return description;
     }
+
+    // Returns the author name or null
+	protected String extractAuthorName(Document doc) {
+		String authorName = "";
+		
+		Element result = doc.select("body [rel*=author]").first();
+		
+		if(result != null)
+			authorName = SHelper.innerTrim(result.ownText());
+			
+		if (authorName.isEmpty()) {
+			authorName = SHelper.innerTrim(doc.select("head meta[name=author]").attr("content"));
+			if (authorName.isEmpty()) {
+				try{
+					Elements matches = doc.select(".byLineTag,.byline,.author,.by,.writer,.address");
+					
+					if(matches == null || matches.size() == 0){
+						matches = doc.select("body [class*=author]");
+					}
+					
+					if(matches == null || matches.size() == 0){
+						matches = doc.select("body [title*=author]");
+					}
+										
+					if(matches != null){				
+						Element bestMatch = getBestMatchElement(matches);
+
+						if(!(bestMatch == null))
+						{
+							authorName = bestMatch.ownText();
+							
+							if(authorName.length() < MIN_AUTHOR_NAME_LENGTH){
+								authorName = bestMatch.text();	
+							}							
+							
+							authorName = SHelper.innerTrim(IGNORE_AUTHOR_PARTS.matcher(authorName).replaceAll(""));
+							
+							if(authorName.indexOf(",") != -1){
+								authorName = authorName.split(",")[0];
+							}
+						}
+					}
+				}				
+				catch(Exception e){
+					System.out.println(e.toString());
+				}	
+			}
+		}
+        return authorName;
+    }
+	
+	// Returns the author description or null
+	protected String extractAuthorDescription(Document doc, String authorName){
+		
+		String authorDesc = "";
+		
+		if(authorName.equals(""))
+			return "";
+			
+		Elements nodes = doc.select(":containsOwn(" + authorName + ")");
+
+		Element bestMatch = getBestMatchElement(nodes);
+		
+		if(bestMatch != null)
+			authorDesc = bestMatch.text();
+			
+		return authorDesc;
+	}
+  
 
     protected Collection<String> extractKeywords(Document doc) {
         String content = SHelper.innerTrim(doc.select("head meta[name=keywords]").attr("content"));
