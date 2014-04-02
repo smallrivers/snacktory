@@ -200,6 +200,7 @@ public class HtmlFetcher {
         return charset;
     }
 
+    // main workhorse to call externally
     public JResult fetchAndExtract(String url, int timeout, boolean resolve) throws Exception {
         String originalUrl = url;
         url = SHelper.removeHashbang(url);
@@ -254,6 +255,7 @@ public class HtmlFetcher {
             cache.put(url, result);
         }
 
+        // extract content to the extent appropriate for content type
         String lowerUrl = url.toLowerCase();
         if (SHelper.isDoc(lowerUrl) || SHelper.isApp(lowerUrl) || SHelper.isPackage(lowerUrl)) {
             // skip
@@ -298,6 +300,7 @@ public class HtmlFetcher {
         return fetchAsString(urlAsString, timeout, true);
     }
 
+    // main routine to get raw webpage content
     public String fetchAsString(String urlAsString, int timeout, boolean includeSomeGooseOptions)
             throws MalformedURLException, IOException {
         HttpURLConnection hConn = createUrlConnection(urlAsString, timeout, includeSomeGooseOptions);
