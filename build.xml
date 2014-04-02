@@ -1,0 +1,54 @@
+<project name="simpleCompile" default="compile2" basedir=".">
+   <target name="init">
+      <property name="sourceDir" value="src/main/java/de/jetwick/snacktory" />
+      <property name="outputDir" value="target/classes" />
+      <property name="outputDir2" value="new/classes" />
+      <property name="depdir" value="target/dependency/" />
+      <property name="debug" value="true" />
+   </target>
+
+   <fileset dir="${depdir}" id="myclasspath">
+     <include name="**/*.jar" />
+   </fileset>
+
+   <target name="clean" depends="init">
+      <delete>
+        <fileset dir="${outputDir}" >
+          <include name="**/*.class" />
+          <exclude name="log4j.properties"/>
+        </fileset>	
+      </delete>
+      <delete>
+        <fileset dir="${outputDir2}" />
+      </delete>
+   </target>
+
+   <target name="prepare" depends="clean">
+      <mkdir dir="${outputDir}" />
+      <mkdir dir="${outputDir2}" />
+   </target>
+
+   <target name="compile" depends="prepare">
+     <javac destdir="${outputDir}" debug="${debug}">
+       <src path="${sourceDir}"/>
+       <classpath> 
+         <fileset dir="${depdir}"> 
+           <include name="*.jar" /> 
+           <exclude name="abc.jar" /> 
+         </fileset>	
+       </classpath>
+     </javac>
+   </target>
+
+   <target name="compile2" depends="compile">
+     <javac destdir="${outputDir2}" debug="${debug}">
+       <src path="new"/> 
+       <classpath path="${outputDir}"> 
+         <fileset dir="${depdir}"> 
+           <include name="*.jar" /> 
+         </fileset>	
+       </classpath>
+     </javac>
+   </target>
+
+</project>
