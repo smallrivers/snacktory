@@ -11,12 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.Date;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.commons.lang.time.*;
 
 /**
  * This class is thread safe.
@@ -129,7 +131,7 @@ public class ArticleTextExtractor {
 		Element bestMatchElement = null;
 		
         for (Element entry : nodes) {
-            int currentWeight = getWeight(entry);
+            int currentWeight = getWeight(entry, false);
             if (currentWeight > maxWeight) {
                 maxWeight = currentWeight;
                 bestMatchElement = entry;
@@ -154,6 +156,26 @@ public class ArticleTextExtractor {
         // get author information
         res.setAuthorName(extractAuthorName(doc));
         res.setAuthorDescription(extractAuthorDescription(doc, res.getAuthorName()));
+
+        // add extra selection gravity to any element containing author name
+        // wasn't useful in the case I implemented it for, but might be later
+        /*
+        Elements authelems = doc.select(":containsOwn(" + res.getAuthorName() + ")");
+        for (Element elem : authelems) {
+            elem.attr("extragravityscore", Integer.toString(100));
+            System.out.println("modified element " + elem.toString());
+        }
+        */
+
+        // get date from document, if not present, extract from URL if possible
+        Date docdate = extractDate(doc);
+        if (docdate == null) {   
+            String dateStr = SHelper.estimateDate(res.getUrl());
+            docdate = parseDate(dateStr);
+            res.setDate(docdate);
+        } else {
+            res.setDate(docdate);
+        }
 
         // now remove the clutter
         prepareDocument(doc);
@@ -184,12 +206,17 @@ public class ArticleTextExtractor {
             }
 
             // extract links from the same best element
+            String fullhtml = bestMatchElement.toString();
             Elements children = bestMatchElement.select("a[href]"); // a with href = link
+            String linkstr = "";
+            Integer linkpos = 0;
+            Integer lastlinkpos = 0;
             for (Element child : children) {
-                res.addLink(child.attr("abs:href"), child.text());
-                //                System.out.println("    str: " + child.toString());
+                linkstr = child.toString();
+                linkpos = fullhtml.indexOf(linkstr, lastlinkpos);
+                res.addLink(child.attr("abs:href"), child.text(), linkpos);
+                lastlinkpos = linkpos;
             }
-
         }
 
         if (res.getImageUrl().isEmpty()) {
@@ -242,21 +269,209 @@ public class ArticleTextExtractor {
         return description;
     }
 
+    // Returns the publication Date or null
+	protected Date extractDate(Document doc) {
+		String dateStr = "";
+
+        // try some locations that nytimes uses
+        Element elem = doc.select("meta[name=ptime]").first();
+		if (elem != null) {
+            dateStr = SHelper.innerTrim(elem.attr("content"));
+            //            elem.attr("extragravityscore", Integer.toString(100));
+            //            System.out.println("date modified element " + elem.toString());
+        }
+
+		if (dateStr == "") {
+            dateStr = SHelper.innerTrim(doc.select("meta[name=utime]").attr("content"));
+        }
+		if (dateStr == "") {
+            dateStr = SHelper.innerTrim(doc.select("meta[name=pdate]").attr("content"));
+        }
+		if (dateStr == "") {
+            dateStr = SHelper.innerTrim(doc.select("meta[property=article:published]").attr("content"));
+        }
+		if (dateStr != "") {
+            return parseDate(dateStr);
+        }
+
+        // taking this stuff directly from Juicer (and converted to Java)
+        // opengraph (?)
+        Elements elems = doc.select("meta[property=article:published_time]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            if (el.hasAttr("content")) {
+                dateStr = el.attr("content");
+                
+                if (dateStr.endsWith("Z")) {
+                    dateStr = dateStr.substring(0, dateStr.length() - 1) + "GMT-00:00";
+                } else {
+                    dateStr = "%sGMT%s".format(dateStr.substring(0, dateStr.length() - 6), 
+                                               dateStr.substring(dateStr.length() - 6, 
+                                                                 dateStr.length()));
+                }
+
+                return parseDate(dateStr);
+            }
+        } 
+
+        // rnews 
+        elems = doc.select("meta[property=dateCreated], span[property=dateCreated]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            if (el.hasAttr("content")) {
+                dateStr = el.attr("content");
+                
+                return parseDate(dateStr);
+            } else {
+                return parseDate(el.text());
+            }
+        }
+
+        // schema.org creativework
+        elems = doc.select("meta[itemprop=datePublished], span[itemprop=datePublished]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            if (el.hasAttr("content")) {
+                dateStr = el.attr("content");
+                
+                return parseDate(dateStr);
+            } else if (el.hasAttr("value")) {
+                dateStr = el.attr("value");
+
+                return parseDate(dateStr);
+            } else {
+                return parseDate(el.text());
+            }
+        } 
+
+        // parsely page (?)
+        /*  skip conversion for now, seems highly specific and uses new lib
+        elems = doc.select("meta[name=parsely-page]");
+        if (elems.size() > 0) {
+            implicit val formats = net.liftweb.json.DefaultFormats
+
+                Element el = elems.get(0);
+                if(el.hasAttr("content")) {
+                    val json = parse(el.attr("content"))
+
+                        return DateUtils.parseDateStrictly((json \ "pub_date").extract[String], Array("yyyy-MM-dd'T'HH:mm:ssZ", "yyyy-MM-dd'T'HH:mm:ss'Z'", "yyyy-MM-dd'T'HH:mm:ssZZ", "yyyy-MM-dd'T'HH:mm:ssz"))
+                        }
+            } 
+        */
+      
+        // BBC
+        elems = doc.select("meta[name=OriginalPublicationDate]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            if (el.hasAttr("content")) {
+                dateStr = el.attr("content");
+                return parseDate(dateStr);
+            }
+        }
+
+        // wired
+        elems = doc.select("meta[name=DisplayDate]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            if (el.hasAttr("content")) {
+                dateStr = el.attr("content");
+                return parseDate(dateStr);
+            }
+        }
+
+        // wildcard
+        elems = doc.select("meta[name*=date]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            if (el.hasAttr("content")) {
+                dateStr = el.attr("content");
+                return parseDate(dateStr);
+            }
+        }
+
+        return null;
+    }
+
+    private Date parseDate(String dateStr) {
+        String[] parsePatterns = {
+            "yyyy-MM-dd'T'HH:mm:ssz", 
+            "yyyy-MM-dd HH:mm:ss", 
+            "yyyy/MM/dd HH:mm:ss", 
+            "yyyy-MM-dd HH:mm",
+            "yyyy/MM/dd HH:mm",
+            "yyyy-MM-dd", 
+            "yyyy/MM/dd",
+            "MM/dd/yyyy HH:mm:ss",
+            "MM-dd-yyyy HH:mm:ss",
+            "MM/dd/yyyy HH:mm",
+            "MM-dd-yyyy HH:mm",
+            "MM/dd/yyyy",
+            "MM-dd-yyyy",
+            "EEE, MMM dd, yyyy",
+            "MM/dd/yyyy hh:mm:ss a",
+            "MM-dd-yyyy hh:mm:ss a",
+            "MM/dd/yyyy hh:mm a",
+            "MM-dd-yyyy hh:mm a",
+            "yyyy-MM-dd hh:mm:ss a", 
+            "yyyy/MM/dd hh:mm:ss a ", 
+            "yyyy-MM-dd hh:mm a",
+            "yyyy/MM/dd hh:mm ",
+            "dd MMM yyyy",
+            "dd MMMM yyyy",
+            "yyyyMMddHHmm",
+            "yyyyMMdd HHmm",
+            "dd-MM-yyyy HH:mm:ss",
+            "dd/MM/yyyy HH:mm:ss",
+            "dd MMM yyyy HH:mm:ss",
+            "dd MMMM yyyy HH:mm:ss",
+            "dd-MM-yyyy HH:mm",
+            "dd/MM/yyyy HH:mm",
+            "dd MMM yyyy HH:mm",
+            "dd MMMM yyyy HH:mm",
+            "yyyyMMddHHmmss",
+            "yyyyMMdd HHmmss",
+            "yyyyMMdd"
+        };
+
+      try {
+          return DateUtils.parseDateStrictly(dateStr, parsePatterns);
+      } catch (Exception ex) {
+          return null;
+      }
+    }
+
     // Returns the author name or null
 	protected String extractAuthorName(Document doc) {
 		String authorName = "";
 		
+        // first try the Google Author tag
 		Element result = doc.select("body [rel*=author]").first();
-		
-		if(result != null)
+		if (result != null)
 			authorName = SHelper.innerTrim(result.ownText());
-			
+
+        // if that doesn't work, try some other methods
 		if (authorName.isEmpty()) {
-			authorName = SHelper.innerTrim(doc.select("head meta[name=author]").attr("content"));
+
+            // meta tag approaches, get content
+            result = doc.select("head meta[name=author]").first();
+            if (result != null) {
+                authorName = SHelper.innerTrim(result.attr("content"));
+            }
+
+            if (authorName.isEmpty()) {  // for "opengraph"
+                authorName = SHelper.innerTrim(doc.select("head meta[property=article:author]").attr("content"));
+            }
+            if (authorName.isEmpty()) {  // for "schema.org creativework"
+                authorName = SHelper.innerTrim(doc.select("meta[itemprop=author], span[itemprop=author]").attr("content"));
+            }
+
+            // other hacks
 			if (authorName.isEmpty()) {
 				try{
+                    // build up a set of elements which have likely author-related terms
+                    // .X searches for class X
 					Elements matches = doc.select(".byLineTag,.byline,.author,.by,.writer,.address");
-					
+
 					if(matches == null || matches.size() == 0){
 						matches = doc.select("body [class*=author]");
 					}
@@ -264,7 +479,13 @@ public class ArticleTextExtractor {
 					if(matches == null || matches.size() == 0){
 						matches = doc.select("body [title*=author]");
 					}
-										
+
+                    // a hack for huffington post
+					if(matches == null || matches.size() == 0){
+						matches = doc.select(".staff_info dl a[href]");
+					}
+
+                    // select the best element from them
 					if(matches != null){				
 						Element bestMatch = getBestMatchElement(matches);
 
@@ -304,12 +525,11 @@ public class ArticleTextExtractor {
 
 		Element bestMatch = getBestMatchElement(nodes);
 		
-		if(bestMatch != null)
+		if (bestMatch != null)
 			authorDesc = bestMatch.text();
 			
 		return authorDesc;
 	}
-  
 
     protected Collection<String> extractKeywords(Document doc) {
         String content = SHelper.innerTrim(doc.select("head meta[name=keywords]").attr("content"));
@@ -371,10 +591,21 @@ public class ArticleTextExtractor {
      *
      * @param e Element to weight, along with child nodes
      */
-    protected int getWeight(Element e) {
+    protected int getWeight(Element e, boolean checkextra) {
         int weight = calcWeight(e);
         weight += (int) Math.round(e.ownText().length() / 100.0 * 10);
         weight += weightChildNodes(e);
+
+        // add additional weight using possible 'extragravityscore' attribute
+        if (checkextra) {
+            Element xelem = e.select("[extragravityscore]").first();
+            if (xelem != null) {
+                //                System.out.println("HERE found one: " + xelem.toString());
+                weight += Integer.parseInt(xelem.attr("extragravityscore"));
+                //                System.out.println("WITH WEIGHT: " + xelem.attr("extragravityscore"));
+            }
+        }
+
         return weight;
     }
 
