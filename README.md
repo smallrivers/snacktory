@@ -76,5 +76,5 @@ ant -buildfile build.xml
 
 run development driver
 cd new/classes
-java -cp .:../../classes/:../../target/dependency/* snack
+java -cp .:../../target/classes/:../../target/dependency/* snack
 

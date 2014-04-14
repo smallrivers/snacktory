@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Parsed result from web page containing important title, text and image.
@@ -40,7 +41,7 @@ public class JResult implements Serializable {
     private String description;
     private String authorName;
     private String authorDescription;
-    private String dateString;
+    private Date   date;
     private Collection<String> keywords;
     private List<ImageResult> images = null;
     private List<List<String>> links = new ArrayList<List<String>>();
@@ -177,8 +178,8 @@ public class JResult implements Serializable {
         return this;
     }
 
-    public JResult setDate(String date) {
-        this.dateString = date;
+    public JResult setDate(Date date) {
+        this.date = date;
         return this;
     }
 
@@ -193,8 +194,8 @@ public class JResult implements Serializable {
     /**
      * @return get date from url or guessed from text
      */
-    public String getDate() {
-        return dateString;
+    public Date getDate() {
+        return date;
     }
 
     /**
@@ -222,10 +223,11 @@ public class JResult implements Serializable {
         this.images = images;
     }
 
-    public void addLink(String url, String text) {
+    public void addLink(String url, String text, Integer pos) {
         ArrayList<String> link = new ArrayList<String>();
         link.add(url);
         link.add(text);
+        link.add(String.valueOf(pos));
         links.add(link);
     }
 
