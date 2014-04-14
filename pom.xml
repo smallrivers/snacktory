@@ -77,11 +77,11 @@
     <distributionManagement>
         <snapshotRepository>
             <id>karussell_snapshots</id>
-            <url>https://github.com/karussell/mvnrepo/raw/master/snapshots</url>
+            <url>https://github.com/skyshard/mvnrepo/raw/master/snapshots</url>
         </snapshotRepository>
         <repository>
             <id>karussell_releases</id>
-            <url>https://github.com/karussell/mvnrepo/raw/master/releases/</url>
+            <url>https://github.com/skyshard/mvnrepo/raw/master/releases/</url>
         </repository>
     </distributionManagement>
 </project>
