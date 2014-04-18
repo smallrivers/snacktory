@@ -21,6 +21,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Parsed result from web page containing important title, text and image.
@@ -44,7 +47,7 @@ public class JResult implements Serializable {
     private Date   date;
     private Collection<String> keywords;
     private List<ImageResult> images = null;
-    private List<List<String>> links = new ArrayList<List<String>>();
+    private List<Map<String,String>> links = new ArrayList<Map<String,String>>();
 
     public JResult() {
     }
@@ -224,14 +227,14 @@ public class JResult implements Serializable {
     }
 
     public void addLink(String url, String text, Integer pos) {
-        ArrayList<String> link = new ArrayList<String>();
-        link.add(url);
-        link.add(text);
-        link.add(String.valueOf(pos));
+        Map link = new HashMap();
+        link.put("url", url);
+        link.put("text", text);
+        link.put("offset", String.valueOf(pos));
         links.add(link);
     }
 
-    public List<List<String>> getLinks() {
+    public List<Map<String,String>> getLinks() {
         if (links == null)
             return Collections.emptyList();
         return links;

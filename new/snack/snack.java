@@ -27,8 +27,8 @@ class snack {
       System.out.println("  Description:" + res.getAuthorDescription());
       System.out.println("-----");
       System.out.println("links:");
-      List<List<String>> links = res.getLinks();
-      for (List<String> link : links) {
+      List<Map<String,String>> links = res.getLinks();
+      for (Map<String,String> link : links) {
           System.out.println("link:" + link.toString());
       }
 
