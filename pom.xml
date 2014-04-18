@@ -5,7 +5,7 @@
 
     <groupId>de.jetwick</groupId>
     <artifactId>snacktory</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Snacktory</name>
@@ -83,11 +83,11 @@
     </build>
     <distributionManagement>
         <snapshotRepository>
-            <id>karussell_snapshots</id>
+            <id>skyshard_snapshots</id>
             <url>https://github.com/skyshard/mvnrepo/raw/master/snapshots</url>
         </snapshotRepository>
         <repository>
-            <id>karussell_releases</id>
+            <id>skyshard_releases</id>
             <url>https://github.com/skyshard/mvnrepo/raw/master/releases/</url>
         </repository>
     </distributionManagement>
