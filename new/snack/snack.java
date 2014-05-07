@@ -4,6 +4,7 @@ import de.jetwick.snacktory.JResult;
 import de.jetwick.snacktory.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 //try to run
 class snack {
