@@ -114,15 +114,15 @@ public class ArticleTextExtractor {
     }
 
     public JResult extractContent(JResult res, String html) throws Exception {
-        return extractContent(res, html, formatter);
+        return extractContent(res, html, formatter, true);
     }
 
-    public JResult extractContent(JResult res, String html, OutputFormatter formatter) throws Exception {
+    public JResult extractContent(JResult res, String html, OutputFormatter formatter, Boolean extractimages) throws Exception {
         if (html.isEmpty())
             throw new IllegalArgumentException("html string is empty!?");
 
         // http://jsoup.org/cookbook/extracting-data/selector-syntax
-        return extractContent(res, Jsoup.parse(html), formatter);
+        return extractContent(res, Jsoup.parse(html), formatter, extractimages);
     }
 
     // Returns the best node match based on the weights (see getWeight for strategy)
@@ -144,7 +144,7 @@ public class ArticleTextExtractor {
 	}
 
     // main workhorse
-    public JResult extractContent(JResult res, Document doc, OutputFormatter formatter) throws Exception {
+    public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, Boolean extractimages) throws Exception {
         if (doc == null)
             throw new NullPointerException("missing document");
 
@@ -186,14 +186,16 @@ public class ArticleTextExtractor {
 
         // do extraction from the best element
         if (bestMatchElement != null) {
-            List<ImageResult> images = new ArrayList<ImageResult>();
-            Element imgEl = determineImageSource(bestMatchElement, images);
-            if (imgEl != null) {
-                res.setImageUrl(SHelper.replaceSpaces(imgEl.attr("src")));
-                // TODO remove parent container of image if it is contained in bestMatchElement
-                // to avoid image subtitles flooding in
+            if (extractimages) {
+                List<ImageResult> images = new ArrayList<ImageResult>();
+                Element imgEl = determineImageSource(bestMatchElement, images);
+                if (imgEl != null) {
+                    res.setImageUrl(SHelper.replaceSpaces(imgEl.attr("src")));
+                    // TODO remove parent container of image if it is contained in bestMatchElement
+                    // to avoid image subtitles flooding in
 
-                res.setImages(images);
+                    res.setImages(images);
+                }
             }
 
             // clean before grabbing text
@@ -219,8 +221,10 @@ public class ArticleTextExtractor {
             }
         }
 
-        if (res.getImageUrl().isEmpty()) {
-            res.setImageUrl(extractImageUrl(doc));
+        if (extractimages) {
+            if (res.getImageUrl().isEmpty()) {
+                res.setImageUrl(extractImageUrl(doc));
+            }
         }
 
         res.setRssUrl(extractRssUrl(doc));
