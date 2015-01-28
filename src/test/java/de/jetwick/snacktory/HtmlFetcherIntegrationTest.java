@@ -101,7 +101,7 @@ public class HtmlFetcherIntegrationTest {
 
     @Test
     public void testXml() throws Exception {
-        String str = new HtmlFetcher().fetchAsString("http://karussell.wordpress.com/feed/", 10000);
+        String str = new HtmlFetcher().fetchAsString("http://blogs.adobe.com/comments/feed", 10000);
         assertTrue(str, str.startsWith("<?xml version="));
     }
 }
