@@ -17,6 +17,7 @@ package de.jetwick.snacktory;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.apache.commons.lang.time.*;
 
 /**
  *
@@ -48,7 +49,7 @@ public class HtmlFetcherIntegrationTest {
     public void testWithTitle() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://www.midgetmanofsteel.com/2011/03/its-only-matter-of-time-before-fox-news.html", 10000, true);
         assertEquals("It's Only a Matter of Time Before Fox News Takes Out a Restraining Order", res.getTitle());
-        assertEquals("2011/03", res.getDate());
+        assertEquals("2011/03/02", DateFormatUtils.format(res.getDate(), "yyyy/MM/dd"));
     }
 
     // do not support this uglyness
