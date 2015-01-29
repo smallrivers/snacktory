@@ -17,6 +17,7 @@ package de.jetwick.snacktory;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.apache.commons.lang.time.*;
 
 /**
  *
@@ -48,7 +49,7 @@ public class HtmlFetcherIntegrationTest {
     public void testWithTitle() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://www.midgetmanofsteel.com/2011/03/its-only-matter-of-time-before-fox-news.html", 10000, true);
         assertEquals("It's Only a Matter of Time Before Fox News Takes Out a Restraining Order", res.getTitle());
-        assertEquals("2011/03", res.getDate());
+        assertEquals("2011/03/02", DateFormatUtils.format(res.getDate(), "yyyy/MM/dd"));
     }
 
     // do not support this uglyness
@@ -65,8 +66,8 @@ public class HtmlFetcherIntegrationTest {
 //    }
     @Test
     public void testEncoding() throws Exception {
-        JResult res = new HtmlFetcher().fetchAndExtract("http://www.yomiuri.co.jp/science/news/20110415-OYT1T00568.htm", 10000, true);
-        assertEquals("海水汚染には猫トイレの砂…セシウム吸着 : 科学 : YOMIURI ONLINE（読売新聞）", res.getTitle());
+        JResult res = new HtmlFetcher().fetchAndExtract("http://www.yomiuri.co.jp/science/", 10000, true);
+        assertEquals("科学 : 読売新聞（YOMIURI ONLINE）", res.getTitle());
     }
 
     @Test
@@ -100,7 +101,7 @@ public class HtmlFetcherIntegrationTest {
 
     @Test
     public void testXml() throws Exception {
-        String str = new HtmlFetcher().fetchAsString("http://karussell.wordpress.com/feed/", 10000);
+        String str = new HtmlFetcher().fetchAsString("http://blogs.adobe.com/comments/feed", 10000);
         assertTrue(str, str.startsWith("<?xml version="));
     }
 }

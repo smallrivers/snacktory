@@ -389,8 +389,19 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             if (el.hasAttr("content")) {
                 dateStr = el.attr("content");
-                return parseDate(dateStr);
+                Date parsedDate = parseDate(dateStr);
+                if (parsedDate != null){
+                    return parsedDate;
+                }
             }
+        }
+
+        // blogger
+        elems = doc.select(".date-header");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            return parseDate(dateStr);
         }
 
         return null;
