@@ -219,7 +219,7 @@ public class HtmlFetcher {
             if (res != null)
                 return res;
 
-            String resUrl = getResolvedUrl(url, timeout);
+            String resUrl = getResolvedUrl(url, timeout, 0);
             if (resUrl.isEmpty()) {
                 if (logger.isDebugEnabled())
                     logger.warn("resolved url is empty. Url is: " + url);
@@ -333,7 +333,8 @@ public class HtmlFetcher {
      * @return the resolved url if any. Or null if it couldn't resolve the url
      * (within the specified time) or the same url if response code is OK
      */
-    public String getResolvedUrl(String urlAsString, int timeout) {
+    public String getResolvedUrl(String urlAsString, int timeout, 
+                                 int num_redirects) {
         String newUrl = null;
         int responseCode = -1;
         try {
@@ -350,26 +351,37 @@ public class HtmlFetcher {
                 return urlAsString;
 
             newUrl = hConn.getHeaderField("Location");
-            if (responseCode / 100 == 3 && newUrl != null) {
+            // Note that the max recursion level is 5.
+            if (responseCode / 100 == 3 && newUrl != null && num_redirects<5) {
                 newUrl = newUrl.replaceAll(" ", "+");
                 // some services use (none-standard) utf8 in their location header
-                if (urlAsString.startsWith("http://bit.ly") || urlAsString.startsWith("http://is.gd"))
+                if (urlAsString.startsWith("http://bit.ly") 
+                    || urlAsString.startsWith("http://is.gd"))
                     newUrl = encodeUriFromHeader(newUrl);
 
+                // AP: This code is not longer need, instead we always follow
+                // multiple redirects.
+                //
                 // fix problems if shortened twice. as it is often the case after twitters' t.co bullshit
-                if (furtherResolveNecessary.contains(SHelper.extractDomain(newUrl, true)))
-                    newUrl = getResolvedUrl(newUrl, timeout);
+                //if (furtherResolveNecessary.contains(SHelper.extractDomain(newUrl, true)))
+                //    newUrl = getResolvedUrl(newUrl, timeout);
 
+                // Add support for URLs with multiple levels of redirection,
+                // call getResolvedUrl until there is no more redirects or a
+                // max number of redirects is reached.
+                newUrl = getResolvedUrl(newUrl, timeout, num_redirects+1);
                 return newUrl;
             } else
                 return urlAsString;
 
         } catch (Exception ex) {
-            logger.warn("getResolvedUrl:" + urlAsString + " Error:" + ex.getMessage());
+            logger.warn("getResolvedUrl:" + urlAsString + " Error:" 
+                        + ex.getMessage());
             return "";
         } finally {
             if (logger.isDebugEnabled())
-                logger.debug(responseCode + " url:" + urlAsString + " resolved:" + newUrl);
+                logger.debug(responseCode + " url:" + urlAsString 
+                             + " resolved:" + newUrl);
         }
     }
 
