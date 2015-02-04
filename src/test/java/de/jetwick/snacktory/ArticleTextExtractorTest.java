@@ -744,6 +744,14 @@ public class ArticleTextExtractorTest {
         assertEquals("http://www.linkwithin.com/pixel.png", res.getImages().get(2).src);
     }
 
+    @Test
+    public void testSearchEngineJournal() throws Exception {
+        // http://www.searchenginejournal.com/planning-progress-18-tips-successful-social-media-strategy/112567/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("searchenginejournal.html")));
+        assertEquals("18 Tips for a Successful Social Media Strategy", res.getTitle());
+        assertTrue(res.getText(), res.getText().contains("Sharam"));
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes
