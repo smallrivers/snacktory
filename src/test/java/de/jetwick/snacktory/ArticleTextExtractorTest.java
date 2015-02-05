@@ -297,7 +297,6 @@ public class ArticleTextExtractorTest {
         // http://blog.talawah.net/2011/04/gavin-king-unviels-red-hats-top-secret.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("blogger.html")));
         assertTrue(res.getText(), res.getText().startsWith("Gavin King unveils Red Hat's Java killer"));
-//        assertTrue(res.getText(), res.getText().startsWith("Gavin King of Red Hat/Hibernate/Seam fame recently unveiled the top secret project that"));
         assertEquals("http://3.bp.blogspot.com/-cyMzveP3IvQ/TaR7f3qkYmI/AAAAAAAAAIk/mrChE-G0b5c/s200/Java.png", res.getImageUrl());
         assertEquals("The Brain Dump: Gavin King unveils Red Hat's Java killer successor: The Ceylon Project", res.getTitle());
         assertEquals("http://blog.talawah.net/feeds/posts/default?alt=rss", res.getRssUrl());
@@ -542,6 +541,7 @@ public class ArticleTextExtractorTest {
         assertTrue(article.getText(), article.getText().startsWith("FOR beleaguered smokers, the world is an increasingly"));
         assertEquals("http://www.economist.com/sites/default/files/images/articles/migrated/20110122_stp004.jpg",
                 article.getImageUrl());
+        assertFalse(article.getText(), article.getText().contains("Related topics"));
     }
 
     @Test
@@ -750,6 +750,26 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("searchenginejournal.html")));
         assertEquals("18 Tips for a Successful Social Media Strategy", res.getTitle());
         assertTrue(res.getText(), res.getText().contains("Sharam"));
+    }
+
+    @Test
+    public void testAdweek() throws Exception {
+        // http://www.adweek.com/prnewser/5-digital-data-metricstools-that-pr-pros-need-to-know/97735?red=pr
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("adweek.html")));
+        assertEquals("5 Digital Metrics/Tools That PR Pros Need to Know", res.getTitle());
+        assertTrue(res.getText(), res.getText().contains("Cision provides a proprietary"));
+        assertTrue(res.getText(), res.getText().contains("Moz’s Domain Authority."));
+        assertTrue(res.getText(), res.getText().contains("Google Authorship and Google Analytics."));
+    }
+
+    @Test
+    public void testSpinsucks() throws Exception {
+        // http://spinsucks.com/communication/2015-communications-trends/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("spinsucks.html")));
+        assertEquals("The Five Communications Trends for 2015 Spin Sucks", res.getTitle());
+        assertTrue(res.getText(), res.getText().contains("Conversion of media. Julie Hong, the community manager"));
+        assertTrue(res.getText(), res.getText().contains("Paid media affects traditional PR"));
+        assertTrue(res.getText(), res.getText().contains("Old ideas become new again. We’ve stopped doing things such as deskside briefings, large events, direct mail"));
     }
 
     /**

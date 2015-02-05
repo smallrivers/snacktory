@@ -26,7 +26,7 @@ public class OutputFormatter {
     protected final int minFirstParagraphText;
     protected final int minParagraphText;
     protected final List<String> nodesToReplace;
-    protected String nodesToKeepCssSelector = "p";
+    protected String nodesToKeepCssSelector = "p, ol";
 
     public OutputFormatter() {
         this(MIN_FIRST_PARAGRAPH_TEXT, MIN_PARAGRAPH_TEXT, NODES_TO_REPLACE);
@@ -61,14 +61,15 @@ public class OutputFormatter {
         setParagraphIndex(topNode, nodesToKeepCssSelector);
         removeNodesWithNegativeScores(topNode);
         StringBuilder sb = new StringBuilder();
-        append(topNode, sb, nodesToKeepCssSelector);
+        int countOfP = append(topNode, sb, nodesToKeepCssSelector);
         String str = SHelper.innerTrim(sb.toString());
-        if (str.length() > 100)
+        if (str.length() > 100 && countOfP > 0)
             return str;
 
         // no subelements
-        if (str.isEmpty() || !topNode.text().isEmpty() 
-            && str.length() <= topNode.ownText().length()){
+        if (str.isEmpty() || (!topNode.text().isEmpty() 
+            && str.length() <= topNode.ownText().length())
+            || countOfP == 0){
             str = topNode.text();
         }
 
@@ -92,7 +93,8 @@ public class OutputFormatter {
         }
     }
 
-    protected void append(Element node, StringBuilder sb, String tagName) {
+    protected int append(Element node, StringBuilder sb, String tagName) {
+        int countOfP = 0; // Number of P elements in the article
         int paragraphWithTextIndex = 0;
         // is select more costly then getElementsByTag?
         MAIN:
@@ -111,10 +113,16 @@ public class OutputFormatter {
                 continue;
             }
 
+            if (e.tagName().equals("p")){
+                countOfP++;
+            }
+
             sb.append(text);
             sb.append("\n\n");
             paragraphWithTextIndex+=1;
         }
+
+        return countOfP;
     }
 
     protected void setParagraphIndex(Element node, String tagName) {
