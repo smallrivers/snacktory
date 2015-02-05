@@ -50,6 +50,8 @@ public class ArticleTextExtractor {
         {
             add("hacker news");
             add("facebook");
+            add("home");
+            add("articles");
         }
     };
     private static final OutputFormatter DEFAULT_FORMATTER = new OutputFormatter();
@@ -626,7 +628,7 @@ public class ArticleTextExtractor {
 
     /**
      * Weights a child nodes of given Element. During tests some difficulties
-     * were met. For instanance, not every single document has nested paragraph
+     * were met. For instance, not every single document has nested paragraph
      * tags inside of the major article tag. Sometimes people are adding one
      * more nesting level. So, we're adding 4 points for every 100 symbols
      * contained in tag nested inside of the current weighted element, but only
@@ -652,7 +654,11 @@ public class ArticleTextExtractor {
             if (child.tagName().equals("h1") || child.tagName().equals("h2")) {
                 weight += 30;
             } else if (child.tagName().equals("div") || child.tagName().equals("p")) {
-                weight += calcWeightForChild(child, ownText);
+                // Use the entire inner text as part of the weight calculation.
+                // This allow to better support the case when an article text
+                // is inside several levels deep of tags inside the main component.
+                String innerText = child.text();
+                weight += calcWeightForChild(child, innerText);
                 if (child.tagName().equals("p") && ownTextLength > 50)
                     pEls.add(child);
 

@@ -772,6 +772,16 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().contains("Old ideas become new again. We’ve stopped doing things such as deskside briefings, large events, direct mail"));
     }
 
+    @Test
+    public void testPRDaily() throws Exception {
+        // http://www.prdaily.com/Main/Articles/7_PR_blogs_worth_reading_17870.aspx
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("prdaily.html")));
+        assertEquals("7 PR blogs worth reading", res.getTitle());
+        assertTrue(res.getText(), res.getText().contains("I really love the way Rebekah"));
+        assertTrue(res.getText(), res.getText().contains("my team became fascinated with Bad Pitch Blog"));
+        assertTrue(res.getText(), res.getText().contains("I’m fairly certain there is no one nicer than Deirdre Breakenridge"));
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes
