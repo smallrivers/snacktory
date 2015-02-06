@@ -136,6 +136,7 @@ public class ArticleTextExtractor {
 		int maxWeight = -200;        // why -200 now instead of 0?
 		Element bestMatchElement = null;
 		
+        boolean ignoreMaxWeightLimit = false;
         for (Element entry : nodes) {
 
             LogEntries entries = null;
@@ -159,7 +160,23 @@ public class ArticleTextExtractor {
             if (currentWeight > maxWeight) {
                 maxWeight = currentWeight;
                 bestMatchElement = entry;
-                if (maxWeight > 200)
+
+                // The original code had a limit of 200, the intention was that
+                // if a node had a weight greater than it, then it most likely
+                // it was the main content.
+                // However this assumption fails when the amount of text in the 
+                // children (or grandchildren) is too large. If we detect this
+                // case then the limit is ignored and we try all the nodes to select
+                // the one with the absolute maximum weight.
+                if (maxWeight > 2000){
+                    ignoreMaxWeightLimit = true;
+                    continue;
+                } 
+
+                // formerly 200, increased to 250 to account for the fact
+                // we are not adding the weights of the grand children to the
+                // tally.
+                if (maxWeight > 250 && !ignoreMaxWeightLimit) 
                     break;
             }
         }
@@ -669,6 +686,7 @@ public class ArticleTextExtractor {
         int weight = 0;
         Element caption = null;
         List<Element> pEls = new ArrayList<Element>(5);
+
         for (Element child : rootEl.children()) {
             String ownText = child.ownText();
             int ownTextLength = ownText.length();
@@ -682,7 +700,7 @@ public class ArticleTextExtractor {
             if (ownTextLength > 200){
                 int childOwnTextWeight = Math.max(50, ownTextLength / 10);
                 if(logEntries!=null)
-                    logEntries.add("\tOWN TEXT WEIGHT:" 
+                    logEntries.add("      CHILD TEXT WEIGHT:" 
                                    + String.format("%3d", childOwnTextWeight));
                 weight += childOwnTextWeight;
             }
@@ -706,6 +724,85 @@ public class ArticleTextExtractor {
                     caption = child;
             }
         }
+
+        //
+        // Visit grandchildren, This section visits the grandchildren 
+        // of the node and calculate their weights. Note that grandchildren
+        // weights are only worth 1/3 of children's
+        //
+        int grandChildrenWeight = 0;
+        int grandChildrenCount = 0;
+        for (Element child2 : rootEl.children()) {
+
+            if(logEntries!=null) {
+                logEntries.add("\t    CHILD TAG: " + child2.tagName());
+                //logEntries.add(child2.outerHtml());
+            }
+
+            // If the node looks negative don't include it in the weights
+            // instead penalize the grandparent. This is done to try to 
+            // avoid giving weigths to navigation nodes, etc.
+            if (NEGATIVE.matcher(child2.id()).find() || 
+                NEGATIVE.matcher(child2.className()).find()){
+                if(logEntries!=null){
+                    logEntries.add("\t  CHILD DISCARDED");
+                }
+                grandChildrenWeight-=30;
+                continue;
+            }
+
+            for (Element grandchild : child2.children()) {
+                int grandchildWeight = 0;
+                String ownText = grandchild.ownText();
+                int ownTextLength = ownText.length();
+                if (ownTextLength < 20)
+                    continue;
+
+                if(logEntries!=null) {
+                    logEntries.add("\t    GRANDCHILD TAG: " + grandchild.tagName());
+                    logEntries.add(grandchild.outerHtml());
+                }
+                grandChildrenCount+=1;
+
+                if (ownTextLength > 200){
+                    int childOwnTextWeight = Math.max(50, ownTextLength / 10);
+                    if(logEntries!=null)
+                        logEntries.add("    GRANDCHILD TEXT WEIGHT:" 
+                                       + String.format("%3d", childOwnTextWeight));
+                    grandchildWeight += childOwnTextWeight;
+                }
+
+                if (grandchild.tagName().equals("h1") || grandchild.tagName().equals("h2")) {
+                    int h2h1Weight = 30;
+                    grandchildWeight += h2h1Weight;
+                    if(logEntries!=null)
+                        logEntries.add("   GRANDCHILD H1/H2 WEIGHT:" 
+                                       + String.format("%3d", h2h1Weight));
+                } else if (grandchild.tagName().equals("div") || grandchild.tagName().equals("p")) {
+                    int calcChildWeight = calcWeightForChild(grandchild, ownText);
+                    grandchildWeight+=calcChildWeight;
+                    if(logEntries!=null)
+                        logEntries.add("   GRANDCHILD CHILD WEIGHT:" 
+                                       + String.format("%3d", calcChildWeight));
+                }
+
+                if(logEntries!=null)
+                    logEntries.add("\t GRANDCHILD WEIGHT:" 
+                                   + String.format("%3d", grandchildWeight));
+                grandChildrenWeight += grandchildWeight;
+            }
+        }
+
+        if (grandChildrenCount <= 0)
+            grandChildrenCount = 1;
+        grandChildrenWeight = grandChildrenWeight / 3;
+        if(logEntries!=null){
+            logEntries.add("\t  GRANDCHILDREN WEIGHT:" 
+                           + String.format("%3d", grandChildrenWeight));
+            logEntries.add("\t   GRANDCHILDREN COUNT:" 
+                           + String.format("%3d", grandChildrenCount));
+        }
+        weight+=grandChildrenWeight;
 
         // use caption and image
         if (caption != null){
@@ -792,6 +889,12 @@ public class ArticleTextExtractor {
         String style = e.attr("style");
         if (style != null && !style.isEmpty() && NEGATIVE_STYLE.matcher(style).find())
             weight -= 50;
+
+        String itemprop = e.attr("itemprop");
+        if (itemprop != null && !itemprop.isEmpty() && POSITIVE.matcher(itemprop).find()){
+            weight += 100;
+        }
+
         return weight;
     }
 
