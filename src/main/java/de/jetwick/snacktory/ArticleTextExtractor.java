@@ -59,6 +59,10 @@ public class ArticleTextExtractor {
 
 	private static final int MIN_AUTHOR_NAME_LENGTH = 4;
 
+    // For debugging
+    private static final boolean DEBUG_WEIGHTS = false;
+    private static final int MAX_LOG_LENGTH = 200;
+
     public ArticleTextExtractor() {
         setUnlikely("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
                 + "header|menu|re(mark|ply)|rss|sh(are|outbox)|sponsor"
@@ -133,7 +137,25 @@ public class ArticleTextExtractor {
 		Element bestMatchElement = null;
 		
         for (Element entry : nodes) {
-            int currentWeight = getWeight(entry, false);
+
+            LogEntries entries = null;
+            if (DEBUG_WEIGHTS)
+                entries = new LogEntries();
+            int currentWeight = getWeight(entry, false, entries);
+            if (DEBUG_WEIGHTS){
+                if(currentWeight>35){
+                    System.out.println("-------------------------------------------");
+                    System.out.println("         TAG: " + entry.tagName());
+                    entries.print();
+                    System.out.println("======================================");
+                    System.out.println("                  TOTAL WEIGHT:" 
+                                        + String.format("%3d", currentWeight));
+                    String outerHtml = entry.outerHtml();
+                    if (outerHtml.length() > MAX_LOG_LENGTH)
+                        outerHtml = outerHtml.substring(0, MAX_LOG_LENGTH);
+                    System.out.println(outerHtml);
+                }
+            }
             if (currentWeight > maxWeight) {
                 maxWeight = currentWeight;
                 bestMatchElement = entry;
@@ -608,10 +630,15 @@ public class ArticleTextExtractor {
      *
      * @param e Element to weight, along with child nodes
      */
-    protected int getWeight(Element e, boolean checkextra) {
+    protected int getWeight(Element e, boolean checkextra, LogEntries logEntries) {
         int weight = calcWeight(e);
-        weight += (int) Math.round(e.ownText().length() / 100.0 * 10);
-        weight += weightChildNodes(e);
+        if(logEntries!=null) logEntries.add("       ======>     BASE WEIGHT:" + String.format("%3d", weight));
+        int ownTextWeight = (int) Math.round(e.ownText().length() / 100.0 * 10);
+        weight+=ownTextWeight;
+        if(logEntries!=null) logEntries.add("       ======> OWN TEXT WEIGHT:" + String.format("%3d", ownTextWeight));
+        int childrenWeight = weightChildNodes(e, logEntries);
+        weight+=childrenWeight;
+        if(logEntries!=null) logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight));
 
         // add additional weight using possible 'extragravityscore' attribute
         if (checkextra) {
@@ -638,7 +665,7 @@ public class ArticleTextExtractor {
      *
      * @param rootEl Element, who's child nodes will be weighted
      */
-    protected int weightChildNodes(Element rootEl) {
+    protected int weightChildNodes(Element rootEl, LogEntries logEntries) {
         int weight = 0;
         Element caption = null;
         List<Element> pEls = new ArrayList<Element>(5);
@@ -648,17 +675,30 @@ public class ArticleTextExtractor {
             if (ownTextLength < 20)
                 continue;
 
-            if (ownTextLength > 200)
-                weight += Math.max(50, ownTextLength / 10);
+            if(logEntries!=null) {
+                logEntries.add("\t      CHILD TAG: " + child.tagName());
+            }
+
+            if (ownTextLength > 200){
+                int childOwnTextWeight = Math.max(50, ownTextLength / 10);
+                if(logEntries!=null)
+                    logEntries.add("\tOWN TEXT WEIGHT:" 
+                                   + String.format("%3d", childOwnTextWeight));
+                weight += childOwnTextWeight;
+            }
 
             if (child.tagName().equals("h1") || child.tagName().equals("h2")) {
-                weight += 30;
+                int h2h1Weight = 30;
+                weight += h2h1Weight;
+                if(logEntries!=null)
+                    logEntries.add("\t   H1/H2 WEIGHT:" 
+                                   + String.format("%3d", h2h1Weight));
             } else if (child.tagName().equals("div") || child.tagName().equals("p")) {
-                // Use the entire inner text as part of the weight calculation.
-                // This allow to better support the case when an article text
-                // is inside several levels deep of tags inside the main component.
-                String innerText = child.text();
-                weight += calcWeightForChild(child, innerText);
+                int calcChildWeight = calcWeightForChild(child, ownText);
+                weight+=calcChildWeight;
+                if(logEntries!=null)
+                    logEntries.add("\t   CHILD WEIGHT:" 
+                                   + String.format("%3d", calcChildWeight));
                 if (child.tagName().equals("p") && ownTextLength > 50)
                     pEls.add(child);
 
@@ -668,13 +708,22 @@ public class ArticleTextExtractor {
         }
 
         // use caption and image
-        if (caption != null)
-            weight += 30;
+        if (caption != null){
+            int captionWeight = 30;
+            weight+=captionWeight;
+            if(logEntries!=null)
+                logEntries.add("\t CAPTION WEIGHT:" 
+                               + String.format("%3d", captionWeight));
+        }
 
         if (pEls.size() >= 2) {
             for (Element subEl : rootEl.children()) {
                 if ("h1;h2;h3;h4;h5;h6".contains(subEl.tagName())) {
-                    weight += 20;
+                    int h1h2h3Weight = 20;
+                    weight += h1h2h3Weight;
+                    if(logEntries!=null)
+                        logEntries.add("  h1;h2;h3;h4;h5;h6 WEIGHT:" 
+                                       + String.format("%3d", h1h2h3Weight));
                     // headerEls.add(subEl);
                 } else if ("table;li;td;th".contains(subEl.tagName())) {
                     addScore(subEl, -30);
@@ -971,6 +1020,29 @@ public class ArticleTextExtractor {
         public int compare(ImageResult o1, ImageResult o2) {
             // Returns the highest weight first
             return o2.weight.compareTo(o1.weight);
+        }
+    }
+
+
+    /**
+    *   Helper class to keep track of log entries.
+    */
+    private class LogEntries {
+
+        List<String> entries;
+
+        public LogEntries(){
+            entries = new ArrayList();
+        }
+
+        public void add(String entry){
+            this.entries.add(entry);
+        }
+
+        public void print(){
+            for (String entry : this.entries) {
+                System.out.println(entry);
+            }
         }
     }
 }
