@@ -788,8 +788,14 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("marthastewartweddings.html")));
         assertEquals("Bridal Beauty Diaries: Lauren – Toning Up and Cutting Down", res.getTitle());
         assertTrue(res.getText(), res.getText().contains("Its “go” time. Approximately seven months until the big day"));
-        //assertTrue(res.getText(), res.getText().contains("my team became fascinated with Bad Pitch Blog"));
-        //assertTrue(res.getText(), res.getText().contains("I’m fairly certain there is no one nicer than Deirdre Breakenridge"));
+    }
+
+    @Test
+    public void testNotebookCheck() throws Exception {
+        // http://www.notebookcheck.com/UEbernahme-Microsoft-schluckt-Devices-und-Services-Sparte-von-Nokia.115522.0.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("notebookcheck.html")));
+        assertEquals("Übernahme: Microsoft schluckt Devices und Services Sparte von Nokia - Notebookcheck.com News", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Tschüss Nokia. Willkommen Microsoft. Die Übernahmen ist unter Dach und Fach"));
     }
 
     /**
