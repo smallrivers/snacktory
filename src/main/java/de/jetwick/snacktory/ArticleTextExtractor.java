@@ -760,7 +760,7 @@ public class ArticleTextExtractor {
 
                 if(logEntries!=null) {
                     logEntries.add("\t    GRANDCHILD TAG: " + grandchild.tagName());
-                    logEntries.add(grandchild.outerHtml());
+                    //logEntries.add(grandchild.outerHtml());
                 }
                 grandChildrenCount+=1;
 
@@ -860,7 +860,7 @@ public class ArticleTextExtractor {
         if (c > 5)
             val = -30;
         else
-            val = (int) Math.round(ownText.length() / 25.0);
+            val = (int) Math.round(ownText.length() / 35.0);
 
         addScore(child, val);
         return val;
@@ -872,7 +872,7 @@ public class ArticleTextExtractor {
             weight += 35;
 
         if (POSITIVE.matcher(e.id()).find())
-            weight += 40;
+            weight += 45;
 
         if (UNLIKELY.matcher(e.className()).find())
             weight -= 20;

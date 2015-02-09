@@ -798,6 +798,35 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("Tschüss Nokia. Willkommen Microsoft. Die Übernahmen ist unter Dach und Fach"));
     }
 
+    @Test
+    public void testPeople() throws Exception {
+        // http://www.people.com/article/ryan-seacrest-marriage-turning-40
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("people.html")));
+        assertEquals("Ryan Seacrest on Marriage: 'I Want What My Mom and Dad Have' - American Idol, Ryan Seacrest : People.com", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("There are those who are in denial about turning 40"));
+        assertFalse(res.getText(), res.getText().contains("Poppy Montgomery Drama Unforgettable Is Being Brought Back"));
+    }
+
+    @Test
+    public void testPeople2() throws Exception {
+        // http://www.people.com/article/truck-driver-rescues-family-burning-car-video
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("people2.html")));
+        System.out.println(res.getTitle());
+        assertEquals("Truck Driver Rescues Family in Burning Wreck : People.com", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("David Fredericksen was driving his semi truck along"));
+        assertFalse(res.getText(), res.getText().contains("How Water Helps with Weight Loss"));
+    }
+
+    @Test
+    public void testPeople3() throws Exception {
+        // http://www.people.com/article/pierce-brosnan-jimmy-fallon-goldeneye-007-n64
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("people3.html")));
+        System.out.println(res.getTitle());
+        assertEquals("Pierce Brosnan Plays Jimmy Fallon in 'GoldenEye 007' on 'Tonight Show' : People.com", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Just because you star in a video game, doesn't mean you'll be any good at it."));
+        assertFalse(res.getText(), res.getText().contains("How Water Helps with Weight Loss"));
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes
