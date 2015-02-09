@@ -811,7 +811,6 @@ public class ArticleTextExtractorTest {
     public void testPeople2() throws Exception {
         // http://www.people.com/article/truck-driver-rescues-family-burning-car-video
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("people2.html")));
-        System.out.println(res.getTitle());
         assertEquals("Truck Driver Rescues Family in Burning Wreck : People.com", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("David Fredericksen was driving his semi truck along"));
         assertFalse(res.getText(), res.getText().contains("How Water Helps with Weight Loss"));
@@ -821,10 +820,19 @@ public class ArticleTextExtractorTest {
     public void testPeople3() throws Exception {
         // http://www.people.com/article/pierce-brosnan-jimmy-fallon-goldeneye-007-n64
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("people3.html")));
-        System.out.println(res.getTitle());
         assertEquals("Pierce Brosnan Plays Jimmy Fallon in 'GoldenEye 007' on 'Tonight Show' : People.com", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Just because you star in a video game, doesn't mean you'll be any good at it."));
         assertFalse(res.getText(), res.getText().contains("How Water Helps with Weight Loss"));
+    }
+
+    @Test
+    public void testEntrepreneur() throws Exception {
+        // http://www.entrepreneur.com/article/237402
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("entrepreneur.html")));
+        assertEquals("7 Big Changes in the PR Landscape Every Business Should Know About", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("At least three times a week, I get emails from entrepreneurs or small-business owners asking for advice on public relations."));
+        assertEquals("Rebekah Iliff", res.getAuthorName());
+        assertEquals("Chief Strategy Officer for AirPR", res.getAuthorDescription());
     }
 
     /**

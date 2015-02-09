@@ -576,7 +576,16 @@ public class ArticleTextExtractor {
 		
 		if(authorName.equals(""))
 			return "";
-			
+
+        // Special case for entrepreneur.com
+        Elements matches = doc.select(".byline > .bio");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            return authorDesc;
+        }
+        
+
 		Elements nodes = doc.select(":containsOwn(" + authorName + ")");
 
 		Element bestMatch = getBestMatchElement(nodes);
