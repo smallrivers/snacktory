@@ -297,7 +297,6 @@ public class ArticleTextExtractorTest {
         // http://blog.talawah.net/2011/04/gavin-king-unviels-red-hats-top-secret.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("blogger.html")));
         assertTrue(res.getText(), res.getText().startsWith("Gavin King unveils Red Hat's Java killer"));
-//        assertTrue(res.getText(), res.getText().startsWith("Gavin King of Red Hat/Hibernate/Seam fame recently unveiled the top secret project that"));
         assertEquals("http://3.bp.blogspot.com/-cyMzveP3IvQ/TaR7f3qkYmI/AAAAAAAAAIk/mrChE-G0b5c/s200/Java.png", res.getImageUrl());
         assertEquals("The Brain Dump: Gavin King unveils Red Hat's Java killer successor: The Ceylon Project", res.getTitle());
         assertEquals("http://blog.talawah.net/feeds/posts/default?alt=rss", res.getRssUrl());
@@ -542,6 +541,7 @@ public class ArticleTextExtractorTest {
         assertTrue(article.getText(), article.getText().startsWith("FOR beleaguered smokers, the world is an increasingly"));
         assertEquals("http://www.economist.com/sites/default/files/images/articles/migrated/20110122_stp004.jpg",
                 article.getImageUrl());
+        assertFalse(article.getText(), article.getText().contains("Related topics"));
     }
 
     @Test
@@ -742,6 +742,97 @@ public class ArticleTextExtractorTest {
         assertEquals("../wp-content/uploads/2010/11/The-Gemmel-Family-Does-a-Gilligans-Island-Theme-Family-Reunion-Vacation-Sarah-Gemmel-300x225.jpg",
                 res.getImages().get(1).src);
         assertEquals("http://www.linkwithin.com/pixel.png", res.getImages().get(2).src);
+    }
+
+    @Test
+    public void testSearchEngineJournal() throws Exception {
+        // http://www.searchenginejournal.com/planning-progress-18-tips-successful-social-media-strategy/112567/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("searchenginejournal.html")));
+        assertEquals("18 Tips for a Successful Social Media Strategy", res.getTitle());
+        assertTrue(res.getText(), res.getText().contains("Sharam"));
+    }
+
+    @Test
+    public void testAdweek() throws Exception {
+        // http://www.adweek.com/prnewser/5-digital-data-metricstools-that-pr-pros-need-to-know/97735?red=pr
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("adweek.html")));
+        assertEquals("5 Digital Metrics/Tools That PR Pros Need to Know", res.getTitle());
+        assertTrue(res.getText(), res.getText().contains("Cision provides a proprietary"));
+        assertTrue(res.getText(), res.getText().contains("Moz’s Domain Authority."));
+        assertTrue(res.getText(), res.getText().contains("Google Authorship and Google Analytics."));
+    }
+
+    @Test
+    public void testSpinsucks() throws Exception {
+        // http://spinsucks.com/communication/2015-communications-trends/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("spinsucks.html")));
+        assertEquals("The Five Communications Trends for 2015 Spin Sucks", res.getTitle());
+        assertTrue(res.getText(), res.getText().contains("Conversion of media. Julie Hong, the community manager"));
+        assertTrue(res.getText(), res.getText().contains("Paid media affects traditional PR"));
+        assertTrue(res.getText(), res.getText().contains("Old ideas become new again. We’ve stopped doing things such as deskside briefings, large events, direct mail"));
+    }
+
+    @Test
+    public void testPRDaily() throws Exception {
+        // http://www.prdaily.com/Main/Articles/7_PR_blogs_worth_reading_17870.aspx
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("prdaily.html")));
+        assertEquals("7 PR blogs worth reading", res.getTitle());
+        assertTrue(res.getText(), res.getText().contains("I really love the way Rebekah"));
+        assertTrue(res.getText(), res.getText().contains("my team became fascinated with Bad Pitch Blog"));
+        assertTrue(res.getText(), res.getText().contains("I’m fairly certain there is no one nicer than Deirdre Breakenridge"));
+    }
+
+    @Test
+    public void testMarthaStewartWeddings() throws Exception {
+        // http://www.marthastewartweddings.com/363473/bridal-beauty-diaries-lauren-%25E2%2580%2593-toning-and-cutting-down
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("marthastewartweddings.html")));
+        assertEquals("Bridal Beauty Diaries: Lauren – Toning Up and Cutting Down", res.getTitle());
+        assertTrue(res.getText(), res.getText().contains("Its “go” time. Approximately seven months until the big day"));
+    }
+
+    @Test
+    public void testNotebookCheck() throws Exception {
+        // http://www.notebookcheck.com/UEbernahme-Microsoft-schluckt-Devices-und-Services-Sparte-von-Nokia.115522.0.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("notebookcheck.html")));
+        assertEquals("Übernahme: Microsoft schluckt Devices und Services Sparte von Nokia - Notebookcheck.com News", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Tschüss Nokia. Willkommen Microsoft. Die Übernahmen ist unter Dach und Fach"));
+    }
+
+    @Test
+    public void testPeople() throws Exception {
+        // http://www.people.com/article/ryan-seacrest-marriage-turning-40
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("people.html")));
+        assertEquals("Ryan Seacrest on Marriage: 'I Want What My Mom and Dad Have' - American Idol, Ryan Seacrest : People.com", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("There are those who are in denial about turning 40"));
+        assertFalse(res.getText(), res.getText().contains("Poppy Montgomery Drama Unforgettable Is Being Brought Back"));
+    }
+
+    @Test
+    public void testPeople2() throws Exception {
+        // http://www.people.com/article/truck-driver-rescues-family-burning-car-video
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("people2.html")));
+        assertEquals("Truck Driver Rescues Family in Burning Wreck : People.com", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("David Fredericksen was driving his semi truck along"));
+        assertFalse(res.getText(), res.getText().contains("How Water Helps with Weight Loss"));
+    }
+
+    @Test
+    public void testPeople3() throws Exception {
+        // http://www.people.com/article/pierce-brosnan-jimmy-fallon-goldeneye-007-n64
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("people3.html")));
+        assertEquals("Pierce Brosnan Plays Jimmy Fallon in 'GoldenEye 007' on 'Tonight Show' : People.com", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Just because you star in a video game, doesn't mean you'll be any good at it."));
+        assertFalse(res.getText(), res.getText().contains("How Water Helps with Weight Loss"));
+    }
+
+    @Test
+    public void testEntrepreneur() throws Exception {
+        // http://www.entrepreneur.com/article/237402
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("entrepreneur.html")));
+        assertEquals("7 Big Changes in the PR Landscape Every Business Should Know About", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("At least three times a week, I get emails from entrepreneurs or small-business owners asking for advice on public relations."));
+        assertEquals("Rebekah Iliff", res.getAuthorName());
+        assertEquals("Chief Strategy Officer for AirPR", res.getAuthorDescription());
     }
 
     /**

@@ -83,10 +83,13 @@ public class SHelperTest {
 
     @Test
     public void testFavicon() {
-        assertEquals("http://www.n24.de/news/../../../media/imageimport/images/content/favicon.ico",
-                SHelper.useDomainOfFirstArg4Second("http://www.n24.de/news/newsitem_6797232.html", "../../../media/imageimport/images/content/favicon.ico"));
-        SHelper.useDomainOfFirstArg4Second("http://www.n24.de/favicon.ico", "/favicon.ico");
-        SHelper.useDomainOfFirstArg4Second("http://www.n24.de/favicon.ico", "favicon.ico");
+        assertEquals("http://www.n24.de/../../media/imageimport/images/content/favicon.ico",
+                    SHelper.useDomainOfFirstArg4Second("http://www.n24.de/news/newsitem_6797232.html", 
+                                                       "../../../media/imageimport/images/content/favicon.ico"));
+        assertEquals("http://www.n24.de/favicon.ico",
+                    SHelper.useDomainOfFirstArg4Second("http://www.n24.de/favicon.ico", "/favicon.ico"));
+        assertEquals("http://www.n24.de/favicon.ico",
+                    SHelper.useDomainOfFirstArg4Second("http://www.n24.de/favicon.ico", "favicon.ico"));
     }
 
     @Test
@@ -99,6 +102,13 @@ public class SHelperTest {
     public void testImageProtocolRelative() throws Exception {
         assertEquals("http://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Greece.svg/150px-Flag_of_Greece.svg.png",
                 SHelper.useDomainOfFirstArg4Second("http://de.wikipedia.org/wiki/Griechenland", "//upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Greece.svg/150px-Flag_of_Greece.svg.png"));
+    }
+
+    @Test
+    public void testRelativeURL() throws Exception {
+        assertEquals("http://www.notebookcheck.com/fileadmin/_processed_/csm_NokiaDayOne_WithNokiaX_1600x540_EN_US_JPG_e01bbf05f0.jpg",
+                SHelper.useDomainOfFirstArg4Second("http://www.notebookcheck.com/UEbernahme-Microsoft-schluckt-Devices-und-Services-Sparte-von-Nokia.115522.0.html",
+                                                   "fileadmin/_processed_/csm_NokiaDayOne_WithNokiaX_1600x540_EN_US_JPG_e01bbf05f0.jpg"));
     }
 
     @Test
