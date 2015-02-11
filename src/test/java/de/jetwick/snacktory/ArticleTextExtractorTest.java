@@ -31,6 +31,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().endsWith("\"How Four Drinking Buddies Saved Brazil.\""));
         assertEquals("http://media.npr.org/assets/img/2010/10/04/real_wide.jpg?t=1286218782&s=3", res.getImageUrl());
         assertTrue(res.getKeywords().isEmpty());
+        assertEquals("Chana Joffe-Walt", res.getAuthorName());
     }
 
     @Test
@@ -65,6 +66,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Gadhafi asks Obama to end NATO bombing - CNN.com", res.getTitle());
         assertEquals("/2011/WORLD/africa/04/06/libya.war/t1larg.libyarebel.gi.jpg", res.getImageUrl());
         assertTrue("cnn:" + res.getText(), res.getText().startsWith("Tripoli, Libya (CNN) -- As rebel and pro-government forces in Libya maneuvered on the battlefield Wedn"));
+        assertEquals("By the CNN Wire Staff", res.getAuthorName());
     }
 
     @Test
@@ -74,6 +76,7 @@ public class ArticleTextExtractorTest {
         assertEquals("BBC News - Brazil mourns Santa Maria nightclub fire victims", res.getTitle());
         assertEquals("http://news.bbcimg.co.uk/media/images/65545000/gif/_65545798_brazil_santa_m_kiss_464.gif", res.getImageUrl());
         assertTrue(res.getText().startsWith("Brazil has declared three days of national mourning for 231 people killed in a nightclub fire in the southern city of Santa Maria."));
+        assertEquals("Caio Quero", res.getAuthorName());
     }
 
     @Test
@@ -83,6 +86,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Knight trading loss shows cracks in equity markets", res.getTitle());
         assertEquals("http://s1.reutersmedia.net/resources/r/?m=02&d=20120803&t=2&i=637797752&w=460&fh=&fw=&ll=&pl=&r=CBRE872074Y00", res.getImageUrl());
         assertTrue("reuters:" + res.getText(), res.getText().startsWith("(Reuters) - The software glitch that cost Knight Capital Group $440 million in just 45 minutes reveals the deep fault lines in stock markets that are increasingly dominated by sophisticated high-speed trading systems. But Wall Street firms and regulators have few easy solutions for such problems."));
+        assertEquals("Jed Horowitz and Joseph Menn", res.getAuthorName());
     }
 
     @Test
@@ -97,7 +101,6 @@ public class ArticleTextExtractorTest {
     public void testWordpress() throws Exception {
         // http://karussell.wordpress.com/
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wordpress.html")));
-//        System.out.println("wordpress:" + res.getText());
         assertEquals("Twitter API and Me « Find Time for the Karussell", res.getTitle());
         assertTrue("wordpress:" + res.getText(), res.getText().startsWith("I have a love hate relationship with Twitter. As a user I see "));
     }
@@ -106,11 +109,8 @@ public class ArticleTextExtractorTest {
     public void testFirefox() throws Exception {
         // http://www.golem.de/1104/82797.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("golem.html")));
-//        System.out.println("firefox:" + res.getText());
-//        assertTrue(res.getText(), res.getText().startsWith("Unter dem Namen \"Aurora\" hat Firefox einen"));
         assertTrue(res.getText(), res.getText().startsWith("Mozilla hat Firefox 5.0a2 veröffentlicht und zugleich eine erste Entwicklerversion von Firefox 6 freigegeben."));
         assertEquals("http://scr3.golem.de/screenshots/1104/Firefox-Aurora/thumb480/aurora-nighly-beta-logos.png", res.getImageUrl());
-//        assertEquals("http://www.golem.de/1104/82797-9183-i.png", res.getImageUrl());
         assertEquals("Mozilla: Vorabversionen von Firefox 5 und 6 veröffentlicht - Golem.de", res.getTitle());
     }
 
@@ -127,10 +127,9 @@ public class ArticleTextExtractorTest {
     public void testFAZ() throws Exception {
         // http://www.faz.net/s/Rub469C43057F8C437CACC2DE9ED41B7950/Doc~EBA775DE7201E46E0B0C5AD9619BD56E9~ATpl~Ecommon~Scontent.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("faz.html")));
-//        assertTrue(res.getText(), res.getText().startsWith("Im Gespräch: Umweltaktivist Stewart Brand"));
         assertTrue(res.getText(), res.getText().startsWith("Deutschland hat vor, ganz auf Atomkraft zu verzichten. Ist das eine gute"));
         assertEquals("/m/{5F104CCF-3B5A-4B4C-B83E-4774ECB29889}g225_4.jpg", res.getImageUrl());
-
+        assertEquals("FAZ Electronic Media", res.getAuthorName());
         assertEquals(Arrays.asList("Atomkraft", "Deutschland", "Jahren", "Atommüll", "Fukushima", "Problem", "Brand", "Kohle", "2011", "11",
                 "Stewart", "Atomdebatte", "Jahre", "Boden", "Treibhausgase", "April", "Welt", "Müll", "Radioaktivität",
                 "Gesamtbild", "Klimawandel", "Reaktoren", "Verzicht", "Scheinheiligkeit", "Leute", "Risiken", "Löcher",
@@ -152,8 +151,6 @@ public class ArticleTextExtractorTest {
     public void testJetwick() throws Exception {
         // http://jetwick.com
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("jetwick.html")));
-//        assertTrue(res.getText(), res.getText().startsWith("Search twitter without noise"));
-//        assertEquals("img/yourkit.png", res.getImageUrl());
         assertEquals(Arrays.asList("news", "twitter", "search", "jetwick"), res.getKeywords());
     }
 
@@ -163,20 +160,18 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("vimeo.html")));
         assertTrue(res.getText(), res.getText().startsWith("1 month ago 1 month ago: Fri, Mar 11, 2011 2:24am EST (Eastern Standard Time) See all Show me 1. finn. & Dirk von Lowtzow"));
         assertTrue(res.getTitle(), res.getTitle().startsWith("finn. & Dirk von Lowtzow \"CRYING IN THE RAIN\""));
-//        assertEquals("http://b.vimeocdn.com/ts/134/104/134104048_200.jpg", res.getImageUrl());
         assertEquals("", res.getVideoUrl());
         assertEquals(Arrays.asList("finn", "finn.", "Dirk von Lowtzow", "crying in the rain", "I wish I was someone else", "Tocotronic",
                 "Sunday Service", "Indigo", "Patrick Zimmer", "Patrick Zimmer aka finn.", "video", "video sharing",
                 "digital cameras", "videoblog", "vidblog", "video blogging", "home video", "home movie"),
                 res.getKeywords());
+        assertEquals("finn.", res.getAuthorName());
     }
 
     @Test
     public void testYoutube() throws Exception {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("youtube.html")));
-//        assertTrue(res.getText(), res.getText().startsWith("The makers of doom used remixed version of real metal songs for many"));
         assertTrue(res.getText(), res.getText().startsWith("Master of the Puppets by Metallica. Converted to 8 bit with GSXCC. Original verson can be found us"));
-
         assertEquals("YouTube - Metallica - Master of the Puppets 8-bit", res.getTitle());
         assertEquals("http://i4.ytimg.com/vi/wlupmjrfaB4/default.jpg", res.getImageUrl());
         assertEquals("http://www.youtube.com/v/wlupmjrfaB4?version=3", res.getVideoUrl());
@@ -192,14 +187,8 @@ public class ArticleTextExtractorTest {
     public void testGithub() throws Exception {
         // https://github.com/ifesdjeen/jReadability
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("github.html")));
-//        System.out.println("github:" + res.getText());
-//        assertTrue(res.getText().isEmpty());
         assertTrue(res.getDescription(), res.getDescription().startsWith("Article text extractor from given HTML text"));
-
-        // this would be awsome:
         assertTrue(res.getText(), res.getText().startsWith("= jReadability This is a small helper utility (only 130 lines of code) for pepole"));
-        // this would be not good:
-//        assertTrue(res.getText(), res.getText().startsWith("ifesdjeen / jReadability Admin Watch Unwatch Fork Where do you want to for"));
     }
 
     @Test
@@ -240,10 +229,10 @@ public class ArticleTextExtractorTest {
     public void testTechcrunch() throws Exception {
         // http://techcrunch.com/2011/04/04/twitter-advanced-search/
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("techcrunch.html")));
-//        System.out.println("techcrunch:" + res.getTitle());        
-        assertEquals("http://tctechcrunch.files.wordpress.com/2011/04/screen-shot-2011-04-04-at-12-11-36-pm.png?w=285&h=85", res.getImageUrl());
+        assertEquals("http://tctechcrunch2011.files.wordpress.com/2011/04/screen-shot-2011-04-04-at-12-11-36-pm.png?w=285&h=85", res.getImageUrl());
         assertEquals("Twitter Finally Brings Advanced Search Out Of Purgatory; Updates Discovery Algorithms", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("A couple weeks ago, we wrote a post wishing Twitter a happy fifth birthday, but also noting "));
+        assertEquals("MG Siegler", res.getAuthorName());
     }
 
     @Test
@@ -253,6 +242,8 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("Editorial: Android's problem isn't fragmentation, it's contamination This thought was first given voice by Myriam Joire on last night's Mobile Podcast, and the"));
         assertEquals("http://www.blogcdn.com/www.engadget.com/media/2011/04/11x0409mnbvhg_thumbnail.jpg", res.getImageUrl());
         assertEquals("Editorial: Android's problem isn't fragmentation, it's contamination -- Engadget", res.getTitle());
+        // TODO: Fix author extraction.
+        //assertEquals("Vlad Savov", res.getAuthorName());
     }
 
     @Test
@@ -261,7 +252,6 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("twitter.html")));
         assertEquals("Twitter Engineering: Twitter Search is Now 3x Faster", res.getTitle());
         assertEquals("http://4.bp.blogspot.com/-CmXJmr9UAbA/TZy6AsT72fI/AAAAAAAAAAs/aaF5AEzC-e4/s72-c/Blender_Tsunami.jpg", res.getImageUrl());
-//        assertEquals("http://4.bp.blogspot.com/-CmXJmr9UAbA/TZy6AsT72fI/AAAAAAAAAAs/aaF5AEzC-e4/s400/Blender_Tsunami.jpg", res.getImageUrl());
         assertTrue("twitter:" + res.getText(), res.getText().startsWith("In the spring of 2010, the search team at Twitter started to rewrite our search engine in order to serve our ever-growin"));
     }
 
@@ -271,7 +261,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("taz.html")));
         assertTrue("taz:" + res.getText(), res.getText().startsWith("Absolute Minderheit: Im Shiba-Park in Tokio treffen sich jetzt jeden Sonntag die Atomkraftgegner. Sie blicken neidisch auf die Anti-AKW-Bewegung in Deutschland. "));
         assertEquals("Protestkultur in Japan nach der Katastrophe: Anti-Atomkraft? Nein danke! - taz.de", res.getTitle());
-//        assertEquals("http://www.taz.de/uploads/hp_taz_img/full/antiakwprotestjapandapd.20110410-19.jpg", res.getImageUrl());
+        assertEquals("Georg Blume", res.getAuthorName());
     }
 
     @Test
@@ -300,6 +290,7 @@ public class ArticleTextExtractorTest {
         assertEquals("http://3.bp.blogspot.com/-cyMzveP3IvQ/TaR7f3qkYmI/AAAAAAAAAIk/mrChE-G0b5c/s200/Java.png", res.getImageUrl());
         assertEquals("The Brain Dump: Gavin King unveils Red Hat's Java killer successor: The Ceylon Project", res.getTitle());
         assertEquals("http://blog.talawah.net/feeds/posts/default?alt=rss", res.getRssUrl());
+        assertEquals("Marc Richards", res.getAuthorName());
     }
 
     @Test
@@ -309,56 +300,61 @@ public class ArticleTextExtractorTest {
         assertEquals("http://graphics8.nytimes.com/images/2011/04/12/business/dbpix-raj-rajaratnam-1302571800091/dbpix-raj-rajaratnam-1302571800091-tmagSF.jpg",
                 res.getImageUrl());
         assertTrue(res.getText(), res.getText().startsWith("I wouldn’t want to be Raj Rajaratnam’s lawyer right now."));
+        assertEquals("Andrew Ross Sorkin", res.getAuthorName());
     }
 
     @Test
     public void testHuffingtonpost() throws Exception {
-        // "http://www.huffingtonpost.com/2010/08/13/federal-reserve-pursuing_n_681540.html";        
+        // http://www.huffingtonpost.com/2010/08/13/federal-reserve-pursuing_n_681540.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("huffingtonpost.html")));
         assertEquals("Federal Reserve's Low Rate Policy Is A 'Dangerous Gamble,' Says Top Central Bank Official", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("A top regional Federal Reserve official sharply"));
         assertEquals("http://i.huffpost.com/gen/157611/thumbs/s-FED-large.jpg", res.getImageUrl());
+        assertEquals("Shahien Nasiripour", res.getAuthorName());
     }
 
     @Test
     public void testTechcrunch2() throws Exception {
-        //String url = "http://techcrunch.com/2010/08/13/gantto-takes-on-microsoft-project-with-web-based-project-management-application/";
+        // http://techcrunch.com/2010/08/13/gantto-takes-on-microsoft-project-with-web-based-project-management-application/
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("techcrunch2.html")));
         assertEquals("Gantto Takes On Microsoft Project With Web-Based Project Management Application", article.getTitle());
         assertTrue(article.getText(), article.getText().startsWith("Y Combinator-backed Gantto is launching"));
-        assertEquals("http://tctechcrunch.files.wordpress.com/2010/08/gantto.jpg", article.getImageUrl());
+        assertEquals("http://i0.wp.com/tctechcrunch2011.files.wordpress.com/2010/08/gantto.jpg?resize=680%2C680", article.getImageUrl());
+        assertEquals("Leena Rao", article.getAuthorName());
     }
 
     @Test
     public void testCnn2() throws Exception {
-        //String url = "http://www.cnn.com/2010/POLITICS/08/13/democrats.social.security/index.html";
+        // http://www.cnn.com/2010/POLITICS/08/13/democrats.social.security/index.html
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cnn2.html")));
         assertEquals("Democrats to use Social Security against GOP this fall - CNN.com", article.getTitle());
         assertTrue(article.getText(), article.getText().startsWith("Washington (CNN) -- Democrats pledged "));
         assertEquals(article.getImageUrl(), "http://i.cdn.turner.com/cnn/2010/POLITICS/08/13/democrats.social.security/story.kaine.gi.jpg");
+        assertEquals("Ed Hornick", article.getAuthorName());
     }
 
     @Test
     public void testBusinessweek2() throws Exception {
-        //String url = "http://www.businessweek.com/magazine/content/10_34/b4192048613870.htm";
+        // http://www.businessweek.com/magazine/content/10_34/b4192048613870.htm
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("businessweek2.html")));
         assertTrue(article.getText(), article.getText().startsWith("There's discord on Wall Street: Strategists at major American investment "));
         assertEquals("http://images.businessweek.com/mz/covers/current_120x160.jpg", article.getImageUrl());
+        assertEquals("Whitney Kisling,Caroline Dye", article.getAuthorName());
     }
 
     @Test
     public void testFoxnews() throws Exception {
-        //String url = "http://www.foxnews.com/politics/2010/08/14/russias-nuclear-help-iran-stirs-questions-improved-relations/";
+        // http://www.foxnews.com/politics/2010/08/14/russias-nuclear-help-iran-stirs-questions-improved-relations/
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("foxnews.html")));
         assertTrue("Foxnews:" + article.getText(), article.getText().startsWith("Apr. 8: President Obama signs the New START treaty with Russian President Dmitry Medvedev at the Prague Castle. Russia's announcement "));
         assertEquals("http://a57.foxnews.com/static/managed/img/Politics/397/224/startsign.jpg", article.getImageUrl());
+        assertEquals("", article.getAuthorName());
     }
 
     @Test
     public void testStackoverflow() throws Exception {
-        //String url = "http://stackoverflow.com/questions/3553693/wicket-vs-vaadin/3660938";
+        // http://stackoverflow.com/questions/3553693/wicket-vs-vaadin/3660938
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("stackoverflow.html")));
-//        assertTrue("stackoverflow:" + article.getText(), article.getText().startsWith("Hi, Am torn between wicket and vaadin. i am starting a micro-isv"));
         assertTrue("stackoverflow:" + article.getText(), article.getText().startsWith("I think I've invested some time for both frameworks. I really like bo"));
         assertEquals("java - wicket vs Vaadin - Stack Overflow", article.getTitle());
         assertEquals("", article.getImageUrl());
@@ -366,7 +362,7 @@ public class ArticleTextExtractorTest {
 
     @Test
     public void testAolnews() throws Exception {
-        //String url = "http://www.aolnews.com/nation/article/the-few-the-proud-the-marines-getting-a-makeover/19592478";
+        // http://www.aolnews.com/nation/article/the-few-the-proud-the-marines-getting-a-makeover/19592478
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("aolnews.html")));
         assertEquals("http://o.aolcdn.com/art/ch_news/aol_favicon.ico", article.getFaviconUrl());
         assertTrue(article.getText(), article.getText().startsWith("WASHINGTON (Aug. 13) -- Declaring \"the maritime soul of the Marine Corps"));
@@ -378,23 +374,25 @@ public class ArticleTextExtractorTest {
 
     @Test
     public void testWallstreetjournal() throws Exception {
-        //String url = "http://online.wsj.com/article/SB10001424052748704532204575397061414483040.html";
+        // http://online.wsj.com/article/SB10001424052748704532204575397061414483040.html
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wsj.html")));
         assertTrue(article.getText(), article.getText().startsWith("The Obama administration has paid out less than a third of the nearly $230 billion"));
         assertEquals("http://si.wsj.net/public/resources/images/OB-JO747_stimul_D_20100814113803.jpg", article.getImageUrl());
+        assertEquals("LOUISE RADNOFSKY", article.getAuthorName());
     }
 
     @Test
     public void testUsatoday() throws Exception {
-        //String url = "http://content.usatoday.com/communities/thehuddle/post/2010/08/brett-favre-practices-set-to-speak-about-return-to-minnesota-vikings/1";
+        // http://content.usatoday.com/communities/thehuddle/post/2010/08/brett-favre-practices-set-to-speak-about-return-to-minnesota-vikings/1
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("usatoday.html")));
         assertTrue(article.getText(), article.getText().startsWith("Brett Favre couldn't get away from the"));
         assertEquals("http://i.usatoday.net/communitymanager/_photos/the-huddle/2010/08/18/favrespeaksx-inset-community.jpg", article.getImageUrl());
+        assertEquals("Sean Leahy", article.getAuthorName());
     }
 
     @Test
     public void testUsatoday2() throws Exception {
-        //String url = "http://content.usatoday.com/communities/driveon/post/2010/08/gm-finally-files-for-ipo/1";
+        // http://content.usatoday.com/communities/driveon/post/2010/08/gm-finally-files-for-ipo/1
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("usatoday2.html")));
         assertTrue(article.getText(), article.getText().startsWith("General Motors just filed with the Securities and Exchange "));
         assertEquals("http://i.usatoday.net/communitymanager/_photos/drive-on/2010/08/18/cruzex-wide-community.jpg", article.getImageUrl());
@@ -402,7 +400,7 @@ public class ArticleTextExtractorTest {
 
     @Test
     public void testEspn() throws Exception {
-        //String url = "http://sports.espn.go.com/espn/commentary/news/story?id=5461430";
+        // http://sports.espn.go.com/espn/commentary/news/story?id=5461430
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("espn.html")));
         assertTrue(article.getText(), article.getText().startsWith("If you believe what college football coaches have said about sports"));
         assertEquals("http://a.espncdn.com/photo/2010/0813/ncf_i_mpouncey1_300.jpg", article.getImageUrl());
@@ -410,28 +408,29 @@ public class ArticleTextExtractorTest {
 
     @Test
     public void testGizmodo() throws Exception {
-        //String url = "http://www.gizmodo.com.au/2010/08/xbox-kinect-gets-its-fight-club/";
+        // http://www.gizmodo.com.au/2010/08/xbox-kinect-gets-its-fight-club/
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("gizmodo.html")));
         assertTrue(article.getText(), article.getText().startsWith("You love to punch your arms through the air"));
-        assertEquals("", article.getImageUrl());
+        assertEquals("http://cache.gawkerassets.com/assets/images/9/2010/08/500x_fighters_uncaged__screenshot_4b__rider.jpg", article.getImageUrl());
+        // author tested in juicer.
     }
 
     @Test
     public void testEngadget2() throws Exception {
-        //String url = "http://www.engadget.com/2010/08/18/verizon-fios-set-top-boxes-getting-a-new-hd-guide-external-stor/";
+        // http://www.engadget.com/2010/08/18/verizon-fios-set-top-boxes-getting-a-new-hd-guide-external-stor/
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("engadget2.html")));
         assertTrue(article.getText(), article.getText().startsWith("Verizon FiOS set-top boxes getting a new HD guide"));
-//        assertTrue(article.getText(), article.getText().startsWith("Streaming and downloading TV content to mobiles is nice"));
         assertEquals("http://www.blogcdn.com/www.engadget.com/media/2010/08/44ni600_thumbnail.jpg", article.getImageUrl());
     }
 
     @Test
     public void testWired() throws Exception {
-        //String url = "http://www.wired.com/playbook/2010/08/stress-hormones-boxing/";
+        // http://www.wired.com/playbook/2010/08/stress-hormones-boxing/
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wired.html")));
         assertTrue(article.getText(), article.getText().startsWith("On November 25, 1980, professional boxing"));
         assertEquals("Stress Hormones Could Predict Boxing Dominance", article.getTitle());
         assertEquals("http://www.wired.com/playbook/wp-content/uploads/2010/08/fight_f-660x441.jpg", article.getImageUrl());
+        assertEquals("Brian Mossop", article.getAuthorName());
     }
 
     @Test
@@ -823,6 +822,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Pierce Brosnan Plays Jimmy Fallon in 'GoldenEye 007' on 'Tonight Show' : People.com", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Just because you star in a video game, doesn't mean you'll be any good at it."));
         assertFalse(res.getText(), res.getText().contains("How Water Helps with Weight Loss"));
+        assertEquals("Alex Heigl", res.getAuthorName());
     }
 
     @Test
@@ -833,6 +833,16 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("At least three times a week, I get emails from entrepreneurs or small-business owners asking for advice on public relations."));
         assertEquals("Rebekah Iliff", res.getAuthorName());
         assertEquals("Chief Strategy Officer for AirPR", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testHuffingtonpostAuthor() throws Exception {
+        // http://www.huffingtonpost.com/rebekah-iliff/millions-of-consumers-aba_b_5269051.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("huffingtonpost2.html")));
+        assertEquals("Millions of Consumers Abandon Hashtag for Backslash ", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("In a special Silicon Valley \"Tech Report,\" sources confirmed Monday that millions of "));
+        assertEquals("Rebekah Iliff", res.getAuthorName());
+        assertEquals("Chief Strategy Officer, AirPR", res.getAuthorDescription());
     }
 
     /**
