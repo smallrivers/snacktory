@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import java.util.Date;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -57,7 +58,10 @@ public class ArticleTextExtractor {
     private static final OutputFormatter DEFAULT_FORMATTER = new OutputFormatter();
     private OutputFormatter formatter = DEFAULT_FORMATTER;
 
-	private static final int MIN_AUTHOR_NAME_LENGTH = 4;
+    private static final int MIN_AUTHOR_NAME_LENGTH = 4;
+    private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
+        Pattern.compile("By\\S*(.*)[\\.,].*")
+    );
 
     // For debugging
     private static final boolean DEBUG_WEIGHTS = false;
@@ -526,7 +530,7 @@ public class ArticleTextExtractor {
 				try{
                     // build up a set of elements which have likely author-related terms
                     // .X searches for class X
-					Elements matches = doc.select(".byLineTag,.byline,.author,.by,.writer,.address");
+					Elements matches = doc.select("a[rel=author],.byline-name,.byLineTag,.byline,.author,.by,.writer,.address");
 
 					if(matches == null || matches.size() == 0){
 						matches = doc.select("body [class*=author]");
@@ -541,17 +545,22 @@ public class ArticleTextExtractor {
 						matches = doc.select(".staff_info dl a[href]");
 					}
 
+                    // a hack for http://sports.espn.go.com/
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("cite[class*=source]");
+                    }
+
                     // select the best element from them
-					if(matches != null){				
+					if(matches != null){
 						Element bestMatch = getBestMatchElement(matches);
 
 						if(!(bestMatch == null))
 						{
-							authorName = bestMatch.ownText();
+							authorName = bestMatch.text();
 							
 							if(authorName.length() < MIN_AUTHOR_NAME_LENGTH){
-								authorName = bestMatch.text();	
-							}							
+								authorName = bestMatch.text();
+							}
 							
 							authorName = SHelper.innerTrim(IGNORE_AUTHOR_PARTS.matcher(authorName).replaceAll(""));
 							
@@ -560,12 +569,21 @@ public class ArticleTextExtractor {
 							}
 						}
 					}
-				}				
+				}
 				catch(Exception e){
 					System.out.println(e.toString());
-				}	
+				}
 			}
 		}
+
+        for (Pattern pattern : CLEAN_AUTHOR_PATTERNS) {
+            Matcher matcher = pattern.matcher(authorName);
+            if(matcher.matches()){
+                authorName = SHelper.innerTrim(matcher.group(1));
+                break;
+            }
+        }
+
         return authorName;
     }
 	
@@ -585,6 +603,13 @@ public class ArticleTextExtractor {
             return authorDesc;
         }
         
+        // Special case for huffingtonpost.com
+        matches = doc.select(".byline span[class*=teaser]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            return authorDesc;
+        }
 
 		Elements nodes = doc.select(":containsOwn(" + authorName + ")");
 
