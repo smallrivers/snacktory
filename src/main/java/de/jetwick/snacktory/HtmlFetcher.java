@@ -263,7 +263,11 @@ public class HtmlFetcher {
         } else if (SHelper.isImage(lowerUrl)) {
             result.setImageUrl(url);
         } else {
-            extractor.extractContent(result, fetchAsString(url, timeout));
+            try {
+                extractor.extractContent(result, fetchAsString(url, timeout));
+            } catch (IOException io){
+                // do nothing
+            }
             if (result.getFaviconUrl().isEmpty())
                 result.setFaviconUrl(SHelper.getDefaultFavicon(url));
 
