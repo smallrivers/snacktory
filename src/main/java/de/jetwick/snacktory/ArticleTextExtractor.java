@@ -172,13 +172,13 @@ public class ArticleTextExtractor {
     protected String extractTitle(Document doc) {
         String title = cleanTitle(doc.title());
         if (title.isEmpty()) {
-            title = SHelper.innerTrim(doc.select("head title").text());
+            title = SHelper.innerTrim(doc.select("head meta[property=og:title]").attr("content"));
             if (title.isEmpty()) {
-                title = SHelper.innerTrim(doc.select("head meta[name=title]").attr("content"));
+                title = SHelper.innerTrim(doc.select("head meta[name=twitter:title]").attr("content"));
                 if (title.isEmpty()) {
-                    title = SHelper.innerTrim(doc.select("head meta[property=og:title]").attr("content"));
+                    title = SHelper.innerTrim(doc.select("head title").text());
                     if (title.isEmpty()) {
-                        title = SHelper.innerTrim(doc.select("head meta[name=twitter:title]").attr("content"));
+                        title = SHelper.innerTrim(doc.select("head meta[name=title]").attr("content"));
                     }
                 }
             }
