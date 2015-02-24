@@ -351,15 +351,17 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             if (el.hasAttr("content")) {
                 dateStr = el.attr("content");
-                
-                if (dateStr.endsWith("Z")) {
-                    dateStr = dateStr.substring(0, dateStr.length() - 1) + "GMT-00:00";
-                } else {
-                    dateStr = "%sGMT%s".format(dateStr.substring(0, dateStr.length() - 6), 
-                                               dateStr.substring(dateStr.length() - 6, 
-                                                                 dateStr.length()));
-                }
-
+                try {
+                    if (dateStr.endsWith("Z")) {
+                        dateStr = dateStr.substring(0, dateStr.length() - 1) + "GMT-00:00";
+                    } else {
+                        dateStr = "%sGMT%s".format(dateStr.substring(0, dateStr.length() - 6), 
+                                                   dateStr.substring(dateStr.length() - 6, 
+                                                                     dateStr.length()));
+                    }
+                } catch(StringIndexOutOfBoundsException ex) {
+                    // do nothing
+                } 
                 return parseDate(dateStr);
             }
         } 
