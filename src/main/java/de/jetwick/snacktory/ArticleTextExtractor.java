@@ -17,6 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.jsoup.select.Selector.SelectorParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.commons.lang.time.*;
@@ -611,15 +612,17 @@ public class ArticleTextExtractor {
             return authorDesc;
         }
 
-		Elements nodes = doc.select(":containsOwn(" + authorName + ")");
+        try {
+            Elements nodes = doc.select(":containsOwn(" + authorName + ")");
+            Element bestMatch = getBestMatchElement(nodes);
+            if (bestMatch != null)
+                authorDesc = bestMatch.text();
+        } catch(SelectorParseException se){
+            // Avoid error when selector is invalid
+        }
 
-		Element bestMatch = getBestMatchElement(nodes);
-		
-		if (bestMatch != null)
-			authorDesc = bestMatch.text();
-			
-		return authorDesc;
-	}
+        return authorDesc;
+    }
 
     protected Collection<String> extractKeywords(Document doc) {
         String content = SHelper.innerTrim(doc.select("head meta[name=keywords]").attr("content"));
