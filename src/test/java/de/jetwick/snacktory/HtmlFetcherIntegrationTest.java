@@ -89,7 +89,7 @@ public class HtmlFetcherIntegrationTest {
 
     @Test
     public void testFurther() throws Exception {
-        JResult res = new HtmlFetcher().fetchAndExtract("https://linksunten.indymedia.org/de/node/41619?utm_source=twitterfeed&utm_medium=twitter", 10000, true);
+        JResult res = new HtmlFetcher().fetchAndExtract("http://linksunten.indymedia.org/de/node/41619?utm_source=twitterfeed&utm_medium=twitter", 10000, true);
         assertTrue(res.getText(), res.getText().startsWith("Es gibt kein ruhiges Hinterland! Schon wieder den "));
     }
 
