@@ -58,7 +58,7 @@ public class ArticleTextExtractorTest {
     public void testCNN() throws Exception {
         // http://edition.cnn.com/2011/WORLD/africa/04/06/libya.war/index.html?on.cnn=1
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cnn.html")));
-        assertEquals("Gadhafi asks Obama to end NATO bombing - CNN.com", res.getTitle());
+        assertEquals("Gadhafi asks Obama to end NATO bombing", res.getTitle());
         assertEquals("/2011/WORLD/africa/04/06/libya.war/t1larg.libyarebel.gi.jpg", res.getImageUrl());
         assertTrue("cnn:" + res.getText(), res.getText().startsWith("Tripoli, Libya (CNN) -- As rebel and pro-government forces in Libya maneuvered on the battlefield Wedn"));
     }
@@ -67,7 +67,7 @@ public class ArticleTextExtractorTest {
     public void testBBC() throws Exception {
         // http://www.bbc.co.uk/news/world-latin-america-21226565
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("bbc_noscript.html")));
-        assertEquals("BBC News - Brazil mourns Santa Maria nightclub fire victims", res.getTitle());
+        assertEquals("Brazil mourns nightclub fire dead", res.getTitle());
         assertEquals("http://news.bbcimg.co.uk/media/images/65545000/gif/_65545798_brazil_santa_m_kiss_464.gif", res.getImageUrl());
         assertTrue(res.getText().startsWith("Brazil has declared three days of national mourning for 231 people killed in a nightclub fire in the southern city of Santa Maria."));
     }
@@ -85,7 +85,7 @@ public class ArticleTextExtractorTest {
     public void testBBCNoCSS() throws Exception {
         // http://www.bbc.co.uk/news/magazine-21206964
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("bbc_nocss.html")));
-        assertEquals("BBC News - Digital artists inspired by the GIF's resurgence", res.getTitle());
+        assertEquals("Digital artists inspired by the GIF's resurgence", res.getTitle());
         assertEquals("http://news.bbcimg.co.uk/media/images/65563000/jpg/_65563005_65562996.jpg", res.getImageUrl());
         assertTrue("bbc no css:" + res.getText(), res.getText().startsWith("They were created in the late-1980s, but recent years have seen a resurgence in popularity of GIF animated files."));
     }
@@ -148,7 +148,7 @@ public class ArticleTextExtractorTest {
         // http://en.rian.ru/world/20110410/163458489.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("rian.html")));
         assertTrue(res.getText(), res.getText().startsWith("About 15,000 people took to the streets in Tokyo on Sunday to protest against th"));
-        assertEquals("Japanese rally against nuclear power industry | World", res.getTitle());
+        assertEquals("Japanese rally against nuclear power industry", res.getTitle());
         assertEquals("/favicon.ico", res.getFaviconUrl());
         assertTrue(res.getKeywords().isEmpty());
     }
@@ -182,7 +182,7 @@ public class ArticleTextExtractorTest {
 //        assertTrue(res.getText(), res.getText().startsWith("The makers of doom used remixed version of real metal songs for many"));
         assertTrue(res.getText(), res.getText().startsWith("Master of the Puppets by Metallica. Converted to 8 bit with GSXCC. Original verson can be found us"));
 
-        assertEquals("YouTube - Metallica - Master of the Puppets 8-bit", res.getTitle());
+        assertEquals("Metallica - Master of the Puppets 8-bit", res.getTitle());
         assertEquals("http://i4.ytimg.com/vi/wlupmjrfaB4/default.jpg", res.getImageUrl());
         assertEquals("http://www.youtube.com/v/wlupmjrfaB4?version=3", res.getVideoUrl());
     }
@@ -247,10 +247,10 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("techcrunch.html")));
 //        System.out.println("techcrunch:" + res.getTitle());        
         assertEquals("http://tctechcrunch.files.wordpress.com/2011/04/screen-shot-2011-04-04-at-12-11-36-pm.png?w=285&h=85", res.getImageUrl());
-        assertEquals("Twitter Finally Brings Advanced Search Out Of Purgatory; Updates Discovery Algorithms", res.getTitle());
+        assertEquals("Twitter Finally Brings Advanced Search Out Of Purgatory; Updates Discovery Algorithms", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("A couple weeks ago, we wrote a post wishing Twitter a happy fifth birthday, but also noting "));
     }
-
+    
     @Test
     public void testEngadget() throws Exception {
         // http://www.engadget.com/2011/04/09/editorial-androids-problem-isnt-fragmentation-its-contamina/
@@ -330,7 +330,7 @@ public class ArticleTextExtractorTest {
     public void testTechcrunch2() throws Exception {
         //String url = "http://techcrunch.com/2010/08/13/gantto-takes-on-microsoft-project-with-web-based-project-management-application/";
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("techcrunch2.html")));
-        assertEquals("Gantto Takes On Microsoft Project With Web-Based Project Management Application", article.getTitle());
+        assertEquals("Gantto Takes On Microsoft Project With Web-Based Project Management Application", article.getTitle());
         assertTrue(article.getText(), article.getText().startsWith("Y Combinator-backed Gantto is launching"));
         assertEquals("http://tctechcrunch.files.wordpress.com/2010/08/gantto.jpg", article.getImageUrl());
     }
@@ -445,7 +445,7 @@ public class ArticleTextExtractorTest {
         //String url = "http://www.wired.com/playbook/2010/08/stress-hormones-boxing/";
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wired.html")));
         assertTrue(article.getText(), article.getText().startsWith("On November 25, 1980, professional boxing"));
-        assertEquals("Stress Hormones Could Predict Boxing Dominance", article.getTitle());
+        assertEquals("» Stress Hormones Could Predict Boxing Dominance", article.getTitle());
         assertEquals("http://www.wired.com/playbook/wp-content/uploads/2010/08/fight_f-660x441.jpg", article.getImageUrl());
     }
 
@@ -537,7 +537,7 @@ public class ArticleTextExtractorTest {
         assertTrue(article.getText(), article.getText().startsWith("ALAMEDA, Calif. — The Oakland Raiders informed coach Tom Cable on Tuesday that they will not bring him back"));
         assertEquals("http://dy.snimg.com/story-image/0/69/174475/14072-650-366.jpg",
                 article.getImageUrl());
-        assertEquals("Raiders cut ties with Cable - NFL - Sporting News", article.getTitle());
+        assertEquals("Raiders cut ties with Cable", article.getTitle());
     }
 
     @Test

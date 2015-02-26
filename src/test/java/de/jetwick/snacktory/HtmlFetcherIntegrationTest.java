@@ -67,18 +67,17 @@ public class HtmlFetcherIntegrationTest {
 
     @Test
     public void testEncoding() throws Exception {
-        JResult res = new HtmlFetcher().fetchAndExtract("http://www.yomiuri.co.jp/science/20140401-OYT1T50144.html", 10000, true);
-        assertEquals("承服できない・悪意ない…小保方晴子氏コメント：科学：読売新聞（YOMIURI ONLINE）", res.getTitle());
+        JResult res = new HtmlFetcher().fetchAndExtract("http://www.yomiuri.co.jp/science/", 10000, true);
+        assertEquals("科学 : 読売新聞（YOMIURI ONLINE）", res.getTitle());
     }
 
     @Test
     public void testHashbang() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://www.facebook.com/democracynow", 10000, true);
-        assertTrue(res.getTitle(), res.getTitle().startsWith("Democracy Now! "));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Democracy Now!"));
 
- // not available anymore
- //       res = new HtmlFetcher().fetchAndExtract("http://twitter.com/#!/th61/status/57141697720745984", 10000, true);
- //       assertTrue(res.getTitle(), res.getTitle().startsWith("Twitter / TH61: “@AntiAtomPiraten:"));
+        res = new HtmlFetcher().fetchAndExtract("http://twitter.com/#!/th61/status/57141697720745984", 10000, true);
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Tatjana Hoenich on Twitter"));
     }
 
     public void testImage() throws Exception {
@@ -97,12 +96,12 @@ public class HtmlFetcherIntegrationTest {
     @Test
     public void testDoubleResolve() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://t.co/eZRKcEYI", 10000, true);
-        assertTrue(res.getTitle(), res.getTitle().startsWith("teleject/Responsive-Web-Design-Artboards "));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("teleject/Responsive-Web-Design-Artboards"));
     }
 
     @Test
     public void testXml() throws Exception {
-        String str = new HtmlFetcher().fetchAsString("http://karussell.wordpress.com/feed/", 10000);
+        String str = new HtmlFetcher().fetchAsString("http://www.feedforall.com/sample.xml", 10000);
         assertTrue(str, str.startsWith("<?xml version="));
     }
 }
