@@ -845,6 +845,14 @@ public class ArticleTextExtractorTest {
         assertEquals("Chief Strategy Officer, AirPR", res.getAuthorDescription());
     }
 
+    @Test
+    public void testAllVoices() throws Exception {
+        // http://www.allvoices.com/article/17660716
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("allvoices.html")));
+        assertEquals("Marchex exec: Lead generation moving away from 'faceless transactions'", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Driven by the surge in mobile, lead generation"));
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes
