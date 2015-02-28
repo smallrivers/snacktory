@@ -373,6 +373,7 @@ public class HtmlFetcher {
                 // Add support for URLs with multiple levels of redirection,
                 // call getResolvedUrl until there is no more redirects or a
                 // max number of redirects is reached.
+                newUrl = SHelper.useDomainOfFirstArg4Second(urlAsString, newUrl);
                 newUrl = getResolvedUrl(newUrl, timeout, num_redirects+1);
                 return newUrl;
             } else

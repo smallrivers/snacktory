@@ -290,6 +290,9 @@ public class ArticleTextExtractor {
                     title = SHelper.innerTrim(doc.select("head meta[property=og:title]").attr("content"));
                     if (title.isEmpty()) {
                         title = SHelper.innerTrim(doc.select("head meta[name=twitter:title]").attr("content"));
+                        if (title.isEmpty()) {
+                            title = SHelper.innerTrim(doc.select("h1:first-of-type").text());
+                        }
                     }
                 }
             }
