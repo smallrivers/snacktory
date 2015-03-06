@@ -16,11 +16,14 @@
 package de.jetwick.snacktory;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Parsed result from web page containing important title, text and image.
- * 
+ *
  * @author Peter Karich
  */
 public class JResult implements Serializable {
@@ -36,11 +39,13 @@ public class JResult implements Serializable {
     private String faviconUrl;
     private String description;
     private String dateString;
+    private List<String> textList;
     private Collection<String> keywords;
-    
+    private List<ImageResult> images = null;
+
     public JResult() {
     }
-    
+
     public String getUrl() {
         if (url == null)
             return "";
@@ -62,12 +67,12 @@ public class JResult implements Serializable {
     }
 
     public JResult setCanonicalUrl(String canonicalUrl) {
-      this.canonicalUrl = canonicalUrl;
-      return this;
+        this.canonicalUrl = canonicalUrl;
+        return this;
     }
 
     public String getCanonicalUrl() {
-      return canonicalUrl;
+        return canonicalUrl;
     }
 
     public String getFaviconUrl() {
@@ -81,16 +86,16 @@ public class JResult implements Serializable {
         return this;
     }
 
-    public JResult setRssUrl(String rssUrl) {        
+    public JResult setRssUrl(String rssUrl) {
         this.rssUrl = rssUrl;
         return this;
     }
 
     public String getRssUrl() {
-        if(rssUrl == null)
+        if (rssUrl == null)
             return "";
         return rssUrl;
-    }        
+    }
 
     public String getDescription() {
         if (description == null)
@@ -114,7 +119,7 @@ public class JResult implements Serializable {
         return this;
     }
 
-    public String getText() {        
+    public String getText() {
         if (text == null)
             return "";
 
@@ -123,6 +128,17 @@ public class JResult implements Serializable {
 
     public JResult setText(String text) {
         this.text = text;
+        return this;
+    }
+
+    public List<String> getTextList() {
+        if(this.textList == null)
+            return new ArrayList<String>();
+        return this.textList;
+    }
+
+    public JResult setTextList(List<String> textList) {
+        this.textList = textList;
         return this;
     }
 
@@ -167,7 +183,32 @@ public class JResult implements Serializable {
     public String getDate() {
         return dateString;
     }
-    
+
+    /**
+     * @return images list
+     */
+    public List<ImageResult> getImages() {
+        if (images == null)
+            return Collections.emptyList();
+        return images;
+    }
+
+    /**
+     * @return images count
+     */
+    public int getImagesCount() {
+        if (images == null)
+            return 0;
+        return images.size();
+    }
+
+    /**
+     * set images list
+     */
+    public void setImages(List<ImageResult> images) {
+        this.images = images;
+    }
+
     @Override
     public String toString() {
         return "title:" + getTitle() + " imageUrl:" + getImageUrl() + " text:" + text;

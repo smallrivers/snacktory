@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,13 +73,14 @@ public class HtmlFetcher {
         }
         reader.close();
     }
-    private String referrer = "http://jetsli.de/crawler";
-    private String userAgent = "Mozilla/5.0 (compatible; Jetslide; +" + referrer + ")";
+    private String referrer = "https://github.com/karussell/snacktory";
+    private String userAgent = "Mozilla/5.0 (compatible; Snacktory; +" + referrer + ")";
     private String cacheControl = "max-age=0";
     private String language = "en-us";
     private String accept = "application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
     private String charset = "UTF-8";
     private SCache cache;
+    private Proxy proxy = null;
     private AtomicInteger cacheCounter = new AtomicInteger(0);
     private int maxTextLength = -1;
     private ArticleTextExtractor extractor = new ArticleTextExtractor();
@@ -200,6 +202,18 @@ public class HtmlFetcher {
         return charset;
     }
 
+    public void setProxy(Proxy proxy) {
+        this.proxy = proxy;
+    }
+
+    public Proxy getProxy() {
+        return (proxy != null ? proxy : Proxy.NO_PROXY);
+    }
+
+    public boolean isProxySet() {
+        return getProxy() != null;
+    }
+
     public JResult fetchAndExtract(String url, int timeout, boolean resolve) throws Exception {
         String originalUrl = url;
         url = SHelper.removeHashbang(url);
@@ -302,7 +316,7 @@ public class HtmlFetcher {
             throws MalformedURLException, IOException {
         HttpURLConnection hConn = createUrlConnection(urlAsString, timeout, includeSomeGooseOptions);
         hConn.setInstanceFollowRedirects(true);
-        String encoding = hConn.getContentEncoding();
+        String encoding = hConn.getContentEncoding();        
         InputStream is;
         if (encoding != null && encoding.equalsIgnoreCase("gzip")) {
             is = new GZIPInputStream(hConn.getInputStream());
@@ -328,8 +342,8 @@ public class HtmlFetcher {
      * http://developers.sun.com/mobility/reference/techart/design_guidelines/http_redirection.html
      *
      * @param timeout Sets a specified timeout value, in milliseconds
-     * @return the resolved url if any. Or null if it couldn't resolve the url (within the specified
-     * time) or the same url if response code is OK
+     * @return the resolved url if any. Or null if it couldn't resolve the url
+     * (within the specified time) or the same url if response code is OK
      */
     public String getResolvedUrl(String urlAsString, int timeout) {
         String newUrl = null;
@@ -363,7 +377,7 @@ public class HtmlFetcher {
                 return urlAsString;
 
         } catch (Exception ex) {
-            logger.warn("getResolvedUrl:" + urlAsString + " Error:" + ex.getMessage());
+            logger.warn("getResolvedUrl:" + urlAsString + " Error:" + ex.getMessage(), ex);
             return "";
         } finally {
             if (logger.isDebugEnabled())
@@ -372,8 +386,9 @@ public class HtmlFetcher {
     }
 
     /**
-     * Takes a URI that was decoded as ISO-8859-1 and applies percent-encoding to non-ASCII
-     * characters. Workaround for broken origin servers that send UTF-8 in the Location: header.
+     * Takes a URI that was decoded as ISO-8859-1 and applies percent-encoding
+     * to non-ASCII characters. Workaround for broken origin servers that send
+     * UTF-8 in the Location: header.
      */
     static String encodeUriFromHeader(String badLocation) {
         StringBuilder sb = new StringBuilder();
@@ -394,7 +409,8 @@ public class HtmlFetcher {
             boolean includeSomeGooseOptions) throws MalformedURLException, IOException {
         URL url = new URL(urlAsStr);
         //using proxy may increase latency
-        HttpURLConnection hConn = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
+        Proxy proxy = getProxy();
+        HttpURLConnection hConn = (HttpURLConnection) url.openConnection(proxy);
         hConn.setRequestProperty("User-Agent", userAgent);
         hConn.setRequestProperty("Accept", accept);
 
@@ -404,8 +420,8 @@ public class HtmlFetcher {
             hConn.addRequestProperty("Referer", referrer);
             // avoid the cache for testing purposes only?
             hConn.setRequestProperty("Cache-Control", cacheControl);
-        }        
-        
+        }
+
         // suggest respond to be gzipped or deflated (which is just another compression)
         // http://stackoverflow.com/q/3932117
         hConn.setRequestProperty("Accept-Encoding", "gzip, deflate");

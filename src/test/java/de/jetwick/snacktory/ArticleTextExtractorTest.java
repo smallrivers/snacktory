@@ -3,10 +3,16 @@ package de.jetwick.snacktory;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * @author Alex P, (ifesdjeen from jreadability)
+ * @author Peter Karich
+ */
 public class ArticleTextExtractorTest {
 
     ArticleTextExtractor extractor;
@@ -62,7 +68,7 @@ public class ArticleTextExtractorTest {
         assertEquals("/2011/WORLD/africa/04/06/libya.war/t1larg.libyarebel.gi.jpg", res.getImageUrl());
         assertTrue("cnn:" + res.getText(), res.getText().startsWith("Tripoli, Libya (CNN) -- As rebel and pro-government forces in Libya maneuvered on the battlefield Wedn"));
     }
-    
+
     @Test
     public void testBBC() throws Exception {
         // http://www.bbc.co.uk/news/world-latin-america-21226565
@@ -725,9 +731,53 @@ public class ArticleTextExtractorTest {
         assertEquals("aaa bbb ccc", res.getText());
     }
 
+    @Test
+    public void testI4Online() throws Exception {
+        //https://i4online.com
+        JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("i4online.html")));
+        assertTrue(article.getText(), article.getText().startsWith("Just one week to go and everything is set for the summer Forum 2013"));
+
+        ArticleTextExtractor extractor2 = new ArticleTextExtractor();
+        OutputFormatter outputFormater = new OutputFormatter(10);
+        outputFormater.setNodesToKeepCssSelector("p,h1,h2,h3,h4,h5,h6");
+        extractor2.setOutputFormatter(outputFormater);
+        article = extractor2.extractContent(c.streamToString(getClass().getResourceAsStream("i4online.html")));
+        assertTrue(article.getText(), article.getText().startsWith("Upcoming events: Forum 79 Just one week to go and everything is set for the summer Forum 2013"));
+    }
+
+    @Test
+    public void testImagesList() throws Exception {
+        // http://www.reuters.com/article/2012/08/03/us-knightcapital-trading-technology-idUSBRE87203X20120803
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("reuters.html")));
+        assertEquals(1, res.getImagesCount());
+        assertEquals(res.getImageUrl(), res.getImages().get(0).src);
+        assertEquals("http://s1.reutersmedia.net/resources/r/?m=02&d=20120803&t=2&i=637797752&w=460&fh=&fw=&ll=&pl=&r=CBRE872074Y00",
+                res.getImages().get(0).src);
+
+        // http://thevacationgals.com/vacation-rental-homes-are-a-family-reunion-necessity/
+        res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("thevacationgals.html")));
+        assertEquals(3, res.getImagesCount());
+        assertEquals("http://thevacationgals.com/wp-content/uploads/2010/11/Gemmel-Family-Reunion-at-a-Vacation-Rental-Home1-300x225.jpg",
+                res.getImages().get(0).src);
+        assertEquals("../wp-content/uploads/2010/11/The-Gemmel-Family-Does-a-Gilligans-Island-Theme-Family-Reunion-Vacation-Sarah-Gemmel-300x225.jpg",
+                res.getImages().get(1).src);
+        assertEquals("http://www.linkwithin.com/pixel.png", res.getImages().get(2).src);
+    }
+
+    @Test
+    public void testTextList() throws Exception {
+        JResult res = extractor.extractContent(readFileAsString("test_data/1.html"));
+        String text = res.getText();
+        List<String> textList = res.getTextList();
+        assertEquals(23, textList.size());
+        assertTrue(textList.get(0).startsWith(text.substring(0, 15)));
+        assertTrue(textList.get(22).endsWith(text.substring(text.length() - 15, text.length())));
+    }
+
     /**
-     * @param filePath the name of the file to open. Not sure if it can accept URLs or just
-     * filenames. Path handling could be better, and buffer sizes are hardcoded
+     * @param filePath the name of the file to open. Not sure if it can accept
+     * URLs or just filenames. Path handling could be better, and buffer sizes
+     * are hardcoded
      */
     public static String readFileAsString(String filePath)
             throws java.io.IOException {

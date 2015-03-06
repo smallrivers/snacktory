@@ -57,14 +57,12 @@ public class HtmlFetcherIntegrationTest {
 //        JResult res = new HtmlFetcher().fetchAndExtract("http://bit.ly/eZPI1c", 10000, true);
 //        assertEquals("12 Minuten Battlefield 3 Gameplay - ohne Facebook-Bedingungen | Spaß und Spiele", res.getTitle());
 //    }
-
     // not available anymore
 //    @Test
 //    public void testTwitpicGzipDoesNOTwork() throws Exception {
 //        JResult res = new HtmlFetcher().fetchAndExtract("http://twitpic.com/4kuem8", 12000, true);
 //        assertTrue(res.getText(), res.getText().contains("*Not* what you want to see"));
 //    }
-
     @Test
     public void testEncoding() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://www.yomiuri.co.jp/science/", 10000, true);

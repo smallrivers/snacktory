@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -14,8 +15,8 @@ import org.jsoup.nodes.TextNode;
  * @author goose | jim
  * @author karussell
  *
- * this class will be responsible for taking our top node and stripping out junk we don't want and
- * getting it ready for how we want it presented to the user
+ * this class will be responsible for taking our top node and stripping out junk
+ * we don't want and getting it ready for how we want it presented to the user
  */
 public class OutputFormatter {
 
@@ -24,6 +25,7 @@ public class OutputFormatter {
     private Pattern unlikelyPattern = Pattern.compile("display\\:none|visibility\\:hidden");
     protected final int minParagraphText;
     protected final List<String> nodesToReplace;
+    protected String nodesToKeepCssSelector = "p";
 
     public OutputFormatter() {
         this(MIN_PARAGRAPH_TEXT, NODES_TO_REPLACE);
@@ -39,12 +41,19 @@ public class OutputFormatter {
     }
 
     /**
+     * set elements to keep in output text
+     */
+    public void setNodesToKeepCssSelector(String nodesToKeepCssSelector) {
+        this.nodesToKeepCssSelector = nodesToKeepCssSelector;
+    }
+
+    /**
      * takes an element and turns the P tags into \n\n
      */
     public String getFormattedText(Element topNode) {
         removeNodesWithNegativeScores(topNode);
         StringBuilder sb = new StringBuilder();
-        append(topNode, sb, "p");
+        append(topNode, sb, nodesToKeepCssSelector);
         String str = SHelper.innerTrim(sb.toString());
         if (str.length() > 100)
             return str;
@@ -59,7 +68,21 @@ public class OutputFormatter {
     }
 
     /**
-     * If there are elements inside our top node that have a negative gravity score remove them
+     * Takes an element and returns a list of texts extracted from the P tags
+     */
+    public List<String> getTextList(Element topNode) {
+        List<String> texts = new ArrayList<String>();
+        for(Element element : topNode.select(this.nodesToKeepCssSelector)) {
+            if(element.hasText()) {
+                texts.add(element.text());
+            }
+        }
+        return texts;
+    }
+
+    /**
+     * If there are elements inside our top node that have a negative gravity
+     * score remove them
      */
     protected void removeNodesWithNegativeScores(Element topNode) {
         Elements gravityItems = topNode.select("*[gravityScore]");
