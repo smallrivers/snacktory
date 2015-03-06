@@ -5,7 +5,7 @@
 
     <groupId>org.clojars.smallrivers</groupId>
     <artifactId>snacktory</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <packaging>jar</packaging>
 
     <name>Snacktory</name>
@@ -26,7 +26,7 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.7.3</version>
+            <version>1.8.1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
