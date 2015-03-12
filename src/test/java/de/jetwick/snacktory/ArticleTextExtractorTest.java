@@ -861,6 +861,30 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("Coca Cola announced that it will not be spending"));
     }
 
+    @Test
+    public void testHuffingtonpostAuthorDesc() throws Exception {
+        // http://www.huffingtonpost.com/2015/03/10/bruce-miller-san-francisco-49ers-domestic-violence_n_6836416.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("huffingtonpost3.html")));
+        assertEquals("San Francisco 49ers Fullback Bruce Miller Arrested On Domestic Violence Charges", res.getTitle());
+        assertEquals("", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testPRnewswireAuthorDesc() throws Exception {
+        // www.prnewswire.com/news-releases/tableau-to-present-at-upcoming-investor-conferences-300039248.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("prnewswire.html")));
+        assertEquals("Tableau to Present at Upcoming Investor Conferences -- SEATTLE, Feb. 24, 2015 /PRNewswire/ --", res.getTitle());
+        assertEquals("", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testTrendkraftAuthorDesc() throws Exception {
+        // http://www.trendkraft.de/it-software/freigegeben-und-ab-sofort-verfuegbar-die-sechste-generation-des-ecm-systems-windream/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("trendkraft_de.html")));
+        assertEquals("Freigegeben und ab sofort verfügbar: die sechste Generation des ECM-Systems windream", res.getTitle());
+        assertTrue(res.getAuthorDescription(), res.getAuthorDescription().length() == 1000);
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes

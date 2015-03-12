@@ -46,7 +46,7 @@ public class ArticleTextExtractor {
     private Pattern NEGATIVE;
     private static final Pattern NEGATIVE_STYLE =
             Pattern.compile("hidden|display: ?none|font-size: ?small");
-	private static final Pattern IGNORE_AUTHOR_PARTS =
+    private static final Pattern IGNORE_AUTHOR_PARTS =
         Pattern.compile("by|name|author|posted|twitter|handle|news", Pattern.CASE_INSENSITIVE);
     private static final Set<String> IGNORED_TITLE_PARTS = new LinkedHashSet<String>() {
         {
@@ -185,9 +185,9 @@ public class ArticleTextExtractor {
                     break;
             }
         }
-		
-		return bestMatchElement;
-	}
+
+        return bestMatchElement;
+    }
 
     // main workhorse
     public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, Boolean extractimages) throws Exception {
@@ -277,7 +277,25 @@ public class ArticleTextExtractor {
         res.setVideoUrl(extractVideoUrl(doc));
         res.setFaviconUrl(extractFaviconUrl(doc));
         res.setKeywords(extractKeywords(doc));
+
+        // Sanity checks in author description.
+        String authorDescSnippet = getSnippet(res.getAuthorDescription());
+        if (getSnippet(res.getText()).equals(authorDescSnippet) || 
+             getSnippet(res.getDescription()).equals(authorDescSnippet)) {
+            res.setAuthorDescription("");
+        } else {
+            if (res.getAuthorDescription().length() > 1000){
+                res.setAuthorDescription(res.getAuthorDescription().substring(0, 1000));
+            }
+        }
         return res;
+    }
+
+    private static String getSnippet(String data){
+        if (data.length() < 50)
+            return data;
+        else
+            return data.substring(0, 50);
     }
 
     protected String extractTitle(Document doc) {
@@ -592,14 +610,14 @@ public class ArticleTextExtractor {
 
         return authorName;
     }
-	
-	// Returns the author description or null
-	protected String extractAuthorDescription(Document doc, String authorName){
-		
-		String authorDesc = "";
-		
-		if(authorName.equals(""))
-			return "";
+
+    // Returns the author description or null
+    protected String extractAuthorDescription(Document doc, String authorName){
+
+        String authorDesc = "";
+
+        if(authorName.equals(""))
+            return "";
 
         // Special case for entrepreneur.com
         Elements matches = doc.select(".byline > .bio");
