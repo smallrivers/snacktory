@@ -78,7 +78,7 @@ public class HtmlFetcherIntegrationTest {
     @Test
     public void testHashbang() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://www.facebook.com/democracynow", 10000, true);
-        assertTrue(res.getTitle(), res.getTitle().startsWith("Democracy Now! "));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Democracy Now!"));
 
         // not available anymore
         //       res = new HtmlFetcher().fetchAndExtract("http://twitter.com/#!/th61/status/57141697720745984", 10000, true);
