@@ -877,6 +877,14 @@ public class ArticleTextExtractorTest {
         assertEquals("", res.getAuthorDescription());
     }
 
+    @Test
+    public void testTrendkraftAuthorDesc() throws Exception {
+        // http://www.trendkraft.de/it-software/freigegeben-und-ab-sofort-verfuegbar-die-sechste-generation-des-ecm-systems-windream/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("trendkraft_de.html")));
+        assertEquals("Freigegeben und ab sofort verfügbar: die sechste Generation des ECM-Systems windream", res.getTitle());
+        assertTrue(res.getAuthorDescription(), res.getAuthorDescription().length() == 1000);
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes

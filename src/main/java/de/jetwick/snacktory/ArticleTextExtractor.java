@@ -283,6 +283,10 @@ public class ArticleTextExtractor {
         if (getSnippet(res.getText()).equals(authorDescSnippet) || 
              getSnippet(res.getDescription()).equals(authorDescSnippet)) {
             res.setAuthorDescription("");
+        } else {
+            if (res.getAuthorDescription().length() > 1000){
+                res.setAuthorDescription(res.getAuthorDescription().substring(0, 1000));
+            }
         }
         return res;
     }
