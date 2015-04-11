@@ -548,6 +548,9 @@ public class ArticleTextExtractor {
             if (authorName.isEmpty()) {  // for "opengraph"
                 authorName = SHelper.innerTrim(doc.select("head meta[property=article:author]").attr("content"));
             }
+            if (authorName.isEmpty()) { // OpenGraph twitter:creator tag
+            	authorName = SHelper.innerTrim(doc.select("head meta[property=twitter:creator]").attr("content"));
+            }
             if (authorName.isEmpty()) {  // for "schema.org creativework"
                 authorName = SHelper.innerTrim(doc.select("meta[itemprop=author], span[itemprop=author]").attr("content"));
             }
