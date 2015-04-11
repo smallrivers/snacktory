@@ -198,6 +198,9 @@ public class ArticleTextExtractor {
         res.setTitle(extractTitle(doc));
         res.setDescription(extractDescription(doc));
         res.setCanonicalUrl(extractCanonicalUrl(doc));
+		res.setType(extractType(doc));
+		res.setSitename(extractSitename(doc));
+		res.setLanguage(extractLanguage(doc));
 
         // get author information
         res.setAuthorName(extractAuthorName(doc));
@@ -545,6 +548,9 @@ public class ArticleTextExtractor {
             if (authorName.isEmpty()) {  // for "opengraph"
                 authorName = SHelper.innerTrim(doc.select("head meta[property=article:author]").attr("content"));
             }
+            if (authorName.isEmpty()) { // OpenGraph twitter:creator tag
+            	authorName = SHelper.innerTrim(doc.select("head meta[property=twitter:creator]").attr("content"));
+            }
             if (authorName.isEmpty()) {  // for "schema.org creativework"
                 authorName = SHelper.innerTrim(doc.select("meta[itemprop=author], span[itemprop=author]").attr("content"));
             }
@@ -698,6 +704,39 @@ public class ArticleTextExtractor {
         }
         return faviconUrl;
     }
+    	
+    protected String extractType(Document doc) {
+        String type = cleanTitle(doc.title());
+        type = SHelper.innerTrim(doc.select("head meta[property=og:type]").attr("content"));
+        return type;
+    }
+
+    protected String extractSitename(Document doc) {
+        String sitename = SHelper.innerTrim(doc.select("head meta[property=og:site_name]").attr("content"));
+        if (sitename.isEmpty()) {
+        	sitename = SHelper.innerTrim(doc.select("head meta[name=twitter:site]").attr("content"));
+        }
+		if (sitename.isEmpty()) {
+			sitename = SHelper.innerTrim(doc.select("head meta[property=og:site_name]").attr("content"));
+		}
+        return sitename;
+    }
+
+	protected String extractLanguage(Document doc) {
+		String language = SHelper.innerTrim(doc.select("head meta[property=language]").attr("content"));
+	    if (language.isEmpty()) {
+	    	language = SHelper.innerTrim(doc.select("html").attr("lang"));
+	    	if (language.isEmpty()) {
+				language = SHelper.innerTrim(doc.select("head meta[property=og:locale]").attr("content"));
+	    	}
+	    }
+	    if (!language.isEmpty()) {
+			if (language.length()>2) {
+				language = language.substring(0,2);
+			}
+		}
+	    return language;
+	}
 
     /**
      * Weights current element. By matching it with positive candidates and
