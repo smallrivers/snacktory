@@ -48,6 +48,9 @@ public class JResult implements Serializable {
     private Collection<String> keywords;
     private List<ImageResult> images = null;
     private List<Map<String,String>> links = new ArrayList<Map<String,String>>();
+    private String type;
+    private String sitename;
+    private String language;
 
     public JResult() {
     }
@@ -239,6 +242,30 @@ public class JResult implements Serializable {
             return Collections.emptyList();
         return links;
     }
+    
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getSitename() {
+		return sitename;
+	}
+
+	public void setSitename(String sitename) {
+		this.sitename = sitename;
+	}
+	
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
     @Override
     public String toString() {
