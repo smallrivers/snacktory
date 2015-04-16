@@ -885,6 +885,15 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getAuthorDescription(), res.getAuthorDescription().length() == 1000);
     }
 
+    @Test
+    public void testLimitSize() throws Exception {
+        // https://medium.com/@nathanbruinooge/a-travelogue-of-india-7b1f3aa62a19
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("medium.html")), 1000);
+        assertEquals("A Travelogue of India — Medium", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Schipol Airport in 2012 looks nothing like Schipol Airport in the Eighties"));
+        assertTrue("Should be less than 1000", res.getText().length() <= 1000);
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes

@@ -120,20 +120,29 @@ public class ArticleTextExtractor {
      * with improper HTML, although jSoup should be able to handle minor stuff.
      * @returns extracted article, all HTML tags stripped
      */
+    public JResult extractContent(String html, int maxContentSize) throws Exception {
+        return extractContent(new JResult(), html, maxContentSize);
+    }
+
     public JResult extractContent(String html) throws Exception {
-        return extractContent(new JResult(), html);
+        return extractContent(new JResult(), html, 0);
+    }
+
+    public JResult extractContent(JResult res, String html, int maxContentSize) throws Exception {
+        return extractContent(res, html, formatter, true, maxContentSize);
     }
 
     public JResult extractContent(JResult res, String html) throws Exception {
-        return extractContent(res, html, formatter, true);
+        return extractContent(res, html, formatter, true, 0);
     }
 
-    public JResult extractContent(JResult res, String html, OutputFormatter formatter, Boolean extractimages) throws Exception {
+    public JResult extractContent(JResult res, String html, OutputFormatter formatter, 
+                                  Boolean extractimages, int maxContentSize) throws Exception {
         if (html.isEmpty())
             throw new IllegalArgumentException("html string is empty!?");
 
         // http://jsoup.org/cookbook/extracting-data/selector-syntax
-        return extractContent(res, Jsoup.parse(html), formatter, extractimages);
+        return extractContent(res, Jsoup.parse(html), formatter, extractimages, maxContentSize);
     }
 
     // Returns the best node match based on the weights (see getWeight for strategy)
@@ -190,7 +199,8 @@ public class ArticleTextExtractor {
     }
 
     // main workhorse
-    public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, Boolean extractimages) throws Exception {
+    public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, 
+                                  Boolean extractimages, int maxContentSize) throws Exception {
         if (doc == null)
             throw new NullPointerException("missing document");
 
@@ -252,6 +262,11 @@ public class ArticleTextExtractor {
             text = removeTitleFromText(text, res.getTitle());
             // this fails for short facebook post and probably tweets: text.length() > res.getDescription().length()
             if (text.length() > res.getTitle().length()) {
+                if (maxContentSize > 0){
+                    if (text.length() > maxContentSize){
+                        text = utf8truncate(text, maxContentSize);
+                    }
+                }
                 res.setText(text);
                 //                print("best element:", bestMatchElement);
             }
@@ -1209,6 +1224,42 @@ public class ArticleTextExtractor {
 
         return SHelper.innerTrim(res.toString());
     }
+
+    /**
+     * Truncate a Java string so that its UTF-8 representation will not 
+     * exceed the specified number of bytes.
+     *
+     * For discussion of why you might want to do this, see
+     * http://lpar.ath0.com/2011/06/07/unicode-alchemy-with-db2/
+     */
+    public static String utf8truncate(String input, int length) {
+      StringBuffer result = new StringBuffer(length);
+      int resultlen = 0;
+      for (int i = 0; i < input.length(); i++) {
+        char c = input.charAt(i);
+        int charlen = 0;
+        if (c <= 0x7f) {
+          charlen = 1;
+        } else if (c <= 0x7ff) {
+          charlen = 2;
+        } else if (c <= 0xd7ff) {
+          charlen = 3;
+        } else if (c <= 0xdbff) {
+          charlen = 4;
+        } else if (c <= 0xdfff) {
+          charlen = 0;
+        } else if (c <= 0xffff) {
+          charlen = 3;
+        }
+        if (resultlen + charlen > length) {
+          break;
+        }
+        result.append(c);
+        resultlen += charlen;
+      }
+      return result.toString();
+    }
+
 
     /**
      * Comparator for Image by weight

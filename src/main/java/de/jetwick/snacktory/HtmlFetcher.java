@@ -200,8 +200,12 @@ public class HtmlFetcher {
         return charset;
     }
 
-    // main workhorse to call externally
     public JResult fetchAndExtract(String url, int timeout, boolean resolve) throws Exception {
+        return fetchAndExtract(url, timeout, resolve, 0);
+    }
+
+    // main workhorse to call externally
+    public JResult fetchAndExtract(String url, int timeout, boolean resolve, int maxContentSize) throws Exception {
         String originalUrl = url;
         url = SHelper.removeHashbang(url);
         String gUrl = SHelper.getUrlFromUglyGoogleRedirect(url);
@@ -264,7 +268,7 @@ public class HtmlFetcher {
             result.setImageUrl(url);
         } else {
             try {
-                extractor.extractContent(result, fetchAsString(url, timeout));
+                extractor.extractContent(result, fetchAsString(url, timeout), maxContentSize);
             } catch (IOException io){
                 // do nothing
             }
