@@ -69,10 +69,12 @@ public class HtmlFetcherIntegrationTest {
 //        JResult res = new HtmlFetcher().fetchAndExtract("http://twitpic.com/4kuem8", 12000, true);
 //        assertTrue(res.getText(), res.getText().contains("*Not* what you want to see"));
 //    }
+
+    // TODO: Change test so they depend on external pages anymore
     @Test
     public void testEncoding() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://www.yomiuri.co.jp/science/", 10000, true);
-        assertEquals("科学 : 読売新聞（YOMIURI ONLINE）", res.getTitle());
+        assertEquals("科学ニュース：読売新聞(YOMIURI ONLINE)", res.getTitle());
     }
 
     @Test
