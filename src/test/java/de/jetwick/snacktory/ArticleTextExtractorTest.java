@@ -894,6 +894,15 @@ public class ArticleTextExtractorTest {
         assertTrue("Should be less than 1000", res.getText().length() <= 1000);
     }
 
+    @Test
+    public void testQualcomm() throws Exception {
+        // https://www.qualcomm.com/news/releases/2014/10/16/qualcomm-declares-quarterly-cash-dividend
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("qualcomm.html")));
+        assertEquals("Qualcomm Declares Quarterly Cash Dividend", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Qualcomm Incorporated (NASDAQ: QCOM) today announced"));
+    }
+
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes

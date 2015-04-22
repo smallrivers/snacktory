@@ -236,11 +236,19 @@ public class ArticleTextExtractor {
             res.setDate(docdate);
         }
 
-        // now remove the clutter
+        // now remove the clutter 
+        // note that we keep a copy of the original in case we need
+        // to go back to it
+        Document origDoc = doc.clone();
         prepareDocument(doc);
 
         // init elements and get the one with highest weight (see getWeight for strategy)
         Collection<Element> nodes = getNodes(doc);
+        if(nodes.size() == 0){
+            // if no nodes were found try with the original docto.
+            nodes = getNodes(origDoc);
+        }
+
         Element bestMatchElement = getBestMatchElement(nodes);
 
         // do extraction from the best element
@@ -1115,7 +1123,6 @@ public class ArticleTextExtractor {
         for (Element item : scripts) {
             item.remove();
         }
-
         Elements noscripts = doc.getElementsByTag("noscript");
         for (Element item : noscripts) {
             item.remove();
