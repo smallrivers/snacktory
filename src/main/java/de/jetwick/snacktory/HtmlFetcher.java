@@ -201,11 +201,12 @@ public class HtmlFetcher {
     }
 
     public JResult fetchAndExtract(String url, int timeout, boolean resolve) throws Exception {
-        return fetchAndExtract(url, timeout, resolve, 0);
+        return fetchAndExtract(url, timeout, resolve, 0, false);
     }
 
     // main workhorse to call externally
-    public JResult fetchAndExtract(String url, int timeout, boolean resolve, int maxContentSize) throws Exception {
+    public JResult fetchAndExtract(String url, int timeout, boolean resolve, 
+                                   int maxContentSize, boolean forceReload) throws Exception {
         String originalUrl = url;
         url = SHelper.removeHashbang(url);
         String gUrl = SHelper.getUrlFromUglyGoogleRedirect(url);
@@ -268,7 +269,11 @@ public class HtmlFetcher {
             result.setImageUrl(url);
         } else {
             try {
-                extractor.extractContent(result, fetchAsString(url, timeout), maxContentSize);
+                String urlToDownload = url;
+                if(forceReload){
+                    urlToDownload = getURLtoBreakCache(url);
+                } 
+                extractor.extractContent(result, fetchAsString(urlToDownload, timeout), maxContentSize);
             } catch (IOException io){
                 // do nothing
             }
@@ -286,6 +291,20 @@ public class HtmlFetcher {
             result.notifyAll();
         }
         return result;
+    }
+
+    // Ugly hack to break free from any cached versions, a few URLs required this.
+    public String getURLtoBreakCache(String url) {
+        try {
+            URL aURL = new URL(url);
+            if (aURL.getQuery() != "") {
+                return url + "?1";
+            } else {
+                return url + "&1";
+            }
+        } catch(MalformedURLException e){
+            return url;
+        }
     }
 
     public String lessText(String text) {
