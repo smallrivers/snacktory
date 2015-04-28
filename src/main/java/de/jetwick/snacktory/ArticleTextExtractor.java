@@ -59,10 +59,12 @@ public class ArticleTextExtractor {
     private static final OutputFormatter DEFAULT_FORMATTER = new OutputFormatter();
     private OutputFormatter formatter = DEFAULT_FORMATTER;
 
+    private static final int MAX_AUTHOR_NAME_LENGHT = 255;
     private static final int MIN_AUTHOR_NAME_LENGTH = 4;
     private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
         Pattern.compile("By\\S*(.*)[\\.,].*")
     );
+    private static final int MAX_AUTHOR_DESC_LENGHT = 1000;
 
     // For debugging
     private static final boolean DEBUG_WEIGHTS = false;
@@ -304,14 +306,19 @@ public class ArticleTextExtractor {
         res.setFaviconUrl(extractFaviconUrl(doc));
         res.setKeywords(extractKeywords(doc));
 
+        // Sanity checks in author
+        if (res.getAuthorName().length() > MAX_AUTHOR_NAME_LENGHT){
+            res.setAuthorName(utf8truncate(res.getAuthorName(), MAX_AUTHOR_NAME_LENGHT));
+        }
+
         // Sanity checks in author description.
         String authorDescSnippet = getSnippet(res.getAuthorDescription());
         if (getSnippet(res.getText()).equals(authorDescSnippet) || 
              getSnippet(res.getDescription()).equals(authorDescSnippet)) {
             res.setAuthorDescription("");
         } else {
-            if (res.getAuthorDescription().length() > 1000){
-                res.setAuthorDescription(res.getAuthorDescription().substring(0, 1000));
+            if (res.getAuthorDescription().length() > MAX_AUTHOR_DESC_LENGHT){
+                res.setAuthorDescription(utf8truncate(res.getAuthorDescription(), MAX_AUTHOR_DESC_LENGHT));
             }
         }
         return res;
