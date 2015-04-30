@@ -882,7 +882,7 @@ public class ArticleTextExtractorTest {
         // http://www.trendkraft.de/it-software/freigegeben-und-ab-sofort-verfuegbar-die-sechste-generation-des-ecm-systems-windream/
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("trendkraft_de.html")));
         assertEquals("Freigegeben und ab sofort verfügbar: die sechste Generation des ECM-Systems windream", res.getTitle());
-        assertTrue(res.getAuthorDescription(), res.getAuthorDescription().length() == 1000);
+        assertTrue(res.getAuthorDescription(), res.getAuthorDescription().length() == 987);
     }
 
     @Test
@@ -902,6 +902,13 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("Qualcomm Incorporated (NASDAQ: QCOM) today announced"));
     }
 
+    @Test
+    public void testApplePR() throws Exception {
+        // http://www.apple.com/pr/library/2015/04/27Apple-Expands-Capital-Return-Program-to-200-Billion.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("applepr.html")));
+        assertEquals("Apple - Press Info - Apple Expands Capital Return Program to $200 Billion", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Apple Expands Capital Return Program to $200 Billion CUPERTINO, California—April 27, 2015—Apple"));
+    }
 
     /**
      * @param filePath the name of the file to open. Not sure if it can accept

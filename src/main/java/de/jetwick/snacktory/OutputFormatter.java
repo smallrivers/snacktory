@@ -63,13 +63,19 @@ public class OutputFormatter {
         StringBuilder sb = new StringBuilder();
         int countOfP = append(topNode, sb, nodesToKeepCssSelector);
         String str = SHelper.innerTrim(sb.toString());
-        if (str.length() > 100 && countOfP > 0)
+
+        int topNodeLength = topNode.text().length();
+        if (topNodeLength == 0) {
+            topNodeLength = 1;
+        }
+        boolean lowTextRatio = ((str.length() / (topNodeLength * 1.0)) < 0.1);
+        if (str.length() > 100 && countOfP > 0 && !lowTextRatio)
             return str;
 
         // no subelements
         if (str.isEmpty() || (!topNode.text().isEmpty() 
             && str.length() <= topNode.ownText().length())
-            || countOfP == 0){
+            || countOfP == 0 || lowTextRatio){
             str = topNode.text();
         }
 
