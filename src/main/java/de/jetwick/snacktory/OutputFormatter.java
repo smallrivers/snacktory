@@ -68,7 +68,9 @@ public class OutputFormatter {
         if (topNodeLength == 0) {
             topNodeLength = 1;
         }
-        boolean lowTextRatio = ((str.length() / (topNodeLength * 1.0)) < 0.1);
+
+
+        boolean lowTextRatio = ((str.length() / (topNodeLength * 1.0)) < 0.25);
         if (str.length() > 100 && countOfP > 0 && !lowTextRatio)
             return str;
 
