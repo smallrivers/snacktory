@@ -65,6 +65,7 @@ public class ArticleTextExtractor {
         Pattern.compile("By\\S*(.*)[\\.,].*")
     );
     private static final int MAX_AUTHOR_DESC_LENGHT = 1000;
+    private static final int MAX_IMAGE_LENGHT = 255;
 
     // For debugging
     private static final boolean DEBUG_WEIGHTS = false;
@@ -321,6 +322,13 @@ public class ArticleTextExtractor {
                 res.setAuthorDescription(utf8truncate(res.getAuthorDescription(), MAX_AUTHOR_DESC_LENGHT));
             }
         }
+
+        // Sanity checks in image name
+        if (res.getImageUrl().length() > MAX_IMAGE_LENGHT){
+            // doesn't make sense to truncate a URL
+            res.setImageUrl("");
+        }
+
         return res;
     }
 

@@ -910,6 +910,14 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("Apple Expands Capital Return Program to $200 Billion CUPERTINO, California—April 27, 2015—Apple"));
     }
 
+    @Test
+    public void testLongImageName() throws Exception {
+        // http://www.adverts.ie/lego-building-toys/lego-general-zod-minifigure-brand-new/5980084
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("adverts.ie.html")));
+        assertEquals("Lego General Zod Minifigure Brand New For Sale in Tralee, Kerry from dlaw1", res.getTitle());
+        assertTrue(res.getImageUrl(), res.getImageUrl().length() == 0);
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes
