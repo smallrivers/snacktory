@@ -37,7 +37,7 @@ public class HtmlFetcherIntegrationTest {
 //        System.out.println("faz:" + res.getUrl());
 
         res = new HtmlFetcher().fetchAndExtract("http://www.google.com/url?sa=x&q=http://www.taz.de/1/politik/asien/artikel/1/anti-atomkraft-nein-danke/&ct=ga&cad=caeqargbiaaoataaoabaltmh7qrialaawabibwrllurf&cd=d5glzns5m_4&usg=afqjcnetx___sph8sjwhjwi-_mmdnhilra&utm_source=twitterfeed&utm_medium=twitter", 10000, true);
-        assertEquals("http://www.taz.de/!68884/", res.getUrl());
+        assertTrue(res.getUrl(), res.getUrl().startsWith("http://www.taz.de/!"));
 //        System.out.println("google redirect:" + res.getUrl());
 
         // Two levels of redirection:
