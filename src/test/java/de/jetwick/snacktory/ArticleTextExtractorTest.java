@@ -920,6 +920,14 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testForbes() throws Exception {
+        // http://fortune.com/2015/05/11/rackspaces-support-other-cloud/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("forbes.html")));
+        assertEquals("Will Rackspace support Google's or Amazon's clouds? - Fortune", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Rackspace, a true cloud computing pioneer, is starting to sound like a company that will"));
+    }
+
+    @Test
     public void testLongImageName() throws Exception {
         // http://www.adverts.ie/lego-building-toys/lego-general-zod-minifigure-brand-new/5980084
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("adverts.ie.html")));

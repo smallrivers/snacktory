@@ -201,9 +201,21 @@ public class ArticleTextExtractor {
         return bestMatchElement;
     }
 
-    // main workhorse
     public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, 
                                   Boolean extractimages, int maxContentSize) throws Exception {
+        Document origDoc = doc.clone();
+        JResult result = extractContent(res, doc, formatter, extractimages, maxContentSize, true);
+        //System.out.println("result.getText().length()="+result.getText().length());
+        if (result.getText().length() == 0) {
+            result = extractContent(res, origDoc, formatter, extractimages, maxContentSize, false);
+        }
+        return result;
+    }
+
+
+    // main workhorse
+    public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, 
+                                  Boolean extractimages, int maxContentSize, boolean cleanScripts) throws Exception {
         if (doc == null)
             throw new NullPointerException("missing document");
 
@@ -211,9 +223,9 @@ public class ArticleTextExtractor {
         res.setTitle(extractTitle(doc));
         res.setDescription(extractDescription(doc));
         res.setCanonicalUrl(extractCanonicalUrl(doc));
-		res.setType(extractType(doc));
-		res.setSitename(extractSitename(doc));
-		res.setLanguage(extractLanguage(doc));
+        res.setType(extractType(doc));
+        res.setSitename(extractSitename(doc));
+        res.setLanguage(extractLanguage(doc));
 
         // get author information
         res.setAuthorName(extractAuthorName(doc));
@@ -231,7 +243,7 @@ public class ArticleTextExtractor {
 
         // get date from document, if not present, extract from URL if possible
         Date docdate = extractDate(doc);
-        if (docdate == null) {   
+        if (docdate == null) {
             String dateStr = SHelper.estimateDate(res.getUrl());
             docdate = parseDate(dateStr);
             res.setDate(docdate);
@@ -240,18 +252,12 @@ public class ArticleTextExtractor {
         }
 
         // now remove the clutter 
-        // note that we keep a copy of the original in case we need
-        // to go back to it
-        Document origDoc = doc.clone();
-        prepareDocument(doc);
+        if (cleanScripts) {
+            prepareDocument(doc);
+        }
 
         // init elements and get the one with highest weight (see getWeight for strategy)
         Collection<Element> nodes = getNodes(doc);
-        if(nodes.size() == 0){
-            // if no nodes were found try with the original docto.
-            nodes = getNodes(origDoc);
-        }
-
         Element bestMatchElement = getBestMatchElement(nodes);
 
         // do extraction from the best element
