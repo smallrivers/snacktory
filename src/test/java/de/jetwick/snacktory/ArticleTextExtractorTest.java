@@ -935,6 +935,15 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getImageUrl(), res.getImageUrl().length() == 0);
     }
 
+    @Test
+    public void testCloudComputingExpo() throws Exception {
+        // www.cloudcomputingexpo.com/node/3342675
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo.html")));
+        assertTrue(res.getText(), res.getText().startsWith("How to Put Public Sector Data Migration Hassles on the Road to Extinction"));
+        // test it doesn't extract outside the article content
+        assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes

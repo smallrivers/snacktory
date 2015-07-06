@@ -185,7 +185,7 @@ public class ArticleTextExtractor {
                 // children (or grandchildren) is too large. If we detect this
                 // case then the limit is ignored and we try all the nodes to select
                 // the one with the absolute maximum weight.
-                if (maxWeight > 2000){
+                if (maxWeight > 500){
                     ignoreMaxWeightLimit = true;
                     continue;
                 } 
