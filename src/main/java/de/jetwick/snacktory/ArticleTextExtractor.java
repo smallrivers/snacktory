@@ -178,6 +178,11 @@ public class ArticleTextExtractor {
                 maxWeight = currentWeight;
                 bestMatchElement = entry;
 
+                /*
+                // NOTE: This optimization fails with large pages that
+                contains chunks of text that can be mistaken by articles, since we 
+                want the best accuracy possible, I am disabling it for now. AP.
+
                 // The original code had a limit of 200, the intention was that
                 // if a node had a weight greater than it, then it most likely
                 // it was the main content.
@@ -189,12 +194,14 @@ public class ArticleTextExtractor {
                     ignoreMaxWeightLimit = true;
                     continue;
                 } 
-
+                
                 // formerly 200, increased to 250 to account for the fact
                 // we are not adding the weights of the grand children to the
                 // tally.
+                
                 if (maxWeight > 250 && !ignoreMaxWeightLimit) 
                     break;
+                */
             }
         }
 

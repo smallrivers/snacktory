@@ -287,7 +287,7 @@ public class ArticleTextExtractorTest {
     public void testBlogger() throws Exception {
         // http://blog.talawah.net/2011/04/gavin-king-unviels-red-hats-top-secret.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("blogger.html")));
-        assertTrue(res.getText(), res.getText().startsWith("Gavin King unveils Red Hat's Java killer"));
+        assertTrue(res.getText(), res.getText().startsWith("Gavin King of Red Hat/Hibernate/Seam fame recently"));
         assertEquals("http://3.bp.blogspot.com/-cyMzveP3IvQ/TaR7f3qkYmI/AAAAAAAAAIk/mrChE-G0b5c/s200/Java.png", res.getImageUrl());
         assertEquals("The Brain Dump: Gavin King unveils Red Hat's Java killer successor: The Ceylon Project", res.getTitle());
         assertEquals("http://blog.talawah.net/feeds/posts/default?alt=rss", res.getRssUrl());
@@ -940,6 +940,15 @@ public class ArticleTextExtractorTest {
         // www.cloudcomputingexpo.com/node/3342675
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo.html")));
         assertTrue(res.getText(), res.getText().startsWith("How to Put Public Sector Data Migration Hassles on the Road to Extinction"));
+        // test it doesn't extract outside the article content
+        assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
+    }
+
+    @Test
+    public void testCloudComputingExpo2() throws Exception {
+        // www.cloudcomputingexpo.com/node/3342675
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo2.html")));
+        assertTrue(res.getText(), res.getText().startsWith("Merck, a leading company for innovative, top-quality high-tech"));
         // test it doesn't extract outside the article content
         assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
     }
