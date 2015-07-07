@@ -74,7 +74,7 @@ public class HtmlFetcherIntegrationTest {
     @Test
     public void testEncoding() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://www.yomiuri.co.jp/science/", 10000, true);
-        assertEquals("科学ニュース：読売新聞(YOMIURI ONLINE)", res.getTitle());
+        assertEquals("科学・ＩＴニュース：読売新聞(YOMIURI ONLINE)", res.getTitle());
     }
 
     @Test
