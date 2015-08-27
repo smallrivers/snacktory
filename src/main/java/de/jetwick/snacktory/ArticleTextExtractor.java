@@ -59,13 +59,13 @@ public class ArticleTextExtractor {
     private static final OutputFormatter DEFAULT_FORMATTER = new OutputFormatter();
     private OutputFormatter formatter = DEFAULT_FORMATTER;
 
-    private static final int MAX_AUTHOR_NAME_LENGHT = 255;
+    private static final int MAX_AUTHOR_NAME_LENGTH = 255;
     private static final int MIN_AUTHOR_NAME_LENGTH = 4;
     private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
         Pattern.compile("By\\S*(.*)[\\.,].*")
     );
-    private static final int MAX_AUTHOR_DESC_LENGHT = 1000;
-    private static final int MAX_IMAGE_LENGHT = 255;
+    private static final int MAX_AUTHOR_DESC_LENGTH = 1000;
+    private static final int MAX_IMAGE_LENGTH = 255;
 
     // For debugging
     private static final boolean DEBUG_WEIGHTS = false;
@@ -326,8 +326,8 @@ public class ArticleTextExtractor {
         res.setKeywords(extractKeywords(doc));
 
         // Sanity checks in author
-        if (res.getAuthorName().length() > MAX_AUTHOR_NAME_LENGHT){
-            res.setAuthorName(utf8truncate(res.getAuthorName(), MAX_AUTHOR_NAME_LENGHT));
+        if (res.getAuthorName().length() > MAX_AUTHOR_NAME_LENGTH){
+            res.setAuthorName(utf8truncate(res.getAuthorName(), MAX_AUTHOR_NAME_LENGTH));
         }
 
         // Sanity checks in author description.
@@ -336,13 +336,13 @@ public class ArticleTextExtractor {
              getSnippet(res.getDescription()).equals(authorDescSnippet)) {
             res.setAuthorDescription("");
         } else {
-            if (res.getAuthorDescription().length() > MAX_AUTHOR_DESC_LENGHT){
-                res.setAuthorDescription(utf8truncate(res.getAuthorDescription(), MAX_AUTHOR_DESC_LENGHT));
+            if (res.getAuthorDescription().length() > MAX_AUTHOR_DESC_LENGTH){
+                res.setAuthorDescription(utf8truncate(res.getAuthorDescription(), MAX_AUTHOR_DESC_LENGTH));
             }
         }
 
         // Sanity checks in image name
-        if (res.getImageUrl().length() > MAX_IMAGE_LENGHT){
+        if (res.getImageUrl().length() > MAX_IMAGE_LENGTH){
             // doesn't make sense to truncate a URL
             res.setImageUrl("");
         }
