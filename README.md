@@ -66,3 +66,17 @@ TODOs
 # Build
 
 via Maven. Maven will automatically resolve dependencies to jsoup, log4j and slf4j-api
+
+# Build without Maven
+
+download dependencies
+mvn dependency:copy-dependencies
+--> puts .jars in ./target/dependency/
+
+recompile both snacktory code and development driver
+ant -buildfile build.xml
+
+run development driver
+cd new/classes
+java -cp .:../../target/classes/:../../target/dependency/* snack
+

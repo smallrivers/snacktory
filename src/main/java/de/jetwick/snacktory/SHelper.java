@@ -21,6 +21,8 @@ import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.net.URL;
+import java.net.MalformedURLException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -163,28 +165,14 @@ public class SHelper {
      * @return
      */
     public static String useDomainOfFirstArg4Second(String urlForDomain, String path) {
-        if (path.startsWith("http"))
+        try {
+            // See: http://stackoverflow.com/questions/1389184/building-an-absolute-url-from-a-relative-url-in-java
+            URL baseUrl = new URL(urlForDomain);
+            URL relativeurl = new URL( baseUrl , path);
+            return relativeurl.toString();
+        } catch (MalformedURLException ex) {
             return path;
-
-        if ("favicon.ico".equals(path))
-            path = "/favicon.ico";
-
-        if (path.startsWith("//")) {
-            // wikipedia special case, see tests
-            if (urlForDomain.startsWith("https:"))
-                return "https:" + path;
-
-            return "http:" + path;
-        } else if (path.startsWith("/"))
-            return "http://" + extractHost(urlForDomain) + path;
-        else if (path.startsWith("../")) {
-            int slashIndex = urlForDomain.lastIndexOf("/");
-            if (slashIndex > 0 && slashIndex + 1 < urlForDomain.length())
-                urlForDomain = urlForDomain.substring(0, slashIndex + 1);
-
-            return urlForDomain + path;
         }
-        return path;
     }
 
     public static String extractHost(String url) {
