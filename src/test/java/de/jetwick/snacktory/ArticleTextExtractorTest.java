@@ -797,6 +797,18 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testLeFigaroSport() throws Exception {
+        // Test http://sport24.lefigaro.fr/football/coupe-du-monde/2014-bresil/fil-info/ronaldo-ecourte-l-entrainement-700221
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("lefigaro.html")));
+        String text = res.getText();
+        assertThat(res.getText(), startsWith("Cristiano Ronaldo a quitté l’entraînement de la sélection portugaise plus tôt que ses coéquipiers ce mercredi. L’attaquant du Real Madrid a rejoint les vestiaires avec une poche de glace sur un genou, comme il l’a déjà fait à plusieurs reprises depuis son arrivée au Brésil."));
+        List<String> textList = res.getTextList();
+        assertEquals(2, textList.size());
+        assertTrue(textList.get(0).startsWith(text.substring(0, 15)));
+        assertTrue(textList.get(1).endsWith(text.substring(text.length() - 15, text.length())));
+    }
+
+    @Test
     public void testSearchEngineJournal() throws Exception {
         // http://www.searchenginejournal.com/planning-progress-18-tips-successful-social-media-strategy/112567/
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("searchenginejournal.html")));
