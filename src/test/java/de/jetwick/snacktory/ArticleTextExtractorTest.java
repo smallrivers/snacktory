@@ -120,9 +120,9 @@ public class ArticleTextExtractorTest {
     public void testFirefox() throws Exception {
         // http://www.golem.de/1104/82797.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("golem.html")));
-        assertTrue(res.getText(), res.getText().startsWith("Mozilla hat Firefox 5.0a2 veröffentlicht und zugleich eine erste Entwicklerversion von Firefox 6 freigegeben."));
+        assertTrue(res.getText(), res.getText().startsWith("nter dem Namen \"Aurora\" hat Firefox einen neuen Kanal mit Vorabversionen von Firefox eingerichtet."));
         assertEquals("http://scr3.golem.de/screenshots/1104/Firefox-Aurora/thumb480/aurora-nighly-beta-logos.png", res.getImageUrl());
-        assertEquals("Mozilla: Vorabversionen von Firefox 5 und 6 veröffentlicht - Golem.de", res.getTitle());
+        assertEquals("Mozilla: Vorabversionen von Firefox 5 und 6 veröffentlicht", res.getTitle());
     }
 
     @Test
@@ -778,7 +778,7 @@ public class ArticleTextExtractorTest {
     public void testSearchEngineJournal() throws Exception {
         // http://www.searchenginejournal.com/planning-progress-18-tips-successful-social-media-strategy/112567/
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("searchenginejournal.html")));
-        assertEquals("18 Tips for a Successful Social Media Strategy", res.getTitle());
+        assertEquals("18 Tips for a Successful Social Media Strategy | SEJ", res.getTitle());
         assertTrue(res.getText(), res.getText().contains("Sharam"));
     }
 
@@ -796,7 +796,7 @@ public class ArticleTextExtractorTest {
     public void testSpinsucks() throws Exception {
         // http://spinsucks.com/communication/2015-communications-trends/
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("spinsucks.html")));
-        assertEquals("The Five Communications Trends for 2015 Spin Sucks", res.getTitle());
+        assertEquals("The Five Communications Trends for 2015", res.getTitle());
         assertTrue(res.getText(), res.getText().contains("Conversion of media. Julie Hong, the community manager"));
         assertTrue(res.getText(), res.getText().contains("Paid media affects traditional PR"));
         assertTrue(res.getText(), res.getText().contains("Old ideas become new again. We’ve stopped doing things such as deskside briefings, large events, direct mail"));
@@ -816,7 +816,7 @@ public class ArticleTextExtractorTest {
     public void testMarthaStewartWeddings() throws Exception {
         // http://www.marthastewartweddings.com/363473/bridal-beauty-diaries-lauren-%25E2%2580%2593-toning-and-cutting-down
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("marthastewartweddings.html")));
-        assertEquals("Bridal Beauty Diaries: Lauren – Toning Up and Cutting Down", res.getTitle());
+        assertEquals("Bridal Beauty Diaries: Lauren – Toning Up and Cutting Down | Martha Stewart Weddings", res.getTitle());
         assertTrue(res.getText(), res.getText().contains("Its “go” time. Approximately seven months until the big day"));
     }
 
@@ -824,7 +824,7 @@ public class ArticleTextExtractorTest {
     public void testNotebookCheck() throws Exception {
         // http://www.notebookcheck.com/UEbernahme-Microsoft-schluckt-Devices-und-Services-Sparte-von-Nokia.115522.0.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("notebookcheck.html")));
-        assertEquals("Übernahme: Microsoft schluckt Devices und Services Sparte von Nokia - Notebookcheck.com News", res.getTitle());
+        assertEquals("Übernahme: Microsoft schluckt Devices und Services Sparte von Nokia", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Tschüss Nokia. Willkommen Microsoft. Die Übernahmen ist unter Dach und Fach"));
     }
 
@@ -832,7 +832,7 @@ public class ArticleTextExtractorTest {
     public void testPeople() throws Exception {
         // http://www.people.com/article/ryan-seacrest-marriage-turning-40
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("people.html")));
-        assertEquals("Ryan Seacrest on Marriage: 'I Want What My Mom and Dad Have' - American Idol, Ryan Seacrest : People.com", res.getTitle());
+        assertEquals("Ryan Seacrest on Marriage: 'I Want What My Mom and Dad Have'", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("There are those who are in denial about turning 40"));
         assertFalse(res.getText(), res.getText().contains("Poppy Montgomery Drama Unforgettable Is Being Brought Back"));
     }
@@ -841,7 +841,7 @@ public class ArticleTextExtractorTest {
     public void testPeople2() throws Exception {
         // http://www.people.com/article/truck-driver-rescues-family-burning-car-video
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("people2.html")));
-        assertEquals("Truck Driver Rescues Family in Burning Wreck : People.com", res.getTitle());
+        assertEquals("Truck Driver Rescues Family Caught in Burning Car (VIDEO)", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("David Fredericksen was driving his semi truck along"));
         assertFalse(res.getText(), res.getText().contains("How Water Helps with Weight Loss"));
     }
@@ -850,7 +850,7 @@ public class ArticleTextExtractorTest {
     public void testPeople3() throws Exception {
         // http://www.people.com/article/pierce-brosnan-jimmy-fallon-goldeneye-007-n64
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("people3.html")));
-        assertEquals("Pierce Brosnan Plays Jimmy Fallon in 'GoldenEye 007' on 'Tonight Show' : People.com", res.getTitle());
+        assertEquals("Pierce Brosnan Loses to Jimmy Fallon in 'GoldenEye 007' (VIDEO)", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Just because you star in a video game, doesn't mean you'll be any good at it."));
         assertFalse(res.getText(), res.getText().contains("How Water Helps with Weight Loss"));
         assertEquals("Alex Heigl", res.getAuthorName());
@@ -870,7 +870,7 @@ public class ArticleTextExtractorTest {
     public void testHuffingtonpostAuthor() throws Exception {
         // http://www.huffingtonpost.com/rebekah-iliff/millions-of-consumers-aba_b_5269051.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("huffingtonpost2.html")));
-        assertEquals("Millions of Consumers Abandon Hashtag for Backslash ", res.getTitle());
+        assertEquals("Millions of Consumers Abandon Hashtag for Backslash", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("In a special Silicon Valley \"Tech Report,\" sources confirmed Monday that millions of "));
         assertEquals("Rebekah Iliff", res.getAuthorName());
         assertEquals("Chief Strategy Officer, AirPR", res.getAuthorDescription());
@@ -896,7 +896,7 @@ public class ArticleTextExtractorTest {
     public void testHuffingtonpostAuthorDesc() throws Exception {
         // http://www.huffingtonpost.com/2015/03/10/bruce-miller-san-francisco-49ers-domestic-violence_n_6836416.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("huffingtonpost3.html")));
-        assertEquals("San Francisco 49ers Fullback Bruce Miller Arrested On Domestic Violence Charges", res.getTitle());
+        assertEquals("San Francisco 49er Arrested On Domestic Violence Charges", res.getTitle());
         assertEquals("", res.getAuthorDescription());
     }
 
@@ -904,7 +904,7 @@ public class ArticleTextExtractorTest {
     public void testPRnewswireAuthorDesc() throws Exception {
         // www.prnewswire.com/news-releases/tableau-to-present-at-upcoming-investor-conferences-300039248.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("prnewswire.html")));
-        assertEquals("Tableau to Present at Upcoming Investor Conferences -- SEATTLE, Feb. 24, 2015 /PRNewswire/ --", res.getTitle());
+        assertEquals("Tableau to Present at Upcoming Investor Conferences", res.getTitle());
         assertEquals("", res.getAuthorDescription());
     }
 
@@ -920,7 +920,7 @@ public class ArticleTextExtractorTest {
     public void testLimitSize() throws Exception {
         // https://medium.com/@nathanbruinooge/a-travelogue-of-india-7b1f3aa62a19
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("medium.html")), 1000);
-        assertEquals("A Travelogue of India — Medium", res.getTitle());
+        assertEquals("A Travelogue of India", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Schipol Airport in 2012 looks nothing like Schipol Airport in the Eighties"));
         assertTrue("Should be less than 1000", res.getText().length() <= 1000);
     }
@@ -929,7 +929,7 @@ public class ArticleTextExtractorTest {
     public void testQualcomm() throws Exception {
         // https://www.qualcomm.com/news/releases/2014/10/16/qualcomm-declares-quarterly-cash-dividend
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("qualcomm.html")));
-        assertEquals("Qualcomm Declares Quarterly Cash Dividend", res.getTitle());
+        assertEquals("Qualcomm Declares Quarterly Cash Dividend | Qualcomm", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Qualcomm Incorporated (NASDAQ: QCOM) today announced"));
     }
 
@@ -953,7 +953,7 @@ public class ArticleTextExtractorTest {
     public void testForbes() throws Exception {
         // http://fortune.com/2015/05/11/rackspaces-support-other-cloud/
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("forbes.html")));
-        assertEquals("Will Rackspace support Google's or Amazon's clouds? - Fortune", res.getTitle());
+        assertEquals("Does Rackspace’s future lie in supporting someone else’s cloud?", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Rackspace, a true cloud computing pioneer, is starting to sound like a company that will"));
     }
 
