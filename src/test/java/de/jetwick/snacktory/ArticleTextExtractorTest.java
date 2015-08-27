@@ -6,14 +6,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+
+import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Alex P, (ifesdjeen from jreadability)
  * @author Peter Karich
  */
 public class ArticleTextExtractorTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(ArticleTextExtractorTest.class);
 
     ArticleTextExtractor extractor;
     Converter c;
@@ -120,9 +127,10 @@ public class ArticleTextExtractorTest {
     public void testFirefox() throws Exception {
         // http://www.golem.de/1104/82797.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("golem.html")));
-        assertTrue(res.getText(), res.getText().startsWith("nter dem Namen \"Aurora\" hat Firefox einen neuen Kanal mit Vorabversionen von Firefox eingerichtet."));
+        assertThat(res.getText(), is(notNullValue()));
+        assertThat(res.getText(), startsWith("Unter dem Namen \"Aurora\" hat Firefox einen neuen Kanal mit Vorabversionen von Firefox eingerichtet."));
         assertEquals("http://scr3.golem.de/screenshots/1104/Firefox-Aurora/thumb480/aurora-nighly-beta-logos.png", res.getImageUrl());
-        assertEquals("Mozilla: Vorabversionen von Firefox 5 und 6 veröffentlicht", res.getTitle());
+        assertThat(res.getTitle(), equalTo("Mozilla: Vorabversionen von Firefox 5 und 6 veröffentlicht - Golem.de"));
     }
 
     @Test
@@ -769,9 +777,9 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(readFileAsString("test_data/1.html"));
         String text = res.getText();
         List<String> textList = res.getTextList();
-        assertEquals(23, textList.size());
+        assertEquals(25, textList.size());
         assertTrue(textList.get(0).startsWith(text.substring(0, 15)));
-        assertTrue(textList.get(22).endsWith(text.substring(text.length() - 15, text.length())));
+        assertTrue(textList.get(24).endsWith(text.substring(text.length() - 15, text.length())));
     }
 
     @Test
