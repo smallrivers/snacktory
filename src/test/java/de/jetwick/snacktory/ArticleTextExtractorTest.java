@@ -507,7 +507,7 @@ public class ArticleTextExtractorTest {
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("sportsillustrated.html")));
         assertTrue(article.getText(), article.getText().startsWith("COLUMBUS, Ohio (AP) -- Ohio State has closed"));
         assertEquals("http://i.cdn.turner.com/si/.e1d/img/4.0/global/logos/si_100x100.jpg",
-                article.getImageUrl());
+              article.getImageUrl());
     }
 
     @Test public void testDailybeast() throws Exception {
@@ -568,7 +568,7 @@ public class ArticleTextExtractorTest {
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("economist.html")));
         assertTrue(article.getText(), article.getText().startsWith("FOR beleaguered smokers, the world is an increasingly"));
         assertEquals("http://www.economist.com/sites/default/files/images/articles/migrated/20110122_stp004.jpg",
-                article.getImageUrl());
+              article.getImageUrl());
         assertFalse(article.getText(), article.getText().contains("Related topics"));
     }
 
@@ -578,7 +578,7 @@ public class ArticleTextExtractorTest {
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("thevacationgals.html")));
         assertTrue(article.getText(), article.getText().startsWith("Editors’ Note: We are huge proponents of vacation rental homes"));
         assertEquals("http://thevacationgals.com/wp-content/uploads/2010/11/Gemmel-Family-Reunion-at-a-Vacation-Rental-Home1-300x225.jpg",
-                article.getImageUrl());
+              article.getImageUrl());
     }
 
     @Test
@@ -597,7 +597,7 @@ public class ArticleTextExtractorTest {
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wikipedia.html")));
         assertTrue(article.getText(), article.getText().startsWith("Therapsida is a group of the most advanced reptile-grade synapsids, and the ancestors of mammals"));
         assertEquals("//upload.wikimedia.org/wikipedia/commons/thumb/4/42/Pristeroognathus_DB.jpg/240px-Pristeroognathus_DB.jpg",
-                article.getImageUrl());
+              article.getImageUrl());
         assertEquals("//en.wikipedia.org/apple-touch-icon.png",
                 article.getFaviconUrl());
     }
@@ -679,7 +679,7 @@ public class ArticleTextExtractorTest {
         assertTrue(article.getText(), article.getText().startsWith("Rachel Dratch had been keeping the identity of her baby daddy "));
 
         assertEquals("http://cdn.thefrisky.com/images/uploads/rachel_dratch_102810_m.jpg",
-                article.getImageUrl());
+              article.getImageUrl());
         assertEquals("Rachel Dratch Met Her Baby Daddy At A Bar", article.getTitle());
     }
 
@@ -692,7 +692,7 @@ public class ArticleTextExtractorTest {
         //String url = "http://www.br-online.de/br-klassik/programmtipps/highlight-bayreuth-tannhaeuser-festspielzeit-2011-ID1309895438808.xml";
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("br-online.html")));
         assertTrue(article.getText(), article.getText().startsWith("Wenn ein Dirigent, der Alte Musik liebt, erstmals eine "
-                + "Neuproduktion bei den Bayreuther Richard-Wagner-Festspielen übernimmt,"));
+              + "Neuproduktion bei den Bayreuther Richard-Wagner-Festspielen übernimmt,"));
         assertEquals("Eröffnung der 100. Bayreuther Festspiele: Alles neu beim \"Tannhäuser\" | Programmtipps | BR-KLASSIK",
                 article.getTitle());
     }
@@ -766,7 +766,7 @@ public class ArticleTextExtractorTest {
         res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("thevacationgals.html")));
         assertEquals(3, res.getImagesCount());
         assertEquals("http://thevacationgals.com/wp-content/uploads/2010/11/Gemmel-Family-Reunion-at-a-Vacation-Rental-Home1-300x225.jpg",
-                res.getImages().get(0).src);
+              res.getImages().get(0).src);
         assertEquals("../wp-content/uploads/2010/11/The-Gemmel-Family-Does-a-Gilligans-Island-Theme-Family-Reunion-Vacation-Sarah-Gemmel-300x225.jpg",
                 res.getImages().get(1).src);
         assertEquals("http://www.linkwithin.com/pixel.png", res.getImages().get(2).src);
@@ -780,6 +780,20 @@ public class ArticleTextExtractorTest {
         assertEquals(25, textList.size());
         assertTrue(textList.get(0).startsWith(text.substring(0, 15)));
         assertTrue(textList.get(24).endsWith(text.substring(text.length() - 15, text.length())));
+    }
+
+    @Test
+    public void testMurraySenateGov() throws Exception {
+        // Test http://www.murray.senate.gov/public/index.cfm/newsreleases?ContentRecord_id=28da79eb-bca4-421e-9358-cec1c064def0
+        // Was not fully extracted by version 1.2.3
+        JResult res = extractor.extractContent(readFileAsString("test_data/murray_senate_gov.html"));
+        String text = res.getText();
+        // logger.info("text: " + text);
+        List<String> textList = res.getTextList();
+        // logger.info("textList:\n-" + StringUtils.join(textList, "\n-"));
+        assertEquals(4, textList.size());
+        assertTrue(textList.get(0).startsWith(text.substring(0, 15)));
+        assertTrue(textList.get(3).endsWith(text.substring(text.length() - 15, text.length())));
     }
 
     @Test
