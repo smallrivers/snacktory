@@ -124,11 +124,15 @@ public class ArticleTextExtractor {
      * @returns extracted article, all HTML tags stripped
      */
     public JResult extractContent(Document doc) throws Exception {
-        return extractContent(new JResult(), doc, formatter, true, 0);
+        return extractContent(new JResult(), doc, formatter, true, true, 0);
     }
 
     public JResult extractContent(Document doc, OutputFormatter formatter) throws Exception {
-        return extractContent(new JResult(), doc, formatter, true, 0);
+        return extractContent(new JResult(), doc, formatter, true, true, 0);
+    }
+
+    public JResult extractContent(JResult res, Document doc, OutputFormatter formatter) throws Exception {
+        return extractContent(res, doc, formatter, true, true, 0);
     }
 
     public JResult extractContent(String html) throws Exception {
@@ -136,20 +140,20 @@ public class ArticleTextExtractor {
     }
 
     public JResult extractContent(String html, int maxContentSize) throws Exception {
-        return extractContent(new JResult(), html, formatter, true, maxContentSize);
+        return extractContent(new JResult(), html, formatter, true, true, maxContentSize);
     }
 
     public JResult extractContent(JResult res, String html, int maxContentSize) throws Exception {
-        return extractContent(res, html, formatter, true, maxContentSize);
+        return extractContent(res, html, formatter, true, true, maxContentSize);
     }
 
     public JResult extractContent(JResult res, String html, OutputFormatter formatter, 
-                                  Boolean extractimages, int maxContentSize) throws Exception {
+                                  boolean extractImages, boolean extractAuthor, int maxContentSize) throws Exception {
         if (html.isEmpty())
             throw new IllegalArgumentException("html string is empty!?");
 
         // http://jsoup.org/cookbook/extracting-data/selector-syntax
-        return extractContent(res, Jsoup.parse(html), formatter, extractimages, maxContentSize);
+        return extractContent(res, Jsoup.parse(html), formatter, extractImages, extractAuthor, maxContentSize);
     }
 
     // Returns the best node match based on the weights (see getWeight for strategy)
@@ -157,7 +161,6 @@ public class ArticleTextExtractor {
 		int maxWeight = -200;        // why -200 now instead of 0?
 		Element bestMatchElement = null;
 		
-        boolean ignoreMaxWeightLimit = false;
         for (Element entry : nodes) {
 
             LogEntries entries = null;
@@ -213,12 +216,13 @@ public class ArticleTextExtractor {
     }
 
     public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, 
-                                  Boolean extractimages, int maxContentSize) throws Exception {
+                                  boolean extractImages, boolean extractAuthor,
+                                  int maxContentSize) throws Exception {
         Document origDoc = doc.clone();
-        JResult result = extractContent(res, doc, formatter, extractimages, maxContentSize, true);
+        JResult result = extractContent(res, doc, formatter, extractImages, extractAuthor, maxContentSize, true);
         //System.out.println("result.getText().length()="+result.getText().length());
         if (result.getText().length() == 0) {
-            result = extractContent(res, origDoc, formatter, extractimages, maxContentSize, false);
+            result = extractContent(res, origDoc, formatter, extractImages, extractAuthor, maxContentSize, false);
         }
         return result;
     }
@@ -226,7 +230,8 @@ public class ArticleTextExtractor {
 
     // main workhorse
     public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, 
-                                  Boolean extractimages, int maxContentSize, boolean cleanScripts) throws Exception {
+                                  boolean extractImages, boolean extractAuthor,
+                                  int maxContentSize, boolean cleanScripts) throws Exception {
         if (doc == null)
             throw new NullPointerException("missing document");
 
@@ -239,8 +244,10 @@ public class ArticleTextExtractor {
         res.setLanguage(extractLanguage(doc));
 
         // get author information
-        res.setAuthorName(extractAuthorName(doc));
-        res.setAuthorDescription(extractAuthorDescription(doc, res.getAuthorName()));
+        if (extractAuthor) {
+            res.setAuthorName(extractAuthorName(doc));
+            res.setAuthorDescription(extractAuthorDescription(doc, res.getAuthorName()));
+        }
 
         // add extra selection gravity to any element containing author name
         // wasn't useful in the case I implemented it for, but might be later
@@ -273,7 +280,7 @@ public class ArticleTextExtractor {
 
         // do extraction from the best element
         if (bestMatchElement != null) {
-            if (extractimages) {
+            if (extractImages) {
                 List<ImageResult> images = new ArrayList<ImageResult>();
                 Element imgEl = determineImageSource(bestMatchElement, images);
                 if (imgEl != null) {
@@ -314,7 +321,7 @@ public class ArticleTextExtractor {
             res.setTextList(formatter.getTextList(bestMatchElement));
         }
 
-        if (extractimages) {
+        if (extractImages) {
             if (res.getImageUrl().isEmpty()) {
                 res.setImageUrl(extractImageUrl(doc));
             }
