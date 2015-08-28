@@ -65,7 +65,7 @@ public class ArticleTextExtractor {
         Pattern.compile("By\\S*(.*)[\\.,].*")
     );
     private static final int MAX_AUTHOR_DESC_LENGTH = 1000;
-    private static final int MAX_IMAGE_LENGTH = 300;
+    private static final int MAX_IMAGE_LENGTH = 290;
 
     // For debugging
     private static final boolean DEBUG_WEIGHTS = false;
@@ -124,15 +124,15 @@ public class ArticleTextExtractor {
      * @returns extracted article, all HTML tags stripped
      */
     public JResult extractContent(Document doc) throws Exception {
-        return extractContent(new JResult(), doc, formatter, true, true, 0);
+        return extractContent(new JResult(), doc, formatter, true, true, true, 0);
     }
 
     public JResult extractContent(Document doc, OutputFormatter formatter) throws Exception {
-        return extractContent(new JResult(), doc, formatter, true, true, 0);
+        return extractContent(new JResult(), doc, formatter, true, true, true, 0);
     }
 
     public JResult extractContent(JResult res, Document doc, OutputFormatter formatter) throws Exception {
-        return extractContent(res, doc, formatter, true, true, 0);
+        return extractContent(res, doc, formatter, true, true, true, 0);
     }
 
     public JResult extractContent(String html) throws Exception {
@@ -140,20 +140,21 @@ public class ArticleTextExtractor {
     }
 
     public JResult extractContent(String html, int maxContentSize) throws Exception {
-        return extractContent(new JResult(), html, formatter, true, true, maxContentSize);
+        return extractContent(new JResult(), html, formatter, true, true, true, maxContentSize);
     }
 
     public JResult extractContent(JResult res, String html, int maxContentSize) throws Exception {
-        return extractContent(res, html, formatter, true, true, maxContentSize);
+        return extractContent(res, html, formatter, true, true, true, maxContentSize);
     }
 
     public JResult extractContent(JResult res, String html, OutputFormatter formatter, 
-                                  boolean extractImages, boolean extractAuthor, int maxContentSize) throws Exception {
+                                  boolean extractImages, boolean extractAuthor, boolean extractDate,
+                                  int maxContentSize) throws Exception {
         if (html.isEmpty())
             throw new IllegalArgumentException("html string is empty!?");
 
         // http://jsoup.org/cookbook/extracting-data/selector-syntax
-        return extractContent(res, Jsoup.parse(html), formatter, extractImages, extractAuthor, maxContentSize);
+        return extractContent(res, Jsoup.parse(html), formatter, extractImages, extractAuthor, extractDate, maxContentSize);
     }
 
     // Returns the best node match based on the weights (see getWeight for strategy)
@@ -216,13 +217,13 @@ public class ArticleTextExtractor {
     }
 
     public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, 
-                                  boolean extractImages, boolean extractAuthor,
+                                  boolean extractImages, boolean extractAuthor, boolean extractDate,
                                   int maxContentSize) throws Exception {
         Document origDoc = doc.clone();
-        JResult result = extractContent(res, doc, formatter, extractImages, extractAuthor, maxContentSize, true);
+        JResult result = extractContent(res, doc, formatter, extractImages, extractAuthor, extractDate, maxContentSize, true);
         //System.out.println("result.getText().length()="+result.getText().length());
         if (result.getText().length() == 0) {
-            result = extractContent(res, origDoc, formatter, extractImages, extractAuthor, maxContentSize, false);
+            result = extractContent(res, origDoc, formatter, extractImages, extractAuthor, extractDate, maxContentSize, false);
         }
         return result;
     }
@@ -230,7 +231,7 @@ public class ArticleTextExtractor {
 
     // main workhorse
     public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, 
-                                  boolean extractImages, boolean extractAuthor,
+                                  boolean extractImages, boolean extractAuthor, boolean extractDate,
                                   int maxContentSize, boolean cleanScripts) throws Exception {
         if (doc == null)
             throw new NullPointerException("missing document");
@@ -260,14 +261,15 @@ public class ArticleTextExtractor {
         */
 
         // get date from document, if not present, extract from URL if possible
-        Date docdate = extractDate(doc);
-        if (docdate == null) {
-            String dateStr = SHelper.estimateDate(res.getUrl());
-            docdate = parseDate(dateStr);
-            res.setDate(docdate);
-        } else {
-            res.setDate(docdate);
-        }
+        if (extractDate) {
+            Date docdate = extractDate(doc);
+            if (docdate == null) {
+                String dateStr = SHelper.estimateDate(res.getUrl());
+                docdate = parseDate(dateStr);
+                res.setDate(docdate);
+            } else {
+                res.setDate(docdate);
+            }}
 
         // now remove the clutter 
         if (cleanScripts) {
