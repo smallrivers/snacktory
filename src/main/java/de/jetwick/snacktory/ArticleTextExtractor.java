@@ -33,7 +33,7 @@ import org.apache.commons.lang.time.*;
 public class ArticleTextExtractor {
 
     private static final Logger logger = LoggerFactory.getLogger(ArticleTextExtractor.class);
-    // Interessting nodes
+    // Interesting nodes
     private static final Pattern NODES = Pattern.compile("p|div|article|section");
     // Unlikely candidates
     private String unlikelyStr;
@@ -65,7 +65,7 @@ public class ArticleTextExtractor {
         Pattern.compile("By\\S*(.*)[\\.,].*")
     );
     private static final int MAX_AUTHOR_DESC_LENGTH = 1000;
-    private static final int MAX_IMAGE_LENGTH = 255;
+    private static final int MAX_IMAGE_LENGTH = 300;
 
     // For debugging
     private static final boolean DEBUG_WEIGHTS = false;
