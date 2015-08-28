@@ -1340,7 +1340,7 @@ public class ArticleTextExtractor {
         List<String> entries;
 
         public LogEntries(){
-            entries = new ArrayList();
+            entries = new ArrayList<String>();
         }
 
         public void add(String entry){

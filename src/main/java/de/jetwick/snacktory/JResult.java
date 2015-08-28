@@ -243,7 +243,7 @@ public class JResult implements Serializable {
     }
 
     public void addLink(String url, String text, Integer pos) {
-        Map link = new HashMap();
+        Map<String, String> link = new HashMap<String, String>();
         link.put("url", url);
         link.put("text", text);
         link.put("offset", String.valueOf(pos));
