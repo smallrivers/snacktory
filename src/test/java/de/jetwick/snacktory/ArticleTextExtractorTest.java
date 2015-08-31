@@ -953,6 +953,15 @@ public class ArticleTextExtractorTest {
         assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
     }
 
+    @Test
+    public void testCanonical() throws Exception {
+        // http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cio.com.html")));
+        assertEquals("Internet of things is overhyped, should be called internet with things", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("The internet of things is overhyped and should instead be called the internet with things"));
+        assertEquals("http://www.techworld.com/news/startups/rackspace-mongodb-execs-take-iot-hype-down-notch-3617731/", res.getCanonicalUrl());
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes
