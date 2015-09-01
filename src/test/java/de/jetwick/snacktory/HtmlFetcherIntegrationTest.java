@@ -111,4 +111,10 @@ public class HtmlFetcherIntegrationTest {
         String str = new HtmlFetcher().fetchAsString("http://blogs.adobe.com/comments/feed", 10000);
         assertTrue(str, str.startsWith("<?xml version="));
     }
+
+    @Test
+    public void testYahooMobile() throws Exception {
+        JResult res  = new HtmlFetcher().fetchAndExtract("https://m.yahoo.com/w/legobpengine/finance/news/stevia-first-corp-stvf-looks-123500390.html?.intl=us&.lang=en-us", 10000, true);
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Stevia First Corp. (STVF) Looks to Disrupt Flavor Industry"));
+    }
 }
