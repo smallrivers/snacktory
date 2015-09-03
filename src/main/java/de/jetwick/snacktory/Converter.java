@@ -173,7 +173,7 @@ public class Converter {
     protected String detectCharset(String key, ByteArrayOutputStream bos, BufferedInputStream in,
             String enc) throws IOException {
 
-        // Grab better encoding from stream        
+        // Grab better encoding from stream
         byte[] arr = new byte[K2];
         int nSum = 0;
         while (nSum < K2) {
@@ -188,7 +188,7 @@ public class Converter {
         String str = bos.toString(enc);
         int encIndex = str.indexOf(key);
         int clength = key.length();
-        if (encIndex > 0) {
+        if (encIndex > 0 && encIndex + clength < str.length()) {
             char startChar = str.charAt(encIndex + clength);
             int lastEncIndex;
             if (startChar == '\'')
@@ -198,7 +198,7 @@ public class Converter {
                 // if we have charset="something"
                 lastEncIndex = str.indexOf("\"", ++encIndex + clength);
             else {
-                // if we have "text/html; charset=utf-8"                    
+                // if we have "text/html; charset=utf-8"
                 int first = str.indexOf("\"", encIndex + clength);
                 if (first < 0)
                     first = Integer.MAX_VALUE;

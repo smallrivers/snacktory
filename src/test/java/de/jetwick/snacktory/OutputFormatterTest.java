@@ -34,7 +34,7 @@ public class OutputFormatterTest {
         OutputFormatter formatter = new OutputFormatter();
         Document doc = Jsoup.parse("<div><div style=\"display:none\">xy</div>test</div>");
         StringBuilder sb = new StringBuilder();
-        formatter.appendTextSkipHidden(doc, sb);
+        formatter.appendTextSkipHidden(doc, sb, 0);
         assertEquals("test", sb.toString());
     }
 
