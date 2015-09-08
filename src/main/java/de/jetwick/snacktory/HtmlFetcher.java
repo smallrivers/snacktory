@@ -280,6 +280,7 @@ public class HtmlFetcher {
                 extractor.extractContent(result, fetchAsString(urlToDownload, timeout), maxContentSize);
             } catch (IOException io){
                 // do nothing
+                logger.error("Exception for URL: " + url + ":" + io);
             }
             if (result.getFaviconUrl().isEmpty())
                 result.setFaviconUrl(SHelper.getDefaultFavicon(url));

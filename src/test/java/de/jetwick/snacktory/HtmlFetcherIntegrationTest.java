@@ -117,4 +117,11 @@ public class HtmlFetcherIntegrationTest {
         JResult res  = new HtmlFetcher().fetchAndExtract("https://m.yahoo.com/w/legobpengine/finance/news/stevia-first-corp-stvf-looks-123500390.html?.intl=us&.lang=en-us", 10000, true);
         assertTrue(res.getTitle(), res.getTitle().startsWith("Stevia First Corp. (STVF) Looks to Disrupt Flavor Industry"));
     }
+
+    /* FIXME: This test fails with a java.io.IOException: Invalid Http response 
+    @Test
+    public void testWeixin() throws Exception {
+        JResult res  = new HtmlFetcher().fetchAndExtract("http://mp.weixin.qq.com/s?3rd=MzA3MDU4NTYzMw%3D%3D&__biz=MzA4MTQ0Njc2Nw%3D%3D&idx=4&mid=207614885&scene=6&sn=eda80bb13406fb31cb25f70d12e6e7dc", 10000, true);
+        assertTrue(res.getTitle(), res.getTitle().startsWith("缺少IT支持成跨境电商发展阻力"));
+    }*/
 }

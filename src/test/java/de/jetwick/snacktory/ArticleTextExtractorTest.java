@@ -970,6 +970,14 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("WHITEFISH, MT / ACCESSWIRE / July 13, 2015 / The global market for sugar and sweeteners"));
     }
 
+    @Test
+    public void testWeixin() throws Exception {
+        // http://mp.weixin.qq.com/s?3rd=MzA3MDU4NTYzMw%3D%3D&__biz=MzA4MTQ0Njc2Nw%3D%3D&idx=4&mid=207614885&scene=6&sn=eda80bb13406fb31cb25f70d12e6e7dc
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("weixin.qq.com.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("缺少IT支持成跨境电商发展阻力"));
+        assertTrue(res.getText(), res.getText().startsWith("根据联合国贸发会议预计"));
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes
