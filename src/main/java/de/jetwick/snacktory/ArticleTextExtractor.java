@@ -38,9 +38,12 @@ public class ArticleTextExtractor {
     // Unlikely candidates
     private String unlikelyStr;
     private Pattern UNLIKELY;
-    // Most likely positive candidates
+    // Likely positive candidates
     private String positiveStr;
     private Pattern POSITIVE;
+    // Most likely positive candidates
+    private String highlyPositiveStr;
+    private Pattern HIGHLY_POSITIVE;
     // Most likely negative candidates
     private String negativeStr;
     private Pattern NEGATIVE;
@@ -61,6 +64,7 @@ public class ArticleTextExtractor {
 
     private static final int MAX_AUTHOR_NAME_LENGHT = 255;
     private static final int MIN_AUTHOR_NAME_LENGTH = 4;
+    private static final int MIN_WEIGHT_TO_SHOW_IN_LOG = 200;
     private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
         Pattern.compile("By\\S*(.*)[\\.,].*")
     );
@@ -77,7 +81,8 @@ public class ArticleTextExtractor {
                 + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-                + "|arti(cle|kel)|instapaper_body");
+                + "|arti(cle|kel)|instapaper_body|storybody");
+        setHighlyPositive("storybody");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard");
@@ -96,6 +101,12 @@ public class ArticleTextExtractor {
     public ArticleTextExtractor setPositive(String positiveStr) {
         this.positiveStr = positiveStr;
         POSITIVE = Pattern.compile(positiveStr);
+        return this;
+    }
+
+    public ArticleTextExtractor setHighlyPositive(String highlyPositiveStr) {
+        this.highlyPositiveStr = highlyPositiveStr;
+        HIGHLY_POSITIVE = Pattern.compile(highlyPositiveStr);
         return this;
     }
 
@@ -161,7 +172,7 @@ public class ArticleTextExtractor {
                 entries = new LogEntries();
             int currentWeight = getWeight(entry, false, entries);
             if (DEBUG_WEIGHTS){
-                if(currentWeight>35){
+                if(currentWeight>MIN_WEIGHT_TO_SHOW_IN_LOG){
                     System.out.println("-------------------------------------------");
                     System.out.println("         TAG: " + entry.tagName());
                     entries.print();
@@ -1018,6 +1029,13 @@ public class ArticleTextExtractor {
 
     private int calcWeight(Element e) {
         int weight = 0;
+
+        if (HIGHLY_POSITIVE.matcher(e.className()).find())
+            weight += 170;
+
+        if (HIGHLY_POSITIVE.matcher(e.id()).find())
+            weight += 90;
+
         if (POSITIVE.matcher(e.className()).find())
             weight += 35;
 

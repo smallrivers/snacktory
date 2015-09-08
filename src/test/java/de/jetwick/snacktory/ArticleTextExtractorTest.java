@@ -937,20 +937,31 @@ public class ArticleTextExtractorTest {
 
     @Test
     public void testCloudComputingExpo() throws Exception {
-        // www.cloudcomputingexpo.com/node/3342675
+        // http://www.cloudcomputingexpo.com/node/3342675
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo.html")));
         assertTrue(res.getText(), res.getText().startsWith("How to Put Public Sector Data Migration Hassles on the Road to Extinction"));
+        // test it doesn't extract outside the article content
+        assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
+        assertTrue(res.getText(), res.getText().startsWith("How to Put Public Sector Data Migration Hassles on the Road to Extinction"));
+    }
+
+    @Test
+    public void testCloudComputingExpo2() throws Exception {
+        // http://www.cloudcomputingexpo.com/node/3346367
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo2.html")));
+        assertTrue(res.getText(), res.getText().startsWith("Merck, a leading company for innovative, top-quality high-tech"));
+        assertTrue(res.getText(), res.getText().endsWith("EMD Millipore and EMD Performance Materials."));
         // test it doesn't extract outside the article content
         assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
     }
 
     @Test
-    public void testCloudComputingExpo2() throws Exception {
-        // www.cloudcomputingexpo.com/node/3342675
-        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo2.html")));
-        assertTrue(res.getText(), res.getText().startsWith("Merck, a leading company for innovative, top-quality high-tech"));
-        // test it doesn't extract outside the article content
-        assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
+    public void testCloudComputingExpo3() throws Exception {
+        // http://www.cloudcomputingexpo.com/node/3432136
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo3.html")));
+        assertEquals("IHS to Hold Conference Call and Webcast on September 29, 2015 with Release of Third Quarter Results for Fiscal Year 2015", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("IHS Inc. (NYSE: IHS), the leading global "));
+        assertTrue(res.getText(), res.getText().endsWith("http://www.businesswire.com/news/home/20150828005027/en/"));
     }
 
     @Test
