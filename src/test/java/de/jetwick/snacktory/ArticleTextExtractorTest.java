@@ -965,6 +965,24 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testCloudComputingExpo4() throws Exception {
+        // http://www.cloudcomputingexpo.com/node/3372014
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo4.html")));
+        assertEquals("As New Cases Of Ebola Are Confirmed We Highlight The Need For Global Coordination In The Field Of Distance Education", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("LOS ANGELES, July 16, 2015 /PRNewswire-iReach/"));
+        assertTrue(res.getText(), res.getText().endsWith("News distributed by PR Newswire iReach: https://ireach.prnewswire.com"));
+    }
+
+    @Test
+    public void testCloudComputingExpo5() throws Exception {
+        // http://www.cloudcomputingexpo.com/node/3345803
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo5.html")));
+        assertEquals("U.S. FDA Approves Eisai's Antiepileptic Agent Fycompa as Adjunctive Treatment For Primary Generalized Tonic-Clonic Seizures", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("U.S. FDA Approves Eisai's Antiepileptic Agent Fycompa as Adjunctive Treatment"));
+        //assertTrue(res.getText(), res.getText().endsWith("or for any actions taken in reliance thereon"));
+    }
+
+    @Test
     public void testCanonical() throws Exception {
         // http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cio.com.html")));

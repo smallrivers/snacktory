@@ -64,7 +64,7 @@ public class ArticleTextExtractor {
 
     private static final int MAX_AUTHOR_NAME_LENGHT = 255;
     private static final int MIN_AUTHOR_NAME_LENGTH = 4;
-    private static final int MIN_WEIGHT_TO_SHOW_IN_LOG = 200;
+    
     private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
         Pattern.compile("By\\S*(.*)[\\.,].*")
     );
@@ -74,6 +74,7 @@ public class ArticleTextExtractor {
     // For debugging
     private static final boolean DEBUG_WEIGHTS = false;
     private static final int MAX_LOG_LENGTH = 200;
+    private static final int MIN_WEIGHT_TO_SHOW_IN_LOG = 800;
 
     public ArticleTextExtractor() {
         setUnlikely("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
@@ -814,7 +815,7 @@ public class ArticleTextExtractor {
         int ownTextWeight = (int) Math.round(e.ownText().length() / 100.0 * 10);
         weight+=ownTextWeight;
         if(logEntries!=null) logEntries.add("       ======> OWN TEXT WEIGHT:" + String.format("%3d", ownTextWeight));
-        int childrenWeight = weightChildNodes(e, logEntries);
+        int childrenWeight = (int) Math.round(weightChildNodes(e, logEntries) * 0.9);
         weight+=childrenWeight;
         if(logEntries!=null) logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight));
 
@@ -854,9 +855,9 @@ public class ArticleTextExtractor {
             if (ownTextLength < 20)
                 continue;
 
-            if(logEntries!=null) {
-                logEntries.add("\t      CHILD TAG: " + child.tagName());
-            }
+            //if(logEntries!=null) {
+            //    logEntries.add("\t      CHILD TAG: " + child.tagName());
+            //}
 
             if (ownTextLength > 200){
                 int childOwnTextWeight = Math.max(50, ownTextLength / 10);
@@ -895,10 +896,10 @@ public class ArticleTextExtractor {
         int grandChildrenCount = 0;
         for (Element child2 : rootEl.children()) {
 
-            if(logEntries!=null) {
-                logEntries.add("\t    CHILD TAG: " + child2.tagName());
+            //if(logEntries!=null) {
+            //    logEntries.add("\t    CHILD TAG: " + child2.tagName());
                 //logEntries.add(child2.outerHtml());
-            }
+            //}
 
             // If the node looks negative don't include it in the weights
             // instead penalize the grandparent. This is done to try to 
@@ -1031,7 +1032,7 @@ public class ArticleTextExtractor {
         int weight = 0;
 
         if (HIGHLY_POSITIVE.matcher(e.className()).find())
-            weight += 170;
+            weight += 200;
 
         if (HIGHLY_POSITIVE.matcher(e.id()).find())
             weight += 90;
