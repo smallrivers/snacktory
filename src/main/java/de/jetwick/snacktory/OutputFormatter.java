@@ -23,7 +23,7 @@ public class OutputFormatter {
     public static final int MIN_FIRST_PARAGRAPH_TEXT = 50; // Min size of first paragraph
     public static final int MIN_PARAGRAPH_TEXT = 30;       // Min size of any other paragraphs
     private static final List<String> NODES_TO_REPLACE = Arrays.asList("strong", "b", "i");
-    private Pattern unlikelyPattern = Pattern.compile("display\\:none|visibility\\:hidden");
+    private Pattern unlikelyPattern = Pattern.compile("display: ?none|visibility: ?hidden");
     protected final int minFirstParagraphText;
     protected final int minParagraphText;
     protected final List<String> nodesToReplace;

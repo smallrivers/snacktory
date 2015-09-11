@@ -59,6 +59,9 @@ public class ArticleTextExtractor {
             add("articles");
         }
     };
+
+    private static final Pattern TO_REMOVE = Pattern.compile("hdn-analytics-data");
+
     private static final OutputFormatter DEFAULT_FORMATTER = new OutputFormatter();
     private OutputFormatter formatter = DEFAULT_FORMATTER;
 
@@ -132,11 +135,6 @@ public class ArticleTextExtractor {
         this.formatter = formatter;
     }
 
-    /**
-     * @param html extracts article text from given html string. wasn't tested
-     * with improper HTML, although jSoup should be able to handle minor stuff.
-     * @returns extracted article, all HTML tags stripped
-     */
     public JResult extractContent(Document doc) throws Exception {
         return extractContent(new JResult(), doc, formatter, true, true, true, 0);
     }
@@ -149,6 +147,11 @@ public class ArticleTextExtractor {
         return extractContent(res, doc, formatter, true, true, true, 0);
     }
 
+    /**
+     * @param html extracts article text from given html string. wasn't tested
+     * with improper HTML, although jSoup should be able to handle minor stuff.
+     * @returns extracted article, all HTML tags stripped
+     */
     public JResult extractContent(String html) throws Exception {
         return extractContent(html, 0);
     }
@@ -284,7 +287,8 @@ public class ArticleTextExtractor {
                 res.setDate(docdate);
             } else {
                 res.setDate(docdate);
-            }}
+            }
+        }
 
         // now remove the clutter 
         if (cleanScripts) {
@@ -806,9 +810,7 @@ public class ArticleTextExtractor {
     }
     	
     protected String extractType(Document doc) {
-        String type = cleanTitle(doc.title());
-        type = SHelper.innerTrim(doc.select("head meta[property=og:type]").attr("content"));
-        return type;
+        return SHelper.innerTrim(doc.select("head meta[property=og:type]").attr("content"));
     }
 
     protected String extractSitename(Document doc) {
@@ -1204,7 +1206,7 @@ public class ArticleTextExtractor {
      * of function
      */
     protected void prepareDocument(Document doc) {
-//        stripUnlikelyCandidates(doc);
+        stripToRemoveCandidates(doc);
         removeScriptsAndStyles(doc);
     }
 
@@ -1214,14 +1216,14 @@ public class ArticleTextExtractor {
      *
      * @param doc document to strip unlikely candidates from
      */
-    protected void stripUnlikelyCandidates(Document doc) {
-        for (Element child : doc.select("body").select("*")) {
-            String className = child.className().toLowerCase();
-            String id = child.id().toLowerCase();
+    protected void stripToRemoveCandidates(Document doc) {
+        for (Element child : doc.body().children().select("*")) {
+            final String className = child.className().toLowerCase();
+            final String id = child.id().toLowerCase();
 
-            if (NEGATIVE.matcher(className).find()
-                    || NEGATIVE.matcher(id).find()) {
-//                print("REMOVE:", child);
+            if (TO_REMOVE.matcher(className).find()
+                    || TO_REMOVE.matcher(id).find()) {
+                //print("REMOVE:", child);
                 child.remove();
             }
         }

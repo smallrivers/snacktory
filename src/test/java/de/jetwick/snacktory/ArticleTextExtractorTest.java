@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Arrays;
 import java.util.List;
+import org.jsoup.Jsoup;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import org.apache.commons.lang.StringUtils;
+import org.jsoup.nodes.Document;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -787,14 +789,24 @@ public class ArticleTextExtractorTest {
     public void testMurraySenateGov() throws Exception {
         // Test http://www.murray.senate.gov/public/index.cfm/newsreleases?ContentRecord_id=28da79eb-bca4-421e-9358-cec1c064def0
         // Was not fully extracted by version 1.2.3
-        JResult res = extractor.extractContent(readFileAsString("test_data/murray_senate_gov.html"));
-        String text = res.getText();
-        // logger.info("text: " + text);
+        Document doc = Jsoup.parse(readFileAsString("test_data/murray_senate_gov.html"));
+        JResult res = extractor.extractContent(doc);
+        String text = res.getText();//logger.info("text: " + text);
         List<String> textList = res.getTextList();
-        // logger.info("textList:\n-" + StringUtils.join(textList, "\n-"));
         assertEquals(4, textList.size());
         assertTrue(textList.get(0).startsWith(text.substring(0, 15)));
         assertTrue(textList.get(3).endsWith(text.substring(text.length() - 15, text.length())));
+    }
+
+    @Test
+    public void testMysanantonioCom() throws Exception {
+        // Test http://www.mysanantonio.com/entertainment/music-stage/article/S-A-band-American-Kings-is-on-the-verge-6476107.php
+        Document doc = Jsoup.parse(readFileAsString("test_data/mysanantonio_com.html"));
+        JResult res = extractor.extractContent(doc);
+        //logger.info("document:" + doc);
+        String text = res.getText();
+        // logger.info("textList:\n-" + StringUtils.join(textList, "\n-"));
+        assertThat(text, startsWith("American Kings are for real. So are the screams."));
     }
 
     @Test
