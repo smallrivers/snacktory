@@ -553,6 +553,14 @@ public class ArticleTextExtractor {
             return parseDate(dateStr);
         }
 
+        // naturebox.com
+        elems = doc.select("time[class=published]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            return parseDate(dateStr);
+        }
+
         return null;
     }
 
@@ -594,7 +602,8 @@ public class ArticleTextExtractor {
             "dd MMMM yyyy HH:mm",
             "yyyyMMddHHmmss",
             "yyyyMMdd HHmmss",
-            "yyyyMMdd"
+            "yyyyMMdd",
+            "MMM dd, yyyy",
         };
 
       try {

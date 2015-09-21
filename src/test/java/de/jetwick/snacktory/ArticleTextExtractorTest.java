@@ -1014,6 +1014,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("naturebox.com.html")));
         assertTrue(res.getTitle(), res.getTitle().startsWith("Lunch Box Idea: Breakfast for Lunch"));
         assertTrue(res.getText(), res.getText().startsWith("I don’t know a kid who doesn’t enjoy breakfast for lunch!"));
+        assertEquals("Thu Feb 19 00:00:00 UTC 2015", res.getDate().toString());
     }
 
     /**
