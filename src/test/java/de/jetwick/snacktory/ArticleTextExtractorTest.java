@@ -420,7 +420,8 @@ public class ArticleTextExtractorTest {
     public void testEngadget2() throws Exception {
         // http://www.engadget.com/2010/08/18/verizon-fios-set-top-boxes-getting-a-new-hd-guide-external-stor/
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("engadget2.html")));
-        assertTrue(article.getText(), article.getText().startsWith("Verizon FiOS set-top boxes getting a new HD guide"));
+        assertEquals("Verizon FiOS set-top boxes getting a new HD guide, external storage and more in Q4 -- Engadget", article.getTitle());
+        assertTrue(article.getText(), article.getText().startsWith("Streaming and downloading TV content to mobiles is nice"));
         assertEquals("http://www.blogcdn.com/www.engadget.com/media/2010/08/44ni600_thumbnail.jpg", article.getImageUrl());
     }
 
@@ -1005,6 +1006,14 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("weixin.qq.com.html")));
         assertTrue(res.getTitle(), res.getTitle().startsWith("缺少IT支持成跨境电商发展阻力"));
         assertTrue(res.getText(), res.getText().startsWith("根据联合国贸发会议预计"));
+    }
+
+    @Test
+    public void testNaturebox() throws Exception {
+        // http://blog.naturebox.com/posts/lunch-box-idea-breakfast-for-lunch
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("naturebox.com.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Lunch Box Idea: Breakfast for Lunch"));
+        assertTrue(res.getText(), res.getText().startsWith("I don’t know a kid who doesn’t enjoy breakfast for lunch!"));
     }
 
     /**

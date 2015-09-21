@@ -73,8 +73,10 @@ public class ArticleTextExtractor {
 
     // For debugging
     private static final boolean DEBUG_WEIGHTS = false;
+    private static final boolean DEBUG_BASE_WEIGHTS = false;
+    private static final boolean DEBUG_CHILDREN_WEIGHTS = false;
     private static final int MAX_LOG_LENGTH = 200;
-    private static final int MIN_WEIGHT_TO_SHOW_IN_LOG = 800;
+    private static final int MIN_WEIGHT_TO_SHOW_IN_LOG = 10;
 
     public ArticleTextExtractor() {
         setUnlikely("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
@@ -86,7 +88,7 @@ public class ArticleTextExtractor {
         setHighlyPositive("storybody");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
-                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard");
+                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -174,6 +176,7 @@ public class ArticleTextExtractor {
             int currentWeight = getWeight(entry, false, entries);
             if (DEBUG_WEIGHTS){
                 if(currentWeight>MIN_WEIGHT_TO_SHOW_IN_LOG){
+                    System.out.println("");
                     System.out.println("-------------------------------------------");
                     System.out.println("         TAG: " + entry.tagName());
                     entries.print();
@@ -281,6 +284,17 @@ public class ArticleTextExtractor {
 
         // do extraction from the best element
         if (bestMatchElement != null) {
+
+            if (DEBUG_WEIGHTS){
+                System.out.println("----------- BEST ELEMENT --------------");
+                System.out.println("         TAG: " + bestMatchElement.tagName());
+                System.out.println("======================================");
+                String outerHtml = bestMatchElement.outerHtml();
+                if (outerHtml.length() > MAX_LOG_LENGTH)
+                    outerHtml = outerHtml.substring(0, MAX_LOG_LENGTH);
+                System.out.println(outerHtml);
+            }
+
             if (extractimages) {
                 List<ImageResult> images = new ArrayList<ImageResult>();
                 Element imgEl = determineImageSource(bestMatchElement, images);
@@ -855,9 +869,11 @@ public class ArticleTextExtractor {
             if (ownTextLength < 20)
                 continue;
 
-            //if(logEntries!=null) {
-            //    logEntries.add("\t      CHILD TAG: " + child.tagName());
-            //}
+            if (DEBUG_CHILDREN_WEIGHTS){
+                if(logEntries!=null) {
+                    logEntries.add("\t      CHILD TAG: " + child.tagName());
+                }
+            }
 
             if (ownTextLength > 200){
                 int childOwnTextWeight = Math.max(50, ownTextLength / 10);
@@ -896,10 +912,12 @@ public class ArticleTextExtractor {
         int grandChildrenCount = 0;
         for (Element child2 : rootEl.children()) {
 
-            //if(logEntries!=null) {
-            //    logEntries.add("\t    CHILD TAG: " + child2.tagName());
-                //logEntries.add(child2.outerHtml());
-            //}
+            if (DEBUG_CHILDREN_WEIGHTS){
+                if(logEntries!=null) {
+                    logEntries.add("\t    CHILD TAG: " + child2.tagName());
+                    //logEntries.add(child2.outerHtml());
+                }
+            }
 
             // If the node looks negative don't include it in the weights
             // instead penalize the grandparent. This is done to try to 
@@ -1031,37 +1049,56 @@ public class ArticleTextExtractor {
     private int calcWeight(Element e) {
         int weight = 0;
 
-        if (HIGHLY_POSITIVE.matcher(e.className()).find())
+        if (HIGHLY_POSITIVE.matcher(e.className()).find()){
             weight += 200;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("+200"); }
+        }
 
-        if (HIGHLY_POSITIVE.matcher(e.id()).find())
+        if (HIGHLY_POSITIVE.matcher(e.id()).find()) {
             weight += 90;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("+90"); }
+        }
 
-        if (POSITIVE.matcher(e.className()).find())
+        if (POSITIVE.matcher(e.className()).find()){
             weight += 35;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("+35"); }
+        }
 
-        if (POSITIVE.matcher(e.id()).find())
+        if (POSITIVE.matcher(e.id()).find()){
             weight += 45;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("+45"); }
+        }
 
-        if (UNLIKELY.matcher(e.className()).find())
+        if (UNLIKELY.matcher(e.className()).find()){
             weight -= 20;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("-20"); }
+        }
 
-        if (UNLIKELY.matcher(e.id()).find())
+        if (UNLIKELY.matcher(e.id()).find()){
             weight -= 20;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("-20"); }
+        }
 
-        if (NEGATIVE.matcher(e.className()).find())
+        if (NEGATIVE.matcher(e.className()).find()){
             weight -= 50;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("-50"); }
+        }
 
-        if (NEGATIVE.matcher(e.id()).find())
+        if (NEGATIVE.matcher(e.id()).find()){
             weight -= 50;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("-50"); }
+        }
 
         String style = e.attr("style");
-        if (style != null && !style.isEmpty() && NEGATIVE_STYLE.matcher(style).find())
+        if (style != null && !style.isEmpty() && NEGATIVE_STYLE.matcher(style).find()){
             weight -= 50;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("-50"); }
+        }
 
         String itemprop = e.attr("itemprop");
         if (itemprop != null && !itemprop.isEmpty() && POSITIVE.matcher(itemprop).find()){
             weight += 100;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("+100"); }
         }
 
         return weight;
