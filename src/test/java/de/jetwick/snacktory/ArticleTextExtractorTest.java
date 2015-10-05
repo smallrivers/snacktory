@@ -448,7 +448,8 @@ public class ArticleTextExtractorTest {
     public void testEngadget2() throws Exception {
         // http://www.engadget.com/2010/08/18/verizon-fios-set-top-boxes-getting-a-new-hd-guide-external-stor/
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("engadget2.html")));
-        assertTrue(article.getText(), article.getText().startsWith("Verizon FiOS set-top boxes getting a new HD guide"));
+        assertEquals("Verizon FiOS set-top boxes getting a new HD guide, external storage and more in Q4 -- Engadget", article.getTitle());
+        assertTrue(article.getText(), article.getText().startsWith("Streaming and downloading TV content to mobiles is nice"));
         assertEquals("http://www.blogcdn.com/www.engadget.com/media/2010/08/44ni600_thumbnail.jpg", article.getImageUrl());
     }
 
@@ -1001,20 +1002,83 @@ public class ArticleTextExtractorTest {
 
     @Test
     public void testCloudComputingExpo() throws Exception {
-        // www.cloudcomputingexpo.com/node/3342675
+        // http://www.cloudcomputingexpo.com/node/3342675
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo.html")));
         assertTrue(res.getText(), res.getText().startsWith("How to Put Public Sector Data Migration Hassles on the Road to Extinction"));
+        // test it doesn't extract outside the article content
+        assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
+        assertTrue(res.getText(), res.getText().startsWith("How to Put Public Sector Data Migration Hassles on the Road to Extinction"));
+    }
+
+    @Test
+    public void testCloudComputingExpo2() throws Exception {
+        // http://www.cloudcomputingexpo.com/node/3346367
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo2.html")));
+        assertTrue(res.getText(), res.getText().startsWith("Merck, a leading company for innovative, top-quality high-tech"));
+        assertTrue(res.getText(), res.getText().endsWith("EMD Millipore and EMD Performance Materials."));
         // test it doesn't extract outside the article content
         assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
     }
 
     @Test
-    public void testCloudComputingExpo2() throws Exception {
-        // www.cloudcomputingexpo.com/node/3342675
-        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo2.html")));
-        assertTrue(res.getText(), res.getText().startsWith("Merck, a leading company for innovative, top-quality high-tech"));
-        // test it doesn't extract outside the article content
-        assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
+    public void testCloudComputingExpo3() throws Exception {
+        // http://www.cloudcomputingexpo.com/node/3432136
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo3.html")));
+        assertEquals("IHS to Hold Conference Call and Webcast on September 29, 2015 with Release of Third Quarter Results for Fiscal Year 2015", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("IHS Inc. (NYSE: IHS), the leading global "));
+        assertTrue(res.getText(), res.getText().endsWith("http://www.businesswire.com/news/home/20150828005027/en/"));
+    }
+
+    @Test
+    public void testCloudComputingExpo4() throws Exception {
+        // http://www.cloudcomputingexpo.com/node/3372014
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo4.html")));
+        assertEquals("As New Cases Of Ebola Are Confirmed We Highlight The Need For Global Coordination In The Field Of Distance Education", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("LOS ANGELES, July 16, 2015 /PRNewswire-iReach/"));
+        assertTrue(res.getText(), res.getText().endsWith("News distributed by PR Newswire iReach: https://ireach.prnewswire.com"));
+    }
+
+    @Test
+    public void testCloudComputingExpo5() throws Exception {
+        // http://www.cloudcomputingexpo.com/node/3345803
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo5.html")));
+        assertEquals("U.S. FDA Approves Eisai's Antiepileptic Agent Fycompa as Adjunctive Treatment For Primary Generalized Tonic-Clonic Seizures", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("U.S. FDA Approves Eisai's Antiepileptic Agent Fycompa as Adjunctive Treatment"));
+        //assertTrue(res.getText(), res.getText().endsWith("or for any actions taken in reliance thereon"));
+    }
+
+    @Test
+    public void testCanonical() throws Exception {
+        // http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cio.com.html")));
+        assertEquals("Internet of things is overhyped, should be called internet with things", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("The internet of things is overhyped and should instead be called the internet with things"));
+        assertEquals("http://www.techworld.com/news/startups/rackspace-mongodb-execs-take-iot-hype-down-notch-3617731/", res.getCanonicalUrl());
+    }
+
+    @Test
+    public void testYahooMobile() throws Exception {
+        // https://m.yahoo.com/w/legobpengine/finance/news/stevia-first-corp-stvf-looks-123500390.html?.intl=us&.lang=en-us
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("m_yahoo.html")));
+        assertEquals("Stevia First Corp. (STVF) Looks to Disrupt Flavor Industry", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("WHITEFISH, MT / ACCESSWIRE / July 13, 2015 / The global market for sugar and sweeteners"));
+    }
+
+    @Test
+    public void testWeixin() throws Exception {
+        // http://mp.weixin.qq.com/s?3rd=MzA3MDU4NTYzMw%3D%3D&__biz=MzA4MTQ0Njc2Nw%3D%3D&idx=4&mid=207614885&scene=6&sn=eda80bb13406fb31cb25f70d12e6e7dc
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("weixin.qq.com.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("缺少IT支持成跨境电商发展阻力"));
+        assertTrue(res.getText(), res.getText().startsWith("根据联合国贸发会议预计"));
+    }
+
+    @Test
+    public void testNaturebox() throws Exception {
+        // http://blog.naturebox.com/posts/lunch-box-idea-breakfast-for-lunch
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("naturebox.com.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Lunch Box Idea: Breakfast for Lunch"));
+        assertTrue(res.getText(), res.getText().startsWith("I don’t know a kid who doesn’t enjoy breakfast for lunch!"));
+        assertEquals("Thu Feb 19 00:00:00 UTC 2015", res.getDate().toString());
     }
 
     /**
