@@ -93,15 +93,24 @@
                 </configuration>
             </plugin>
         </plugins>
+        <extensions>  
+            <extension>
+                <groupId>org.kuali.maven.wagons</groupId>
+                <artifactId>maven-s3-wagon</artifactId>
+                <version>1.2.1</version>
+            </extension>
+        </extensions>
     </build>
     <distributionManagement>
-        <snapshotRepository>
-            <id>skyshard_snapshots</id>
-            <url>https://github.com/skyshard/mvnrepo/raw/master/snapshots</url>
-        </snapshotRepository>
         <repository>
-            <id>skyshard_releases</id>
-            <url>https://github.com/skyshard/mvnrepo/raw/master/releases/</url>
+            <id>smallrivers-release</id>
+            <name>Internal Maven Release Repository</name>
+            <url>s3://smallrivers-repository/</url>
         </repository>
+        <snapshotRepository>
+            <id>smallrivers-snapshot</id>
+            <name>Internal Maven Snapshot Repository</name>
+            <url>s3://smallrivers-repository/</url>
+        </snapshotRepository>
     </distributionManagement>
 </project>
