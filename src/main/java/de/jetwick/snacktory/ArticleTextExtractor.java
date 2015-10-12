@@ -379,7 +379,8 @@ public class ArticleTextExtractor {
     }
 
     protected String extractTitle(Document doc) {
-        String title = cleanTitle(doc.title());
+
+        String title = doc.title();
         if (title.isEmpty()) {
             title = SHelper.innerTrim(doc.select("head title").text());
             if (title.isEmpty()) {
@@ -394,6 +395,25 @@ public class ArticleTextExtractor {
                     }
                 }
             }
+        } else {
+            // Apply heuristic to try to determine whether the title is a substring of the
+            // document title.
+            boolean usingPossibleTitle = false;
+            if (title.contains(" | ") || title.contains(" : ") || title.contains(" - ")){
+                String possibleTitle = SHelper.innerTrim(doc.select("h1:first-of-type").text());
+                if(!possibleTitle.isEmpty()){
+                    String doc_title = doc.title();
+                    if (doc_title.toLowerCase().contains(possibleTitle.toLowerCase())){
+                        title = possibleTitle;
+                        usingPossibleTitle = true;
+                    }
+                }
+            }
+
+            if(!usingPossibleTitle){
+                title = cleanTitle(title);
+            }
+
         }
         return title;
     }
