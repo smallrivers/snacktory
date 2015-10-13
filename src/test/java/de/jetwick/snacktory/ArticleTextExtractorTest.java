@@ -1021,6 +1021,15 @@ public class ArticleTextExtractorTest {
         assertEquals("Thu Feb 19 00:00:00 UTC 2015", res.getDate().toString());
     }
 
+    @Test
+    public void testItsaLovelyLife() throws Exception {
+        // http://itsalovelylife.com/why-having-a-sparkling-smile-is-important-to-me/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("itsalovelylife.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Why Having A Sparkling Smile Is Important To Me"));
+        assertTrue(res.getText(), res.getText().startsWith("I am still working my way through my New Year"));
+        assertEquals("Mon Oct 05 00:00:00 UTC 2015", res.getDate().toString());
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes

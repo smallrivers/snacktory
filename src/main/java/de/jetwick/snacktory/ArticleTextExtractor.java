@@ -85,7 +85,7 @@ public class ArticleTextExtractor {
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
                 + "|arti(cle|kel)|instapaper_body|storybody");
-        setHighlyPositive("storybody");
+        setHighlyPositive("storybody|main-content");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title");
@@ -288,6 +288,10 @@ public class ArticleTextExtractor {
             if (DEBUG_WEIGHTS){
                 System.out.println("----------- BEST ELEMENT --------------");
                 System.out.println("         TAG: " + bestMatchElement.tagName());
+                String bestMatchrHtml = bestMatchElement.outerHtml();
+                if (bestMatchrHtml.length() > MAX_LOG_LENGTH)
+                    bestMatchrHtml = bestMatchrHtml.substring(0, MAX_LOG_LENGTH);
+                System.out.println(bestMatchrHtml);
                 System.out.println("======================================");
                 String outerHtml = bestMatchElement.outerHtml();
                 if (outerHtml.length() > MAX_LOG_LENGTH)
@@ -575,6 +579,14 @@ public class ArticleTextExtractor {
 
         // naturebox.com
         elems = doc.select("time[class=published]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            return parseDate(dateStr);
+        }
+
+        // itsalovelylife.com
+        elems = doc.select("*[itemprop=datePublished]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
