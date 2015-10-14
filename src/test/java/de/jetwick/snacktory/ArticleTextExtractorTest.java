@@ -3,6 +3,10 @@ package de.jetwick.snacktory;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.TimeZone;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -785,6 +789,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().contains("I really love the way Rebekah"));
         assertTrue(res.getText(), res.getText().contains("my team became fascinated with Bad Pitch Blog"));
         assertTrue(res.getText(), res.getText().contains("I’m fairly certain there is no one nicer than Deirdre Breakenridge"));
+        compareDates("2015-01-08", res.getDate());
     }
 
     @Test
@@ -793,6 +798,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("marthastewartweddings.html")));
         assertEquals("Bridal Beauty Diaries: Lauren – Toning Up and Cutting Down", res.getTitle());
         assertTrue(res.getText(), res.getText().contains("Its “go” time. Approximately seven months until the big day"));
+        compareDates("2014-07-02", res.getDate());
     }
 
     @Test
@@ -810,6 +816,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Ryan Seacrest on Marriage: 'I Want What My Mom and Dad Have' - American Idol, Ryan Seacrest : People.com", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("There are those who are in denial about turning 40"));
         assertFalse(res.getText(), res.getText().contains("Poppy Montgomery Drama Unforgettable Is Being Brought Back"));
+        compareDates("2014-08-20 09:15:00", res.getDate());
     }
 
     @Test
@@ -819,6 +826,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Truck Driver Rescues Family in Burning Wreck : People.com", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("David Fredericksen was driving his semi truck along"));
         assertFalse(res.getText(), res.getText().contains("How Water Helps with Weight Loss"));
+        compareDates("2014-08-20 10:30:00", res.getDate());
     }
 
     @Test
@@ -829,6 +837,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("Just because you star in a video game, doesn't mean you'll be any good at it."));
         assertFalse(res.getText(), res.getText().contains("How Water Helps with Weight Loss"));
         assertEquals("Alex Heigl", res.getAuthorName());
+        compareDates("2014-08-20 08:20:00", res.getDate());
     }
 
     @Test
@@ -839,6 +848,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("At least three times a week, I get emails from entrepreneurs or small-business owners asking for advice on public relations."));
         assertEquals("Rebekah Iliff", res.getAuthorName());
         assertEquals("Chief Strategy Officer for AirPR", res.getAuthorDescription());
+        compareDates("2014-09-15 17:30:00", res.getDate());
     }
 
     @Test
@@ -849,6 +859,8 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("In a special Silicon Valley \"Tech Report,\" sources confirmed Monday that millions of "));
         assertEquals("Rebekah Iliff", res.getAuthorName());
         assertEquals("Chief Strategy Officer, AirPR", res.getAuthorDescription());
+        // Mon, 05 May 2014 16:04:09 -0400 (sailthru.date?)
+        compareDates("2014-05-05 20:04:09", res.getDate());
     }
 
     @Test
@@ -857,6 +869,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("allvoices.html")));
         assertEquals("Marchex exec: Lead generation moving away from 'faceless transactions'", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Driven by the surge in mobile, lead generation"));
+        compareDates("2014-08-14", res.getDate());
     }
 
     @Test
@@ -870,17 +883,21 @@ public class ArticleTextExtractorTest {
     @Test
     public void testHuffingtonpostAuthorDesc() throws Exception {
         // http://www.huffingtonpost.com/2015/03/10/bruce-miller-san-francisco-49ers-domestic-violence_n_6836416.html
-        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("huffingtonpost3.html")));
+        JResult res = new JResult();
+        res.setUrl("http://www.huffingtonpost.com/2015/03/10/bruce-miller-san-francisco-49ers-domestic-violence_n_6836416.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("huffingtonpost3.html")));
         assertEquals("San Francisco 49ers Fullback Bruce Miller Arrested On Domestic Violence Charges", res.getTitle());
         assertEquals("", res.getAuthorDescription());
+        compareDates("2015-03-10 05:27:01", res.getDate());
     }
 
     @Test
     public void testPRnewswireAuthorDesc() throws Exception {
-        // www.prnewswire.com/news-releases/tableau-to-present-at-upcoming-investor-conferences-300039248.html
+        // http://www.prnewswire.com/news-releases/tableau-to-present-at-upcoming-investor-conferences-300039248.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("prnewswire.html")));
         assertEquals("Tableau to Present at Upcoming Investor Conferences -- SEATTLE, Feb. 24, 2015 /PRNewswire/ --", res.getTitle());
         assertEquals("", res.getAuthorDescription());
+        compareDates("2015-03-12 02:21:37", res.getDate());
     }
 
     @Test
@@ -889,6 +906,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("trendkraft_de.html")));
         assertEquals("Freigegeben und ab sofort verfügbar: die sechste Generation des ECM-Systems windream", res.getTitle());
         assertTrue(res.getAuthorDescription(), res.getAuthorDescription().length() == 987);
+        compareDates("2015-03-11 09:19:56", res.getDate());
     }
 
     @Test
@@ -898,14 +916,18 @@ public class ArticleTextExtractorTest {
         assertEquals("A Travelogue of India — Medium", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Schipol Airport in 2012 looks nothing like Schipol Airport in the Eighties"));
         assertTrue("Should be less than 1000", res.getText().length() <= 1000);
+        compareDates("2014-08-19 04:11:18", res.getDate());
     }
 
     @Test
     public void testQualcomm() throws Exception {
         // https://www.qualcomm.com/news/releases/2014/10/16/qualcomm-declares-quarterly-cash-dividend
-        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("qualcomm.html")));
+        JResult res = new JResult();
+        res.setUrl("https://www.qualcomm.com/news/releases/2014/10/16/qualcomm-declares-quarterly-cash-dividend");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("qualcomm.html")));
         assertEquals("Qualcomm Declares Quarterly Cash Dividend", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Qualcomm Incorporated (NASDAQ: QCOM) today announced"));
+        compareDates("2014-10-16", res.getDate());
     }
 
     @Test
@@ -918,7 +940,7 @@ public class ArticleTextExtractorTest {
 
     @Test
     public void testApplePR2() throws Exception {
-        // www.apple.com/pr/library/2015/03/09Apple-Watch-Available-in-Nine-Countries-on-April-24.html
+        // http://www.apple.com/pr/library/2015/03/09Apple-Watch-Available-in-Nine-Countries-on-April-24.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("applepr2.html")));
         assertEquals("Apple Watch Available in Nine Countries on April 24", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Apple Watch Available in Nine Countries on April 24"));
@@ -930,6 +952,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("forbes.html")));
         assertEquals("Will Rackspace support Google's or Amazon's clouds? - Fortune", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Rackspace, a true cloud computing pioneer, is starting to sound like a company that will"));
+        compareDates("2015-05-11 23:01:19", res.getDate());
     }
 
     @Test
@@ -948,6 +971,7 @@ public class ArticleTextExtractorTest {
         // test it doesn't extract outside the article content
         assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
         assertTrue(res.getText(), res.getText().startsWith("How to Put Public Sector Data Migration Hassles on the Road to Extinction"));
+        compareDates("2015-06-29 12:00:00", res.getDate());
     }
 
     @Test
@@ -958,6 +982,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().endsWith("EMD Millipore and EMD Performance Materials."));
         // test it doesn't extract outside the article content
         assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
+        compareDates("2015-06-23 10:31:00", res.getDate());
     }
 
     @Test
@@ -967,6 +992,7 @@ public class ArticleTextExtractorTest {
         assertEquals("IHS to Hold Conference Call and Webcast on September 29, 2015 with Release of Third Quarter Results for Fiscal Year 2015", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("IHS Inc. (NYSE: IHS), the leading global "));
         assertTrue(res.getText(), res.getText().endsWith("http://www.businesswire.com/news/home/20150828005027/en/"));
+        compareDates("2015-08-28 08:00:00", res.getDate());
     }
 
     @Test
@@ -976,6 +1002,7 @@ public class ArticleTextExtractorTest {
         assertEquals("As New Cases Of Ebola Are Confirmed We Highlight The Need For Global Coordination In The Field Of Distance Education", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("LOS ANGELES, July 16, 2015 /PRNewswire-iReach/"));
         assertTrue(res.getText(), res.getText().endsWith("News distributed by PR Newswire iReach: https://ireach.prnewswire.com"));
+        compareDates("2015-07-16 19:37:00", res.getDate());
     }
 
     @Test
@@ -984,7 +1011,8 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo5.html")));
         assertEquals("U.S. FDA Approves Eisai's Antiepileptic Agent Fycompa as Adjunctive Treatment For Primary Generalized Tonic-Clonic Seizures", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("U.S. FDA Approves Eisai's Antiepileptic Agent Fycompa as Adjunctive Treatment"));
-        //assertTrue(res.getText(), res.getText().endsWith("or for any actions taken in reliance thereon"));
+        assertTrue(res.getText(), res.getText().endsWith("or for any actions taken in reliance thereon."));
+        compareDates("2015-06-22 02:21:00", res.getDate());
     }
 
     @Test
@@ -994,6 +1022,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Internet of things is overhyped, should be called internet with things", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("The internet of things is overhyped and should instead be called the internet with things"));
         assertEquals("http://www.techworld.com/news/startups/rackspace-mongodb-execs-take-iot-hype-down-notch-3617731/", res.getCanonicalUrl());
+        compareDates("2015-06-26 09:52:00-0700", res.getDate());
     }
 
     @Test
@@ -1002,6 +1031,8 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("m_yahoo.html")));
         assertEquals("Stevia First Corp. (STVF) Looks to Disrupt Flavor Industry", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("WHITEFISH, MT / ACCESSWIRE / July 13, 2015 / The global market for sugar and sweeteners"));
+        // not supported
+        //compareDates("2015-07-13 00:00:00", res.getDate());
     }
 
     @Test
@@ -1010,6 +1041,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("weixin.qq.com.html")));
         assertTrue(res.getTitle(), res.getTitle().startsWith("缺少IT支持成跨境电商发展阻力"));
         assertTrue(res.getText(), res.getText().startsWith("根据联合国贸发会议预计"));
+        compareDates("2015-07-27 00:00:00", res.getDate());
     }
 
     @Test
@@ -1018,7 +1050,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("naturebox.com.html")));
         assertTrue(res.getTitle(), res.getTitle().startsWith("Lunch Box Idea: Breakfast for Lunch"));
         assertTrue(res.getText(), res.getText().startsWith("I don’t know a kid who doesn’t enjoy breakfast for lunch!"));
-        assertEquals("Thu Feb 19 00:00:00 UTC 2015", res.getDate().toString());
+        compareDates("2015-02-19 00:00:00", res.getDate());
     }
 
     @Test
@@ -1027,7 +1059,37 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("itsalovelylife.html")));
         assertTrue(res.getTitle(), res.getTitle().startsWith("Why Having A Sparkling Smile Is Important To Me"));
         assertTrue(res.getText(), res.getText().startsWith("I am still working my way through my New Year"));
-        assertEquals("Mon Oct 05 00:00:00 UTC 2015", res.getDate().toString());
+        compareDates("2015-10-05 00:00:00", res.getDate());
+    }
+
+    @Test
+    public void testWsjVideo() throws Exception {
+        // http://www.wsj.com/video/what-did-steve-jobs-learn-from-the-beatles/46155A57-A19F-4AA1-9B2D-A3D8B1568A14.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wsj.com.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("What Did Steve Jobs Learn from the Beatles?"));
+        assertTrue(res.getText(), res.getText().startsWith("This transcript has been automatically generated"));
+        compareDates("2011-10-31 17:00:00", res.getDate());
+    }
+
+    public static void compareDates(String wanted, Date extracted) throws Exception {
+        Date wantedDate = null;
+        SimpleDateFormat[] dateFormats = {
+            new SimpleDateFormat("yyyy-MM-dd"),
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ssz"),
+        };
+
+        for(SimpleDateFormat dateFormat : dateFormats)
+        {
+            try {
+                wantedDate = dateFormat.parse(wanted);
+            } catch(ParseException ex) {
+                continue;
+            }
+        }
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        assertEquals(formatter.format(wantedDate), formatter.format(extracted));
     }
 
     /**

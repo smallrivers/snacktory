@@ -21,6 +21,7 @@ import org.jsoup.select.Selector.SelectorParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.commons.lang.time.*;
+import org.apache.commons.lang3.*;
 
 /**
  * This class is thread safe.
@@ -68,6 +69,11 @@ public class ArticleTextExtractor {
     private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
         Pattern.compile("By\\S*(.*)[\\.,].*")
     );
+
+    private static final List<Pattern> CLEAN_DATE_PATTERNS = Arrays.asList(
+        Pattern.compile("Posted:(.*)")
+    );
+
     private static final int MAX_AUTHOR_DESC_LENGHT = 1000;
     private static final int MAX_IMAGE_LENGHT = 255;
 
@@ -267,6 +273,7 @@ public class ArticleTextExtractor {
         Date docdate = extractDate(doc);
         if (docdate == null) {
             String dateStr = SHelper.estimateDate(res.getUrl());
+
             docdate = parseDate(dateStr);
             res.setDate(docdate);
         } else {
@@ -510,11 +517,9 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             if (el.hasAttr("content")) {
                 dateStr = el.attr("content");
-                
                 return parseDate(dateStr);
             } else if (el.hasAttr("value")) {
                 dateStr = el.attr("value");
-
                 return parseDate(dateStr);
             } else {
                 return parseDate(el.text());
@@ -535,7 +540,7 @@ public class ArticleTextExtractor {
                         }
             } 
         */
-      
+
         // BBC
         elems = doc.select("meta[name=OriginalPublicationDate]");
         if (elems.size() > 0) {
@@ -590,7 +595,46 @@ public class ArticleTextExtractor {
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
-            return parseDate(dateStr);
+            if (dateStr != null)
+                return parseDate(dateStr);
+        }
+
+        // trendkraft.de
+        elems = doc.select("*[itemprop=dateCreated]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            if (el.hasAttr("datetime")) {
+                dateStr = el.attr("datetime");
+                if (dateStr != null)
+                    return parseDate(dateStr);
+            }
+            dateStr = el.text();
+            if (dateStr != null)
+                return parseDate(dateStr);
+        }
+
+        elems = doc.select("*[id=post-date]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null)
+                return parseDate(dateStr);
+        }
+
+        elems = doc.select("*[class=storydatetime]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null)
+                return parseDate(dateStr);
+        }
+
+        elems = doc.select("*[class*=date]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null)
+                return parseDate(dateStr);
         }
 
         return null;
@@ -598,51 +642,101 @@ public class ArticleTextExtractor {
 
     private Date parseDate(String dateStr) {
         String[] parsePatterns = {
-            "yyyy-MM-dd'T'HH:mm:ssz", 
-            "yyyy-MM-dd HH:mm:ss", 
-            "yyyy/MM/dd HH:mm:ss", 
-            "yyyy-MM-dd HH:mm",
-            "yyyy/MM/dd HH:mm",
-            "yyyy-MM-dd", 
-            "yyyy/MM/dd",
-            "MM/dd/yyyy HH:mm:ss",
-            "MM-dd-yyyy HH:mm:ss",
-            "MM/dd/yyyy HH:mm",
-            "MM-dd-yyyy HH:mm",
-            "MM/dd/yyyy",
-            "MM-dd-yyyy",
-            "EEE, MMM dd, yyyy",
-            "MM/dd/yyyy hh:mm:ss a",
-            "MM-dd-yyyy hh:mm:ss a",
-            "MM/dd/yyyy hh:mm a",
-            "MM-dd-yyyy hh:mm a",
-            "yyyy-MM-dd hh:mm:ss a", 
-            "yyyy/MM/dd hh:mm:ss a ", 
-            "yyyy-MM-dd hh:mm a",
-            "yyyy/MM/dd hh:mm ",
-            "dd MMM yyyy",
-            "dd MMMM yyyy",
-            "yyyyMMddHHmm",
-            "yyyyMMdd HHmm",
-            "dd-MM-yyyy HH:mm:ss",
-            "dd/MM/yyyy HH:mm:ss",
-            "dd MMM yyyy HH:mm:ss",
-            "dd MMMM yyyy HH:mm:ss",
-            "dd-MM-yyyy HH:mm",
-            "dd/MM/yyyy HH:mm",
             "dd MMM yyyy HH:mm",
+            "dd MMM yyyy HH:mm:ss",
+            "dd MMM yyyy",
             "dd MMMM yyyy HH:mm",
-            "yyyyMMddHHmmss",
+            "dd MMMM yyyy HH:mm:ss",
+            "dd MMMM yyyy",
+            "dd-MM-yyyy HH:mm",
+            "dd-MM-yyyy HH:mm:ss",
+            "dd/MM/yyyy HH:mm",
+            "dd/MM/yyyy HH:mm:ss",
+            "EEE, dd MMM yyyy HH:mm:ss z",
+            "EEE, dd MMM yyyy HH:mm:ss",
+            "EEE, MMM dd, yyyy",
+            "MM-dd-yyyy hh:mm a",
+            "MM-dd-yyyy HH:mm",
+            "MM-dd-yyyy hh:mm:ss a",
+            "MM-dd-yyyy HH:mm:ss",
+            "MM-dd-yyyy",
+            "MM/dd/yyyy hh:mm a",
+            "MM/dd/yyyy HH:mm",
+            "MM/dd/yyyy hh:mm:ss a",
+            "MM/dd/yyyy HH:mm:ss",
+            "MM/dd/yyyy HH:mma",
+            "MM/dd/yyyy",
+            "MMM dd, yyyy hh:mm a",
+            "MMM dd, yyyy HH:mm",
+            "MMM dd, yyyy hh:mm:ss a",
+            "MMM dd, yyyy HH:mm:ss",
+            "MMM dd, yyyy",
+            "MMM. dd, yyyy hh:mm a",
+            "MMM. dd, yyyy HH:mm",
+            "MMM. dd, yyyy hh:mm:ss a",
+            "MMM. dd, yyyy HH:mm:ss",
+            "MMM. dd, yyyy",
+            "yyyy-MM-dd hh:mm a",
+            "yyyy-MM-dd HH:mm",
+            "yyyy-MM-dd hh:mm:ss a", 
+            "yyyy-MM-dd HH:mm:ss", 
+            "yyyy-MM-dd", 
+            "yyyy-MM-dd'T'HH:mm", 
+            "yyyy-MM-dd'T'HH:mm:ss",
+            "yyyy-MM-dd'T'HH:mm:ss",
+            "yyyy-MM-dd'T'HH:mm:ss.SSS",
+            "yyyy-MM-dd'T'HH:mm:ss.SSSz",
+            "yyyy-MM-dd'T'HH:mm:ssz",
+            "yyyy-MM-dd'T'HH:mmz",
+            "yyyy/MM/dd hh:mm ",
+            "yyyy/MM/dd HH:mm",
+            "yyyy/MM/dd hh:mm:ss a ", 
+            "yyyy/MM/dd HH:mm:ss", 
+            "yyyy/MM/dd",
+            "yyyyMMdd HHmm",
             "yyyyMMdd HHmmss",
             "yyyyMMdd",
-            "MMM dd, yyyy",
+            "yyyyMMddHHmm",
+            "yyyyMMddHHmmss",
         };
 
-      try {
-          return DateUtils.parseDateStrictly(dateStr, parsePatterns);
-      } catch (Exception ex) {
-          return null;
-      }
+        try {
+            dateStr = cleanDate(dateStr);
+            //System.out.println("dateStr="+dateStr+"|");
+            return DateUtils.parseDateStrictly(dateStr, parsePatterns);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    private static String toUnicode(char ch) {
+        return String.format("\\u%04x", (int) ch);
+    }
+
+    private String cleanDate(String dateStr) {
+
+        // Workaround for Zulu timezone not support in DateUtil formats
+        // see: http://stackoverflow.com/questions/2580925/simpledateformat-parsing-date-with-z-literal
+        dateStr = dateStr.replaceAll("Z$", "+0000");
+
+        // Workaround for issue with DateUtil format not supporting semicolon
+        // on the tz format, see: http://stackoverflow.com/questions/6841067/date-format-error-with-2011-07-27t0641110000
+        if (!dateStr.contains("GMT")){
+            dateStr = dateStr.replaceAll("(.*[+-]\\d\\d):(\\d\\d)", "$1$2");
+        }
+
+        for (Pattern pattern : CLEAN_DATE_PATTERNS) {
+            Matcher matcher = pattern.matcher(dateStr);
+            if(matcher.matches()){
+                dateStr = SHelper.innerTrim(matcher.group(1));
+                break;
+            }
+        }
+
+        // See: http://stackoverflow.com/questions/1060570/why-is-non-breaking-space-not-a-whitespace-character-in-java
+        dateStr = dateStr.replaceAll("^\u00A0*(.*)\u00A0*","$1");
+        dateStr = StringUtils.strip(dateStr);
+        return dateStr;
     }
 
     // Returns the author name or null
@@ -822,7 +916,7 @@ public class ArticleTextExtractor {
         }
         return faviconUrl;
     }
-    	
+
     protected String extractType(Document doc) {
         String type = cleanTitle(doc.title());
         type = SHelper.innerTrim(doc.select("head meta[property=og:type]").attr("content"));
