@@ -239,6 +239,10 @@ public class HtmlFetcher {
                 return res;
 
             String resUrl = getResolvedUrl(url, timeout, 0);
+            /*
+            // There are some cases when the resolved URL is empty (some sites
+            don't like the HEAD request, in that case instead of returning an
+            empty result try to access the site normally with GET.)
             if (resUrl.isEmpty()) {
                 if (logger.isDebugEnabled())
                     logger.warn("resolved url is empty. Url is: " + url);
@@ -247,10 +251,10 @@ public class HtmlFetcher {
                 if (cache != null)
                     cache.put(url, result);
                 return result.setUrl(url);
-            }
+            }*/
 
             // if resolved url is different then use it!
-            if (resUrl != null && resUrl != url) {
+            if (resUrl != null && !resUrl.isEmpty() && resUrl != url) {
                 // this is necessary e.g. for some homebaken url resolvers which return
                 // the resolved url relative to url!
                 url = SHelper.useDomainOfFirstArg4Second(url, resUrl);
@@ -290,6 +294,7 @@ public class HtmlFetcher {
                 extractor.extractContent(result, fetchAsString(urlToDownload, timeout), maxContentSize);
             } catch (IOException io){
                 // do nothing
+                logger.error("Exception for URL: " + url + ":" + io);
             }
             if (result.getFaviconUrl().isEmpty())
                 result.setFaviconUrl(SHelper.getDefaultFavicon(url));

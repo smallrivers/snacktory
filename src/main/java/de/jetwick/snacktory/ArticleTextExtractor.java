@@ -38,9 +38,12 @@ public class ArticleTextExtractor {
     // Unlikely candidates
     private String unlikelyStr;
     private Pattern UNLIKELY;
-    // Most likely positive candidates
+    // Likely positive candidates
     private String positiveStr;
     private Pattern POSITIVE;
+    // Most likely positive candidates
+    private String highlyPositiveStr;
+    private Pattern HIGHLY_POSITIVE;
     // Most likely negative candidates
     private String negativeStr;
     private Pattern NEGATIVE;
@@ -61,6 +64,7 @@ public class ArticleTextExtractor {
 
     private static final int MAX_AUTHOR_NAME_LENGTH = 255;
     private static final int MIN_AUTHOR_NAME_LENGTH = 4;
+    
     private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
         Pattern.compile("By\\S*(.*)[\\.,].*")
     );
@@ -69,7 +73,10 @@ public class ArticleTextExtractor {
 
     // For debugging
     private static final boolean DEBUG_WEIGHTS = false;
+    private static final boolean DEBUG_BASE_WEIGHTS = false;
+    private static final boolean DEBUG_CHILDREN_WEIGHTS = false;
     private static final int MAX_LOG_LENGTH = 200;
+    private static final int MIN_WEIGHT_TO_SHOW_IN_LOG = 10;
 
     public ArticleTextExtractor() {
         setUnlikely("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
@@ -77,10 +84,11 @@ public class ArticleTextExtractor {
                 + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-                + "|arti(cle|kel)|instapaper_body");
+                + "|arti(cle|kel)|instapaper_body|storybody");
+        setHighlyPositive("storybody");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
-                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|avatar|follow-me-twitter");
+                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|avatar|follow-me-twitter");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -96,6 +104,12 @@ public class ArticleTextExtractor {
     public ArticleTextExtractor setPositive(String positiveStr) {
         this.positiveStr = positiveStr;
         POSITIVE = Pattern.compile(positiveStr);
+        return this;
+    }
+
+    public ArticleTextExtractor setHighlyPositive(String highlyPositiveStr) {
+        this.highlyPositiveStr = highlyPositiveStr;
+        HIGHLY_POSITIVE = Pattern.compile(highlyPositiveStr);
         return this;
     }
 
@@ -169,7 +183,8 @@ public class ArticleTextExtractor {
                 entries = new LogEntries();
             int currentWeight = getWeight(entry, false, entries);
             if (DEBUG_WEIGHTS){
-                if(currentWeight>35){
+                if(currentWeight>MIN_WEIGHT_TO_SHOW_IN_LOG){
+                    System.out.println("");
                     System.out.println("-------------------------------------------");
                     System.out.println("         TAG: " + entry.tagName());
                     entries.print();
@@ -282,6 +297,17 @@ public class ArticleTextExtractor {
 
         // do extraction from the best element
         if (bestMatchElement != null) {
+
+            if (DEBUG_WEIGHTS){
+                System.out.println("----------- BEST ELEMENT --------------");
+                System.out.println("         TAG: " + bestMatchElement.tagName());
+                System.out.println("======================================");
+                String outerHtml = bestMatchElement.outerHtml();
+                if (outerHtml.length() > MAX_LOG_LENGTH)
+                    outerHtml = outerHtml.substring(0, MAX_LOG_LENGTH);
+                System.out.println(outerHtml);
+            }
+
             if (extractImages) {
                 List<ImageResult> images = new ArrayList<ImageResult>();
                 Element imgEl = determineImageSource(bestMatchElement, images);
@@ -541,6 +567,14 @@ public class ArticleTextExtractor {
             return parseDate(dateStr);
         }
 
+        // naturebox.com
+        elems = doc.select("time[class=published]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            return parseDate(dateStr);
+        }
+
         return null;
     }
 
@@ -582,7 +616,8 @@ public class ArticleTextExtractor {
             "dd MMMM yyyy HH:mm",
             "yyyyMMddHHmmss",
             "yyyyMMdd HHmmss",
-            "yyyyMMdd"
+            "yyyyMMdd",
+            "MMM dd, yyyy",
         };
 
       try {
@@ -817,7 +852,7 @@ public class ArticleTextExtractor {
         int ownTextWeight = (int) Math.round(e.ownText().length() / 100.0 * 10);
         weight+=ownTextWeight;
         if(logEntries!=null) logEntries.add("       ======> OWN TEXT WEIGHT:" + String.format("%3d", ownTextWeight));
-        int childrenWeight = weightChildNodes(e, logEntries);
+        int childrenWeight = (int) Math.round(weightChildNodes(e, logEntries) * 0.9);
         weight+=childrenWeight;
         if(logEntries!=null) logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight));
 
@@ -857,8 +892,10 @@ public class ArticleTextExtractor {
             if (ownTextLength < 20)
                 continue;
 
-            if(logEntries!=null) {
-                logEntries.add("\t      CHILD TAG: " + child.tagName());
+            if (DEBUG_CHILDREN_WEIGHTS){
+                if(logEntries!=null) {
+                    logEntries.add("\t      CHILD TAG: " + child.tagName());
+                }
             }
 
             if (ownTextLength > 200){
@@ -900,9 +937,11 @@ public class ArticleTextExtractor {
         int grandChildrenCount = 0;
         for (Element child2 : rootEl.children()) {
 
-            if(logEntries!=null) {
-                logEntries.add("\t    CHILD TAG: " + child2.tagName());
-                //logEntries.add(child2.outerHtml());
+            if (DEBUG_CHILDREN_WEIGHTS){
+                if(logEntries!=null) {
+                    logEntries.add("\t    CHILD TAG: " + child2.tagName());
+                    //logEntries.add(child2.outerHtml());
+                }
             }
 
             // If the node looks negative don't include it in the weights
@@ -1034,31 +1073,57 @@ public class ArticleTextExtractor {
 
     private int calcWeight(Element e) {
         int weight = 0;
-        if (POSITIVE.matcher(e.className()).find())
+
+        if (HIGHLY_POSITIVE.matcher(e.className()).find()){
+            weight += 200;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("+200"); }
+        }
+
+        if (HIGHLY_POSITIVE.matcher(e.id()).find()) {
+            weight += 90;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("+90"); }
+        }
+
+        if (POSITIVE.matcher(e.className()).find()){
             weight += 35;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("+35"); }
+        }
 
-        if (POSITIVE.matcher(e.id()).find())
+        if (POSITIVE.matcher(e.id()).find()){
             weight += 45;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("+45"); }
+        }
 
-        if (UNLIKELY.matcher(e.className()).find())
+        if (UNLIKELY.matcher(e.className()).find()){
             weight -= 20;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("-20"); }
+        }
 
-        if (UNLIKELY.matcher(e.id()).find())
+        if (UNLIKELY.matcher(e.id()).find()){
             weight -= 20;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("-20"); }
+        }
 
-        if (NEGATIVE.matcher(e.className()).find())
+        if (NEGATIVE.matcher(e.className()).find()){
             weight -= 50;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("-50"); }
+        }
 
-        if (NEGATIVE.matcher(e.id()).find())
+        if (NEGATIVE.matcher(e.id()).find()){
             weight -= 50;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("-50"); }
+        }
 
         String style = e.attr("style");
-        if (style != null && !style.isEmpty() && NEGATIVE_STYLE.matcher(style).find())
+        if (style != null && !style.isEmpty() && NEGATIVE_STYLE.matcher(style).find()){
             weight -= 50;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("-50"); }
+        }
 
         String itemprop = e.attr("itemprop");
         if (itemprop != null && !itemprop.isEmpty() && POSITIVE.matcher(itemprop).find()){
             weight += 100;
+            if (DEBUG_BASE_WEIGHTS) { System.out.println("+100"); }
         }
 
         return weight;
