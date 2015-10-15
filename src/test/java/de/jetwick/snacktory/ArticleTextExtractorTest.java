@@ -1071,6 +1071,42 @@ public class ArticleTextExtractorTest {
         compareDates("2011-10-31 17:00:00", res.getDate());
     }
 
+    @Test
+    public void testMsn() throws Exception {
+        // http://www.msn.com/en-us/lifestyle/weddings/how-to-make-your-smile-extra-stunning-for-your-wedding/ar-AAfi5iR
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("msn.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("How to Make Your Smile Extra Stunning for Your Wedding"));
+        assertTrue(res.getText(), res.getText().startsWith("Want to make your stunning natural smile even more gorgeous?"));
+        compareDates("2015-10-09 19:07:02", res.getDate());
+    }
+
+    @Test
+    public void testMsn2() throws Exception {
+        // http://www.msn.com/en-us/news/other/update-4-tennis-halle-open-mens-singles-round-1-results/ar-BBlaHCs
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("msn2.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("UPDATE 4-Tennis-Halle Open men's singles round 1 results"));
+        assertTrue(res.getText(), res.getText().startsWith("June 15 (Infostrada Sports) - Results from the Halle Open Men'"));
+        compareDates("2015-06-15 15:36:06", res.getDate());
+    }
+
+    @Test
+    public void testMsn3() throws Exception {
+        // http://www.msn.com/en-us/news/other/microsoft-shows-off-minecraft-built-specifically-for-hololens/ar-BBlb2RM
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("msn3.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Microsoft shows off 'Minecraft' built specifically for HoloLens"));
+        assertTrue(res.getText(), res.getText().startsWith("At its E3 2015 event, Microsoft has given us a new demo of Minecraft"));
+        compareDates("2015-06-15 17:54:00", res.getDate());
+    }
+
+    @Test
+    public void testMsn4() throws Exception {
+        // http://www.msn.com/en-sg/money/other/asia-stocks-fall-second-week-as-china-h-shares-enter-bear-market/ar-AAoxWG
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("msn4.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Asia Stocks Fall Second Week as China H-Shares Enter Bear Market"));
+        assertTrue(res.getText(), res.getText().startsWith("March 22 (Bloomberg) -- Asia’s benchmark stock index fell the past five days to the biggest "));
+        compareDates("2014-03-22 00:15:58", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

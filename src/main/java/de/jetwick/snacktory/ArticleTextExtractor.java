@@ -34,7 +34,7 @@ import org.apache.commons.lang3.*;
 public class ArticleTextExtractor {
 
     private static final Logger logger = LoggerFactory.getLogger(ArticleTextExtractor.class);
-    // Interessting nodes
+    // Interesting nodes
     private static final Pattern NODES = Pattern.compile("p|div|td|h1|h2|article|section");
     // Unlikely candidates
     private String unlikelyStr;
@@ -91,10 +91,10 @@ public class ArticleTextExtractor {
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
                 + "|arti(cle|kel)|instapaper_body|storybody");
-        setHighlyPositive("storybody|main-content");
+        setHighlyPositive("storybody|main-content|articlebody");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
-                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title");
+                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -632,6 +632,20 @@ public class ArticleTextExtractor {
         elems = doc.select("*[class*=date]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null)
+                return parseDate(dateStr);
+        }
+
+        // msn.com
+        elems = doc.select("time[data-always-show=true]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            if (el.hasAttr("datetime")) {
+                dateStr = el.attr("datetime");
+                if (dateStr != null)
+                    return parseDate(dateStr);
+            }
             dateStr = el.text();
             if (dateStr != null)
                 return parseDate(dateStr);
