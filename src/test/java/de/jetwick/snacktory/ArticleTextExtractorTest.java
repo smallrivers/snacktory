@@ -1107,6 +1107,36 @@ public class ArticleTextExtractorTest {
         compareDates("2014-03-22 00:15:58", res.getDate());
     }
 
+    @Test
+    public void testCNBC() throws Exception {
+        // http://www.cnbc.com/2015/10/01/amazon-google-move-into-on-demand-home-services.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cnbc1.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Amazon, Google move into on-demand home services"));
+        assertTrue(res.getText(), res.getText().startsWith("Amazon and Google are vying to become the Uber for handymen"));
+        assertTrue(res.getText(), res.getText().endsWith("This story has been updated to reflect that Thumbtack's CEO is Marco Zappacosta."));
+        compareDates("2015-10-01 16:12:05", res.getDate());
+    }
+
+    @Test
+    public void testCNBC2() throws Exception {
+        // http://www.cnbc.com/2015/10/18/chinas-q3-gdp-up-69-y-o-y-compared-to-forecast-of-68.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cnbc2.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("China's Q3 GDP up 6.9% y-o-y compared to forecast of 6.8%"));
+        assertTrue(res.getText(), res.getText().startsWith("China's economy grew at its slowest pace since the global financial"));
+        assertTrue(res.getText(), res.getText().endsWith("This report has been updated to show that China's economy grew 6.9 percent in the third-quarter."));
+        compareDates("2015-10-18 22:00:02", res.getDate());
+    }
+
+    @Test
+    public void testCNBC3() throws Exception {
+        // http://www.cnbc.com/2015/10/12/india-us-japan-hold-naval-drills-in-bay-of-bengal-china-concerned.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cnbc3.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("India, US, Japan hold naval drills in Bay of Bengal, China concerned"));
+        assertTrue(res.getText(), res.getText().startsWith("India, Japan and the United States will hold joint naval exercises each year"));
+        assertTrue(res.getText(), res.getText().endsWith("Indo-Pacific idea,\" he said."));
+        compareDates("2015-10-12 21:49:04", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

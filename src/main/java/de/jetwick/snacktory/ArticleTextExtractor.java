@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.Date;
+import java.util.TreeMap;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -91,7 +92,7 @@ public class ArticleTextExtractor {
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
                 + "|arti(cle|kel)|instapaper_body|storybody");
-        setHighlyPositive("storybody|main-content|articlebody");
+        setHighlyPositive("storybody|main-content|articlebody|article_body");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate");
@@ -169,30 +170,24 @@ public class ArticleTextExtractor {
     }
 
     // Returns the best node match based on the weights (see getWeight for strategy)
-	private Element getBestMatchElement(Collection<Element> nodes){
-		int maxWeight = -200;        // why -200 now instead of 0?
-		Element bestMatchElement = null;
-		
+    private Element getBestMatchElement(Collection<Element> nodes){
+        int maxWeight = -200;        // why -200 now instead of 0?
+        Element bestMatchElement = null;
+        Map<Integer, ElementDebug> sortedElementsMap = new TreeMap<Integer, ElementDebug>();
+
         boolean ignoreMaxWeightLimit = false;
         for (Element entry : nodes) {
 
-            LogEntries entries = null;
+            LogEntries logEntries = null;
             if (DEBUG_WEIGHTS)
-                entries = new LogEntries();
-            int currentWeight = getWeight(entry, false, entries);
+                logEntries = new LogEntries();
+            int currentWeight = getWeight(entry, false, logEntries);
             if (DEBUG_WEIGHTS){
                 if(currentWeight>MIN_WEIGHT_TO_SHOW_IN_LOG){
-                    System.out.println("");
-                    System.out.println("-------------------------------------------");
-                    System.out.println("         TAG: " + entry.tagName());
-                    entries.print();
-                    System.out.println("======================================");
-                    System.out.println("                  TOTAL WEIGHT:" 
-                                        + String.format("%3d", currentWeight));
-                    String outerHtml = entry.outerHtml();
-                    if (outerHtml.length() > MAX_LOG_LENGTH)
-                        outerHtml = outerHtml.substring(0, MAX_LOG_LENGTH);
-                    System.out.println(outerHtml);
+                    ElementDebug elementdDebug = new ElementDebug();
+                    elementdDebug.logEntries = logEntries;
+                    elementdDebug.entry = entry;
+                    sortedElementsMap.put(currentWeight, elementdDebug);
                 }
             }
             if (currentWeight > maxWeight) {
@@ -223,6 +218,33 @@ public class ArticleTextExtractor {
                 if (maxWeight > 250 && !ignoreMaxWeightLimit) 
                     break;
                 */
+            }
+        }
+
+        if (DEBUG_WEIGHTS){
+            int mapSize = sortedElementsMap.size();
+            int entryCount = 0;
+            for(Map.Entry<Integer,ElementDebug> mapEntry : sortedElementsMap.entrySet()) {
+                Integer currentWeight = mapEntry.getKey();
+                ElementDebug elementDebug = mapEntry.getValue();
+                Element entry = elementDebug.entry;
+                LogEntries logEntries = elementDebug.logEntries;
+
+                entryCount+=1;
+                // Only show the 5 last nodes (highest weight)
+                if ((mapSize - entryCount) > 5){
+                    continue;
+                }
+                System.out.println("");
+                System.out.println("\t\t--------------- START NODE --------------------");
+                String outerHtml = entry.outerHtml();
+                if (outerHtml.length() > MAX_LOG_LENGTH)
+                    outerHtml = outerHtml.substring(0, MAX_LOG_LENGTH);
+                System.out.println("        HTML: " + outerHtml);
+                logEntries.print();
+                System.out.println("\t\t======================================");
+                System.out.println("                  TOTAL WEIGHT:" + String.format("%3d", currentWeight));
+                System.out.println("\t\t--------------- END NODE ----------------------");
             }
         }
 
@@ -291,20 +313,6 @@ public class ArticleTextExtractor {
 
         // do extraction from the best element
         if (bestMatchElement != null) {
-
-            if (DEBUG_WEIGHTS){
-                System.out.println("----------- BEST ELEMENT --------------");
-                System.out.println("         TAG: " + bestMatchElement.tagName());
-                String bestMatchrHtml = bestMatchElement.outerHtml();
-                if (bestMatchrHtml.length() > MAX_LOG_LENGTH)
-                    bestMatchrHtml = bestMatchrHtml.substring(0, MAX_LOG_LENGTH);
-                System.out.println(bestMatchrHtml);
-                System.out.println("======================================");
-                String outerHtml = bestMatchElement.outerHtml();
-                if (outerHtml.length() > MAX_LOG_LENGTH)
-                    outerHtml = outerHtml.substring(0, MAX_LOG_LENGTH);
-                System.out.println(outerHtml);
-            }
 
             if (extractimages) {
                 List<ImageResult> images = new ArrayList<ImageResult>();
@@ -980,7 +988,8 @@ public class ArticleTextExtractor {
         if(logEntries!=null) logEntries.add("       ======> OWN TEXT WEIGHT:" + String.format("%3d", ownTextWeight));
         int childrenWeight = (int) Math.round(weightChildNodes(e, logEntries) * 0.9);
         weight+=childrenWeight;
-        if(logEntries!=null) logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight));
+        if(logEntries!=null) logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight)
+                                            + " -- 90% OF CHILDREN WEIGHT");
 
         // add additional weight using possible 'extragravityscore' attribute
         if (checkextra) {
@@ -1009,129 +1018,171 @@ public class ArticleTextExtractor {
      */
     protected int weightChildNodes(Element rootEl, LogEntries logEntries) {
         int weight = 0;
+
+        int childrenWeight = 0;
+        int childrenCount = 0;
         Element caption = null;
         List<Element> pEls = new ArrayList<Element>(5);
 
+        boolean hasDebugHeader = false;
         for (Element child : rootEl.children()) {
             String ownText = child.ownText();
             int ownTextLength = ownText.length();
             if (ownTextLength < 20)
                 continue;
 
-            if (DEBUG_CHILDREN_WEIGHTS){
-                if(logEntries!=null) {
-                    logEntries.add("\t      CHILD TAG: " + child.tagName());
-                }
+            int childWeight = 0;
+            int childOwnTextWeight = 0;
+            int h2h1Weight = 0;
+            int calcChildWeight = 0;
+            childrenCount+=1;
+
+            if(DEBUG_CHILDREN_WEIGHTS && logEntries!=null && !hasDebugHeader){
+                logEntries.add("       ======>        CHILDREN:");
+                logEntries.add("\t ---------------------------------------------------------------------");
+                logEntries.add("\t |   TAG   | TEXT WEIGHT | H1/H2 WEIGHT | CHILD WEIGHT | CHILD TOTAL |");
+                logEntries.add("\t ---------------------------------------------------------------------");
+                hasDebugHeader = true;
             }
 
             if (ownTextLength > 200){
-                int childOwnTextWeight = Math.max(50, ownTextLength / 10);
-                if(logEntries!=null)
-                    logEntries.add("      CHILD TEXT WEIGHT:" 
-                                   + String.format("%3d", childOwnTextWeight));
-                weight += childOwnTextWeight;
+                childOwnTextWeight = Math.max(50, ownTextLength / 10);
+                childWeight += childOwnTextWeight;
             }
 
             if (child.tagName().equals("h1") || child.tagName().equals("h2")) {
-                int h2h1Weight = 30;
-                weight += h2h1Weight;
-                if(logEntries!=null)
-                    logEntries.add("\t   H1/H2 WEIGHT:" 
-                                   + String.format("%3d", h2h1Weight));
+                h2h1Weight = 30;
+                childWeight += h2h1Weight;
             } else if (child.tagName().equals("div") || child.tagName().equals("p")) {
-                int calcChildWeight = calcWeightForChild(child, ownText);
-                weight+=calcChildWeight;
-                if(logEntries!=null)
-                    logEntries.add("\t   CHILD WEIGHT:" 
-                                   + String.format("%3d", calcChildWeight));
+                calcChildWeight = calcWeightForChild(child, ownText);
+                childWeight+=calcChildWeight;
                 if (child.tagName().equals("p") && ownTextLength > 50)
                     pEls.add(child);
-
                 if (child.className().toLowerCase().equals("caption"))
                     caption = child;
             }
+
+            if (DEBUG_CHILDREN_WEIGHTS && logEntries!=null){
+                logEntries.add("\t |" + String.format("%7s  |", String.format("%s-%d", child.tagName(), childrenCount))
+                                      + String.format("%12s |", childOwnTextWeight)
+                                      + String.format("%13s |", h2h1Weight)
+                                      + String.format("%13s |", calcChildWeight)
+                                      + String.format("%12s |", childWeight));
+                logEntries.add("\t ---------------------------------------------------------------------");
+            }
+            childrenWeight += childWeight;
         }
+
+        if(logEntries!=null){
+            if(childrenCount==0){
+                logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight) 
+                                + " -- NO CHILDREN INCLUDED");
+            } else {
+                logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight));
+            }
+        }
+        weight+=childrenWeight;
 
         //
         // Visit grandchildren, This section visits the grandchildren 
-        // of the node and calculate their weights. Note that grandchildren
-        // weights are only worth 1/3 of children's
+        // of the node and calculate their weights.
         //
-        int grandChildrenWeight = 0;
         int grandChildrenCount = 0;
-        for (Element child2 : rootEl.children()) {
+        int grandChildrenWeight = 0;
 
-            if (DEBUG_CHILDREN_WEIGHTS){
-                if(logEntries!=null) {
-                    logEntries.add("\t    CHILD TAG: " + child2.tagName());
-                    //logEntries.add(child2.outerHtml());
-                }
-            }
+        int greatGrandChildrenCount = 0;
+        int greatGrandChildrenWeight = 0;
+
+        LogEntries granChildrenLogEntries = new LogEntries();
+        LogEntries greatGranChildrenLogEntries = new LogEntries();
+
+        childrenCount = 0;
+
+        if(DEBUG_CHILDREN_WEIGHTS && logEntries!=null){
+            // TODO: All these logging is becoming messy, find a better way to do it.
+            granChildrenLogEntries.add("       ======>  GRAND CHILDREN:");
+            granChildrenLogEntries.add("\t ---------------------------------------------");
+            granChildrenLogEntries.add("\t |   PARENT TAG   |     TAG     |      TOTAL |");
+            granChildrenLogEntries.add("\t ---------------------------------------------");
+
+            greatGranChildrenLogEntries.add("       ======>  GREAT CHILDREN:");
+            greatGranChildrenLogEntries.add("\t --------------------------------------------------------------------");
+            greatGranChildrenLogEntries.add("\t |   GRAND PARENT TAG   |   PARENT TAG   |     TAG     |      TOTAL |");
+            greatGranChildrenLogEntries.add("\t --------------------------------------------------------------------");
+        }
+
+        for (Element child : rootEl.children()) {
 
             // If the node looks negative don't include it in the weights
             // instead penalize the grandparent. This is done to try to 
             // avoid giving weigths to navigation nodes, etc.
-            if (NEGATIVE.matcher(child2.id()).find() || 
-                NEGATIVE.matcher(child2.className()).find()){
-                if(logEntries!=null){
-                    logEntries.add("\t  CHILD DISCARDED");
-                }
+            if (NEGATIVE.matcher(child.id()).find() || 
+                NEGATIVE.matcher(child.className()).find()){
+                //logEntries.add(" grandChildrenWeight-=30");
                 grandChildrenWeight-=30;
                 continue;
             }
 
-            for (Element grandchild : child2.children()) {
-                int grandchildWeight = 0;
-                String ownText = grandchild.ownText();
-                int ownTextLength = ownText.length();
-                if (ownTextLength < 20)
-                    continue;
-
-                if(logEntries!=null) {
-                    logEntries.add("\t    GRANDCHILD TAG: " + grandchild.tagName());
-                    //logEntries.add(grandchild.outerHtml());
-                }
+            childrenCount+=1;
+            int currentGrandChildrenCount = 0;
+            for (Element grandchild : child.children()) {
                 grandChildrenCount+=1;
-
-                if (ownTextLength > 200){
-                    int childOwnTextWeight = Math.max(50, ownTextLength / 10);
-                    if(logEntries!=null)
-                        logEntries.add("    GRANDCHILD TEXT WEIGHT:" 
-                                       + String.format("%3d", childOwnTextWeight));
-                    grandchildWeight += childOwnTextWeight;
+                int grandChildWeight = getGrandChildWeight(grandchild, logEntries);
+                grandChildrenWeight +=  grandChildWeight;
+                if (grandChildWeight > 0) {
+                    currentGrandChildrenCount+=1;
+                    granChildrenLogEntries.add("\t |" + String.format("%14s |", String.format("%s-%d", child.tagName(), childrenCount))
+                                                      + String.format("%14s |", String.format("%s-%d", grandchild.tagName(), currentGrandChildrenCount))
+                                                      + String.format("%11s |", grandChildWeight));
                 }
 
-                if (grandchild.tagName().equals("h1") || grandchild.tagName().equals("h2")) {
-                    int h2h1Weight = 30;
-                    grandchildWeight += h2h1Weight;
-                    if(logEntries!=null)
-                        logEntries.add("   GRANDCHILD H1/H2 WEIGHT:" 
-                                       + String.format("%3d", h2h1Weight));
-                } else if (grandchild.tagName().equals("div") || grandchild.tagName().equals("p")) {
-                    int calcChildWeight = calcWeightForChild(grandchild, ownText);
-                    grandchildWeight+=calcChildWeight;
-                    if(logEntries!=null)
-                        logEntries.add("   GRANDCHILD CHILD WEIGHT:" 
-                                       + String.format("%3d", calcChildWeight));
+                int currentGreatGrandChildrenCount = 0;
+                for (Element greatgrandchild : grandchild.children()) {
+                    greatGrandChildrenCount+=1;
+                    int greatGrandChildWeight = getGrandChildWeight(greatgrandchild, logEntries);
+                    greatGrandChildrenWeight += greatGrandChildWeight;
+                    if (greatGrandChildrenWeight > 0) {
+                        currentGreatGrandChildrenCount+=1;
+                        greatGranChildrenLogEntries.add("\t |" + String.format("%17s    |", String.format("%s-%d", child.tagName(), childrenCount))
+                                                               + String.format("%13s    |", String.format("%s-%d", grandchild.tagName(), currentGrandChildrenCount))
+                                                               + String.format("%9s    |", String.format("%s-%d", greatgrandchild.tagName(), currentGreatGrandChildrenCount))
+                                                               + String.format("%11s |", greatGrandChildWeight));
+                    }
                 }
-
-                if(logEntries!=null)
-                    logEntries.add("\t GRANDCHILD WEIGHT:" 
-                                   + String.format("%3d", grandchildWeight));
-                grandChildrenWeight += grandchildWeight;
+                if (currentGreatGrandChildrenCount > 0) {
+                    greatGranChildrenLogEntries.add("\t --------------------------------------------------------------------");
+                }
+            }
+            if (currentGrandChildrenCount > 0) {
+                granChildrenLogEntries.add("\t ---------------------------------------------"); 
             }
         }
 
-        if (grandChildrenCount <= 0)
-            grandChildrenCount = 1;
-        grandChildrenWeight = grandChildrenWeight / 3;
-        if(logEntries!=null){
-            logEntries.add("\t  GRANDCHILDREN WEIGHT:" 
-                           + String.format("%3d", grandChildrenWeight));
-            logEntries.add("\t   GRANDCHILDREN COUNT:" 
-                           + String.format("%3d", grandChildrenCount));
+        // grand children
+        grandChildrenWeight = (int) Math.round(grandChildrenWeight * 0.45);
+        if(DEBUG_CHILDREN_WEIGHTS && logEntries!=null){
+            if(grandChildrenWeight > 0){
+                logEntries.append(granChildrenLogEntries);
+                logEntries.add("       ======> GRAND-CH WEIGHT:" + String.format("%3d", grandChildrenWeight));
+            } else {
+                logEntries.add("       ======> GRAND-CH WEIGHT:" + String.format("%3d", grandChildrenWeight) 
+                                + " -- NO GRANDCHILDREN INCLUDED");
+            }
         }
         weight+=grandChildrenWeight;
+
+        // great grand children
+        greatGrandChildrenWeight = (int) Math.round(greatGrandChildrenWeight * 0.45);
+        if(DEBUG_CHILDREN_WEIGHTS && logEntries!=null){
+            if(greatGrandChildrenWeight > 0){
+                logEntries.append(greatGranChildrenLogEntries);
+                logEntries.add("       ======> GREAT-CH WEIGHT:" + String.format("%3d", greatGrandChildrenWeight));
+            } else {
+                logEntries.add("       ======> GREAT-CH WEIGHT:" + String.format("%3d", greatGrandChildrenWeight) 
+                                + " -- NO GREAT GRANDCHILDREN INCLUDED");
+            }
+        }
+        weight+=greatGrandChildrenWeight;
 
         // use caption and image
         if (caption != null){
@@ -1160,6 +1211,55 @@ public class ArticleTextExtractor {
             }
         }
         return weight;
+    }
+
+    public int getGrandChildWeight(Element grandchild, LogEntries logEntries){
+        int grandchildWeight = 0;
+        String ownText = grandchild.ownText();
+        int ownTextLength = ownText.length();
+        if (ownTextLength < 20)
+            return 0;
+
+        /*
+        if(logEntries!=null) {
+            logEntries.add("\t    GRANDCHILD TAG: " + grandchild.tagName());
+            //logEntries.add(grandchild.outerHtml());
+        }*/
+
+        if (ownTextLength > 200){
+            int childOwnTextWeight = Math.max(50, ownTextLength / 10);
+            /*
+            if(logEntries!=null)
+                logEntries.add("    GRANDCHILD TEXT WEIGHT:" 
+                               + String.format("%3d", childOwnTextWeight));
+            */
+            grandchildWeight += childOwnTextWeight;
+        }
+
+        if (grandchild.tagName().equals("h1") || grandchild.tagName().equals("h2")) {
+            int h2h1Weight = 30;
+            grandchildWeight += h2h1Weight;
+            /*
+            if(logEntries!=null)
+                logEntries.add("   GRANDCHILD H1/H2 WEIGHT:" 
+                               + String.format("%3d", h2h1Weight));
+            */
+        } else if (grandchild.tagName().equals("div") || grandchild.tagName().equals("p")) {
+            int calcChildWeight = calcWeightForChild(grandchild, ownText);
+            grandchildWeight+=calcChildWeight;
+            /*
+            if(logEntries!=null)
+                logEntries.add("   GRANDCHILD CHILD WEIGHT:" 
+                               + String.format("%3d", calcChildWeight));
+            */
+        }
+
+        /*
+        if(logEntries!=null)
+            logEntries.add("\t GRANDCHILD WEIGHT:" 
+                           + String.format("%3d", grandchildWeight));
+        */
+        return grandchildWeight;
     }
 
     public void addScore(Element el, int score) {
@@ -1532,10 +1632,27 @@ public class ArticleTextExtractor {
             this.entries.add(entry);
         }
 
+        public void append(LogEntries otherEntries){
+            this.entries.addAll(otherEntries.entries);
+        }
+
         public void print(){
             for (String entry : this.entries) {
                 System.out.println(entry);
             }
         }
+
+        public int size(){
+            return entries.size();
+        }
     }
+
+    /**
+     *  Helper class to debug element weights calculation
+    */
+    private class ElementDebug {
+        LogEntries logEntries;
+        Element entry;
+    }
+
 }
