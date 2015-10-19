@@ -1096,7 +1096,7 @@ public class ArticleTextExtractor {
             }
 
             if (DEBUG_CHILDREN_WEIGHTS && logEntries!=null){
-                logEntries.add("\t |" + String.format("%6s-%d |", child.tagName(), childrenCount)
+                logEntries.add("\t |" + String.format("%7s  |", String.format("%s-%d", child.tagName(), childrenCount))
                                       + String.format("%12s |", childOwnTextWeight)
                                       + String.format("%13s |", h2h1Weight)
                                       + String.format("%13s |", calcChildWeight)
@@ -1164,8 +1164,8 @@ public class ArticleTextExtractor {
                 grandChildrenWeight +=  grandChildWeight;
                 if (grandChildWeight > 0) {
                     currentGrandChildrenCount+=1;
-                    granChildrenLogEntries.add("\t |" + String.format("%10s-%d    |", child.tagName(), childrenCount)
-                                                      + String.format("%10s-%d |", grandchild.tagName(), currentGrandChildrenCount)
+                    granChildrenLogEntries.add("\t |" + String.format("%14s |", String.format("%s-%d", child.tagName(), childrenCount))
+                                                      + String.format("%14s |", String.format("%s-%d", grandchild.tagName(), currentGrandChildrenCount))
                                                       + String.format("%11s |", grandChildWeight));
                 }
 
@@ -1176,9 +1176,9 @@ public class ArticleTextExtractor {
                     greatGrandChildrenWeight += greatGrandChildWeight;
                     if (greatGrandChildrenWeight > 0) {
                         currentGreatGrandChildrenCount+=1;
-                        greatGranChildrenLogEntries.add("\t |" + String.format("%13s-%d       |", child.tagName(), childrenCount)
-                                                               + String.format("%10s-%d    |", grandchild.tagName(), currentGrandChildrenCount)
-                                                               + String.format("%10s-%d |", greatgrandchild.tagName(), currentGreatGrandChildrenCount)
+                        greatGranChildrenLogEntries.add("\t |" + String.format("%17s    |", String.format("%s-%d", child.tagName(), childrenCount))
+                                                               + String.format("%13s    |", String.format("%s-%d", grandchild.tagName(), currentGrandChildrenCount))
+                                                               + String.format("%9s    |", String.format("%s-%d", greatgrandchild.tagName(), currentGreatGrandChildrenCount))
                                                                + String.format("%11s |", greatGrandChildWeight));
                     }
                 }
@@ -1192,7 +1192,7 @@ public class ArticleTextExtractor {
         }
 
         // grand children
-        grandChildrenWeight = grandChildrenWeight / 3;
+        grandChildrenWeight = (int) Math.round(grandChildrenWeight * 0.45);
         if(DEBUG_CHILDREN_WEIGHTS && logEntries!=null){
             if(grandChildrenWeight > 0){
                 logEntries.append(granChildrenLogEntries);
@@ -1205,7 +1205,7 @@ public class ArticleTextExtractor {
         weight+=grandChildrenWeight;
 
         // great grand children
-        greatGrandChildrenWeight = (int) Math.round(greatGrandChildrenWeight * 0.33);
+        greatGrandChildrenWeight = (int) Math.round(greatGrandChildrenWeight * 0.45);
         if(DEBUG_CHILDREN_WEIGHTS && logEntries!=null){
             if(greatGrandChildrenWeight > 0){
                 logEntries.append(greatGranChildrenLogEntries);
