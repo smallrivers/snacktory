@@ -1012,7 +1012,6 @@ public class ArticleTextExtractor {
         int ownTextWeight = (int) Math.round(e.ownText().length() / 100.0 * 10);
         weight+=ownTextWeight;
         if(logEntries!=null) logEntries.add("       ======> OWN TEXT WEIGHT:" + String.format("%3d", ownTextWeight));
-        //int childrenWeight = (int) Math.round(weightChildNodes(e, logEntries) * 0.9);
         int childrenWeight = (int) Math.round(weightChildNodes(e, logEntries) * 0.9);
         weight+=childrenWeight;
         if(logEntries!=null) logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight)
