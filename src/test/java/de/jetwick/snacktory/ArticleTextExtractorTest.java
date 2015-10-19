@@ -1178,6 +1178,15 @@ public class ArticleTextExtractorTest {
         compareDates("2014-03-22 00:15:58", res.getDate());
     }
 
+    @Test
+    public void testCNBC() throws Exception {
+        // http://www.cnbc.com/2015/10/01/amazon-google-move-into-on-demand-home-services.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cnbc.com.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Amazon, Google move into on-demand home services"));
+        assertTrue(res.getText(), res.getText().startsWith("Amazon and Google are vying to become the Uber for handymen"));
+        compareDates("2015-10-01 16:12:05", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
