@@ -57,9 +57,11 @@ public class OutputFormatter {
     /**
      * takes an element and turns the P tags into \n\n
      */
-    public String getFormattedText(Element topNode) {
+    public String getFormattedText(Element topNode, boolean removeNegative) {
         setParagraphIndex(topNode, nodesToKeepCssSelector);
-        removeNodesWithNegativeScores(topNode);
+        if(removeNegative){
+            removeNodesWithNegativeScores(topNode);
+        }
         StringBuilder sb = new StringBuilder();
         int countOfP = append(topNode, sb, nodesToKeepCssSelector);
         String str = SHelper.innerTrim(sb.toString());
@@ -192,6 +194,8 @@ public class OutputFormatter {
                 else if (element.tagName().equals("br"))
                     accum.append(" ");
                 appendTextSkipHidden(element, accum, indent + 1);
+                if (element.tagName().equals("cite")) // Used in cnn.com
+                    accum.append(" ");
             }
         }
     }

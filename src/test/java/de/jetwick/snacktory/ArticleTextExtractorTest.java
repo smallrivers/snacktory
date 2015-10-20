@@ -779,6 +779,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().contains("Conversion of media. Julie Hong, the community manager"));
         assertTrue(res.getText(), res.getText().contains("Paid media affects traditional PR"));
         assertTrue(res.getText(), res.getText().contains("Old ideas become new again. We’ve stopped doing things such as deskside briefings, large events, direct mail"));
+        compareDates("2014-12-09 05:58:40", res.getDate());
     }
 
     @Test
@@ -896,7 +897,7 @@ public class ArticleTextExtractorTest {
         // http://www.prnewswire.com/news-releases/tableau-to-present-at-upcoming-investor-conferences-300039248.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("prnewswire.html")));
         assertEquals("Tableau to Present at Upcoming Investor Conferences -- SEATTLE, Feb. 24, 2015 /PRNewswire/ --", res.getTitle());
-        assertEquals("", res.getAuthorDescription());
+        assertEquals("Tableau Software (NYSE: DATA) helps people see and understand data. Tableau helps anyone quickly analyze, visualize and share information. More than 26,000 customer accounts get rapid results with Tableau in the office and on-the-go. And tens of thousands of people use Tableau Public to share data in their blogs and websites. See how Tableau can help you by downloading the free trial at www.tableau.com/trial.", res.getAuthorDescription());
         compareDates("2015-03-12 02:21:37", res.getDate());
     }
 
@@ -1135,6 +1136,36 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("India, Japan and the United States will hold joint naval exercises each year"));
         assertTrue(res.getText(), res.getText().endsWith("Indo-Pacific idea,\" he said."));
         compareDates("2015-10-12 21:49:04", res.getDate());
+    }
+
+    @Test
+    public void testCNN3() throws Exception {
+        // http://www.cnn.com/2015/09/24/politics/donald-trump-marco-rubio-foreign-policy/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cnn3.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Rubio strikes back at Trump - CNNPolitics.com"));
+        assertTrue(res.getText(), res.getText().startsWith("Washington Sen. Marco Rubio is firing back at Donald Trump as \"insecure\" and \"touchy\" after the mogul has spent the past two days going after his Republican presidential opponent."));
+        assertTrue(res.getText(), res.getText().endsWith("\"Every time they kill mid-level accounting person from ISIS they have a news conference,\" he said. Marco Rubio's below-the-radar campaign"));
+        compareDates("2015-09-24 12:29:56", res.getDate());
+    }
+
+    @Test
+    public void testCNN4() throws Exception {
+        // http://www.cnn.com/2015/10/20/middleeast/israeli-palestinian-tensions/index.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cnn4.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("U.N. leader visits Israel, Palestinian territories - CNN.com"));
+        assertTrue(res.getText(), res.getText().startsWith("Jerusalem (CNN) U.N. Secretary-General Ban Ki-moon "));
+        assertTrue(res.getText(), res.getText().endsWith("Ben Wedeman contributed to this report."));
+        compareDates("2015-10-20 09:05:18", res.getDate());
+    }
+
+    @Test
+    public void testCNN5() throws Exception {
+        // http://money.cnn.com/2015/10/20/news/uber-india-rape-verdict/index.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cnn5.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Uber driver guilty in India rape case"));
+        assertTrue(res.getText(), res.getText().startsWith("Yadav was convicted Tuesday on four charges related to"));
+        assertTrue(res.getText(), res.getText().endsWith("puts Uber in the shade"));
+        compareDates("2015-10-20 03:16:59", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
