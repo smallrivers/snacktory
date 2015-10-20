@@ -92,7 +92,7 @@ public class ArticleTextExtractor {
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
                 + "|arti(cle|kel)|instapaper_body|storybody");
-        setHighlyPositive("storybody|main-content|articlebody|article_body");
+        setHighlyPositive("storybody|main-content|articlebody|article_body|articleBody");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings|title|avatar|follow-me-twitter|truncate");
@@ -189,12 +189,15 @@ public class ArticleTextExtractor {
         Map<Integer, ElementDebug> sortedElementsMap = new TreeMap<Integer, ElementDebug>();
 
         boolean ignoreMaxWeightLimit = false;
+        boolean hasHighlyPositive = false;
         for (Element entry : nodes) {
 
             LogEntries logEntries = null;
             if (DEBUG_WEIGHTS)
                 logEntries = new LogEntries();
-            int currentWeight = getWeight(entry, false, logEntries);
+            Weight val = getWeight(entry, false, hasHighlyPositive, logEntries);
+            int currentWeight = val.weight;
+            hasHighlyPositive = val.hasHighlyPositive;
             if (DEBUG_WEIGHTS){
                 if(currentWeight>MIN_WEIGHT_TO_SHOW_IN_LOG){
                     ElementDebug elementdDebug = new ElementDebug();
@@ -363,7 +366,7 @@ public class ArticleTextExtractor {
             }
 
             // clean before grabbing text
-            String text = formatter.getFormattedText(bestMatchElement);
+            String text = formatter.getFormattedText(bestMatchElement, true);
             text = removeTitleFromText(text, res.getTitle());
             // this fails for short facebook post and probably tweets: text.length() > res.getDescription().length()
             if (text.length() > res.getTitle().length()) {
@@ -1006,28 +1009,38 @@ public class ArticleTextExtractor {
      *
      * @param e Element to weight, along with child nodes
      */
-    protected int getWeight(Element e, boolean checkextra, LogEntries logEntries) {
-        int weight = calcWeight(e);
-        if(logEntries!=null) logEntries.add("       ======>     BASE WEIGHT:" + String.format("%3d", weight));
+    protected Weight getWeight(Element e, boolean checkextra, boolean hasHighlyPositive, LogEntries logEntries) {
+        Weight val = calcWeight(e, hasHighlyPositive);
+
+        if(logEntries!=null) logEntries.add("       ======>     BASE WEIGHT:" + String.format("%3d", val.weight));
         int ownTextWeight = (int) Math.round(e.ownText().length() / 100.0 * 10);
-        weight+=ownTextWeight;
+        val.weight+=ownTextWeight;
         if(logEntries!=null) logEntries.add("       ======> OWN TEXT WEIGHT:" + String.format("%3d", ownTextWeight));
         int childrenWeight = (int) Math.round(weightChildNodes(e, logEntries) * 0.9);
-        weight+=childrenWeight;
+        val.weight+=childrenWeight;
         if(logEntries!=null) logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight)
                                             + " -- 90% OF CHILDREN WEIGHT");
+
+        // Experimental
+        /*
+        // total node text
+        String totalText = formatter.getFormattedText(e, false);
+        int totalTextWeight =(int) Math.round(totalText.length() / 100.0 * 02);
+        val.weight+=totalTextWeight;
+        if(logEntries!=null) logEntries.add("       ===>  TOTAL TEXT WEIGHT:" + String.format("%3d", totalTextWeight));
+        */
 
         // add additional weight using possible 'extragravityscore' attribute
         if (checkextra) {
             Element xelem = e.select("[extragravityscore]").first();
             if (xelem != null) {
                 //                System.out.println("HERE found one: " + xelem.toString());
-                weight += Integer.parseInt(xelem.attr("extragravityscore"));
+                val.weight += Integer.parseInt(xelem.attr("extragravityscore"));
                 //                System.out.println("WITH WEIGHT: " + xelem.attr("extragravityscore"));
             }
         }
 
-        return weight;
+        return val;
     }
 
     /**
@@ -1327,62 +1340,78 @@ public class ArticleTextExtractor {
         return val;
     }
 
-    private int calcWeight(Element e) {
-        int weight = 0;
+    private Weight calcWeight(Element e, boolean hasHighlyPositive) {
 
-        if (HIGHLY_POSITIVE.matcher(e.className()).find()){
-            weight += 200;
-            if (DEBUG_BASE_WEIGHTS) { System.out.println("+200"); }
-        }
+        Weight val = new Weight();
+        val.weight = 0;
+        val.hasHighlyPositive = hasHighlyPositive;
 
-        if (HIGHLY_POSITIVE.matcher(e.id()).find()) {
-            weight += 90;
-            if (DEBUG_BASE_WEIGHTS) { System.out.println("+90"); }
+        // It can have only one of these nodes.
+        if(val.hasHighlyPositive==false){
+            if (e.hasAttr("itemprop")) {
+                if (HIGHLY_POSITIVE.matcher(e.attr("itemprop")).find()){
+                    val.weight += 350;
+                    if (DEBUG_BASE_WEIGHTS) { System.out.println("+350"); }
+                    val.hasHighlyPositive = true;
+                }
+            }
+
+            if (HIGHLY_POSITIVE.matcher(e.className()).find()){
+                val.weight += 200;
+                if (DEBUG_BASE_WEIGHTS) { System.out.println("+200"); }
+                val.hasHighlyPositive = true;
+            }
+
+            if (HIGHLY_POSITIVE.matcher(e.id()).find()) {
+                val.weight += 90;
+                if (DEBUG_BASE_WEIGHTS) { System.out.println("+90"); }
+                val.hasHighlyPositive = true;
+            }
         }
 
         if (POSITIVE.matcher(e.className()).find()){
-            weight += 35;
+            val.weight += 35;
             if (DEBUG_BASE_WEIGHTS) { System.out.println("+35"); }
         }
 
         if (POSITIVE.matcher(e.id()).find()){
-            weight += 45;
+            val.weight += 45;
             if (DEBUG_BASE_WEIGHTS) { System.out.println("+45"); }
         }
 
         if (UNLIKELY.matcher(e.className()).find()){
-            weight -= 20;
+            val.weight -= 20;
             if (DEBUG_BASE_WEIGHTS) { System.out.println("-20"); }
         }
 
         if (UNLIKELY.matcher(e.id()).find()){
-            weight -= 20;
+            val.weight -= 20;
             if (DEBUG_BASE_WEIGHTS) { System.out.println("-20"); }
         }
 
         if (NEGATIVE.matcher(e.className()).find()){
-            weight -= 50;
+            val.weight -= 50;
             if (DEBUG_BASE_WEIGHTS) { System.out.println("-50"); }
         }
 
         if (NEGATIVE.matcher(e.id()).find()){
-            weight -= 50;
+            val.weight -= 50;
             if (DEBUG_BASE_WEIGHTS) { System.out.println("-50"); }
         }
 
         String style = e.attr("style");
         if (style != null && !style.isEmpty() && NEGATIVE_STYLE.matcher(style).find()){
-            weight -= 50;
+            val.weight -= 50;
             if (DEBUG_BASE_WEIGHTS) { System.out.println("-50"); }
         }
 
         String itemprop = e.attr("itemprop");
         if (itemprop != null && !itemprop.isEmpty() && POSITIVE.matcher(itemprop).find()){
-            weight += 100;
+            val.weight += 100;
             if (DEBUG_BASE_WEIGHTS) { System.out.println("+100"); }
         }
 
-        return weight;
+        return val;
     }
 
     public Element determineImageSource(Element el, List<ImageResult> images) {
@@ -1688,6 +1717,14 @@ public class ArticleTextExtractor {
     private class ElementDebug {
         LogEntries logEntries;
         Element entry;
+    }
+
+    /*
+     *  Helper class to pass around the calculated weights
+     */
+    private class Weight {
+        int weight;
+        boolean hasHighlyPositive;
     }
 
 }
