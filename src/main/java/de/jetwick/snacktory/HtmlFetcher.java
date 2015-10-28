@@ -34,6 +34,10 @@ import java.util.zip.InflaterInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.*;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
 /**
  * Class to fetch articles. This class is thread safe.
  *
@@ -72,6 +76,7 @@ public class HtmlFetcher {
         }
         reader.close();
     }
+    private static final boolean DISABLE_SSL_VERIFICATION = true;
     private String referrer = "http://jetsli.de/crawler";
     private String userAgent = "Mozilla/5.0 (compatible; Jetslide; +" + referrer + ")";
     private String cacheControl = "max-age=0";
@@ -447,6 +452,7 @@ public class HtmlFetcher {
 
     protected HttpURLConnection createUrlConnection(String urlAsStr, int timeout,
             boolean includeSomeGooseOptions) throws MalformedURLException, IOException {
+
         URL url = new URL(urlAsStr);
         //using proxy may increase latency
         HttpURLConnection hConn = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
@@ -466,6 +472,21 @@ public class HtmlFetcher {
         hConn.setRequestProperty("Accept-Encoding", "gzip, deflate");
         hConn.setConnectTimeout(timeout);
         hConn.setReadTimeout(timeout);
+
+        if(DISABLE_SSL_VERIFICATION){
+            if (urlAsStr.toLowerCase().startsWith("https://")){
+                try {
+                    SSLContext sslc = SSLContext.getInstance("TLS");
+                    TrustManager[] trustManagerArray = { new NullX509TrustManager() };
+                    sslc.init(null, trustManagerArray, null);
+                    HttpsURLConnection hConnSecure = (HttpsURLConnection) hConn;
+                    hConnSecure.setDefaultSSLSocketFactory(sslc.getSocketFactory());
+                    hConnSecure.setDefaultHostnameVerifier(new NullHostnameVerifier());
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return hConn;
     }
 
@@ -483,5 +504,23 @@ public class HtmlFetcher {
             }
         }
         return null;
+    }
+
+    private static class NullX509TrustManager implements X509TrustManager {
+        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            //System.out.println();
+        }
+        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            //System.out.println();
+        }
+        public X509Certificate[] getAcceptedIssuers() {
+            return new X509Certificate[0];
+        }
+    }
+ 
+    private static class NullHostnameVerifier implements HostnameVerifier {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
     }
 }
