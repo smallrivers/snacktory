@@ -1239,6 +1239,17 @@ public class ArticleTextExtractorTest {
         compareDates("2015-10-20 03:16:59", res.getDate());
     }
 
+    @Test
+    public void testWamu() throws Exception {
+        // https://wamu.org/news/15/10/23/why_calling_slaves_workers_is_more_than_an_editing_error
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wamu.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Why Calling Slaves 'Workers' Is More Than An Editing Error"));
+        assertTrue(res.getText(), res.getText().startsWith("Coby Burren was reading his textbook"));
+        assertTrue(res.getText(), res.getText().endsWith("\"and that he'll be heard.\""));
+        // not supported
+        //compareDates("2015-10-23", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
