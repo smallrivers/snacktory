@@ -73,6 +73,9 @@ public class SHelper {
         if (str.isEmpty())
             return "";
 
+        // Replace &nbsp from jsoup with space
+        // TODO: Maybe create a separate function to remove/replace entities.
+        str = str.replace("\u00a0", " ");
         StringBuilder sb = new StringBuilder();
         boolean previousSpace = false;
         for (int i = 0; i < str.length(); i++) {

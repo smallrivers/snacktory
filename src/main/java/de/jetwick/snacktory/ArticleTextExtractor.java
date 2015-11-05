@@ -46,9 +46,13 @@ public class ArticleTextExtractor {
     // Most likely positive candidates
     private String highlyPositiveStr;
     private Pattern HIGHLY_POSITIVE;
-    // Most likely negative candidates
+    // Likely negative candidates
     private String negativeStr;
     private Pattern NEGATIVE;
+    // Most likely negative candidates
+    private String highlyNegativeStr;
+    private Pattern HIGHLY_NEGATIVE;
+
     private static final Pattern NEGATIVE_STYLE =
             Pattern.compile("hidden|display: ?none|font-size: ?small");
     private static final Pattern IGNORE_AUTHOR_PARTS =
@@ -92,10 +96,11 @@ public class ArticleTextExtractor {
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
                 + "|arti(cle|kel)|instapaper_body|storybody");
-        setHighlyPositive("storybody|main-content|articlebody|article_body|articleBody");
+        setHighlyPositive("storybody|main-content|articlebody|article_body|articleBody|html-view-content");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings|title|avatar|follow-me-twitter|truncate");
+        setHighlyNegative("policy-blk|FollowLinkedInSignIn");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -129,6 +134,13 @@ public class ArticleTextExtractor {
         NEGATIVE = Pattern.compile(negativeStr);
         return this;
     }
+
+    public ArticleTextExtractor setHighlyNegative(String highlyNegativeStr) {
+        this.highlyNegativeStr = highlyNegativeStr;
+        HIGHLY_NEGATIVE = Pattern.compile(highlyNegativeStr);
+        return this;
+    }
+
 
     public ArticleTextExtractor addNegative(String neg) {
         setNegative(negativeStr + "|" + neg);
@@ -247,7 +259,7 @@ public class ArticleTextExtractor {
                 LogEntries logEntries = elementDebug.logEntries;
 
                 entryCount+=1;
-                // Only show the 5 last nodes (highest weight)
+                // Only show the N last nodes (highest weight)
                 if ((mapSize - entryCount) > 5){
                     continue;
                 }
@@ -689,6 +701,15 @@ public class ArticleTextExtractor {
                 return parseDate(dateStr);
         }
 
+        // jdsupra.com
+        elems = doc.select("time");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null)
+                return parseDate(dateStr);
+        }
+
         return null;
     }
 
@@ -819,6 +840,10 @@ public class ArticleTextExtractor {
                 authorName = SHelper.innerTrim(doc.select("meta[itemprop=author], span[itemprop=author]").attr("content"));
             }
 
+            if (authorName.isEmpty()) {  // a hack for http://jdsupra.com/
+                authorName = SHelper.innerTrim(doc.select("*[class*=author_name]").text());
+            }
+
             // other hacks
 			if (authorName.isEmpty()) {
 				try{
@@ -842,6 +867,11 @@ public class ArticleTextExtractor {
                     // a hack for http://sports.espn.go.com/
                     if(matches == null || matches.size() == 0){
                         matches = doc.select("cite[class*=source]");
+                    }
+
+                    // a hack for http://jdsupra.com/
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("*[class*=bd author_name]");
                     }
 
                     // select the best element from them
@@ -899,6 +929,14 @@ public class ArticleTextExtractor {
         
         // Special case for huffingtonpost.com
         matches = doc.select(".byline span[class*=teaser]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            return authorDesc;
+        }
+
+        // Special case for jdsupra.com
+        matches = doc.select("*[class*=author_tag_firm_name]");
         if (matches!= null && matches.size() > 0){
             Element bestMatch = matches.first(); // assume it is the first.
             authorDesc = bestMatch.text();
@@ -1010,7 +1048,7 @@ public class ArticleTextExtractor {
      * @param e Element to weight, along with child nodes
      */
     protected Weight getWeight(Element e, boolean checkextra, boolean hasHighlyPositive, LogEntries logEntries) {
-        Weight val = calcWeight(e, hasHighlyPositive);
+        Weight val = calcWeight(e, hasHighlyPositive, logEntries);
 
         if(logEntries!=null) logEntries.add("       ======>     BASE WEIGHT:" + String.format("%3d", val.weight));
         int ownTextWeight = (int) Math.round(e.ownText().length() / 100.0 * 10);
@@ -1340,7 +1378,7 @@ public class ArticleTextExtractor {
         return val;
     }
 
-    private Weight calcWeight(Element e, boolean hasHighlyPositive) {
+    private Weight calcWeight(Element e, boolean hasHighlyPositive, LogEntries logEntries) {
 
         Weight val = new Weight();
         val.weight = 0;
@@ -1351,64 +1389,72 @@ public class ArticleTextExtractor {
             if (e.hasAttr("itemprop")) {
                 if (HIGHLY_POSITIVE.matcher(e.attr("itemprop")).find()){
                     val.weight += 350;
-                    if (DEBUG_BASE_WEIGHTS) { System.out.println("+350"); }
+                    if (DEBUG_BASE_WEIGHTS) { logEntries.add("   => HIGHLY_POSITIVE: " + e.attr("itemprop") + ":+350"); }
                     val.hasHighlyPositive = true;
+                    if (DEBUG_BASE_WEIGHTS) { System.out.println("Found HIGHLY_POSITIVE:" + e.attr("itemprop")); }
                 }
             }
 
             if (HIGHLY_POSITIVE.matcher(e.className()).find()){
                 val.weight += 200;
-                if (DEBUG_BASE_WEIGHTS) { System.out.println("+200"); }
+                if (DEBUG_BASE_WEIGHTS) { logEntries.add("   => HIGHLY_POSITIVE: " + e.className() + ":+200"); }
                 val.hasHighlyPositive = true;
+                if (DEBUG_BASE_WEIGHTS) { System.out.println("Found HIGHLY_POSITIVE:" + e.className()); }
             }
 
             if (HIGHLY_POSITIVE.matcher(e.id()).find()) {
                 val.weight += 90;
-                if (DEBUG_BASE_WEIGHTS) { System.out.println("+90"); }
+                if (DEBUG_BASE_WEIGHTS) { logEntries.add("   => HIGHLY_POSITIVE: " + e.id() + ":+90"); }
                 val.hasHighlyPositive = true;
+                if (DEBUG_BASE_WEIGHTS) { System.out.println("Found HIGHLY_POSITIVE:" + e.id()); }
             }
         }
 
         if (POSITIVE.matcher(e.className()).find()){
             val.weight += 35;
-            if (DEBUG_BASE_WEIGHTS) { System.out.println("+35"); }
+            if (DEBUG_BASE_WEIGHTS) { logEntries.add("   => POSITIVE: " + e.className() + ":+35"); }
         }
 
         if (POSITIVE.matcher(e.id()).find()){
             val.weight += 45;
-            if (DEBUG_BASE_WEIGHTS) { System.out.println("+45"); }
+            if (DEBUG_BASE_WEIGHTS) { logEntries.add("   => POSITIVE: " + e.id() + ":+45"); }
         }
 
         if (UNLIKELY.matcher(e.className()).find()){
             val.weight -= 20;
-            if (DEBUG_BASE_WEIGHTS) { System.out.println("-20"); }
+            if (DEBUG_BASE_WEIGHTS) { logEntries.add("   => UNLIKELY: " + e.className() + ":-20"); }
         }
 
         if (UNLIKELY.matcher(e.id()).find()){
             val.weight -= 20;
-            if (DEBUG_BASE_WEIGHTS) { System.out.println("-20"); }
+            if (DEBUG_BASE_WEIGHTS) { logEntries.add("   => UNLIKELY: " + e.id() + ":-20"); }
         }
 
         if (NEGATIVE.matcher(e.className()).find()){
             val.weight -= 50;
-            if (DEBUG_BASE_WEIGHTS) { System.out.println("-50"); }
+            if (DEBUG_BASE_WEIGHTS) { logEntries.add("   => NEGATIVE: " + e.className() + ":-50"); }
         }
 
         if (NEGATIVE.matcher(e.id()).find()){
             val.weight -= 50;
-            if (DEBUG_BASE_WEIGHTS) { System.out.println("-50"); }
+            if (DEBUG_BASE_WEIGHTS) { logEntries.add("   => NEGATIVE: " + e.id() + ":-50"); }
+        }
+
+        if (HIGHLY_NEGATIVE.matcher(e.id()).find()){
+            val.weight -= 700;
+            if (DEBUG_BASE_WEIGHTS) { logEntries.add("   => HIGHLY_NEGATIVE: " + e.id() + ":-700"); }
         }
 
         String style = e.attr("style");
         if (style != null && !style.isEmpty() && NEGATIVE_STYLE.matcher(style).find()){
             val.weight -= 50;
-            if (DEBUG_BASE_WEIGHTS) { System.out.println("-50"); }
+            if (DEBUG_BASE_WEIGHTS) { logEntries.add("   => NEGATIVE: " + style + ":-50"); }
         }
 
         String itemprop = e.attr("itemprop");
         if (itemprop != null && !itemprop.isEmpty() && POSITIVE.matcher(itemprop).find()){
             val.weight += 100;
-            if (DEBUG_BASE_WEIGHTS) { System.out.println("+100"); }
+            if (DEBUG_BASE_WEIGHTS) { logEntries.add("   => POSITIVE: " + style + ":+100"); }
         }
 
         return val;

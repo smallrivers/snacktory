@@ -353,7 +353,7 @@ public class ArticleTextExtractorTest {
     public void testTechcrunch2() throws Exception {
         // http://techcrunch.com/2010/08/13/gantto-takes-on-microsoft-project-with-web-based-project-management-application/
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("techcrunch2.html")));
-        assertEquals("Gantto Takes On Microsoft Project With Web-Based Project Management Application", article.getTitle());
+        assertEquals("Gantto Takes On Microsoft Project With Web-Based Project Management Application", article.getTitle());
         assertTrue(article.getText(), article.getText().startsWith("Y Combinator-backed Gantto is launching"));
         assertEquals("http://i0.wp.com/tctechcrunch2011.files.wordpress.com/2010/08/gantto.jpg?resize=680%2C680", article.getImageUrl());
         assertEquals("Leena Rao", article.getAuthorName());
@@ -630,7 +630,7 @@ public class ArticleTextExtractorTest {
     public void testWikipedia3() throws Exception {
         // http://en.wikipedia.org/wiki/Muhammad
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wikipedia_muhammad.html")));
-        assertTrue(article.getText(), article.getText().startsWith("Muhammad (c. 570 – c. 8 June 632);[1] also transliterated as Mohammad, Mohammed, or Muhammed; Arabic: محمد‎, full name: Abū al-Qāsim Muḥammad"));
+        assertTrue(article.getText(), article.getText().startsWith("Muhammad (c. 570 – c. 8 June 632);[1] also transliterated as Mohammad, Mohammed, or Muhammed; Arabic: محمد‎, full name: Abū al-Qāsim Muḥamma"));
     }
 
     @Test
@@ -919,7 +919,7 @@ public class ArticleTextExtractorTest {
         // http://www.entrepreneur.com/article/237402
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("entrepreneur.html")));
         assertEquals("7 Big Changes in the PR Landscape Every Business Should Know About", res.getTitle());
-        assertTrue(res.getText(), res.getText().startsWith("At least three times a week, I get emails from entrepreneurs or small-business owners asking for advice on public relations."));
+        assertTrue(res.getText(), res.getText().startsWith("At least three times a week, I get emails from entrepreneurs or small-business owners asking for advice on public relations."));
         assertEquals("Rebekah Iliff", res.getAuthorName());
         assertEquals("Chief Strategy Officer for AirPR", res.getAuthorDescription());
         compareDates("2014-09-15 17:30:00", res.getDate());
@@ -1022,7 +1022,7 @@ public class ArticleTextExtractorTest {
     public void testForbes() throws Exception {
         // http://fortune.com/2015/05/11/rackspaces-support-other-cloud/
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("forbes.html")));
-        assertEquals("Does Rackspace’s future lie in supporting someone else’s cloud?", res.getTitle());
+        assertEquals("Does Rackspace’s future lie in supporting someone else’s cloud?", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Rackspace, a true cloud computing pioneer, is starting to sound like a company that will"));
         compareDates("2015-05-11 23:01:19", res.getDate());
     }
@@ -1248,6 +1248,17 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().endsWith("\"and that he'll be heard.\""));
         // not supported
         //compareDates("2015-10-23", res.getDate());
+    }
+
+    @Test
+    public void testJdsupra() throws Exception {
+        // http://www.jdsupra.com/legalnews/defending-the-sec-s-choice-of-the-69927/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("jdsupra.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Defending"));
+        assertTrue(res.getText(), res.getText().startsWith("Wharton Associate Professor"));
+        assertEquals("Keith Paul Bishop", res.getAuthorName());
+        assertEquals("| Allen Matkins Leck Gamble Mallory & Natsis LLP", res.getAuthorDescription());
+        compareDates("2015-10-20", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
