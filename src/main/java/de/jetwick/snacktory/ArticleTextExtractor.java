@@ -745,7 +745,7 @@ public class ArticleTextExtractor {
         }
 
         // msn.com
-        elems = doc.select("time[data-always-show=true]");
+        elems = doc.select("time");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             if (el.hasAttr("datetime")) {
