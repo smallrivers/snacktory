@@ -1229,6 +1229,17 @@ public class ArticleTextExtractorTest {
         compareDates("2014-11-04 16:05:13", res.getDate());
     }
 
+
+    @Test
+    public void testMlive() throws Exception {
+        //http://www.mlive.com/news/bay-city/index.ssf/2014/12/christmas_wishes_tour_fills_pa.html
+        JResult res = new JResult();
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("mlive.html")));
+        assertEquals("'Christmas Wishes Tour' party bus brightens the holiday season for Essexville family", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("On its final stop of"));
+        compareDates("2014-12-22 17:54:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
