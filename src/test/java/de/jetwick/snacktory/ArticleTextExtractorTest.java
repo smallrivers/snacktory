@@ -1199,6 +1199,16 @@ public class ArticleTextExtractorTest {
         compareDates("2014-09-20 14:09:55", res.getDate());
     }
 
+    @Test
+    public void testITV() throws Exception {
+        // http://www.itv.com/news/2014-04-14/boston-marathon-bombings-one-year-on/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("itv.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Boston Marathon bomb attacks: One year on"));
+        assertTrue(res.getText(), res.getText().startsWith("Today Boston will mark the first anniversary"));
+        compareDates("2014-04-14 22:53:59", res.getDate());
+    }
+
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
