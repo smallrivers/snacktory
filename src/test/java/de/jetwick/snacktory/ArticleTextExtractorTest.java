@@ -1208,7 +1208,6 @@ public class ArticleTextExtractorTest {
         compareDates("2014-04-14 22:53:59", res.getDate());
     }
 
-
     @Test
     public void testNola() throws Exception {
         // http://www.nola.com/running/index.ssf/2014/04/race_director_bill_burke_hopin.html
@@ -1218,6 +1217,16 @@ public class ArticleTextExtractorTest {
         assertEquals("Wife of Atlanta firefighter who died during training ride for New Orleans Ironman spoke at race Sunday", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Kimberly Guinn took the microphone"));
         compareDates("2014-04-01", res.getDate());
+    }
+
+    @Test
+    public void testMercuryNews() throws Exception {
+        //http://www.mercurynews.com/ci_26860908/virgin-galactic-co-pilot-michael-alsbury-from-scotts
+        JResult res = new JResult();
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("mercurynews.html")));
+        assertEquals("Virgin Galactic co-pilot Michael Alsbury from Scotts Valley", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("SANTA CRUZ -- Test pilot Michael Alsbury"));
+        compareDates("2014-11-04 16:05:13", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {

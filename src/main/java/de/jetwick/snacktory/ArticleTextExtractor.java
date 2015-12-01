@@ -753,6 +753,18 @@ public class ArticleTextExtractor {
             }
         }
 
+        elems = doc.select("*[id=articleDate]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
         return null;
 
     }
@@ -772,33 +784,42 @@ public class ArticleTextExtractor {
             "EEE, dd MMM yyyy HH:mm:ss z",
             "EEE, dd MMM yyyy HH:mm:ss",
             "EEE, MMM dd, yyyy",
+            "MM-dd-yyyy hh:mm a z",
             "MM-dd-yyyy hh:mm a",
             "MM-dd-yyyy HH:mm",
+            "MM-dd-yyyy hh:mm:ss a z",
             "MM-dd-yyyy hh:mm:ss a",
             "MM-dd-yyyy HH:mm:ss",
             "MM-dd-yyyy",
             "MM/dd/yyyy hh:mm a",
             "MM/dd/yyyy HH:mm",
+            "MM/dd/yyyy hh:mm:ss a z",
             "MM/dd/yyyy hh:mm:ss a",
             "MM/dd/yyyy HH:mm:ss",
             "MM/dd/yyyy HH:mma",
             "MM/dd/yyyy",
+            "MMM dd, yyyy hh:mm a z",
             "MMM dd, yyyy hh:mm a",
             "MMM dd, yyyy HH:mm",
+            "MMM dd, yyyy hh:mm:ss a z",
             "MMM dd, yyyy hh:mm:ss a",
             "MMM dd, yyyy HH:mm:ss",
             "MMM dd, yyyy",
+            "MMM. dd, yyyy hh:mm a z",
             "MMM. dd, yyyy hh:mm a",
             "MMM. dd, yyyy HH:mm",
+            "MMM. dd, yyyy hh:mm:ss a z",
             "MMM. dd, yyyy hh:mm:ss a",
             "MMM. dd, yyyy HH:mm:ss",
             "MMM. dd, yyyy",
+            "yyyy-MM-dd hh:mm a z",
             "yyyy-MM-dd hh:mm a",
             "yyyy-MM-dd HH:mm",
-            "yyyy-MM-dd hh:mm:ss a", 
-            "yyyy-MM-dd HH:mm:ss", 
+            "yyyy-MM-dd hh:mm:ss a z",
+            "yyyy-MM-dd hh:mm:ss a",
+            "yyyy-MM-dd HH:mm:ss",
             "yyyy-MM-dd", 
-            "yyyy-MM-dd'T'HH:mm", 
+            "yyyy-MM-dd'T'HH:mm",
             "yyyy-MM-dd'T'HH:mm:ss",
             "yyyy-MM-dd'T'HH:mm:ss",
             "yyyy-MM-dd'T'HH:mm:ss.SSS",
@@ -807,8 +828,9 @@ public class ArticleTextExtractor {
             "yyyy-MM-dd'T'HH:mmz",
             "yyyy/MM/dd hh:mm ",
             "yyyy/MM/dd HH:mm",
-            "yyyy/MM/dd hh:mm:ss a ", 
-            "yyyy/MM/dd HH:mm:ss", 
+            "yyyy/MM/dd hh:mm:ss a z",
+            "yyyy/MM/dd hh:mm:ss a",
+            "yyyy/MM/dd HH:mm:ss",
             "yyyy/MM/dd",
             "yyyyMMdd HHmm",
             "yyyyMMdd HHmmss",
