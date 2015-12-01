@@ -1261,6 +1261,15 @@ public class ArticleTextExtractorTest {
         compareDates("2015-10-20", res.getDate());
     }
 
+    @Test
+    public void testDailyMail() throws Exception {
+        // http://www.dailymail.co.uk/news/article-2763386/With-breath-hero-mom-hid-baby-toilet-helping-daughter-escape-father-shot-head-turning-gun-himself.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("dailymail.co.uk.html")));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("With her 'last breath,' hero mom hid her baby in the toilet, sheltering the infant in the toilet as her boyfriend shot her in the head before turning the gun on himself"));
+        assertTrue(res.getText(), res.getText().startsWith("A mother saved her six-month-old"));
+        compareDates("2014-09-20 14:09:55", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
