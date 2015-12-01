@@ -1280,6 +1280,17 @@ public class ArticleTextExtractorTest {
     }
 
 
+    @Test
+    public void testNola() throws Exception {
+        // http://www.nola.com/running/index.ssf/2014/04/race_director_bill_burke_hopin.html
+        JResult res = new JResult();
+        res.setUrl("http://www.nola.com/running/index.ssf/2014/04/race_director_bill_burke_hopin.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("nola.com.html")));
+        assertEquals("Wife of Atlanta firefighter who died during training ride for New Orleans Ironman spoke at race Sunday", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Kimberly Guinn took the microphone"));
+        compareDates("2014-04-01", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
