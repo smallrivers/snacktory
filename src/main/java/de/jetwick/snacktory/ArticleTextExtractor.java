@@ -476,28 +476,31 @@ public class ArticleTextExtractor {
     }
 
     // Returns the publication Date or null
-	protected Date extractDate(Document doc) {
-		String dateStr = "";
+    protected Date extractDate(Document doc) {
+        String dateStr = "";
 
         // try some locations that nytimes uses
         Element elem = doc.select("meta[name=ptime]").first();
-		if (elem != null) {
+        if (elem != null) {
             dateStr = SHelper.innerTrim(elem.attr("content"));
             //            elem.attr("extragravityscore", Integer.toString(100));
             //            System.out.println("date modified element " + elem.toString());
         }
 
-		if (dateStr == "") {
+        if (dateStr == "") {
             dateStr = SHelper.innerTrim(doc.select("meta[name=utime]").attr("content"));
         }
-		if (dateStr == "") {
+        if (dateStr == "") {
             dateStr = SHelper.innerTrim(doc.select("meta[name=pdate]").attr("content"));
         }
-		if (dateStr == "") {
+        if (dateStr == "") {
             dateStr = SHelper.innerTrim(doc.select("meta[property=article:published]").attr("content"));
         }
-		if (dateStr != "") {
-            return parseDate(dateStr);
+        if (dateStr != "") {
+            Date d = parseDate(dateStr);
+            if(d!=null){
+                return d;
+            }
         }
 
         // taking this stuff directly from Juicer (and converted to Java)
@@ -518,7 +521,10 @@ public class ArticleTextExtractor {
                 } catch(StringIndexOutOfBoundsException ex) {
                     // do nothing
                 } 
-                return parseDate(dateStr);
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
             }
         } 
 
@@ -528,10 +534,15 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             if (el.hasAttr("content")) {
                 dateStr = el.attr("content");
-                
-                return parseDate(dateStr);
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
             } else {
-                return parseDate(el.text());
+                Date d = parseDate(el.text());
+                if(d!=null){
+                    return d;
+                }
             }
         }
 
@@ -544,9 +555,15 @@ public class ArticleTextExtractor {
                 return parseDate(dateStr);
             } else if (el.hasAttr("value")) {
                 dateStr = el.attr("value");
-                return parseDate(dateStr);
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
             } else {
-                return parseDate(el.text());
+                Date d = parseDate(el.text());
+                if(d!=null){
+                    return d;
+                }
             }
         } 
 
@@ -571,7 +588,10 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             if (el.hasAttr("content")) {
                 dateStr = el.attr("content");
-                return parseDate(dateStr);
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
             }
         }
 
@@ -581,7 +601,10 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             if (el.hasAttr("content")) {
                 dateStr = el.attr("content");
-                return parseDate(dateStr);
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
             }
         }
 
@@ -603,7 +626,12 @@ public class ArticleTextExtractor {
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
-            return parseDate(dateStr);
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
         }
 
         // naturebox.com
@@ -611,7 +639,12 @@ public class ArticleTextExtractor {
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
-            return parseDate(dateStr);
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
         }
 
         // itsalovelylife.com
@@ -619,8 +652,12 @@ public class ArticleTextExtractor {
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
-            if (dateStr != null)
-                return parseDate(dateStr);
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
         }
 
         // trendkraft.de
@@ -629,36 +666,56 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             if (el.hasAttr("datetime")) {
                 dateStr = el.attr("datetime");
-                if (dateStr != null)
-                    return parseDate(dateStr);
+                if (dateStr != null){
+                    Date d = parseDate(dateStr);
+                    if(d!=null){
+                        return d;
+                    }
+                }
             }
             dateStr = el.text();
-            if (dateStr != null)
-                return parseDate(dateStr);
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
         }
 
         elems = doc.select("*[id=post-date]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
-            if (dateStr != null)
-                return parseDate(dateStr);
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
         }
 
         elems = doc.select("*[class=storydatetime]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
-            if (dateStr != null)
-                return parseDate(dateStr);
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
         }
 
         elems = doc.select("*[class*=date]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
-            if (dateStr != null)
-                return parseDate(dateStr);
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
         }
 
         // msn.com
@@ -667,12 +724,20 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             if (el.hasAttr("datetime")) {
                 dateStr = el.attr("datetime");
-                if (dateStr != null)
-                    return parseDate(dateStr);
+                if (dateStr != null){
+                    Date d = parseDate(dateStr);
+                    if(d!=null){
+                        return d;
+                    }
+                }
             }
             dateStr = el.text();
-            if (dateStr != null)
-                return parseDate(dateStr);
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
         }
 
         // jdsupra.com
@@ -680,11 +745,16 @@ public class ArticleTextExtractor {
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
-            if (dateStr != null)
-                return parseDate(dateStr);
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
         }
 
         return null;
+
     }
 
     private Date parseDate(String dateStr) {
