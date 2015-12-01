@@ -1287,7 +1287,7 @@ public class ArticleTextExtractorTest {
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("nola.com.html")));
         assertEquals("Wife of Atlanta firefighter who died during training ride for New Orleans Ironman spoke at race Sunday", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Kimberly Guinn took the microphone"));
-        compareDates("2014-04-01", res.getDate());
+        compareDates("2014-04-13 17:42:00", res.getDate());
     }
 
     @Test
