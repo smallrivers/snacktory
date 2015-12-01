@@ -310,7 +310,7 @@ public class ArticleTextExtractor {
         // get date from document, if not present, extract from URL if possible
         Date docdate = extractDate(doc);
         if (docdate == null) {
-            String dateStr = SHelper.estimateDate(res.getUrl());
+            String dateStr = SHelper.completeDate(SHelper.estimateDate(res.getUrl()));
 
             docdate = parseDate(dateStr);
             res.setDate(docdate);
