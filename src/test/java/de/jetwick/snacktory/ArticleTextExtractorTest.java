@@ -1340,6 +1340,16 @@ public class ArticleTextExtractorTest {
         compareDates("2014-02-12 20:00:00", res.getDate());
     }
 
+    @Test
+    public void testThetelegram() throws Exception {
+        //http://www.thetelegram.com/News/Local/2014-11-24/article-3949943/Fundraiser-response-overwhelms-family/1
+        JResult res = new JResult();
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("thetelegram.html")));
+        assertEquals("Fundraiser response overwhelms family", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Rebecca, 9, daughter of Paul Byrne, holds a thank-you card"));
+        compareDates("2014-11-24 00:00:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
