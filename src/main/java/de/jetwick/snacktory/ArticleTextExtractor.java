@@ -83,6 +83,7 @@ public class ArticleTextExtractor {
     );
 
     // For debugging
+    private static final boolean DEBUG_DATE_EXTRACTION = false;
     private static final boolean DEBUG_WEIGHTS = false;
     private static final boolean DEBUG_BASE_WEIGHTS = false;
     private static final boolean DEBUG_CHILDREN_WEIGHTS = false;
@@ -526,6 +527,7 @@ public class ArticleTextExtractor {
         if (dateStr != "") {
             Date d = parseDate(dateStr);
             if(d!=null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-1"); }
                 return d;
             }
         }
@@ -550,6 +552,7 @@ public class ArticleTextExtractor {
                 } 
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-2"); }
                     return d;
                 }
             }
@@ -563,11 +566,13 @@ public class ArticleTextExtractor {
                 dateStr = el.attr("content");
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-3"); }
                     return d;
                 }
             } else {
                 Date d = parseDate(el.text());
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-4"); }
                     return d;
                 }
             }
@@ -584,11 +589,13 @@ public class ArticleTextExtractor {
                 dateStr = el.attr("value");
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-5"); }
                     return d;
                 }
             } else {
                 Date d = parseDate(el.text());
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-6"); }
                     return d;
                 }
             }
@@ -617,6 +624,7 @@ public class ArticleTextExtractor {
                 dateStr = el.attr("content");
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-7"); }
                     return d;
                 }
             }
@@ -630,12 +638,13 @@ public class ArticleTextExtractor {
                 dateStr = el.attr("content");
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-8"); }
                     return d;
                 }
             }
         }
 
-        // wildcard
+        // wildcard 
         elems = doc.select("meta[name*=date]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
@@ -643,6 +652,7 @@ public class ArticleTextExtractor {
                 dateStr = el.attr("content");
                 Date parsedDate = parseDate(dateStr);
                 if (parsedDate != null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-9"); }
                     return parsedDate;
                 }
             }
@@ -656,6 +666,7 @@ public class ArticleTextExtractor {
             if (dateStr != null){
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-10"); }
                     return d;
                 }
             }
@@ -682,6 +693,7 @@ public class ArticleTextExtractor {
             if (dateStr != null){
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-11"); }
                     return d;
                 }
             }
@@ -696,6 +708,7 @@ public class ArticleTextExtractor {
                 if (dateStr != null){
                     Date d = parseDate(dateStr);
                     if(d!=null){
+                        if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-12"); }
                         return d;
                     }
                 }
@@ -704,6 +717,7 @@ public class ArticleTextExtractor {
             if (dateStr != null){
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-13"); }
                     return d;
                 }
             }
@@ -716,6 +730,7 @@ public class ArticleTextExtractor {
             if (dateStr != null){
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-14"); }
                     return d;
                 }
             }
@@ -728,6 +743,53 @@ public class ArticleTextExtractor {
             if (dateStr != null){
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-15"); }
+                    return d;
+                }
+            }
+        }
+
+        elems = doc.select("*[class=posted]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            if (el.hasAttr("datetime")) {
+                dateStr = el.attr("datetime");
+                if (dateStr != null){
+                    Date d = parseDate(dateStr);
+                    if(d!=null){
+                        if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-16"); }
+                        return d;
+                    }
+                }
+            }
+            dateStr = el.text();
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-17"); }
+                    return d;
+                }
+            }
+        }
+
+        elems = doc.select("*[class=updated]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            if (el.hasAttr("datetime")) {
+                dateStr = el.attr("datetime");
+                if (dateStr != null){
+                    Date d = parseDate(dateStr);
+                    if(d!=null){
+                        if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-18"); }
+                        return d;
+                    }
+                }
+            }
+            dateStr = el.text();
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-19"); }
                     return d;
                 }
             }
@@ -740,6 +802,7 @@ public class ArticleTextExtractor {
             if (dateStr != null){
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-20"); }
                     return d;
                 }
             }
@@ -754,6 +817,7 @@ public class ArticleTextExtractor {
                 if (dateStr != null){
                     Date d = parseDate(dateStr);
                     if(d!=null){
+                        if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-21"); }
                         return d;
                     }
                 }
@@ -762,6 +826,7 @@ public class ArticleTextExtractor {
             if (dateStr != null){
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-22"); }
                     return d;
                 }
             }
@@ -775,6 +840,7 @@ public class ArticleTextExtractor {
             if (dateStr != null){
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-23"); }
                     return d;
                 }
             }
@@ -787,6 +853,20 @@ public class ArticleTextExtractor {
             if (dateStr != null){
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-24"); }
+                    return d;
+                }
+            }
+        }
+
+        elems = doc.select("*[class*=articlePosted]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-25"); }
                     return d;
                 }
             }
@@ -810,6 +890,9 @@ public class ArticleTextExtractor {
             "dd/MM/yyyy HH:mm:ss",
             "EEE, dd MMM yyyy HH:mm:ss z",
             "EEE, dd MMM yyyy HH:mm:ss",
+            "EEE, dd MMM yyyy",
+            "EEE, MMM dd, yyyy HH:mm",
+            "EEE, MMM dd, yyyy HH:mm:ss",
             "EEE, MMM dd, yyyy",
             "MM-dd-yyyy hh:mm a z",
             "MM-dd-yyyy hh:mm a",
@@ -871,7 +954,9 @@ public class ArticleTextExtractor {
 
         try {
             dateStr = cleanDate(dateStr);
-            //System.out.println("dateStr="+dateStr+"|");
+            if(DEBUG_DATE_EXTRACTION){
+                System.out.println("dateStr="+dateStr+"|");
+            }
             return DateUtils.parseDateStrictly(dateStr, parsePatterns);
         } catch (Exception ex) {
             return null;

@@ -1300,7 +1300,6 @@ public class ArticleTextExtractorTest {
         compareDates("2014-11-04 16:05:13", res.getDate());
     }
 
-
     @Test
     public void testMlive() throws Exception {
         //http://www.mlive.com/news/bay-city/index.ssf/2014/12/christmas_wishes_tour_fills_pa.html
@@ -1309,6 +1308,26 @@ public class ArticleTextExtractorTest {
         assertEquals("'Christmas Wishes Tour' party bus brightens the holiday season for Essexville family", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("On its final stop of"));
         compareDates("2014-12-22 17:54:00", res.getDate());
+    }
+
+    @Test
+    public void testKagstv() throws Exception {
+        //http://kagstv.com/News/KAGSNews/ID/6575/Friend-of-teen-torched-I-would-have-fought-for-her
+        JResult res = new JResult();
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("kagstv.html")));
+        assertEquals("Friend of teen torched: 'I would have fought for her' > KAGS TV - College Station, Texas", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("COURTLAND, Miss."));
+        compareDates("2014-12-10 12:53:00", res.getDate());
+    }
+
+    @Test
+    public void testKjrh() throws Exception {
+        //http://www.kjrh.com/news/local-news/muskogee-roughers-football-team-collecting-donations-for-jenks-trojans-assistant-coach-bryant-calip
+        JResult res = new JResult();
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("kjrh.html")));
+        assertEquals("Muskogee Roughers football team collecting donations for Jenks Trojans assistant coach Bryant Calip - KJRH.com", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("That's the distance that separates two opposing football teams"));
+        compareDates("2014-10-21 12:54:43", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
