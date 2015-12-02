@@ -1350,6 +1350,26 @@ public class ArticleTextExtractorTest {
         compareDates("2014-11-24 00:00:00", res.getDate());
     }
 
+    @Test
+    public void testDogsbite() throws Exception {
+        //http://blog.dogsbite.org/2014/08/014-dog-bite-fatality-toddler-dies-family-pit-bull-attack-under-grandmothers-care.html
+        JResult res = new JResult();
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("dogsbite.html")));
+        assertEquals("2014 Dog Bite Fatality: Toddler Dies After Attack by Family Pit Bull While Under Grandmother's Care - DogsBite.org", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Labels: 2014 Dog Bite Fatality"));
+        compareDates("2015-01-29 00:00:00", res.getDate());
+    }
+
+    @Test
+    public void latinoFoxNews() throws Exception {
+        //http://latino.foxnews.com/latino/lifestyle/2014/07/22/cancer-stricken-father-with-4-months-to-live-heads-to-disneyland-with-family/
+        JResult res = new JResult();
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("latino.foxnews.html")));
+        assertEquals("Cancer-Stricken Father With 4 Months To Live Heads To Disneyland With Family For Last Time", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Expected to live only four more months"));
+        compareDates("2014-07-22 00:00:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

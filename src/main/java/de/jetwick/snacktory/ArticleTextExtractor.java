@@ -528,7 +528,7 @@ public class ArticleTextExtractor {
             dateStr = SHelper.innerTrim(doc.select("meta[property=article:published]").attr("content"));
         }
         if (dateStr != "") {
-            if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-1"); }
+            if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-name=ptime"); }
             Date d = parseDate(dateStr);
             if(d!=null){
                 return d;
@@ -553,7 +553,7 @@ public class ArticleTextExtractor {
                 } catch(StringIndexOutOfBoundsException ex) {
                     // do nothing
                 } 
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-2"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-published_time"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -567,16 +567,30 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             if (el.hasAttr("content")) {
                 dateStr = el.attr("content");
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-3"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-rnews-1"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
                 }
             } else {
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-4"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-rnews-2"); }
                 Date d = parseDate(el.text());
                 if(d!=null){
                     return d;
+                }
+            }
+        }
+
+        // fox news
+        elems = doc.select("meta[name=dc.date]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            if (el.hasAttr("content")) {
+                dateStr = el.attr("content");
+                Date parsedDate = parseDate(dateStr);
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-name=dc.date"); }
+                if (parsedDate != null){
+                    return parsedDate;
                 }
             }
         }
@@ -586,23 +600,24 @@ public class ArticleTextExtractor {
         if (elems.size() > 0) {
             Element el = elems.get(0);
             if (el.hasAttr("content")) {
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-schema.org-1"); }
                 dateStr = el.attr("content");
                 return parseDate(dateStr);
             } else if (el.hasAttr("value")) {
                 dateStr = el.attr("value");
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-5"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-schema.org-2"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
                 }
             } else {
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-6"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-schema.org-3"); }
                 Date d = parseDate(el.text());
                 if(d!=null){
                     return d;
                 }
             }
-        } 
+        }
 
         // parsely page (?)
         /*  skip conversion for now, seems highly specific and uses new lib
@@ -625,7 +640,7 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             if (el.hasAttr("content")) {
                 dateStr = el.attr("content");
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-7"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-meta[name=OriginalPublicationDate]"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -639,7 +654,7 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             if (el.hasAttr("content")) {
                 dateStr = el.attr("content");
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-8"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-meta[name=DisplayDate]"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -654,7 +669,7 @@ public class ArticleTextExtractor {
             if (el.hasAttr("content")) {
                 dateStr = el.attr("content");
                 Date parsedDate = parseDate(dateStr);
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-9"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-meta[name*=date]"); }
                 if (parsedDate != null){
                     return parsedDate;
                 }
@@ -667,7 +682,7 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-10"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-.date-header"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -681,7 +696,7 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-11"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-time[class=published]"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -695,7 +710,7 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-12"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-itemprop=datePublished-1"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -710,7 +725,7 @@ public class ArticleTextExtractor {
             if (el.hasAttr("datetime")) {
                 dateStr = el.attr("datetime");
                 if (dateStr != null){
-                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-13"); }
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-itemprop=dateCreated-1"); }
                     Date d = parseDate(dateStr);
                     if(d!=null){
                         return d;
@@ -719,7 +734,7 @@ public class ArticleTextExtractor {
             }
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-14"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-itemprop=dateCreated-2"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -732,7 +747,7 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-15"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-id=post-date"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -745,7 +760,7 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-16"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class=storydatetime"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -759,7 +774,7 @@ public class ArticleTextExtractor {
             if (el.hasAttr("datetime")) {
                 dateStr = el.attr("datetime");
                 if (dateStr != null){
-                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-17"); }
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class=posted-1"); }
                     Date d = parseDate(dateStr);
                     if(d!=null){
                         return d;
@@ -768,7 +783,7 @@ public class ArticleTextExtractor {
             }
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-18"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class=posted-1"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -782,7 +797,7 @@ public class ArticleTextExtractor {
             if (el.hasAttr("datetime")) {
                 dateStr = el.attr("datetime");
                 if (dateStr != null){
-                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-19"); }
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class*=updated-1"); }
                     Date d = parseDate(dateStr);
                     if(d!=null){
                         return d;
@@ -791,7 +806,7 @@ public class ArticleTextExtractor {
             }
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-20"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class*=updated-2"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -804,7 +819,7 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-21"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class*=date"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -819,7 +834,7 @@ public class ArticleTextExtractor {
             if (el.hasAttr("datetime")) {
                 dateStr = el.attr("datetime");
                 if (dateStr != null){
-                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-22"); }
+                    if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-time-1"); }
                     Date d = parseDate(dateStr);
                     if(d!=null){
                         return d;
@@ -829,7 +844,7 @@ public class ArticleTextExtractor {
             dateStr = el.text();
             if (dateStr != null){
                 Date d = parseDate(dateStr);
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-23"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-time-2"); }
                 if(d!=null){
                     return d;
                 }
@@ -842,7 +857,7 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-24"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-time-jdsupra"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -855,7 +870,7 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-25"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-articleDate"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -868,7 +883,7 @@ public class ArticleTextExtractor {
             Element el = elems.get(0);
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-26"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-articlePosted"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -876,6 +891,7 @@ public class ArticleTextExtractor {
             }
         }
 
+        if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
 
     }
