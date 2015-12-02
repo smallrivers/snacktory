@@ -77,7 +77,10 @@ public class ArticleTextExtractor {
     );
 
     private static final List<Pattern> CLEAN_DATE_PATTERNS = Arrays.asList(
-        Pattern.compile("Posted:(.*)")
+        Pattern.compile("Posted:(.*)"),
+        Pattern.compile("Published on:(.*)"),
+        Pattern.compile("Posted(.*)"),
+        Pattern.compile("Published on(.*)")
     );
 
     private static final int MAX_AUTHOR_DESC_LENGHT = 1000;
