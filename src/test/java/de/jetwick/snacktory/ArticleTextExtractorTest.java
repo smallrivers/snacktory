@@ -1330,6 +1330,16 @@ public class ArticleTextExtractorTest {
         compareDates("2014-10-21 12:54:43", res.getDate());
     }
 
+    @Test
+    public void testJezebel() throws Exception {
+        //http://jezebel.com/honey-boo-boo-star-selling-oils-to-save-you-from-ebola-1665926767
+        JResult res = new JResult();
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("jezebel.html")));
+        assertEquals("Honey Boo Boo Star Selling Oils to Save You From Ebola", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Anna Cardwell, former co-star"));
+        compareDates("2014-02-12 20:00:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
