@@ -89,6 +89,8 @@ public class ArticleTextExtractor {
         Pattern.compile("Posted on(.*)"),
         Pattern.compile("Posted:(.*)"),
         Pattern.compile("Posted(.*)"),
+        Pattern.compile("on:(.*)"),
+        Pattern.compile("on(.*)"),
         Pattern.compile("(.*)Uhr")
     );
 
@@ -476,9 +478,11 @@ public class ArticleTextExtractor {
                         if (!possibleTitle.isEmpty()) {
                             String doc_title = doc.title();
                             if (doc_title.toLowerCase().contains(possibleTitle.toLowerCase())) {
-                                title = possibleTitle;
-                                usingPossibleTitle = true;
-                            }
+                                if (possibleTitle.length() > 10) { // short title is not likely a title.
+                                    title = possibleTitle;
+                                    usingPossibleTitle = true;
+                                    }
+                                }
                         }
                     }
 
@@ -754,11 +758,10 @@ public class ArticleTextExtractor {
             }
         }
 
-        elems = doc.select("*[id=post-date], *[id*=posted_time]");
+        elems = doc.select("*[id=post-date], *[id*=posted_time], *[id*=fhtime]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
-            System.out.println("dateStr="+dateStr);
             if (dateStr != null){
                 if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-id=post-date"); }
                 Date d = parseDate(dateStr);
@@ -951,6 +954,7 @@ public class ArticleTextExtractor {
             "dd/MM/yy hh:mma",
             "dd/MM/yyyy HH:mm",
             "dd/MM/yyyy HH:mm:ss",
+            "EEE MMM dd, yyyy hh:mma", //Thursday November 12, 2015 10:17AM
             "EEE, dd MMM yyyy HH:mm:ss z",
             "EEE, dd MMM yyyy HH:mm:ss",
             "EEE, dd MMM yyyy",
@@ -1056,6 +1060,10 @@ public class ArticleTextExtractor {
 
         // See: http://stackoverflow.com/questions/1060570/why-is-non-breaking-space-not-a-whitespace-character-in-java
         dateStr = dateStr.replaceAll("^\u00A0*(.*)\u00A0*","$1");
+
+        // http://mobile.slashdot.org/story/15/11/12/1516255/mozilla-launches-firefox-for-ios
+        dateStr = dateStr.replaceAll("@", "");
+
         dateStr = StringUtils.strip(dateStr);
         return dateStr;
     }
