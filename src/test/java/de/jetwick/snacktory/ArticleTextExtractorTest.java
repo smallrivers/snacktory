@@ -1361,7 +1361,7 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
-    public void latinoFoxNews() throws Exception {
+    public void testFoxNews() throws Exception {
         //http://latino.foxnews.com/latino/lifestyle/2014/07/22/cancer-stricken-father-with-4-months-to-live-heads-to-disneyland-with-family/
         JResult res = new JResult();
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("latino.foxnews.html")));
@@ -1371,7 +1371,7 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
-    public void latinoSimcoeReformer() throws Exception {
+    public void testSimcoeReformer() throws Exception {
         //http://www.simcoereformer.ca/2014/09/29/ddss-teacher-begins-treatment-in-atlanta
         JResult res = new JResult();
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("simcoereformer.html")));
@@ -1381,7 +1381,7 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
-    public void latinoEurweb() throws Exception {
+    public void testEurweb() throws Exception {
         // http://www.eurweb.com/2014/09/darren-wilson-fundraisers-end-without-explanation/
         JResult res = new JResult();
         res.setUrl("http://www.eurweb.com/2014/09/darren-wilson-fundraisers-end-without-explanation/");
@@ -1392,7 +1392,7 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
-    public void latinoShropshirestar() throws Exception {
+    public void testShropshirestar() throws Exception {
         // http://www.shropshirestar.com/news/2014/09/16/shropshire-border-village-rallies-round-mend-our-mum-fight/
         JResult res = new JResult();
         res.setUrl("http://www.shropshirestar.com/news/2014/09/16/shropshire-border-village-rallies-round-mend-our-mum-fight/");
@@ -1403,7 +1403,7 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
-    public void latinoConnectionnewspapers() throws Exception {
+    public void testConnectionnewspapers() throws Exception {
         // http://www.connectionnewspapers.com/news/2014/sep/25/local-aikido-studio-reduces-ptsd-effects/
         JResult res = new JResult();
         res.setUrl("http://www.connectionnewspapers.com/news/2014/sep/25/local-aikido-studio-reduces-ptsd-effects/");
@@ -1411,6 +1411,17 @@ public class ArticleTextExtractorTest {
         assertEquals("Local Aikido Studio Reduces PTSD Effects", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("As a soldier fighting"));
         compareDates("2014-09-25", res.getDate());
+    }
+
+    @Test
+    public void testNewsSky() throws Exception {
+        // http://news.sky.com/story/1515847/taylor-swift-gives-50k-to-fan-with-leukaemia
+        JResult res = new JResult();
+        res.setUrl("http://news.sky.com/story/1515847/taylor-swift-gives-50k-to-fan-with-leukaemia");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("news.sky.com.html")));
+        assertEquals("Taylor Swift Gives $50k To Fan With Leukaemia", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Taylor Swift has surprised one of her young fans"));
+        compareDates("2015-07-09  09:39:00", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {

@@ -742,10 +742,11 @@ public class ArticleTextExtractor {
             }
         }
 
-        elems = doc.select("*[id=post-date]");
+        elems = doc.select("*[id=post-date], *[id*=posted_time]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
+            System.out.println("dateStr="+dateStr);
             if (dateStr != null){
                 if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-id=post-date"); }
                 Date d = parseDate(dateStr);
@@ -924,6 +925,7 @@ public class ArticleTextExtractor {
 
     private Date parseDate(String dateStr) {
         String[] parsePatterns = {
+            "dd MMM yyyy 'at' hh:mma",
             "dd MMM yyyy HH:mm",
             "dd MMM yyyy HH:mm:ss",
             "dd MMM yyyy",
@@ -942,6 +944,7 @@ public class ArticleTextExtractor {
             "EEE, MMM dd, yyyy hh:mm:ss z a",
             "EEE, MMM dd, yyyy HH:mm:ss",
             "EEE, MMM dd, yyyy",
+            "HH:mm, 'UK', EEE dd MMM yyyy",  //09:39, UK, Thursday 09 July 2015
             "MM-dd-yyyy hh:mm a z",
             "MM-dd-yyyy hh:mm a",
             "MM-dd-yyyy HH:mm",
@@ -998,8 +1001,6 @@ public class ArticleTextExtractor {
             "yyyyMMdd",
             "yyyyMMddHHmm",
             "yyyyMMddHHmmss",
-            //14 April 2014 at 11:53pm
-            "dd MMM yyyy 'at' hh:mma",
         };
 
         try {
