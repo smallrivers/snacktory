@@ -827,12 +827,12 @@ public class ArticleTextExtractor {
             }
         }
 
-        elems = doc.select("*[class*=date]");
+        elems = doc.select("*[class*=blogdate], *[class*=posted_date], *[class*=post_date], *[class*=origin-date]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
             if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class*=date"); }
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class*=blogdate"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;

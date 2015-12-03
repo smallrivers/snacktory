@@ -1352,7 +1352,7 @@ public class ArticleTextExtractorTest {
 
     @Test
     public void testDogsbite() throws Exception {
-        //http://blog.dogsbite.org/2014/08/014-dog-bite-fatality-toddler-dies-family-pit-bull-attack-under-grandmothers-care.html
+        // http://blog.dogsbite.org/2014/08/014-dog-bite-fatality-toddler-dies-family-pit-bull-attack-under-grandmothers-care.html
         JResult res = new JResult();
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("dogsbite.html")));
         assertEquals("2014 Dog Bite Fatality: Toddler Dies After Attack by Family Pit Bull While Under Grandmother's Care - DogsBite.org", res.getTitle());
@@ -1378,6 +1378,17 @@ public class ArticleTextExtractorTest {
         assertEquals("`Team Lane’ has its fingers crossed", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("A Delhi teacher is waging the fight of his life"));
         compareDates("2014-09-29 23:44:08", res.getDate());
+    }
+
+    @Test
+    public void latinoEurweb() throws Exception {
+        // http://www.eurweb.com/2014/09/darren-wilson-fundraisers-end-without-explanation/
+        JResult res = new JResult();
+        res.setUrl("http://www.eurweb.com/2014/09/darren-wilson-fundraisers-end-without-explanation/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("eurweb.html")));
+        assertEquals("Darren Wilson Online Fundraisers Stop Without Any Reason", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("*Online fundraisers for embattled Ferguson"));
+        compareDates("2014-09-01", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
