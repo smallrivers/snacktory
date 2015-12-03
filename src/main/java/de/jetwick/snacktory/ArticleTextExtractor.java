@@ -768,6 +768,19 @@ public class ArticleTextExtractor {
             }
         }
 
+        elems = doc.select("*[class=storyDate]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class=storydatetime"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
         elems = doc.select("*[class=posted]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
@@ -827,8 +840,21 @@ public class ArticleTextExtractor {
             }
         }
 
+        elems = doc.select("*[class*=time]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class*=time"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
         // msn.com
-        elems = doc.select("time");
+        elems = doc.select("time[data-always-show=true]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             if (el.hasAttr("datetime")) {
@@ -852,7 +878,7 @@ public class ArticleTextExtractor {
         }
 
         // jdsupra.com
-        elems = doc.select("time");
+        elems = doc.select(".author_tag_space time");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
@@ -906,12 +932,14 @@ public class ArticleTextExtractor {
             "dd MMMM yyyy",
             "dd-MM-yyyy HH:mm",
             "dd-MM-yyyy HH:mm:ss",
+            "dd/MM/yy hh:mma",
             "dd/MM/yyyy HH:mm",
             "dd/MM/yyyy HH:mm:ss",
             "EEE, dd MMM yyyy HH:mm:ss z",
             "EEE, dd MMM yyyy HH:mm:ss",
             "EEE, dd MMM yyyy",
             "EEE, MMM dd, yyyy HH:mm",
+            "EEE, MMM dd, yyyy hh:mm:ss z a",
             "EEE, MMM dd, yyyy HH:mm:ss",
             "EEE, MMM dd, yyyy",
             "MM-dd-yyyy hh:mm a z",
@@ -970,7 +998,8 @@ public class ArticleTextExtractor {
             "yyyyMMdd",
             "yyyyMMddHHmm",
             "yyyyMMddHHmmss",
-            "dd/MM/yy hh:mma",
+            //14 April 2014 at 11:53pm
+            "dd MMM yyyy 'at' hh:mma",
         };
 
         try {

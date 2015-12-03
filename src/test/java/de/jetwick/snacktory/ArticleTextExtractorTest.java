@@ -1276,7 +1276,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("itv.html")));
         assertTrue(res.getTitle(), res.getTitle().startsWith("Boston Marathon bomb attacks: One year on"));
         assertTrue(res.getText(), res.getText().startsWith("Today Boston will mark the first anniversary"));
-        compareDates("2014-04-14 22:53:59", res.getDate());
+        compareDates("2014-04-14 23:53:00", res.getDate());
     }
 
     @Test
@@ -1368,6 +1368,16 @@ public class ArticleTextExtractorTest {
         assertEquals("Cancer-Stricken Father With 4 Months To Live Heads To Disneyland With Family For Last Time", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Expected to live only four more months"));
         compareDates("2014-07-22 00:00:00", res.getDate());
+    }
+
+    @Test
+    public void latinoSimcoeReformer() throws Exception {
+        //http://www.simcoereformer.ca/2014/09/29/ddss-teacher-begins-treatment-in-atlanta
+        JResult res = new JResult();
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("simcoereformer.html")));
+        assertEquals("`Team Lane’ has its fingers crossed", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("A Delhi teacher is waging the fight of his life"));
+        compareDates("2014-09-29 23:44:08", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
