@@ -78,11 +78,18 @@ public class ArticleTextExtractor {
     private static final int MAX_AUTHOR_DESC_LENGTH = 1000;
     private static final int MAX_IMAGE_LENGTH = 290;
 
+    // TODO: Replace this ugly list with a function that remove all the
+    // non numeric characters (except puntuaction, AM/PM and TZ)
     private static final List<Pattern> CLEAN_DATE_PATTERNS = Arrays.asList(
-        Pattern.compile("Posted:(.*)"),
         Pattern.compile("Published on:(.*)"),
+        Pattern.compile("Published on(.*)"),
+        Pattern.compile("Published:(.*)"),
+        Pattern.compile("Published(.*)"),
+        Pattern.compile("Posted on:(.*)"),
+        Pattern.compile("Posted on(.*)"),
+        Pattern.compile("Posted:(.*)"),
         Pattern.compile("Posted(.*)"),
-        Pattern.compile("Published on(.*)")
+        Pattern.compile("(.*)Uhr")
     );
 
     // For debugging
@@ -594,8 +601,13 @@ public class ArticleTextExtractor {
                 }
             }
         }
-
+        
+        /*
         // schema.org creativework
+        //
+        // This rule is commented since it matches some non-article dates in URL like this:
+        // http://www.bild.de/news/ausland/wunder/aerzte-rieten-zur-abtreibung-jaxon-du-bist-ein-wunder-42736638.bild.html
+        //
         elems = doc.select("meta[itemprop=datePublished], span[itemprop=datePublished]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
@@ -617,7 +629,7 @@ public class ArticleTextExtractor {
                     return d;
                 }
             }
-        }
+        }*/
 
         // parsely page (?)
         /*  skip conversion for now, seems highly specific and uses new lib
@@ -805,6 +817,19 @@ public class ArticleTextExtractor {
             }
         }
 
+        elems = doc.select("*[class=published], *[class*=blogdate], *[class*=posted_date], *[class*=post_date], *[class*=origin-date], *[class*=xn-chron], *[class*=article-timestamp]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class*=blogdate"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
         elems = doc.select("*[class*=updated]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
@@ -821,19 +846,6 @@ public class ArticleTextExtractor {
             dateStr = el.text();
             if (dateStr != null){
                 if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class*=updated-2"); }
-                Date d = parseDate(dateStr);
-                if(d!=null){
-                    return d;
-                }
-            }
-        }
-
-        elems = doc.select("*[class*=blogdate], *[class*=posted_date], *[class*=post_date], *[class*=origin-date]");
-        if (elems.size() > 0) {
-            Element el = elems.get(0);
-            dateStr = el.text();
-            if (dateStr != null){
-                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-class*=blogdate"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
@@ -923,6 +935,7 @@ public class ArticleTextExtractor {
 
     }
 
+    // TODO: Look for a library to parse dates formats.
     private Date parseDate(String dateStr) {
         String[] parsePatterns = {
             "dd MMM yyyy 'at' hh:mma",
@@ -934,6 +947,7 @@ public class ArticleTextExtractor {
             "dd MMMM yyyy",
             "dd-MM-yyyy HH:mm",
             "dd-MM-yyyy HH:mm:ss",
+            "dd.MM.yyyy - HH:mm",
             "dd/MM/yy hh:mma",
             "dd/MM/yyyy HH:mm",
             "dd/MM/yyyy HH:mm:ss",
@@ -944,6 +958,7 @@ public class ArticleTextExtractor {
             "EEE, MMM dd, yyyy hh:mm:ss z a",
             "EEE, MMM dd, yyyy HH:mm:ss",
             "EEE, MMM dd, yyyy",
+            "HH:mm z, dd MMM yyyy", // 09:09 EST, 20 September 2014
             "HH:mm, 'UK', EEE dd MMM yyyy",  //09:39, UK, Thursday 09 July 2015
             "MM-dd-yyyy hh:mm a z",
             "MM-dd-yyyy hh:mm a",
@@ -958,6 +973,7 @@ public class ArticleTextExtractor {
             "MM/dd/yyyy hh:mm:ss a",
             "MM/dd/yyyy HH:mm:ss",
             "MM/dd/yyyy HH:mma",
+            "MM/dd/yyyy hh:mma", //10/31/2011 2:00PM
             "MM/dd/yyyy",
             "MMM dd, yyyy 'at' hh:mm a z",
             "MMM dd, yyyy 'at' hh:mm a",

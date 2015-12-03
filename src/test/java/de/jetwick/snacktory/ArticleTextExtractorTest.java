@@ -970,7 +970,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("prnewswire.html")));
         assertEquals("Tableau to Present at Upcoming Investor Conferences", res.getTitle());
         assertEquals("Tableau Software (NYSE: DATA) helps people see and understand data. Tableau helps anyone quickly analyze, visualize and share information. More than 26,000 customer accounts get rapid results with Tableau in the office and on-the-go. And tens of thousands of people use Tableau Public to share data in their blogs and websites. See how Tableau can help you by downloading the free trial at www.tableau.com/trial.", res.getAuthorDescription());
-        compareDates("2015-03-12 02:21:37", res.getDate());
+        compareDates("2015-02-24", res.getDate());
     }
 
     @Test
@@ -1094,7 +1094,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Internet of things is overhyped, should be called internet with things", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("The internet of things is overhyped and should instead be called the internet with things"));
         assertEquals("http://www.techworld.com/news/startups/rackspace-mongodb-execs-take-iot-hype-down-notch-3617731/", res.getCanonicalUrl());
-        compareDates("2015-06-26 09:52:00-0700", res.getDate());
+        compareDates("2015-06-26 07:52:00-0700", res.getDate());
     }
 
     @Test
@@ -1140,7 +1140,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wsj.com.html")));
         assertTrue(res.getTitle(), res.getTitle().startsWith("What Did Steve Jobs Learn from the Beatles?"));
         assertTrue(res.getText(), res.getText().startsWith("This transcript has been automatically generated"));
-        compareDates("2011-10-31 17:00:00", res.getDate());
+        compareDates("2011-10-31 14:00:00", res.getDate());
     }
 
     @Test
@@ -1267,7 +1267,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("dailymail.co.uk.html")));
         assertEquals("With her 'last breath,' mom helped daughter escape from rampaging dad", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("A mother saved her six-month-old"));
-        compareDates("2014-09-20 14:09:55", res.getDate());
+        compareDates("2014-09-20 14:09:00", res.getDate());
     }
 
     @Test
@@ -1421,7 +1421,18 @@ public class ArticleTextExtractorTest {
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("news.sky.com.html")));
         assertEquals("Taylor Swift Gives $50k To Fan With Leukaemia", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Taylor Swift has surprised one of her young fans"));
-        compareDates("2015-07-09  09:39:00", res.getDate());
+        compareDates("2015-07-09 09:39:00", res.getDate());
+    }
+
+    @Test
+    public void testBildDe() throws Exception {
+        // http://www.bild.de/news/ausland/wunder/aerzte-rieten-zur-abtreibung-jaxon-du-bist-ein-wunder-42736638.bild.html
+        JResult res = new JResult();
+        res.setUrl("http://www.bild.de/news/ausland/wunder/aerzte-rieten-zur-abtreibung-jaxon-du-bist-ein-wunder-42736638.bild.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("bild.de.html")));
+        assertEquals("Ärzte rieten Eltern zur Abtreibung, jetzt feiert er seinen 1. Geburtstag: Kleiner Jaxon, du bist ein Wunder! - News Ausland - Bild.de", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Jaxon lernt gerade laufen und sprechen."));
+        compareDates("2015-09-27 13:13:00", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
