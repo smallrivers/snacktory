@@ -370,6 +370,34 @@ public class SHelper {
                     }
                     break;
                 }
+            } else if (str.length() == 3) {
+                String low_str = str.toLowerCase();
+                if (low_str.equals("jan")) {
+                    month = 1;
+                } else if (low_str.equals("feb")) {
+                    month = 2;
+                } else if (low_str.equals("mar")) {
+                    month = 3;
+                } else if (low_str.equals("apr")) {
+                    month = 4;
+                } else if (low_str.equals("may")) {
+                    month = 5;
+                } else if (low_str.equals("jun")) {
+                    month = 6;
+                } else if (low_str.equals("jul")) {
+                    month = 7;
+                } else if (low_str.equals("aug")) {
+                    month = 8;
+                } else if (low_str.equals("sep")) {
+                    month = 9;
+                } else if (low_str.equals("oct")) {
+                    month = 10;
+                } else if (low_str.equals("nov")) {
+                    month = 11;
+                } else if (low_str.equals("dec")) {
+                    month = 12;
+                }
+                monthCounter = counter;
             }
         }
 
