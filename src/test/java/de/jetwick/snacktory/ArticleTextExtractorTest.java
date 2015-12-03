@@ -1402,6 +1402,17 @@ public class ArticleTextExtractorTest {
         compareDates("2014-09-16", res.getDate());
     }
 
+    @Test
+    public void latinoConnectionnewspapers() throws Exception {
+        // http://www.connectionnewspapers.com/news/2014/sep/25/local-aikido-studio-reduces-ptsd-effects/
+        JResult res = new JResult();
+        res.setUrl("http://www.connectionnewspapers.com/news/2014/sep/25/local-aikido-studio-reduces-ptsd-effects/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("connectionnewspapers.html")));
+        assertEquals("Local Aikido Studio Reduces PTSD Effects", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("As a soldier fighting"));
+        compareDates("2014-09-25", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
