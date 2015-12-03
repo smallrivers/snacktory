@@ -1320,6 +1320,17 @@ public class ArticleTextExtractorTest {
         compareDates("2014-09-01", res.getDate());
     }
 
+    @Test
+    public void latinoShropshirestar() throws Exception {
+        // http://www.shropshirestar.com/news/2014/09/16/shropshire-border-village-rallies-round-mend-our-mum-fight/
+        JResult res = new JResult();
+        res.setUrl("http://www.shropshirestar.com/news/2014/09/16/shropshire-border-village-rallies-round-mend-our-mum-fight/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("shropshirestar.html")));
+        assertEquals("Shropshire border village rallies round Mend Our Mum fight « Shropshire Star", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("The Cliffe family were devastated"));
+        compareDates("2014-09-16", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
