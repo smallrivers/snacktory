@@ -95,7 +95,7 @@ public class ArticleTextExtractor {
     );
 
     // For debugging
-    private static final boolean DEBUG_DATE_EXTRACTION = true;
+    private static final boolean DEBUG_DATE_EXTRACTION = false;
     private static final boolean DEBUG_WEIGHTS = false;
     private static final boolean DEBUG_BASE_WEIGHTS = false;
     private static final boolean DEBUG_CHILDREN_WEIGHTS = false;
