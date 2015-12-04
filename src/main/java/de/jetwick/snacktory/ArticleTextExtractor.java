@@ -90,7 +90,7 @@ public class ArticleTextExtractor {
         Pattern.compile("Posted:(.*)", Pattern.CASE_INSENSITIVE),
         Pattern.compile("Posted(.*)", Pattern.CASE_INSENSITIVE),
         Pattern.compile("on:(.*)", Pattern.CASE_INSENSITIVE),
-        Pattern.compile("on(.*, Pattern.CASE_INSENSITIVE)"),
+        Pattern.compile("on(.*)", Pattern.CASE_INSENSITIVE),
         Pattern.compile("(.*)Uhr", Pattern.CASE_INSENSITIVE)
     );
 
@@ -1025,9 +1025,12 @@ public class ArticleTextExtractor {
         };
 
         try {
+            if(DEBUG_DATE_EXTRACTION){
+                System.out.println("BEFORE clean: dateStr="+dateStr+"|");
+            }
             dateStr = cleanDate(dateStr);
             if(DEBUG_DATE_EXTRACTION){
-                System.out.println("dateStr="+dateStr+"|");
+                System.out.println("AFTER clea: dateStr="+dateStr+"|");
             }
             return DateUtils.parseDateStrictly(dateStr, parsePatterns);
         } catch (Exception ex) {
