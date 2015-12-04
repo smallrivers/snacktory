@@ -1328,7 +1328,7 @@ public class ArticleTextExtractorTest {
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("shropshirestar.html")));
         assertEquals("Shropshire border village rallies round Mend Our Mum fight « Shropshire Star", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("The Cliffe family were devastated"));
-        compareDates("2014-09-16", res.getDate());
+        compareDates("2014-09-16 18:59:00", res.getDate());
     }
 
     @Test
