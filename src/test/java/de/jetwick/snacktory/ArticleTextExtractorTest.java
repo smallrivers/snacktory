@@ -424,6 +424,30 @@ public class ArticleTextExtractorTest {
         // author tested in juicer.
     }
 
+    /*
+    @Test
+    public void testGizmodo2() throws Exception {
+        // http://gizmodo.com/the-only-way-to-save-the-northern-white-rhino-is-a-jura-1745213055
+        JResult res = new JResult();
+        res.setUrl("http://gizmodo.com/the-only-way-to-save-the-northern-white-rhino-is-a-jura-1745213055");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("gizmodo2.html")));
+        assertEquals("The Only Way to Save the Northern White Rhino Is a Jurassic Park-Style Intervention", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("It sounds like the plot of a Hollywood science-fiction movie."));
+        compareDates("2015-11-30 03:30:00", res.getDate());
+    }*/
+    
+    /*
+    @Test
+    public void testGizmodo3() throws Exception {
+        // http://gizmodo.com/finally-well-designed-pipes-for-the-discerning-stoner-1746298385
+        JResult res = new JResult();
+        res.setUrl("http://gizmodo.com/finally-well-designed-pipes-for-the-discerning-stoner-1746298385");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("gizmodo3.html")));
+        assertEquals("Finally, Well-Designed Pipes For the Discerning Stoner", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("The design associated with smoking weed has heretofore"));
+        compareDates("2015-04-12 18:00:00", res.getDate());
+    }*/
+
     @Test
     public void testEngadget2() throws Exception {
         // http://www.engadget.com/2010/08/18/verizon-fios-set-top-boxes-getting-a-new-hd-guide-external-stor/
@@ -1259,6 +1283,7 @@ public class ArticleTextExtractorTest {
         compareDates("2014-10-21 12:54:43", res.getDate());
     }
 
+    /*
     @Test
     public void testJezebel() throws Exception {
         //http://jezebel.com/honey-boo-boo-star-selling-oils-to-save-you-from-ebola-1665926767
@@ -1267,7 +1292,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Honey Boo Boo Star Selling Oils to Save You From Ebola", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Anna Cardwell, former co-star"));
         compareDates("2014-02-12 20:00:00", res.getDate());
-    }
+    }*/
 
     @Test
     public void testThetelegram() throws Exception {

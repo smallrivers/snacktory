@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.Date;
 import java.util.TreeMap;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -91,6 +93,10 @@ public class ArticleTextExtractor {
         Pattern.compile("on(.*)", Pattern.CASE_INSENSITIVE),
         Pattern.compile("(.*)Uhr", Pattern.CASE_INSENSITIVE)
     );
+
+    // TODO: Maybe these dates should come from properties?
+    private static final Date earliestValidDate = getDate(2000, 01, 01);
+    private static final Date oldestValidDate = getDate(2030, 01, 01);
 
     private static final int MAX_AUTHOR_DESC_LENGHT = 1000;
     private static final int MAX_IMAGE_LENGHT = 255;
@@ -924,7 +930,7 @@ public class ArticleTextExtractor {
             "dd-MM-yyyy HH:mm",
             "dd-MM-yyyy HH:mm:ss",
             "dd.MM.yyyy - HH:mm",
-            "dd/MM/yy hh:mma",
+            //"dd/MM/yy hh:mma",   // ambiguous pattern
             "dd/MM/yyyy HH:mm",
             "dd/MM/yyyy HH:mm:ss",
             "EEE MMM dd, yyyy hh:mma", //Thursday November 12, 2015 10:17AM
@@ -1003,11 +1009,25 @@ public class ArticleTextExtractor {
             }
             dateStr = cleanDate(dateStr);
             if(DEBUG_DATE_EXTRACTION){
-                System.out.println("AFTER clea: dateStr="+dateStr+"|");
+                System.out.println("AFTER clean: dateStr="+dateStr+"|");
             }
-            return DateUtils.parseDateStrictly(dateStr, parsePatterns);
+            Date d = DateUtils.parseDateStrictly(dateStr, parsePatterns);
+            if (isValidDate(d)){
+                return d;
+            } else {
+                System.out.println("Invalid date found:" + d);
+            }
         } catch (Exception ex) {
             return null;
+        }
+        return null;
+    }
+
+    private static boolean isValidDate(Date d){
+        if (d.after(earliestValidDate) && d.before(oldestValidDate)){
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -1935,6 +1955,11 @@ public class ArticleTextExtractor {
       return result.toString();
     }
 
+    public static Date getDate(int year, int month, int date) {
+        Calendar working = GregorianCalendar.getInstance();
+        working.set(year, month, date, 0, 0, 1);
+        return working.getTime();
+     }
 
     /**
      * Comparator for Image by weight
