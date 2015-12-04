@@ -1377,6 +1377,17 @@ public class ArticleTextExtractorTest {
         compareDates("2015-11-12 10:17:00", res.getDate());
     }
 
+    @Test
+    public void testKwch() throws Exception {
+        // http://www.kwch.com/news/local-news/crowdfunding-trend-growing-for-cancer-patients/33575512
+        JResult res = new JResult();
+        res.setUrl("http://www.kwch.com/news/local-news/crowdfunding-trend-growing-for-cancer-patients/33575512");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("kwch.html")));
+        assertEquals("Crowdfunding trend growing for cancer patients", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("For 5-year-old Prestun Siebel being a kid hasn't been easy."));
+        compareDates("2015-06-15 00:41:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

@@ -79,24 +79,24 @@ public class ArticleTextExtractor {
     // TODO: Replace this ugly list with a function that remove all the 
     // non numeric characters (except puntuaction, AM/PM and TZ)
     private static final List<Pattern> CLEAN_DATE_PATTERNS = Arrays.asList(
-        Pattern.compile("Published on:(.*)"),
-        Pattern.compile("Published on(.*)"),
-        Pattern.compile("Published:(.*)"),
-        Pattern.compile("Published(.*)"),
-        Pattern.compile("Posted on:(.*)"),
-        Pattern.compile("Posted on(.*)"),
-        Pattern.compile("Posted:(.*)"),
-        Pattern.compile("Posted(.*)"),
-        Pattern.compile("on:(.*)"),
-        Pattern.compile("on(.*)"),
-        Pattern.compile("(.*)Uhr")
+        Pattern.compile("Published on:(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("Published on(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("Published:(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("Published(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("Posted on:(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("Posted on(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("Posted:(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("Posted(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("on:(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("on(.*, Pattern.CASE_INSENSITIVE)"),
+        Pattern.compile("(.*)Uhr", Pattern.CASE_INSENSITIVE)
     );
 
     private static final int MAX_AUTHOR_DESC_LENGHT = 1000;
     private static final int MAX_IMAGE_LENGHT = 255;
 
     // For debugging
-    private static final boolean DEBUG_DATE_EXTRACTION = false;
+    private static final boolean DEBUG_DATE_EXTRACTION = true;
     private static final boolean DEBUG_WEIGHTS = false;
     private static final boolean DEBUG_BASE_WEIGHTS = false;
     private static final boolean DEBUG_CHILDREN_WEIGHTS = false;
@@ -793,7 +793,7 @@ public class ArticleTextExtractor {
             }
         }
 
-        elems = doc.select("*[class=published], *[class*=blogdate], *[class*=posted_date], *[class*=post_date], *[class*=origin-date], *[class*=xn-chron], *[class*=article-timestamp]");
+        elems = doc.select("*[class*=postedAt], *[class=published], *[class*=blogdate], *[class*=posted_date], *[class*=post_date], *[class*=origin-date], *[class*=xn-chron], *[class*=article-timestamp]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
@@ -994,6 +994,7 @@ public class ArticleTextExtractor {
             "yyyyMMdd",
             "yyyyMMddHHmm",
             "yyyyMMddHHmmss",
+            "hh:mm a z MMM dd, yyyy", // 07:41 PM CDT Jun 14, 2015
         };
 
         try {
