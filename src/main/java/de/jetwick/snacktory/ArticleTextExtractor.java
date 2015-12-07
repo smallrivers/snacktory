@@ -1,5 +1,7 @@
 package de.jetwick.snacktory;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.commons.lang.time.*;
 import org.apache.commons.lang3.*;
+import com.google.common.net.InternetDomainName;
 
 /**
  * This class is thread safe.
@@ -99,6 +102,17 @@ public class ArticleTextExtractor {
     // TODO: Maybe these dates should come from properties?
     private static final Date earliestValidDate = getDate(2000, 01, 01);
     private static final Date oldestValidDate = getDate(2030, 01, 01);
+
+    // Define custom rules to remove nodes for specific domains
+    // TODO: Load this from yaml/settings file
+    private static final Map<String, List> NODES_TO_REMOVE_PER_DOMAIN;
+    static {
+        Map<String, List> aMap = new LinkedHashMap<String, List>();
+        aMap.put("golocalprov.com", Arrays.asList(
+                "*[id=slideshow-wrap]"
+            ));
+        NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
+    }
 
     // For debugging
     private static final boolean DEBUG_DATE_EXTRACTION = false;
@@ -394,6 +408,22 @@ public class ArticleTextExtractor {
                     }
                 } else {
                     res.setImageUrl(metadataImageUrl);
+                }
+            }
+
+            // check for domain specific rules to remove unwanted nodes.
+            if(!res.getUrl().equals("")){
+                String domain = getTopPrivateDomain(res.getUrl());
+                if (domain!=null){
+                    List<String> selectorList = NODES_TO_REMOVE_PER_DOMAIN.get(domain);
+                    if (selectorList!=null){
+                        for (String selector : selectorList) {
+                            Elements itemsToRemove = bestMatchElement.select(selector);
+                            for (Element item : itemsToRemove) {
+                                item.remove();
+                            }
+                        }
+                    }
                 }
             }
 
@@ -1953,6 +1983,16 @@ public class ArticleTextExtractor {
         }
 
         return SHelper.innerTrim(res.toString());
+    }
+
+    public static String getTopPrivateDomain(String url) {
+        try {
+            String host = new URI(url).getHost();
+            InternetDomainName domainName = InternetDomainName.from(host);
+            return domainName.topPrivateDomain().toString();
+        } catch(URISyntaxException ex){
+            return null;
+        }
     }
 
     /**
