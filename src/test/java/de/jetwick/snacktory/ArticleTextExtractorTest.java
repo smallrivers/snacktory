@@ -1410,6 +1410,18 @@ public class ArticleTextExtractorTest {
         compareDates("2015-06-15 00:41:00", res.getDate());
     }
 
+    @Test
+    public void testGolocalprov() throws Exception {
+        // http://www.golocalprov.com/business/friday-financial-five-december-4-2015
+        JResult res = new JResult();
+        res.setUrl("http://www.golocalprov.com/business/friday-financial-five-december-4-2015");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("golocalprov.html")));
+        assertEquals("Friday Financial Five – December 4, 2015", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("The end of the year is a great time to review"));
+        assertFalse(res.getText(), res.getText().contains("WalletHub"));
+        compareDates("2015-12-04 07:14:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

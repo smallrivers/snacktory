@@ -8,6 +8,7 @@ object Dependencies {
   val CommonsLang = "commons-lang" % "commons-lang" % "2.6"
   val CommonsLang3 = "org.apache.commons" % "commons-lang3" % "3.1"
   val Log4j = "log4j" % "log4j" % "1.2.14"
+  val Guava = "com.google.guava" % "guava" % "18.0"
 }
 
 object SnacktoryBuild extends Build {
@@ -15,5 +16,5 @@ object SnacktoryBuild extends Build {
 
   lazy val root = Project("snacktory", file("."), 
                     settings = Defaults.defaultSettings ++ 
-                    Seq(libraryDependencies ++= Seq(Jsoup, Slf4jApi, Slf4jLog4j12, CommonsLang, CommonsLang3, Log4j)))
+                    Seq(libraryDependencies ++= Seq(Jsoup, Slf4jApi, Slf4jLog4j12, CommonsLang, CommonsLang3, Log4j, Guava)))
 }
