@@ -930,7 +930,7 @@ public class ArticleTextExtractor {
             "dd-MM-yyyy HH:mm",
             "dd-MM-yyyy HH:mm:ss",
             "dd.MM.yyyy - HH:mm",
-            //"dd/MM/yy hh:mma",   // ambiguous pattern
+            "MM/dd/yy hh:mma",   // ambiguous pattern, note it uses American notation.
             "dd/MM/yyyy HH:mm",
             "dd/MM/yyyy HH:mm:ss",
             "EEE MMM dd, yyyy hh:mma", //Thursday November 12, 2015 10:17AM
