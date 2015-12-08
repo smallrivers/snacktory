@@ -856,7 +856,7 @@ public class ArticleTextExtractor {
             }
         }
 
-        elems = doc.select("*[class*=postedAt], *[class=published], *[class*=blogdate], *[class*=posted_date], *[class*=post_date], *[class*=origin-date], *[class*=xn-chron], *[class*=article-timestamp]");
+        elems = doc.select("*[class=published-date], *[class*=postedAt], *[class=published], *[class*=blogdate], *[class*=posted_date], *[class*=post_date], *[class*=origin-date], *[class*=xn-chron], *[class*=article-timestamp]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
@@ -1058,6 +1058,7 @@ public class ArticleTextExtractor {
             "yyyyMMddHHmm",
             "yyyyMMddHHmmss",
             "hh:mm a z MMM dd, yyyy", // 07:41 PM CDT Jun 14, 2015
+            "EEE MMM dd HH:mm:ss z yyyy", // Thu Feb 07 00:00:00 EST 2013
         };
 
         try {
