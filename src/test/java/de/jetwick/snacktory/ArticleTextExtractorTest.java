@@ -1422,6 +1422,17 @@ public class ArticleTextExtractorTest {
         compareDates("2015-12-04 07:14:00", res.getDate());
     }
 
+    @Test
+    public void testMheducation() throws Exception {
+        // http://www.mheducation.com/news-media/press-releases/mcgraw-hill-education-launches-sra-flex-literacy-help-struggling-students-meet.html
+        JResult res = new JResult();
+        res.setUrl("http://www.mheducation.com/news-media/press-releases/mcgraw-hill-education-launches-sra-flex-literacy-help-struggling-students-meet.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("mheducation.html")));
+        assertEquals("McGraw-Hill Education Launches SRA FLEX Literacy™ to Help Struggling Students Meet the Common Core State Standards in English Language Arts", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("NEW YORK, Feb. 7, 2013 /PRNewswire/"));
+        compareDates("2013-02-07 05:00:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
