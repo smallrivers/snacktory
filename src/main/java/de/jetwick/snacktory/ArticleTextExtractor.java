@@ -1958,6 +1958,9 @@ public class ArticleTextExtractor {
             return domainName.topPrivateDomain().toString();
         } catch(URISyntaxException ex){
             return null;
+        } catch(java.lang.IllegalStateException ex){
+            // Handles case: java.lang.IllegalStateException: Not under a public suffix: developer.team
+            return null;
         }
     }
 
