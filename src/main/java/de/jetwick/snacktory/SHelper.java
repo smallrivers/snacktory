@@ -324,6 +324,7 @@ public class SHelper {
     }
 
     public static String estimateDate(String url) {
+
         int index = url.indexOf("://");
         if (index > 0)
             url = url.substring(index + 3);
@@ -347,7 +348,7 @@ public class SHelper {
                     continue;
                 }
                 yearCounter = counter;
-            } else if (str.length() == 2) {
+            } else if (str.length() == 2 || str.length() == 1) {
                 if (monthCounter < 0 && counter == yearCounter + 1) {
                     try {
                         month = Integer.parseInt(str);

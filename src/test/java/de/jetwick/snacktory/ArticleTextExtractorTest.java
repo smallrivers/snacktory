@@ -1504,6 +1504,17 @@ public class ArticleTextExtractorTest {
         compareDates("2013-02-07 05:00:00", res.getDate());
     }
 
+    @Test
+    public void testCMO() throws Exception {
+        // http://www.cmo.com/articles/2015/12/9/millennials-powering-purchase-of-digital-gift-cards.html
+        JResult res = new JResult();
+        res.setUrl("http://www.cmo.com/articles/2015/12/9/millennials-powering-purchase-of-digital-gift-cards.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("cmo.com.html")));
+        assertEquals("Millennials Powering Purchase Of Digital Gift Cards", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("As the retail industry overall trends further toward"));
+        compareDates("2015-12-09 00:00:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
