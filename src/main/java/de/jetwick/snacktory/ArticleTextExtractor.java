@@ -112,6 +112,9 @@ public class ArticleTextExtractor {
         aMap.put("cmo.com", Arrays.asList(
                 "*[id=getupdatesform]"
             ));
+        aMap.put("bestpaths.com", Arrays.asList(
+                "*[id=secondary]"
+            ));
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -719,7 +722,7 @@ public class ArticleTextExtractor {
         }
 
         // naturebox.com
-        elems = doc.select("time[class=published]");
+        elems = doc.select("time[class=published], time[class=entry-date published]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();

@@ -1444,6 +1444,19 @@ public class ArticleTextExtractorTest {
         compareDates("2015-12-09 00:00:00", res.getDate());
     }
 
+    @Test
+    public void testBestpaths() throws Exception {
+        // http://bestpaths.com/twitters-fabric-announces-unity-sdk-support-error-logging-on-ios-and-tvos/
+        JResult res = new JResult();
+        res.setUrl("http://bestpaths.com/twitters-fabric-announces-unity-sdk-support-error-logging-on-ios-and-tvos/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("bestpaths.html")));
+        assertEquals("Twitter’s Fabric Announces Unity SDK Support, Error Logging On iOS And tvOS", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Today at Twitter Flight"));
+        assertFalse(res.getText(), res.getText().contains("Adobe"));
+        assertFalse(res.getText(), res.getText().contains("NFL"));
+        compareDates("2015-10-21 00:00:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
