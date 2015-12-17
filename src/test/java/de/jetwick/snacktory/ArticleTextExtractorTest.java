@@ -1457,6 +1457,17 @@ public class ArticleTextExtractorTest {
         compareDates("2015-10-21 00:00:00", res.getDate());
     }
 
+    @Test
+    public void testPRnewswire() throws Exception {
+        // http://www.prnewswire.com/news-releases/encyclopaedia-britannica-accelerates-its-digital-transformation-with-salesforce-300187911.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("prnewswire2.html")));
+        assertEquals("Encyclopaedia Britannica Accelerates Its Digital Transformation with Salesforce -- SAN FRANCISCO, Dec. 4, 2015 /PRNewswire/ --", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("SAN FRANCISCO, Dec. 4, 2015 /PRNewswire/"));
+        assertTrue(res.getText(), res.getText().contains("240 years"));
+        compareDates("2015-12-04", res.getDate());
+    }
+
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
