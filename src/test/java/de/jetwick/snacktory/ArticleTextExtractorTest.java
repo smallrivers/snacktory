@@ -1538,6 +1538,14 @@ public class ArticleTextExtractorTest {
         compareDates("2015-12-04", res.getDate());
     }
 
+    @Test
+    public void testTheStreet() throws Exception {
+        // http://www.thestreet.com/video/13404696/avoid-non-traded-reits-annuities-says-wall-street-potholes-author.html
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("thestreet.com.html")));
+        assertEquals("Avoid Non-Traded REITs, Annuities Says ‘Wall Street Potholes’ Author", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Non-traded REITs have highly limited liquidity"));
+        compareDates("2015-12-28 06:30:00", res.getDate());
+    }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
