@@ -1038,6 +1038,7 @@ public class ArticleTextExtractor {
             "yyyyMMddHHmmss",
             "hh:mm a z MMM dd, yyyy", // 07:41 PM CDT Jun 14, 2015
             "EEE MMM dd HH:mm:ss z yyyy", // Thu Feb 07 00:00:00 EST 2013
+            "yyyy-MM-dd HH:mm:ss.'0'"// 2015-12-28 06:30:00.0
         };
 
         try {
