@@ -45,9 +45,13 @@ public class HtmlFetcherIntegrationTest {
         res = new HtmlFetcher().fetchAndExtract("http://on.fb.me/IKFRtL", 10000, true);
         assertEquals("https://www.facebook.com/", res.getUrl());
 
-        // Redirection.
-        res = new HtmlFetcher().fetchAndExtract("http://www.azcentral.com/videos/news/12-news/arizona-midday/2014/11/26/19550567/", 10000, true);
-        assertEquals("http://www.azcentral.com/videos/news/12-news/arizona-midday/2014/11/26/19550567/", res.getUrl());
+        // Not found.
+        try {
+            res = new HtmlFetcher().fetchAndExtract("http://www.azcentral.com/videos/news/12-news/arizona-midday/2014/11/26/19550567/", 10000, true);
+            fail( "Must throw SnacktoryNotFoundException" );
+        } catch (SnacktoryNotFoundException ex){
+            // do nothing
+        }
     }
 
     @Test
@@ -77,6 +81,7 @@ public class HtmlFetcherIntegrationTest {
         assertEquals("科学・ＩＴニュース：読売新聞(YOMIURI ONLINE)", res.getTitle());
     }
 
+    /* Fails with: Security Check Required
     @Test
     public void testHashbang() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://www.facebook.com/democracynow", 10000, true);
@@ -85,7 +90,7 @@ public class HtmlFetcherIntegrationTest {
         // not available anymore
         //       res = new HtmlFetcher().fetchAndExtract("http://twitter.com/#!/th61/status/57141697720745984", 10000, true);
         //       assertTrue(res.getTitle(), res.getTitle().startsWith("Twitter / TH61: “@AntiAtomPiraten:"));
-    }
+    }*/
 
     public void testImage() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://grfx.cstv.com/schools/okla/graphics/auto/20110505_schedule.jpg", 10000, true);
