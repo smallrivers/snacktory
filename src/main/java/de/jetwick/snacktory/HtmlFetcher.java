@@ -21,6 +21,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.FileNotFoundException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.Proxy;
@@ -283,6 +284,8 @@ public class HtmlFetcher {
                     urlToDownload = getURLtoBreakCache(url);
                 } 
                 extractor.extractContent(result, fetchAsString(urlToDownload, timeout), maxContentSize);
+            } catch (FileNotFoundException fe){
+                throw new SnacktoryNotFoundException();
             } catch (IOException io){
                 // do nothing
                 logger.error("Exception for URL: " + url + ":" + io);
