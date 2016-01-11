@@ -126,7 +126,7 @@ public class ArticleTextExtractorTest {
     public void testYomiuri() throws Exception {
         // http://www.yomiuri.co.jp/e-japan/gifu/news/20110410-OYT8T00124.htm
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("yomiuri.html")));
-        assertEquals("色とりどりのチューリップ", res.getTitle());
+        assertEquals("色とりどりのチューリップ : 岐阜 : 地域 : YOMIURI ONLINE（読売新聞）", res.getTitle());
         assertTrue("yomiuri:" + res.getText(), res.getText().contains("海津市海津町の国営木曽三川公園で、チューリップが見頃を迎えている。２０日までは「チューリップ祭」が開かれており、大勢の人たちが多彩な色や形を鑑賞している＝写真＝"));
         assertEquals(Arrays.asList("読売新聞", "地域"), res.getKeywords());
     }
@@ -365,7 +365,7 @@ public class ArticleTextExtractorTest {
         // http://stackoverflow.com/questions/3553693/wicket-vs-vaadin/3660938
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("stackoverflow.html")));
         assertTrue("stackoverflow:" + article.getText(), article.getText().startsWith("I think I've invested some time for both frameworks. I really like bo"));
-        assertEquals("wicket vs Vaadin", article.getTitle());
+        assertEquals("java - wicket vs Vaadin - Stack Overflow", article.getTitle());
         assertEquals("", article.getImageUrl());
     }
 
@@ -1474,6 +1474,15 @@ public class ArticleTextExtractorTest {
         assertEquals("Avoid Non-Traded REITs, Annuities Says ‘Wall Street Potholes’ Author", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Non-traded REITs have highly limited liquidity"));
         compareDates("2015-12-28 06:30:00", res.getDate());
+    }
+
+    @Test
+    public void testAdobeBlog() throws Exception {
+        // http://blogs.adobe.com/primetime/2015/09/improving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("adobe_blog.html")));
+        assertEquals("Improving Startup Performance by Pre-Fetching Videos Faster with TVSDK 2.0 - Adobe Primetime Blog", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Adobe Primetime customers get"));
+        compareDates("2015-09-16 03:42:23", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
