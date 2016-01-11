@@ -521,7 +521,7 @@ public class ArticleTextExtractor {
                         if (!possibleTitle.isEmpty()) {
                             String doc_title = doc.title();
                             if (doc_title.toLowerCase().contains(possibleTitle.toLowerCase())) {
-                                if (possibleTitle.length() > 10) { // short title is not likely a title.
+                                if (possibleTitle.length() > 20) { // short title is not likely a title.
                                     title = possibleTitle;
                                     usingPossibleTitle = true;
                                     }
