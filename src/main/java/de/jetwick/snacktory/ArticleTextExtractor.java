@@ -309,14 +309,19 @@ public class ArticleTextExtractor {
             }
 
             if (extractImages) {
-                List<ImageResult> images = new ArrayList<ImageResult>();
-                Element imgEl = determineImageSource(bestMatchElement, images);
-                if (imgEl != null) {
-                    res.setImageUrl(SHelper.replaceSpaces(imgEl.attr("src")));
-                    // TODO remove parent container of image if it is contained in bestMatchElement
-                    // to avoid image subtitles flooding in
+                final String metadataImageUrl = extractImageUrl(doc);
+                if (metadataImageUrl.isEmpty()) {
+                    final List<ImageResult> images = new ArrayList<ImageResult>();
+                    final Element imgEl = determineImageSource(bestMatchElement, images);
+                    if (imgEl != null) {
+                        res.setImageUrl(SHelper.replaceSpaces(imgEl.attr("src")));
+                        // TODO remove parent container of image if it is contained in bestMatchElement
+                        // to avoid image subtitles flooding in
 
-                    res.setImages(images);
+                        res.setImages(images);
+                    }
+                } else {
+                    res.setImageUrl(metadataImageUrl);
                 }
             }
 
@@ -335,24 +340,16 @@ public class ArticleTextExtractor {
             }
 
             // extract links from the same best element
-            String fullhtml = bestMatchElement.toString();
-            Elements children = bestMatchElement.select("a[href]"); // a with href = link
-            String linkstr = "";
-            Integer linkpos = 0;
+            final String fullhtml = bestMatchElement.toString();
+            final Elements children = bestMatchElement.select("a[href]"); // a with href = link
             Integer lastlinkpos = 0;
             for (Element child : children) {
-                linkstr = child.toString();
-                linkpos = fullhtml.indexOf(linkstr, lastlinkpos);
+                final String linkstr = child.toString();
+                final int linkpos = fullhtml.indexOf(linkstr, lastlinkpos);
                 res.addLink(child.attr("abs:href"), child.text(), linkpos);
                 lastlinkpos = linkpos;
             }
             res.setTextList(formatter.getTextList(bestMatchElement));
-        }
-
-        if (extractImages) {
-            if (res.getImageUrl().isEmpty()) {
-                res.setImageUrl(extractImageUrl(doc));
-            }
         }
 
         res.setRssUrl(extractRssUrl(doc));
@@ -768,8 +765,7 @@ public class ArticleTextExtractor {
     }
 
     /**
-     * Tries to extract an image url from metadata if determineImageSource
-     * failed
+     * Tries to extract an image url from metadata
      *
      * @return image url or empty str
      */
@@ -1170,10 +1166,9 @@ public class ArticleTextExtractor {
             if (title.length() > 35)
                 weight += 20;
 
-            String rel = null;
             boolean noFollow = false;
             if (e.parent() != null) {
-                rel = e.parent().attr("rel");
+                final String rel = e.parent().attr("rel");
                 if (rel != null && rel.contains("nofollow")) {
                     noFollow = rel.contains("nofollow");
                     weight -= 40;
@@ -1187,7 +1182,7 @@ public class ArticleTextExtractor {
                 score = score / 2;
             }
 
-            ImageResult image = new ImageResult(sourceUrl, weight, title, height, width, alt, noFollow);
+            final ImageResult image = new ImageResult(sourceUrl, weight, title, height, width, alt, noFollow);
             images.add(image);
         }
 
