@@ -341,7 +341,7 @@ public class ArticleTextExtractor {
         // get the easy stuff
         res.setTitle(extractTitle(doc));
         res.setDescription(extractDescription(doc));
-        res.setCanonicalUrl(extractCanonicalUrl(doc));
+        res.setCanonicalUrl(extractCanonicalUrl(res.getUrl(), doc));
         res.setType(extractType(doc));
         res.setSitename(extractSitename(doc));
         res.setLanguage(extractLanguage(doc));
@@ -538,12 +538,21 @@ public class ArticleTextExtractor {
         return StringEscapeUtils.unescapeHtml4(title);
     }
 
-    protected String extractCanonicalUrl(Document doc) {
+    protected String extractCanonicalUrl(String baseURL, Document doc) {
         String url = SHelper.replaceSpaces(doc.select("head link[rel=canonical]").attr("href"));
         if (url.isEmpty()) {
             url = SHelper.replaceSpaces(doc.select("head meta[property=og:url]").attr("content"));
             if (url.isEmpty()) {
                 url = SHelper.replaceSpaces(doc.select("head meta[name=twitter:url]").attr("content"));
+            }
+        }
+
+        if (!url.isEmpty()) {
+            try {
+                url = new URI(baseURL).resolve(url).toString();
+            } catch (URISyntaxException ex) {
+                // bad url?
+                logger.error("Bad URL: " + url + ":" + ex);
             }
         }
         return url;
