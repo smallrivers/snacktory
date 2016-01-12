@@ -115,6 +115,9 @@ public class ArticleTextExtractor {
         aMap.put("bestpaths.com", Arrays.asList(
                 "*[id=secondary]"
             ));
+        aMap.put("beet.tv", Arrays.asList(
+                "*[class*=single-recent-post-container]"
+            ));
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 

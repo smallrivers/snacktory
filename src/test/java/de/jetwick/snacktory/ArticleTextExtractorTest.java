@@ -1485,6 +1485,18 @@ public class ArticleTextExtractorTest {
         compareDates("2015-09-16 03:42:23", res.getDate());
     }
 
+    @Test
+    public void testBeetTV() throws Exception {
+        // http://www.beet.tv/2016/01/cesrocketwootton.html
+        JResult res = new JResult();
+        res.setUrl("http://www.beet.tv/2016/01/cesrocketwootton.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("beet.tv.html")));
+        assertEquals("Rocket Fuel’s New CEO Targets DISH Moments", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("LAS VEGAS — "));
+        assertTrue(res.getText(), res.getText().endsWith("sponsored by Adobe."));
+        compareDates("2016-01-01", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
