@@ -145,7 +145,7 @@ public class ArticleTextExtractor {
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
                 + "|arti(cle|kel)|instapaper_body|storybody|short-story");
-        setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|articleBody|html-view-content");
+        setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|articleBody|article-body|html-view-content");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate");
@@ -1091,7 +1091,8 @@ public class ArticleTextExtractor {
             "yyyyMMddHHmmss",
             "hh:mm a z MMM dd, yyyy", // 07:41 PM CDT Jun 14, 2015
             "EEE MMM dd HH:mm:ss z yyyy", // Thu Feb 07 00:00:00 EST 2013
-            "yyyy-MM-dd HH:mm:ss.'0'"// 2015-12-28 06:30:00.0
+            "yyyy-MM-dd HH:mm:ss.'0'",// 2015-12-28 06:30:00.0
+            "yyyy-MM-dd HH:mm:ss z" //2016-01-17 15:21:00 -0800
         };
 
         try {

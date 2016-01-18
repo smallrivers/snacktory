@@ -1521,6 +1521,18 @@ public class ArticleTextExtractorTest {
         compareDates("2016-01-18 11:53:24", res.getDate());
     }
 
+    @Test
+    public void testSFGate() throws Exception {
+        // http://www.sfgate.com/sports/article/Wisconsin-Girls-How-Fared-6765744.php
+        JResult res = new JResult();
+        res.setUrl("http://www.sfgate.com/sports/article/Wisconsin-Girls-How-Fared-6765744.php");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("sfgate2.html")));
+        assertEquals("Wisconsin Girls How Fared", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Division 1 1. Bay Port (13-1)"));
+        assertTrue(res.getText(), res.getText().endsWith("beat Royall 57-39."));
+        compareDates("2016-01-17 23:21:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
