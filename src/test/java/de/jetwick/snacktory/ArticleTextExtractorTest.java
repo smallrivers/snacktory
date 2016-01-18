@@ -1497,6 +1497,30 @@ public class ArticleTextExtractorTest {
         compareDates("2016-01-01", res.getDate());
     }
 
+    @Test
+    public void testRussianRT() throws Exception {
+        // https://russian.rt.com/article/141677
+        JResult res = new JResult();
+        res.setUrl("https://russian.rt.com/article/141677");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("russian.rt.com.html")));
+        assertEquals("СМИ: Сеул открыл предупредительный огонь по северокорейскому беспилотнику", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Вооружённые силы Южной"));
+        assertTrue(res.getText(), res.getText().endsWith("государствами."));
+        compareDates("2016-01-13 06:22:43", res.getDate());
+    }
+
+    @Test
+    public void testRussianRT2() throws Exception {
+        // https://russian.rt.com/article/142694
+        JResult res = new JResult();
+        res.setUrl("https://russian.rt.com/article/142694");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("russian.rt2.com.html")));
+        assertEquals("С высоты птичьего полёта: экстремал из Румынии в очередной раз испытал себя", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Экстремал из Румынии забрался"));
+        assertTrue(res.getText(), res.getText().endsWith("— заключил Чернеску."));
+        compareDates("2016-01-18 11:53:24", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
