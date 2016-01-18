@@ -12,6 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Iterator;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.Date;
@@ -57,6 +58,10 @@ public class ArticleTextExtractor {
     // Most likely negative candidates
     private String highlyNegativeStr;
     private Pattern HIGHLY_NEGATIVE;
+
+    // Notes to remove pattterns
+    private String toRemoveStr;
+    private Pattern TO_REMOVE;
 
     private static final Pattern NEGATIVE_STYLE =
             Pattern.compile("hidden|display: ?none|font-size: ?small");
@@ -124,6 +129,7 @@ public class ArticleTextExtractor {
     }
 
     // For debugging
+    private static final boolean DEBUG_REMOVE_RULES = false;
     private static final boolean DEBUG_DATE_EXTRACTION = false;
     private static final boolean DEBUG_WEIGHTS = false;
     private static final boolean DEBUG_BASE_WEIGHTS = false;
@@ -137,12 +143,13 @@ public class ArticleTextExtractor {
                 + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-                + "|arti(cle|kel)|instapaper_body|storybody");
+                + "|arti(cle|kel)|instapaper_body|storybody|short-story");
         setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|articleBody|html-view-content");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings|title|avatar|follow-me-twitter|truncate");
         setHighlyNegative("policy-blk|FollowLinkedInSignIn");
+        setToRemove("visuallyhidden");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -183,9 +190,14 @@ public class ArticleTextExtractor {
         return this;
     }
 
-
     public ArticleTextExtractor addNegative(String neg) {
         setNegative(negativeStr + "|" + neg);
+        return this;
+    }
+
+    public ArticleTextExtractor setToRemove(String toRemoveStr) {
+        this.toRemoveStr = toRemoveStr;
+        TO_REMOVE = Pattern.compile(toRemoveStr);
         return this;
     }
 
@@ -238,17 +250,30 @@ public class ArticleTextExtractor {
 
     // Returns the best node match based on the weights (see getWeight for strategy)
     private Element getBestMatchElement(Collection<Element> nodes){
+        Map.Entry<Integer, Element> firstEntry = getBestMatchElements(nodes).firstEntry();
+        if (firstEntry!=null){
+            return firstEntry.getValue();
+        }
+        return null;
+    }
+
+    // Returns a TreeMap of nodes sorted by their weight.
+    private TreeMap<Integer, Element> getBestMatchElements(Collection<Element> nodes){
         int maxWeight = -200;        // why -200 now instead of 0?
-        Element bestMatchElement = null;
+        //Element bestMatchElement = null;
+
+        // Note that nodes with most weight are sorted first.
+        TreeMap<Integer, Element> sortedResults = new TreeMap<Integer, Element>(Collections.reverseOrder());
         Map<Integer, ElementDebug> sortedElementsMap = new TreeMap<Integer, ElementDebug>();
 
-        boolean ignoreMaxWeightLimit = false;
+        //boolean ignoreMaxWeightLimit = false;
         boolean hasHighlyPositive = false;
         for (Element entry : nodes) {
 
             LogEntries logEntries = null;
             if (DEBUG_WEIGHTS)
                 logEntries = new LogEntries();
+
             Weight val = getWeight(entry, false, hasHighlyPositive, logEntries);
             int currentWeight = val.weight;
             hasHighlyPositive = val.hasHighlyPositive;
@@ -262,7 +287,8 @@ public class ArticleTextExtractor {
             }
             if (currentWeight > maxWeight) {
                 maxWeight = currentWeight;
-                bestMatchElement = entry;
+                //bestMatchElement = entry;
+                sortedResults.put(currentWeight, entry);
 
                 /*
                 // NOTE: This optimization fails with large pages that
@@ -318,7 +344,7 @@ public class ArticleTextExtractor {
             }
         }
 
-        return bestMatchElement;
+        return sortedResults;
     }
 
     public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, 
@@ -378,31 +404,23 @@ public class ArticleTextExtractor {
                 res.setDate(docdate);
             }}
 
-        // now remove the clutter 
+        // now remove the clutter (first try to remove any scripts)
         if (cleanScripts) {
-            prepareDocument(doc);
+            removeScriptsAndStyles(doc);
         }
+        // Always remove unlikely candidates
+        stripUnlikelyCandidates(doc);
+
 
         // init elements and get the one with highest weight (see getWeight for strategy)
         Collection<Element> nodes = getNodes(doc);
-        Element bestMatchElement = getBestMatchElement(nodes);
+        TreeMap<Integer, Element> bestMatchElements = getBestMatchElements(nodes);
+        Set bestMatchElementsSet = bestMatchElements.entrySet();
+        Iterator i = bestMatchElementsSet.iterator();
 
-        // do extraction from the best element
-        if (bestMatchElement != null) {
-
-            if (DEBUG_WEIGHTS){
-                System.out.println("----------- BEST ELEMENT --------------");
-                System.out.println("         TAG: " + bestMatchElement.tagName());
-                String bestMatchrHtml = bestMatchElement.outerHtml();
-                if (bestMatchrHtml.length() > MAX_LOG_LENGTH)
-                    bestMatchrHtml = bestMatchrHtml.substring(0, MAX_LOG_LENGTH);
-                System.out.println(bestMatchrHtml);
-                System.out.println("======================================");
-                String outerHtml = bestMatchElement.outerHtml();
-                if (outerHtml.length() > MAX_LOG_LENGTH)
-                    outerHtml = outerHtml.substring(0, MAX_LOG_LENGTH);
-                System.out.println(outerHtml);
-            }
+        while(i.hasNext()) {
+            Map.Entry currentEntry = (Map.Entry)i.next();
+            Element bestMatchElement = (Element)currentEntry.getValue();
 
             if (extractImages) {
                 final String metadataImageUrl = extractImageUrl(doc);
@@ -440,6 +458,15 @@ public class ArticleTextExtractor {
             // clean before grabbing text
             String text = formatter.getFormattedText(bestMatchElement, true);
             text = removeTitleFromText(text, res.getTitle());
+            // Sanity check
+            if (text.length()==0){
+                // Empty best element (pick next one instead)
+                if(DEBUG_WEIGHTS){
+                    System.out.println("Empty best element!!!");
+                }
+                continue;
+            }
+
             // this fails for short facebook post and probably tweets: text.length() > res.getDescription().length()
             if (text.length() > res.getTitle().length()) {
                 if (maxContentSize > 0){
@@ -448,7 +475,6 @@ public class ArticleTextExtractor {
                     }
                 }
                 res.setText(text);
-                //                print("best element:", bestMatchElement);
             }
 
             // extract links from the same best element
@@ -461,7 +487,17 @@ public class ArticleTextExtractor {
                 res.addLink(child.attr("abs:href"), child.text(), linkpos);
                 lastlinkpos = linkpos;
             }
+
             res.setTextList(formatter.getTextList(bestMatchElement));
+
+            // if we got to this point it means the current entry is the best element.
+            break;
+        }
+
+        if (extractImages) {
+            if (res.getImageUrl().isEmpty()) {
+                res.setImageUrl(extractImageUrl(doc));
+            }
         }
 
         res.setRssUrl(extractRssUrl(doc));
@@ -1857,19 +1893,6 @@ public class ArticleTextExtractor {
     }
 
     /**
-     * Prepares document. Currently only stipping unlikely candidates, since
-     * from time to time they're getting more score than good ones especially in
-     * cases when major text is short.
-     *
-     * @param doc document to prepare. Passed as reference, and changed inside
-     * of function
-     */
-    protected void prepareDocument(Document doc) {
-//        stripUnlikelyCandidates(doc);
-        removeScriptsAndStyles(doc);
-    }
-
-    /**
      * Removes unlikely candidates from HTML. Currently takes id and class name
      * and matches them against list of patterns
      *
@@ -1879,16 +1902,18 @@ public class ArticleTextExtractor {
         for (Element child : doc.select("body").select("*")) {
             String className = child.className().toLowerCase();
             String id = child.id().toLowerCase();
-
-            if (NEGATIVE.matcher(className).find()
-                    || NEGATIVE.matcher(id).find()) {
-//                print("REMOVE:", child);
+            //System.out.println("---> stripUnlikelyCandidates className="+className+"|id="+id);
+            if (TO_REMOVE.matcher(className).find()
+                    || TO_REMOVE.matcher(id).find()) {
+                if(DEBUG_REMOVE_RULES){
+                    print("REMOVE:", child);
+                }
                 child.remove();
             }
         }
     }
 
-    private Document removeScriptsAndStyles(Document doc) {
+    private void removeScriptsAndStyles(Document doc) {
         Elements scripts = doc.getElementsByTag("script");
         for (Element item : scripts) {
             item.remove();
@@ -1902,8 +1927,6 @@ public class ArticleTextExtractor {
         for (Element style : styles) {
             style.remove();
         }
-
-        return doc;
     }
 
     private void print(Element child) {
