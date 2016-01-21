@@ -19,14 +19,18 @@ import java.io.UnsupportedEncodingException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.net.URL;
-import java.net.MalformedURLException;
-import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.security.SecureRandom;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +39,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import org.jsoup.nodes.Element;
+import org.apache.commons.lang.time.DateUtils;
 
 /**
  *
@@ -44,6 +49,10 @@ public class SHelper {
 
     public static final String UTF8 = "UTF-8";
     private static final Pattern SPACE = Pattern.compile(" ");
+
+    // TODO: Maybe these dates should come from properties?
+    private static final Date earliestValidDate = getDate(2000, 01, 01);
+    private static final Date oldestValidDate = getDate(2030, 01, 01);
 
     public static String replaceSpaces(String url) {
         if (!url.isEmpty()) {
@@ -399,6 +408,19 @@ public class SHelper {
                     month = 12;
                 }
                 monthCounter = counter;
+            } else if (str.length() == 8) {
+                String[] parsePatterns = {
+                    "yyyymmdd"
+                };
+                try {
+                Date d = DateUtils.parseDateStrictly(str, parsePatterns);
+                    if (isValidDate(d)){
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+                        return df.format(d);
+                    }
+                } catch(ParseException ex){
+                    // do nothing
+                }
             }
         }
 
@@ -438,6 +460,20 @@ public class SHelper {
         }
         return dateStr + "/01/01";
     }
+
+    public static boolean isValidDate(Date d){
+        if (d.after(earliestValidDate) && d.before(oldestValidDate)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static Date getDate(int year, int month, int date) {
+        Calendar working = GregorianCalendar.getInstance();
+        working.set(year, month, date, 0, 0, 1);
+        return working.getTime();
+     }
 
     /**
      * keep in mind: simpleDateFormatter is not thread safe! call completeDate
