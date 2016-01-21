@@ -1522,6 +1522,18 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testSequoiacap() throws Exception {
+        // https://www.sequoiacap.com/article/build-us-microservices/
+        JResult res = new JResult();
+        res.setUrl("https://www.sequoiacap.com/article/build-us-microservices/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("sequoiacap.html")));
+        assertEquals("Innovate or Die: The Rise of Microservices", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Software has emerged as the critical differentiator"));
+        assertTrue(res.getText(), res.getText().endsWith("Sequoia will host a Microservices Summit in January, 2016."));
+        compareDates("2015-10-05", res.getDate());
+    }
+
+    @Test
     public void testSFGate() throws Exception {
         // http://www.sfgate.com/sports/article/Wisconsin-Girls-How-Fared-6765744.php
         JResult res = new JResult();

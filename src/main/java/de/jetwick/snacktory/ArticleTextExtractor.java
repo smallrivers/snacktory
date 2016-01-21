@@ -988,7 +988,7 @@ public class ArticleTextExtractor {
             }
         }
 
-        elems = doc.select("*[class*=articlePosted]");
+        elems = doc.select("*[class*=articlePosted], *[class*=_date -body-copy]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
@@ -1092,7 +1092,8 @@ public class ArticleTextExtractor {
             "hh:mm a z MMM dd, yyyy", // 07:41 PM CDT Jun 14, 2015
             "EEE MMM dd HH:mm:ss z yyyy", // Thu Feb 07 00:00:00 EST 2013
             "yyyy-MM-dd HH:mm:ss.'0'",// 2015-12-28 06:30:00.0
-            "yyyy-MM-dd HH:mm:ss z" //2016-01-17 15:21:00 -0800
+            "yyyy-MM-dd HH:mm:ss z", //2016-01-17 15:21:00 -0800
+            "MMM dd yyyy" //October 05 2015
         };
 
         try {
