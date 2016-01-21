@@ -17,8 +17,6 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.Date;
 import java.util.TreeMap;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -102,10 +100,6 @@ public class ArticleTextExtractor {
         Pattern.compile("(.*)Uhr", Pattern.CASE_INSENSITIVE)
     );
 
-    // TODO: Maybe these dates should come from properties?
-    private static final Date earliestValidDate = getDate(2000, 01, 01);
-    private static final Date oldestValidDate = getDate(2030, 01, 01);
-
     // Define custom rules to remove nodes for specific domains
     // TODO: Load this from yaml/settings file
     private static final Map<String, List> NODES_TO_REMOVE_PER_DOMAIN;
@@ -150,7 +144,7 @@ public class ArticleTextExtractor {
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate");
         setHighlyNegative("policy-blk|FollowLinkedInSignIn");
-        setToRemove("visuallyhidden");
+        setToRemove("visuallyhidden|ad_topjobs");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -1105,7 +1099,7 @@ public class ArticleTextExtractor {
                 System.out.println("AFTER clean: dateStr="+dateStr+"|");
             }
             Date d = DateUtils.parseDateStrictly(dateStr, parsePatterns);
-            if (isValidDate(d)){
+            if (SHelper.isValidDate(d)){
                 return d;
             } else {
                 System.out.println("Invalid date found:" + d);
@@ -1114,14 +1108,6 @@ public class ArticleTextExtractor {
             return null;
         }
         return null;
-    }
-
-    private static boolean isValidDate(Date d){
-        if (d.after(earliestValidDate) && d.before(oldestValidDate)){
-            return true;
-        } else {
-            return false;
-        }
     }
 
     private static String toUnicode(char ch) {
@@ -2047,12 +2033,6 @@ public class ArticleTextExtractor {
       }
       return result.toString();
     }
-
-    public static Date getDate(int year, int month, int date) {
-        Calendar working = GregorianCalendar.getInstance();
-        working.set(year, month, date, 0, 0, 1);
-        return working.getTime();
-     }
 
     /**
      * Comparator for Image by weight

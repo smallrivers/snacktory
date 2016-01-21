@@ -1545,6 +1545,18 @@ public class ArticleTextExtractorTest {
         compareDates("2016-01-17 23:21:00", res.getDate());
     }
 
+    @Test
+    public void testTelegram() throws Exception {
+        // http://www.telegram.com/article/20160119/SPORTS/160119063/101360/NEWS?rssfeed=true
+        JResult res = new JResult();
+        res.setUrl("http://www.telegram.com/article/20160119/SPORTS/160119063/101360/NEWS?rssfeed=true");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("telegram.com.html")));
+        assertEquals("St. John's 90, Lincoln-Sudbury 70: Lukasevicz leads way as No. 2 Pioneers surge in second half", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("SHREWSBURY — For a time, Tuesday night’s "));
+        assertTrue(res.getText(), res.getText().endsWith("Twitter @CraigGilvarg."));
+        compareDates("2016-01-19", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
