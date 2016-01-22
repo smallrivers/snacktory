@@ -1557,6 +1557,18 @@ public class ArticleTextExtractorTest {
         compareDates("2016-01-19", res.getDate());
     }
 
+    @Test
+    public void testHuffingtonpost4() throws Exception {
+        // http://www.huffingtonpost.com/entry/kesha-fans-protest_us_56a128f5e4b0d8cc109916b1
+        JResult res = new JResult();
+        res.setUrl("http://www.huffingtonpost.com/entry/kesha-fans-protest_us_56a128f5e4b0d8cc109916b1");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("huffingtonpost4.html")));
+        assertEquals("Kesha Fans Set To Protest Sony Music Outside New York Courthouse", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("On Tuesday, Jan. 26, Kesha fans will reportedly protest Sony Music "));
+        assertTrue(res.getText(), res.getText().endsWith("Care2 petition website."));
+        compareDates("2016-01-21 21:16:12", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
