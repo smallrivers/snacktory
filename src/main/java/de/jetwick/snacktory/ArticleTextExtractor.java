@@ -1018,10 +1018,34 @@ public class ArticleTextExtractor {
             }
         }
 
+        // archive.org
+        Date foundDate = extractDateFromSelector(doc, "*[href*=query=date:]");
+        if(foundDate!=null){
+            return foundDate;
+        }
+
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
 
     }
+
+    private Date extractDateFromSelector(Document doc, String cssSelector)
+    {
+        Elements elems = doc.select(cssSelector);
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            String dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-" + cssSelector); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+        return null;
+    }
+
 
     // TODO: Look for a library to parse dates formats.
     private Date parseDate(String dateStr) {

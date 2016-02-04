@@ -1640,6 +1640,18 @@ public class ArticleTextExtractorTest {
         compareDates("2016-01-21 21:16:12", res.getDate());
     }
 
+    @Test
+    public void testArchiveOrg() throws Exception {
+        // https://archive.org/details/gigaom_soundcloud_135885465
+        JResult res = new JResult();
+        res.setUrl("https://archive.org/details/gigaom_soundcloud_135885465");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("archive.org.html")));
+        assertEquals("Rack space president lays out his plan of action : Gigaom : Free Download & Streaming : Internet Archive", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Rack space president lays out his plan of action"));
+        assertTrue(res.getText(), res.getText().endsWith("Be the first one to write a review."));
+        compareDates("2014-02-20", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
