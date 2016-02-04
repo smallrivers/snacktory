@@ -108,7 +108,7 @@ public class HtmlFetcherIntegrationTest {
     @Test
     public void testDoubleResolve() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://t.co/eZRKcEYI", 10000, true);
-        assertTrue(res.getTitle(), res.getTitle().startsWith("teleject/Responsive-Web-Design-Artboards"));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("GitHub - teleject/Responsive-Web-Design-Artboards"));
     }
 
     @Test
