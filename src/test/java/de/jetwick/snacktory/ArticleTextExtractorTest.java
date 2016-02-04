@@ -1652,6 +1652,18 @@ public class ArticleTextExtractorTest {
         compareDates("2014-02-20", res.getDate());
     }
 
+    @Test
+    public void testBoingBoing() throws Exception {
+        // https://boingboing.net/2016/02/02/doxxing-sherlock-3.html
+        JResult res = new JResult();
+        res.setUrl("https://boingboing.net/2016/02/02/doxxing-sherlock-3.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("boingboing.net.html")));
+        assertEquals("Exclusive: Snowden intelligence docs reveal UK spooks' malware checklist / Boing Boing", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Boing Boing is proud to publish two original documents disclosed"));
+        assertTrue(res.getText(), res.getText().endsWith("contributed research to this story."));
+        compareDates("2016-02-02 17:36:53", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
