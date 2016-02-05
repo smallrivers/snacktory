@@ -1593,6 +1593,18 @@ public class ArticleTextExtractorTest {
         compareDates("2016-02-02 17:36:53", res.getDate());
     }
 
+    @Test
+    public void testEfytimes() throws Exception {
+        // http://www.efytimes.com/e1/responsive/fullnews.asp?edid=181209
+        JResult res = new JResult();
+        res.setUrl("http://www.efytimes.com/e1/responsive/fullnews.asp?edid=181209");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("efytimes.com.html")));
+        assertEquals("News from India on Technology, Electronics, Computers, Open Source & more: EFYTIMES.COM", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Cisco Launches Cloud Monitoring Service To Protect Against Shadow IT"));
+        assertTrue(res.getText(), res.getText().endsWith("such as Digital Guardian."));
+        //compareDates("2016-02-02 17:36:53", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
