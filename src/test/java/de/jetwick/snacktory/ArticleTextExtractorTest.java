@@ -1700,6 +1700,19 @@ public class ArticleTextExtractorTest {
         compareDates("2016-02-08 12:30:00", res.getDate());
     }
 
+    @Test
+    public void testWorldPropertyJournal() throws Exception {
+        // http://www.worldpropertyjournal.com/real-estate-news/united-states/new-york-city-real-estate-news/new-york-trophy-buildings-2016-the-midtown-trophy-index-most-exclusive-office-buildings-in-new-york-tristan-ashby-jll-office-rates-in-midtown-manhattan-2016-9633.php
+        JResult res = new JResult();
+        res.setUrl("http://www.worldpropertyjournal.com/real-estate-news/united-states/new-york-city-real-estate-news/new-york-trophy-buildings-2016-the-midtown-trophy-index-most-exclusive-office-buildings-in-new-york-tristan-ashby-jll-office-rates-in-midtown-manhattan-2016-9633.php");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("worldpropertyjournal.html")));
+        assertEquals("Midtown Manhattan Trophy Buildings Post Rock Star Rental Growth Rates", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Midtown Manhattan Trophy Buildings Post Rock Star Rental Growth Rates Residential News"));
+        assertTrue(res.getText(), res.getText().endsWith("All Rights Reserved."));
+        // January 27, 2016  8:34 AM ET
+        // compareDates("2016-02-08 12:30:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
