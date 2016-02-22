@@ -1676,6 +1676,18 @@ public class ArticleTextExtractorTest {
         //compareDates("2016-02-02 17:36:53", res.getDate());
     }
 
+    @Test
+    public void testWm() throws Exception {
+        // http://article.wn.com/view/2016/02/10/Arena_construction_turns_to_locker_rooms_and_luxury_suites/
+        JResult res = new JResult();
+        res.setUrl("http://article.wn.com/view/2016/02/10/Arena_construction_turns_to_locker_rooms_and_luxury_suites/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("wn.com.html")));
+        assertEquals("Arena construction turns to locker rooms and luxury suites", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("It’s getting easier all the time to"));
+        assertTrue(res.getText(), res.getText().endsWith("..."));
+        compareDates("2016-02-10", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
