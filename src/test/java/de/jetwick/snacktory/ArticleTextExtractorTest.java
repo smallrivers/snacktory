@@ -1688,6 +1688,18 @@ public class ArticleTextExtractorTest {
         compareDates("2016-02-10", res.getDate());
     }
 
+    @Test
+    public void testCoolhunting() throws Exception {
+        // http://www.coolhunting.com/link/otherworldly-images-of-a-glass-recyling-factory
+        JResult res = new JResult();
+        res.setUrl("http://www.coolhunting.com/link/otherworldly-images-of-a-glass-recyling-factory");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("coolhunting.html")));
+        assertEquals("Otherworldy Images of a Glass Recycling Factory - Cool Hunting", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("At the Phoenicia Glass Works"));
+        assertTrue(res.getText(), res.getText().endsWith("Take a look at Mashable."));
+        compareDates("2016-02-08 12:30:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

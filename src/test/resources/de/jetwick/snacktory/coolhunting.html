@@ -1,0 +1,961 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta charset="utf-8">
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"4ec8355b97","applicationID":"1724038","transactionName":"IV1XRhdaClUERx5VXAxZFl4MWw1mBVBFWFwO","queueTime":13,"applicationTime":40,"agent":""}</script>
+<script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"VgcHU19QGwIHVlVSBAk="};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o||e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({QJf3ax:[function(t,e){function n(){}function r(t){function e(t){return t&&t instanceof n?t:t?a(t,i,o):o()}function s(n,r,o){t&&t(n,r,o);for(var i=e(o),a=f(n),s=a.length,c=0;s>c;c++)a[c].apply(i,r);return i}function c(t,e){d[t]=f(t).concat(e)}function f(t){return d[t]||[]}function u(){return r(s)}var d={};return{on:c,emit:s,create:u,listeners:f,context:e,_events:d}}function o(){return new n}var i="nr@context",a=t("gos");e.exports=r()},{gos:"7eSDFh"}],ee:[function(t,e){e.exports=t("QJf3ax")},{}],3:[function(t){function e(t){try{i.console&&console.log(t)}catch(e){}}var n,r=t("ee"),o=t(1),i={};try{n=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(i.console=!0,-1!==n.indexOf("dev")&&(i.dev=!0),-1!==n.indexOf("nr_dev")&&(i.nrDev=!0))}catch(a){}i.nrDev&&r.on("internal-error",function(t){e(t.stack)}),i.dev&&r.on("fn-err",function(t,n,r){e(r.stack)}),i.dev&&(e("NR AGENT IN DEVELOPMENT MODE"),e("flags: "+o(i,function(t){return t}).join(", ")))},{1:25,ee:"QJf3ax"}],4:[function(t){function e(t,e,n,i,a){try{f?f-=1:r("err",[a||new UncaughtException(t,e,n)])}catch(c){try{r("ierr",[c,(new Date).getTime(),!0])}catch(u){}}return"function"==typeof s?s.apply(this,o(arguments)):!1}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function n(t){r("err",[t,(new Date).getTime()])}var r=t("handle"),o=t(6),i=t("ee"),a=t("loader"),s=window.onerror,c=!1,f=0;a.features.err=!0,t(5),window.onerror=e;try{throw new Error}catch(u){"stack"in u&&(t(1),t(2),"addEventListener"in window&&t(3),a.xhrWrappable&&t(4),c=!0)}i.on("fn-start",function(){c&&(f+=1)}),i.on("fn-err",function(t,e,r){c&&(this.thrown=!0,n(r))}),i.on("fn-end",function(){c&&!this.thrown&&f>0&&(f-=1)}),i.on("internal-error",function(t){r("ierr",[t,(new Date).getTime(),!0])})},{1:11,2:10,3:8,4:12,5:3,6:26,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],5:[function(t){if(window.addEventListener){var e=t("handle"),n=t("ee");t(1),window.addEventListener("click",function(){e("inc",["ck"])},!1),window.addEventListener("hashchange",function(){e("inc",["hc"])},!1),n.on("pushState-start",function(){e("inc",["ps"])})}},{1:9,ee:"QJf3ax",handle:"D5DuLP"}],6:[function(t){t("loader").features.ins=!0},{loader:"G9z0Bl"}],7:[function(t){function e(){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var n=t("ee"),r=t("handle"),o=t(1),i=t(2);t("loader").features.stn=!0,t(3);var a=Event;n.on("fn-start",function(t){var e=t[0];e instanceof a&&(this.bstStart=Date.now())}),n.on("fn-end",function(t,e){var n=t[0];n instanceof a&&r("bst",[n,e,this.bstStart,Date.now()])}),o.on("fn-start",function(t,e,n){this.bstStart=Date.now(),this.bstType=n}),o.on("fn-end",function(t,e){r("bstTimer",[e,this.bstStart,Date.now(),this.bstType])}),i.on("fn-start",function(){this.bstStart=Date.now()}),i.on("fn-end",function(t,e){r("bstTimer",[e,this.bstStart,Date.now(),"requestAnimationFrame"])}),n.on("pushState-start",function(){this.time=Date.now(),this.startPath=location.pathname+location.hash}),n.on("pushState-end",function(){r("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),"addEventListener"in window.performance&&(window.performance.clearResourceTimings?window.performance.addEventListener("resourcetimingbufferfull",function(){r("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.clearResourceTimings()},!1):window.performance.addEventListener("webkitresourcetimingbufferfull",function(){r("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.webkitClearResourceTimings()},!1)),document.addEventListener("scroll",e,!1),document.addEventListener("keypress",e,!1),document.addEventListener("click",e,!1)}},{1:11,2:10,3:9,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],8:[function(t,e){function n(t){for(var e=t;e&&!e.hasOwnProperty("addEventListener");)e=Object.getPrototypeOf(e);e&&r(e)}function r(t){a.inPlace(t,["addEventListener","removeEventListener"],"-",o)}function o(t){return t[1]}var i=t("ee").create(),a=t(1)(i),s=t("gos");e.exports=i,r(window),"getPrototypeOf"in Object?(n(document),n(XMLHttpRequest.prototype)):XMLHttpRequest.prototype.hasOwnProperty("addEventListener")&&r(XMLHttpRequest.prototype),i.on("addEventListener-start",function(t){if(t[1]){var e=t[1];if("function"==typeof e){var n=s(e,"nr@wrapped",function(){return a(e,"fn-",null,e.name||"anonymous")});this.wrapped=t[1]=n}else"function"==typeof e.handleEvent&&a.inPlace(e,["handleEvent"],"fn-")}}),i.on("removeEventListener-start",function(t){var e=this.wrapped;e&&(t[1]=e)})},{1:27,ee:"QJf3ax",gos:"7eSDFh"}],9:[function(t,e){var n=t("ee").create(),r=t(1)(n);e.exports=n,r.inPlace(window.history,["pushState","replaceState"],"-")},{1:27,ee:"QJf3ax"}],10:[function(t,e){var n=t("ee").create(),r=t(1)(n);e.exports=n,r.inPlace(window,["requestAnimationFrame","mozRequestAnimationFrame","webkitRequestAnimationFrame","msRequestAnimationFrame"],"raf-"),n.on("raf-start",function(t){t[0]=r(t[0],"fn-")})},{1:27,ee:"QJf3ax"}],11:[function(t,e){function n(t,e,n){t[0]=i(t[0],"fn-",null,n)}function r(t,e,n){this.method=n,this.timerDuration="number"==typeof t[1]?t[1]:0,t[0]=i(t[0],"fn-",this,n)}var o=t("ee").create(),i=t(1)(o);e.exports=o,i.inPlace(window,["setTimeout","setImmediate"],"setTimer-"),i.inPlace(window,["setInterval"],"setInterval-"),i.inPlace(window,["clearTimeout","clearImmediate"],"clearTimeout-"),o.on("setInterval-start",n),o.on("setTimer-start",r)},{1:27,ee:"QJf3ax"}],12:[function(t,e){function n(){f.inPlace(this,l,"fn-",o)}function r(t,e){f.inPlace(e,["onreadystatechange"],"fn-",o)}function o(t,e){return e}function i(t,e){for(var n in t)e[n]=t[n];return e}var a=t("ee").create(),s=t(1),c=t(2),f=c(a),u=c(s),d=window.XMLHttpRequest,l=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"];e.exports=a,window.XMLHttpRequest=function(t){var e=new d(t);try{a.emit("new-xhr",[e],e),e.hasOwnProperty("addEventListener")&&u.inPlace(e,["addEventListener","removeEventListener"],"-",o),e.addEventListener("readystatechange",n,!1)}catch(r){try{a.emit("internal-error",[r])}catch(i){}}return e},i(d,XMLHttpRequest),XMLHttpRequest.prototype=d.prototype,f.inPlace(XMLHttpRequest.prototype,["open","send"],"-xhr-",o),a.on("send-xhr-start",r),a.on("open-xhr-start",r)},{1:8,2:27,ee:"QJf3ax"}],13:[function(t){function e(t){var e=this.params,r=this.metrics;if(!this.ended){this.ended=!0;for(var o=0;u>o;o++)t.removeEventListener(f[o],this.listener,!1);if(!e.aborted){if(r.duration=(new Date).getTime()-this.startTime,4===t.readyState){e.status=t.status;var i=this.lastSize||n(t);if(i&&(r.rxSize=i),this.sameOrigin){var s=t.getResponseHeader("X-NewRelic-App-Data");s&&(e.cat=s.split(", ").pop())}}else e.status=0;r.cbTime=this.cbTime,c.emit("xhr-done",[t],t),a("xhr",[e,r,this.startTime])}}}function n(t){var e=t.responseType,n="arraybuffer"===e||"blob"===e||"json"===e?t.response:t.responseText;return r(n)}function r(t){if("string"==typeof t&&t.length)return t.length;if("object"!=typeof t)return void 0;if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if("undefined"!=typeof FormData&&t instanceof FormData)return void 0;try{return JSON.stringify(t).length}catch(e){return void 0}}function o(t,e){var n=s(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.sameOrigin=n.sameOrigin}var i=t("loader");if(i.xhrWrappable){var a=t("handle"),s=t(2),c=t("ee"),f=["load","error","abort","timeout"],u=f.length,d=t(1),l=t(3),p=window.XMLHttpRequest;i.features.xhr=!0,t(5),t(4),c.on("new-xhr",function(t){var n=this;n.totalCbs=0,n.called=0,n.cbTime=0,n.end=e,n.ended=!1,n.xhrGuids={},n.lastSize=0,l&&(l>34||10>l)||window.opera||t.addEventListener("progress",function(t){n.lastSize=t.loaded},!1)}),c.on("open-xhr-start",function(t){this.params={method:t[0]},o(this,t[1]),this.metrics={}}),c.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),c.on("send-xhr-start",function(t,e){var n=this.metrics,o=t[0],i=this;if(n&&o){var a=r(o);a&&(n.txSize=a)}this.startTime=(new Date).getTime(),this.listener=function(t){try{"abort"===t.type&&(i.params.aborted=!0),("load"!==t.type||i.called===i.totalCbs&&(i.onloadCalled||"function"!=typeof e.onload))&&i.end(e)}catch(n){try{c.emit("internal-error",[n])}catch(r){}}};for(var s=0;u>s;s++)e.addEventListener(f[s],this.listener,!1)}),c.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),c.on("xhr-load-added",function(t,e){var n=""+d(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),c.on("xhr-load-removed",function(t,e){var n=""+d(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),c.on("addEventListener-end",function(t,e){e instanceof p&&"load"===t[0]&&c.emit("xhr-load-added",[t[1],t[2]],e)}),c.on("removeEventListener-end",function(t,e){e instanceof p&&"load"===t[0]&&c.emit("xhr-load-removed",[t[1],t[2]],e)}),c.on("fn-start",function(t,e,n){e instanceof p&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=(new Date).getTime()))}),c.on("fn-end",function(t,e){this.xhrCbStart&&c.emit("xhr-cb-time",[(new Date).getTime()-this.xhrCbStart,this.onload,e],e)})}},{1:"XL7HBI",2:14,3:16,4:12,5:8,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],14:[function(t,e){e.exports=function(t){var e=document.createElement("a"),n=window.location,r={};e.href=t,r.port=e.port;var o=e.href.split("://");!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=e.hostname||n.hostname,r.pathname=e.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname);var i=!e.protocol||":"===e.protocol||e.protocol===n.protocol,a=e.hostname===document.domain&&e.port===n.port;return r.sameOrigin=i&&(!e.hostname||a),r}},{}],15:[function(t,e){function n(t){return function(){r(t,[(new Date).getTime()].concat(i(arguments)))}}var r=t("handle"),o=t(1),i=t(2);"undefined"==typeof window.newrelic&&(newrelic=window.NREUM);var a=["setPageViewName","addPageAction","setCustomAttribute","finished","addToTrace","inlineHit","noticeError"];o(a,function(t,e){window.NREUM[e]=n("api-"+e)}),e.exports=window.NREUM},{1:25,2:26,handle:"D5DuLP"}],16:[function(t,e){var n=0,r=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);r&&(n=+r[1]),e.exports=n},{}],gos:[function(t,e){e.exports=t("7eSDFh")},{}],"7eSDFh":[function(t,e){function n(t,e,n){if(r.call(t,e))return t[e];var o=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:o,writable:!0,enumerable:!1}),o}catch(i){}return t[e]=o,o}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],D5DuLP:[function(t,e){function n(t,e,n){return r.listeners(t).length?r.emit(t,e,n):void(r.q&&(r.q[t]||(r.q[t]=[]),r.q[t].push(e)))}var r=t("ee").create();e.exports=n,n.ee=r,r.q={}},{ee:"QJf3ax"}],handle:[function(t,e){e.exports=t("D5DuLP")},{}],XL7HBI:[function(t,e){function n(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:i(t,o,function(){return r++})}var r=1,o="nr@id",i=t("gos");e.exports=n},{gos:"7eSDFh"}],id:[function(t,e){e.exports=t("XL7HBI")},{}],G9z0Bl:[function(t,e){function n(){if(!h++){var t=p.info=NREUM.info,e=f.getElementsByTagName("script")[0];if(t&&t.licenseKey&&t.applicationID&&e){s(d,function(e,n){t[e]||(t[e]=n)});var n="https"===u.split(":")[0]||t.sslForHttp;p.proto=n?"https://":"http://",a("mark",["onload",i()]);var r=f.createElement("script");r.src=p.proto+t.agent,e.parentNode.insertBefore(r,e)}}}function r(){"complete"===f.readyState&&o()}function o(){a("mark",["domContent",i()])}function i(){return(new Date).getTime()}var a=t("handle"),s=t(1),c=window,f=c.document;t(2);var u=(""+location).split("?")[0],d={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-852.min.js"},l=window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent),p=e.exports={offset:i(),origin:u,features:{},xhrWrappable:l};f.addEventListener?(f.addEventListener("DOMContentLoaded",o,!1),c.addEventListener("load",n,!1)):(f.attachEvent("onreadystatechange",r),c.attachEvent("onload",n)),a("mark",["firstbyte",i()]);var h=0},{1:25,2:15,handle:"D5DuLP"}],loader:[function(t,e){e.exports=t("G9z0Bl")},{}],25:[function(t,e){function n(t,e){var n=[],o="",i=0;for(o in t)r.call(t,o)&&(n[i]=e(o,t[o]),i+=1);return n}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],26:[function(t,e){function n(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(0>o?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=n},{}],27:[function(t,e){function n(t){return!(t&&"function"==typeof t&&t.apply&&!t[i])}var r=t("ee"),o=t(1),i="nr@original",a=Object.prototype.hasOwnProperty,s=!1;e.exports=function(t){function e(t,e,r,a){function nrWrapper(){var n,i,s,c;try{i=this,n=o(arguments),s="function"==typeof r?r(n,i):r||{}}catch(u){d([u,"",[n,i,a],s])}f(e+"start",[n,i,a],s);try{return c=t.apply(i,n)}catch(l){throw f(e+"err",[n,i,l],s),l}finally{f(e+"end",[n,i,c],s)}}return n(t)?t:(e||(e=""),nrWrapper[i]=t,u(t,nrWrapper),nrWrapper)}function c(t,r,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<r.length;c++)s=r[c],a=t[s],n(a)||(t[s]=e(a,f?s+o:o,i,s))}function f(e,n,r){if(!s){s=!0;try{t.emit(e,n,r)}catch(o){d([o,e,n,r])}s=!1}}function u(t,e){if(Object.defineProperty&&Object.keys)try{var n=Object.keys(t);return n.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(r){d([r])}for(var o in t)a.call(t,o)&&(e[o]=t[o]);return e}function d(e){try{t.emit("internal-error",e)}catch(n){}}return t||(t=r),e.inPlace=c,e.flag=i,e}},{1:26,ee:"QJf3ax"}]},{},["G9z0Bl",4,13,7,6,5]);</script>
+    <!-- Title -->
+    <title>Otherworldy Images of a Glass Recycling Factory - Cool Hunting</title>
+    <link href="http://assets.coolhunting.com/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+    <link rel="alternate" type="application/atom+xml" title="Cool Hunting Feed" href="/index.xml">
+    <link rel="alternate" type="application/rss+xml" title="Cool Hunting Video Feed" href="/video.xml" />
+    <!-- Readability -->
+    <meta name="readability-verification" content="p8MbXtLkREX38PgVPtWahNdFLEds5pMpqzhJZknB"/>
+    <!-- Bitly -->
+    <meta name="bitly-verification" content="db0141396021"/>
+    <!-- Apple Touch icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link href="http://assets.coolhunting.com/assets/static/img/apple-touch-icon-bc349ba6db2ef79081a78551b05052d2.png" rel="apple-touch-icon" type="image/png" />
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="Waos19ANYx3F0roI72xcAf396vfVT5LDCjxlLP0xoZA" />
+    <!-- Windows 8 tile -->
+    <meta name="application-name" content="COOL HUNTING"/>
+    <meta name="msapplication-TileColor" content="#000000"/>
+    <meta name="msapplication-TileImage" content="2a8e47ea-827d-44a7-bbd9-95323dcfaf75.png"/>
+    <!-- Viewport -->
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Canonical -->
+    <link rel="canonical" href="http://www.coolhunting.com/link/otherworldly-images-of-a-glass-recyling-factory"/>
+    <!-- Keywords -->
+        <meta name="description" content="At the Phoenicia Glass Works Ltd. factory in Yeruham, Israel, massive mountains of soon-to-be-recycled shards of glass form an eerie, colorful landscape. Sorted into piles of green, brown and clear, the mounds reach up to 50 feet in height and stretch..."/>
+<meta name="keywords" content="Link About It,Recycling,Photography,Israel"/>
+<meta property="article:published_time" content="2016-02-08T12:30:00-05:00" />
+
+    
+    <!-- FOR FACEBOOK SHARING -->
+    <meta property="og:title" content="Otherworldy Images of a Glass Recycling Factory"/> 
+    <meta property="og:type" content="article"/> 
+    <meta property="og:image" content="http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56b8c672656330000e010000/large.jpg?1454950001"/>
+    <meta property="og:description" content="At the Phoenicia Glass Works Ltd. factory in Yeruham, Israel, massive mountains of soon-to-be-recycled shards of glass form an eerie, colorful landscape. Sorted into piles of green, brown and clear, the mounds reach up to 50 feet in height and stretch..."/>
+    <meta property="og:url" content="http://www.coolhunting.com/link/otherworldly-images-of-a-glass-recyling-factory"/> 
+    <meta property="og:site_name" content="Cool Hunting"/> 
+    <meta property="fb:admins" content="22701891"/> 
+
+<!-- FOR TWITTER CARDS -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="http://www.coolhunting.com/link/otherworldly-images-of-a-glass-recyling-factory">
+    <meta name="twitter:title" content="Otherworldy Images of a Glass Recycling Factory">
+    <meta name="twitter:description" content="At the Phoenicia Glass Works Ltd. factory in Yeruham, Israel, massive mountains of soon-to-be-recycled shards of glass form an eerie, colorful landscape. Sorted into piles of green, brown and clear, the mounds reach up to 50 feet in height and stretch...">  
+    <meta name="twitter:image" content="http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56b8c672656330000e010000/large.jpg?1454950001">
+    <meta name="twitter:site" content="@coolhunting">
+
+<!-- FOR PARSE.LY -->   
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org/",
+        "@type": "NewsArticle",
+        "headline": "Otherworldy Images of a Glass Recycling Factory",
+        "url": "http://www.coolhunting.com/link/otherworldly-images-of-a-glass-recyling-factory",
+        "thumbnailUrl": "http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56b8c672656330000e010000/large.jpg?1454950001",
+        "dateCreated": "2016-02-08T12:30:00-05:00",
+        "articleSection": "link",
+        "creator": "Kevin Serai",
+        "keywords": ["Link About It", "Recycling", "Photography", "Israel"]
+      }
+    </script>
+
+
+    
+    <link href="http://assets.coolhunting.com/assets/redesign-513a3a8d5c84f29bd83195a60338564d.css" media="screen" rel="stylesheet" />
+    <link href="http://assets.coolhunting.com/assets/redesign-print-ed03787ed6485806c47ecbd4812ac3c3.css" media="print" rel="stylesheet" />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+
+    
+    <script type='text/javascript'>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+        (function() {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') + 
+            '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        })();
+    </script>
+
+    <!-- Google Analytics with Adwords Support -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    //ga('create', 'UA-889923-5', 'auto');
+    //ga('send', 'pageview');
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-889923-5']);
+    _gaq.push(['_setDomainName', 'coolhunting.com']);
+    _gaq.push(['_setAllowLinker', true]);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    function recordOutboundLink(link, category, action) {
+        try {
+            _gaq.push(['_trackEvent', category , action ]);
+        }catch(err){}
+    }
+  </script>
+
+  <script type='text/javascript'>
+    var gptAdSlots = [];
+    googletag.cmd.push(function() {
+      var homeMapping = googletag.sizeMapping().addSize([1320, 0], [[970, 250], [300, 250]]).addSize([0,0], [300, 250]).build();
+      var lookMapping = googletag.sizeMapping().addSize([1320, 0], [[970, 250], [300, 250], [728, 90], [970, 66]]).addSize([1085,0], [[300, 250], [728, 90]]).addSize([0,0], [300, 250]).build();
+      var stickyArticleMapping = googletag.sizeMapping().addSize([1025, 0], [300, 250]).addSize([0,0], []).build();
+      var responsiveArticleMapping = googletag.sizeMapping().addSize([1025, 0], []).addSize([0,0], [[300, 250], [300, 600]]).build();
+      var relatedArticleMapping = googletag.sizeMapping().addSize([964, 0], [[300, 250], [300, 600]]).addSize([0,0], []).build();
+        gptAdSlots['linkItem'] = googletag.defineSlot('/1006677/coolhunting_v6_link_item-970', [[970, 66], [300, 250], [728, 90], [970, 250]], 'div-gpt-ad-link-item').defineSizeMapping(lookMapping).addService(googletag.pubads());
+
+      googletag.pubads().enableSingleRequest();
+      googletag.pubads().disableInitialLoad();
+      googletag.pubads().collapseEmptyDivs();
+      googletag.enableServices();
+      
+    });
+    </script>
+    <script src="//load.sumome.com/" data-sumo-site-id="b8ee48a04fbf4eec63ef47c43ccbdbe971c86b0ca5bb23f9c8940d843a49df6f" async></script>
+</head>
+<body>
+    <div id="ad_pixels" style="display:none"></div>
+    
+    <div class="sidebar content">
+  <div class="close-button"></div>
+  <div class="nav " id="desktop-nav-landing">
+  <div class="header dark"><div class="logo hide-slash"></div></div>
+  <div class="sections single-click">
+    <a href="/" class="section " id="nav-cover" section="cover">
+      Today
+      <div class="icon today"></div>
+      <div class="chip"></div>
+    </a>
+    <a href="/read" class="section " id="nav-read" section="read">
+      Read
+      <div class="icon read"></div>
+      <div class="chip"></div>
+    </a>
+    <a href="/look" class="section " id="nav-look" section="look">
+      Look
+      <div class="icon look"></div>
+      <div class="chip"></div>
+    </a>
+    <a href="/link" class="section selected" id="nav-link" section="link">
+      Link
+      <div class="icon link"></div>
+      <div class="chip"></div>
+    </a>
+    <a href="/buy" class="section " id="nav-buy" section="buy">
+      Buy
+      <div class="icon buy"></div>
+      <div class="chip"></div>
+    </a>
+    <a href="/listen" class="section " id="nav-listen" section="listen">
+      Listen
+      <div class="icon listen"></div>
+      <div class="chip"></div>
+    </a>
+    <a href="/travel" class="section " id="nav-travel" section="travel">
+      Travel
+      <div class="icon travel"></div>
+      <div class="chip"></div>
+    </a>
+  </div>
+  <div class="subscribe-social-btns sidebar-nav">
+    <a class="social-btn facebook" target="_blank" href="https://www.facebook.com/coolhunting"></a>
+    <a class="social-btn twitter" target="_blank" href="http://twitter.com/coolhunting"></a>
+    <a class="social-btn instagram" target="_blank" href="http://instagram.com/coolhunting"></a>
+    <a class="social-btn vimeo" target="_blank" href="http://vimeo.com/coolhunting"></a>
+    <a class="social-btn pinterest" target="_blank" href="http://www.pinterest.com/coolhunting"></a>
+    <a class="social-btn google-plus" target="_blank" href="https://plus.google.com/+coolhunting"></a>
+    <a class="social-btn youtube" target="_blank" href="https://www.youtube.com/user/coolhunting"></a>
+    <a class="social-btn rss" target="_blank" href="http://feeds.coolhunting.com/ch"></a>
+  </div>
+</div>
+
+  <div class="sidebar-footer">
+    <a href="/user"><div class="login"></div></a>
+  </div>
+  <div class="topbar">
+    <div class="links">
+      <a href="/about-us">About</a>
+      <a href="/subscribe">Subscribe</a>
+      <a href="/jobs">Jobs</a>
+      <a href="/advertise">Advertise</a>
+      <a href="/contact-us">Contact</a>
+    </div>
+    <div class="section search" id="nav-search" section="search">
+        <div class="chip"></div>
+    </div>
+  </div>
+</div>
+<div class="mobile header dark">
+  <div class="menu-button"></div>
+  COOL<br/>HUNTING
+  <div class="browse dark mobile">
+      <a href="/buy/circle-gray-stephen-eichhorn-print" class="prev"><div class="icon"></div><div class="label"><span>Circle (Gray) Print</span></div></a>
+    <a href="/travel" class="section link"><div class="icon"></div><div class="label">All Articles</div></a>
+      <a href="/design/studio-van-broekhoven-olivier-van-herpt-solid-vibrations" class="next"><div class="label"><span>Studio van Broekhoven + Olivier van Herpt: Solid Vibrations</span></div><div class="icon"></div></a>
+  </div>
+</div>
+
+<div id="content">
+  <div class="browse-tooltip"></div>
+  <div class="browse dark">
+      <a href="/buy/circle-gray-stephen-eichhorn-print" class="prev"><div class="icon"></div><div class="label"><span>Circle (Gray) Print</span></div></a>
+    <a href="/travel" class="section link"><div class="icon"></div><div class="label">All Articles</div></a>
+      <a href="/design/studio-van-broekhoven-olivier-van-herpt-solid-vibrations" class="next"><div class="label"><span>Studio van Broekhoven + Olivier van Herpt: Solid Vibrations</span></div><div class="icon"></div></a>
+  </div>
+  <div class="section lighter" id="link">
+    <div class="link-detail">
+      <div class="image frame" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56b8c672656330000e010000/large.jpg?1454950001)"></div>
+      <div class="body">
+        <div class="info">
+          <div class="title">Otherworldy Images of a Glass Recycling Factory</div>
+          <div class="source">via <a href="http://mashable.com/2016/02/07/mountains-glass-israeli-desert/#2shYxfE2Bkq6" target="_blank" onClick="recordOutboundLink(this, 'Linkout', 'http://mashable.com/2016/02/07/mountains-glass-israeli-desert/#2shYxfE2Bkq6'); return true;">mashable.com</a></div>
+          <div class="date">on 08 February 2016</div>
+          <div class="description"><p>At the Phoenicia Glass Works Ltd. factory in Yeruham, Israel, massive mountains of soon-to-be-recycled shards of glass form an eerie, colorful landscape. Sorted into piles of green, brown and clear, the mounds reach up to 50 feet in height and stretch across the distance of several soccer fields. Pulitzer Prize-winning Israeli photographer Oded Bality recently traveled to Yeruham to photograph the scraps, producing some otherworldly images. Take a look at Mashable.
+</p></div>
+        </div>
+        <div class="like"></div>
+        <div class="social">
+          <a class="facebook"
+href="https://www.facebook.com/sharer/sharer.php?u=http://www.coolhunting.com/link/otherworldly-images-of-a-glass-recyling-factory"
+onclick="window.open(this.href, 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></a>
+<a class="twitter"
+href="http://twitter.com/share?text=These massive mountains of broken glass form an alien landscape in Israel&url=http://www.coolhunting.com/link/otherworldly-images-of-a-glass-recyling-factory"
+onclick="window.open(this.href, 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></a>
+<a class="gplus" href="https://plus.google.com/share?url=http://www.coolhunting.com/link/otherworldly-images-of-a-glass-recyling-factory" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></a>
+<a class="pinterest"
+    href="https://pinterest.com/pin/create/button/?url=http://www.coolhunting.com/link/otherworldly-images-of-a-glass-recyling-factory&media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56b8c672656330000e010000/feature.jpg?1454950001&description=Otherworldy Images of a Glass Recycling Factory"
+    data-pin-do="buttonPin"
+    data-pin-config="above"
+    onclick="window.open(this.href, 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;">
+</a>
+        </div>
+      </div>
+    </div>
+
+      <div id="pubexchange_link_item"></div>
+
+    <div class="inline-link ad" style="margin: 16px 0">
+      <div id="div-gpt-ad-link-item">
+        <script>
+          googletag.cmd.push(function() {
+            googletag.display('div-gpt-ad-link-item');
+            googletag.pubads().refresh([gptAdSlots['linkItem']]);
+            googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+              var id = event.slot.getSlotId().f;
+              var slot = $('[id$='+ id +']');
+              var slotParent = $(slot).parent();
+              var width = slot.find('iframe:first').width();
+              $(slot).width(width);
+            });
+          });
+        </script>
+      </div>
+    </div>
+
+    <div class="features related-links" id="infinite_content">
+      <div class="four-column">
+        <div class="columns">
+          <div class="column">
+            <a href="http://www.atlasobscura.com/articles/meet-the-continental-uss-first-official-climate-refugees?utm_source=twitter&amp;utm_medium=atlas-page" onClick="recordOutboundLink(this, 'Linkout', 'http://www.atlasobscura.com/articles/meet-the-continental-uss-first-official-climate-refugees?utm_source=twitter&amp;utm_medium=atlas-page'); return true;" target="_blank">
+    <div class="link feature">
+        <div class="image" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56c4a1683130370006010000/feature.jpg?1455726952);">
+            <div class="like"></div>
+            <div class="social">
+                <div class="facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.coolhunting.com/link/united-states-first-climate-change-refugees', 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></div>
+                <div class="twitter" onclick="javascript:window.open('http://twitter.com/share?text=The United States%27 first climate change refugees have already lost 98% of their island &url=http://www.coolhunting.com/link/united-states-first-climate-change-refugees', 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+                <div class="gplus" onclick="javascript:window.open('https://plus.google.com/share?url=http://www.coolhunting.com/link/united-states-first-climate-change-refugees','', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></div>
+                <div class="pinterest" onclick="window.open('https://pinterest.com/pin/create/bookmarklet/?http://www.coolhunting.com/link/united-states-first-climate-change-refugees&description=The United States&#39; Climate Change Refugees&media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56c4a1683130370006010000/feature.jpg?1455726952', 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+            </div>
+        </div>
+        <div class="title">The United States&#39; Climate Change Refugees</div>
+        <div class="link_url" style="display:none;">/link/united-states-first-climate-change-refugees</div>
+        <div class="source">via atlasobscura.com</div>
+        <div class="description">Deep in the Louisiana bayou, residents of Isle de Jean Charles are being forced from their homes. The island (about 1.5 hours from New Orleans) has lost a staggering 98% of its land since 1955—due to climate change, hurricanes and 2010's Deepwater Horizon oil spill—and the Biloxi-Chitimacha-Choctaw Indian people who live there have been fleeing for some time, but now have officially been offered $48 million to relocate. They are the United States' first official climate change refugees and their island home is expected to have completely disappeared within 50 years. Read more on Atlas Obscura.</div>
+    </div>
+</a>
+            <a href="http://www.designboom.com/art/cake-maze-los-angeles-think-tank-gallery-break-bread-scott-hove-bakers-son-02-16-2016/" onClick="recordOutboundLink(this, 'Linkout', 'http://www.designboom.com/art/cake-maze-los-angeles-think-tank-gallery-break-bread-scott-hove-bakers-son-02-16-2016/'); return true;" target="_blank">
+    <div class="link feature">
+        <div class="image" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56c39f203061390006230000/feature.jpg?1455660832);">
+            <div class="like"></div>
+            <div class="social">
+                <div class="facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.coolhunting.com/link/break-bread-cake-maze-los-angeles', 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></div>
+                <div class="twitter" onclick="javascript:window.open('http://twitter.com/share?text=%23LinkAboutIt @thinktankdtla gallery has been turned into a 7,500 squre foot maze-like cake castle&url=http://www.coolhunting.com/link/break-bread-cake-maze-los-angeles', 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+                <div class="gplus" onclick="javascript:window.open('https://plus.google.com/share?url=http://www.coolhunting.com/link/break-bread-cake-maze-los-angeles','', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></div>
+                <div class="pinterest" onclick="window.open('https://pinterest.com/pin/create/bookmarklet/?http://www.coolhunting.com/link/break-bread-cake-maze-los-angeles&description=You&#39;ll Want to Visit LA&#39;s Giant Cake Maze&media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56c39f203061390006230000/feature.jpg?1455660832', 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+            </div>
+        </div>
+        <div class="title">You&#39;ll Want to Visit LA&#39;s Giant Cake Maze</div>
+        <div class="link_url" style="display:none;">/link/break-bread-cake-maze-los-angeles</div>
+        <div class="source">via designboom.com</div>
+        <div class="description">A maze-like castle made of (fake) cake, the labyrinthian "Break Bread" exhibition at Downtown LA's Think Take Gallery sees six rooms adorned with sculptural dessert details and acrylic frosting. The luxuriant, large-scale exhibition covers the walls from top to bottom, touching all the architectural elements in between—with many micro-surprises in the mix. Artists Scott Hove and Baker’s Son(aka Keith Magruder) have truly delivered a whimsical wonderland that will also be playing host to plenty of programming during its run through 13 March 2016.</div>
+    </div>
+</a>
+            <a href="http://www.bloomberg.com/news/articles/2016-02-16/the-parmesan-cheese-you-sprinkle-on-your-penne-could-be-wood" onClick="recordOutboundLink(this, 'Linkout', 'http://www.bloomberg.com/news/articles/2016-02-16/the-parmesan-cheese-you-sprinkle-on-your-penne-could-be-wood'); return true;" target="_blank">
+    <div class="link feature">
+        <div class="image" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56c380843238640006290000/feature.jpg?1455652995);">
+            <div class="like"></div>
+            <div class="social">
+                <div class="facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.coolhunting.com/link/parmesan-cheese-wood', 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></div>
+                <div class="twitter" onclick="javascript:window.open('http://twitter.com/share?text=%23LinkAboutIt The @US_FDA has found that the parmesan you%27re eating might actually be wood &url=http://www.coolhunting.com/link/parmesan-cheese-wood', 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+                <div class="gplus" onclick="javascript:window.open('https://plus.google.com/share?url=http://www.coolhunting.com/link/parmesan-cheese-wood','', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></div>
+                <div class="pinterest" onclick="window.open('https://pinterest.com/pin/create/bookmarklet/?http://www.coolhunting.com/link/parmesan-cheese-wood&description=Your Parmesan Cheese Might Actually Be Wood&media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56c380843238640006290000/feature.jpg?1455652995', 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+            </div>
+        </div>
+        <div class="title">Your Parmesan Cheese Might Actually Be Wood</div>
+        <div class="link_url" style="display:none;">/link/parmesan-cheese-wood</div>
+        <div class="source">via bloomberg.com</div>
+        <div class="description">When acting on a tip a few years back, the US Food and Drug Administration (FDA) found that Castle Cheese Inc was selling "100% parmesan" cheese that was anything but. Not only using cheaper substitutes, the company was even filling out their product with wood pulp. It's believed that Castle wasn't the only company using the trick and considering the popularity of store-bought grated cheese in the United States, Bloomberg News took a closer look and the results are startling. </div>
+    </div>
+</a>
+          </div>
+          <div class="column">
+            <a href="http://www.theverge.com/2016/2/15/11003042/tesla-model-s-radio-flyer-toy-power-wheels" onClick="recordOutboundLink(this, 'Linkout', 'http://www.theverge.com/2016/2/15/11003042/tesla-model-s-radio-flyer-toy-power-wheels'); return true;" target="_blank">
+    <div class="link feature">
+        <div class="image" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56c253f2333930000a240000/feature.jpg?1455576049);">
+            <div class="like"></div>
+            <div class="social">
+                <div class="facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.coolhunting.com/link/radio-flyer-tesla-for-kids', 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></div>
+                <div class="twitter" onclick="javascript:window.open('http://twitter.com/share?text=%23LinkAboutIt @radioflyer releases a @TeslaMotors Model S for kids via the @verge&url=http://www.coolhunting.com/link/radio-flyer-tesla-for-kids', 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+                <div class="gplus" onclick="javascript:window.open('https://plus.google.com/share?url=http://www.coolhunting.com/link/radio-flyer-tesla-for-kids','', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></div>
+                <div class="pinterest" onclick="window.open('https://pinterest.com/pin/create/bookmarklet/?http://www.coolhunting.com/link/radio-flyer-tesla-for-kids&description=Radio Flyer&#39;s Tesla Model S for Kids&media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56c253f2333930000a240000/feature.jpg?1455576049', 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+            </div>
+        </div>
+        <div class="title">Radio Flyer&#39;s Tesla Model S for Kids</div>
+        <div class="link_url" style="display:none;">/link/radio-flyer-tesla-for-kids</div>
+        <div class="source">via theverge.com</div>
+        <div class="description">Radio Flyer, the heritage brand long-producing bright red wagons for kids, announced a turbo-charged new product that's slated to hit shelves in May 2016. The miniature Tesla Model S is powered by a long-lasting, fast-charging flight speed lithium ion battery. The little electric auto features working headlights, turbine rims and a premium paint job. It only reaches 6mph, but that's more than enough for young drivers. And, like the full-size Tesla, there are a lot of customization options. </div>
+    </div>
+</a>
+            <a href="http://www.guitarworld.com/gear-electrics-features-magazine-interviews-news/st-vincent-discusses-her-new-signature-ernie-ball#article-gallery" onClick="recordOutboundLink(this, 'Linkout', 'http://www.guitarworld.com/gear-electrics-features-magazine-interviews-news/st-vincent-discusses-her-new-signature-ernie-ball#article-gallery'); return true;" target="_blank">
+    <div class="link feature">
+        <div class="image" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56c21e3a3764330006210000/feature.jpg?1455562298);">
+            <div class="like"></div>
+            <div class="social">
+                <div class="facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.coolhunting.com/link/st-vincent-designs-signature-guitar', 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></div>
+                <div class="twitter" onclick="javascript:window.open('http://twitter.com/share?text=%23LinkAboutIt Room for boobs: @st_vincent designs a retro-looking guitar to fit her needs&url=http://www.coolhunting.com/link/st-vincent-designs-signature-guitar', 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+                <div class="gplus" onclick="javascript:window.open('https://plus.google.com/share?url=http://www.coolhunting.com/link/st-vincent-designs-signature-guitar','', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></div>
+                <div class="pinterest" onclick="window.open('https://pinterest.com/pin/create/bookmarklet/?http://www.coolhunting.com/link/st-vincent-designs-signature-guitar&description=St Vincent Designs a Guitar&media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56c21e3a3764330006210000/feature.jpg?1455562298', 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+            </div>
+        </div>
+        <div class="title">St Vincent Designs a Guitar</div>
+        <div class="link_url" style="display:none;">/link/st-vincent-designs-signature-guitar</div>
+        <div class="source">via guitarworld.com</div>
+        <div class="description">St Vincent (aka Annie Clark) is set to release her own signature guitar with Ernie Ball Music Man, which she designed from scratch. Along with it channeling her own aesthetic, the retro-feel instrument has also been designed with "room for a breast or two," as she noted on her Instagram account. In this interview with Guitar World, the singer-songwriter explains the need for a lightweight guitar. Available in two "classic car colors," the eye-catching St Vincent Signature Guitar will be available for purchase next month. </div>
+    </div>
+</a>
+            <a href="http://mashable.com/2016/02/10/snoop-dog-burger-king/#YqpkDOX93Zqs" onClick="recordOutboundLink(this, 'Linkout', 'http://mashable.com/2016/02/10/snoop-dog-burger-king/#YqpkDOX93Zqs'); return true;" target="_blank">
+    <div class="link feature">
+        <div class="image" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56c1f33c333930000e030000/feature.jpg?1455551292);">
+            <div class="like"></div>
+            <div class="social">
+                <div class="facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.coolhunting.com/link/snoop-dogg-hot-dogs-burger-king', 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></div>
+                <div class="twitter" onclick="javascript:window.open('http://twitter.com/share?text=The Doggfather @SnoopDogg is helping @BurgerKing employees master the art of the hot dog %23LinkAboutIt&url=http://www.coolhunting.com/link/snoop-dogg-hot-dogs-burger-king', 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+                <div class="gplus" onclick="javascript:window.open('https://plus.google.com/share?url=http://www.coolhunting.com/link/snoop-dogg-hot-dogs-burger-king','', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></div>
+                <div class="pinterest" onclick="window.open('https://pinterest.com/pin/create/bookmarklet/?http://www.coolhunting.com/link/snoop-dogg-hot-dogs-burger-king&description=Snoop Dogg Teaches the Art of the Hot Dog &media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56c1f33c333930000e030000/feature.jpg?1455551292', 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+            </div>
+        </div>
+        <div class="title">Snoop Dogg Teaches the Art of the Hot Dog </div>
+        <div class="link_url" style="display:none;">/link/snoop-dogg-hot-dogs-burger-king</div>
+        <div class="source">via mashable.com</div>
+        <div class="description">Since Burger King has decided to start serving hot dogs, they decided to seek out the dog(g) specialist, Snoop. The fast food chain hit up Snoop for a series of internal instructional videos to train their employees for the new menu. While there are just a few clips floating around the internet for now, we can only hope the public receives some cooking tips from the Doggfather in the future. </div>
+    </div>
+</a>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column">
+            <a href="http://qz.com/613700/its-here-quartzs-first-news-app-for-iphone/" onClick="recordOutboundLink(this, 'Linkout', 'http://qz.com/613700/its-here-quartzs-first-news-app-for-iphone/'); return true;" target="_blank">
+    <div class="link feature">
+        <div class="image" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56be0f5a366636000e0f0000/feature.jpg?1455296346);">
+            <div class="like"></div>
+            <div class="social">
+                <div class="facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.coolhunting.com/link/quartz-app-for-iphone', 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></div>
+                <div class="twitter" onclick="javascript:window.open('http://twitter.com/share?text=With its just-launched news app, @qz aims to deliver information without disruption &url=http://www.coolhunting.com/link/quartz-app-for-iphone', 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+                <div class="gplus" onclick="javascript:window.open('https://plus.google.com/share?url=http://www.coolhunting.com/link/quartz-app-for-iphone','', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></div>
+                <div class="pinterest" onclick="window.open('https://pinterest.com/pin/create/bookmarklet/?http://www.coolhunting.com/link/quartz-app-for-iphone&description=Quartz News App for iPhone&media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56be0f5a366636000e0f0000/feature.jpg?1455296346', 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+            </div>
+        </div>
+        <div class="title">Quartz News App for iPhone</div>
+        <div class="link_url" style="display:none;">/link/quartz-app-for-iphone</div>
+        <div class="source">via qz.com</div>
+        <div class="description">Brand new and exclusively for iPhones, Quartz's news app aims to be unlike any of the others presently available. Quartz structures the app to be more like a conversation about current events ("kind of like texting") rather than a replica of their website content. When users are sent a message, article, link, image or GIF, they can tap to learn more or opt out—making it less disruptive and more tailored. Each session is also designed to only last a few moments, as the creators realize that apps are most often used on-the-go. </div>
+    </div>
+</a>
+            <a href="http://mashable.com/2016/02/10/fashion-week-dogs/#Q4_nLXOyjqqq" onClick="recordOutboundLink(this, 'Linkout', 'http://mashable.com/2016/02/10/fashion-week-dogs/#Q4_nLXOyjqqq'); return true;" target="_blank">
+    <div class="link feature">
+        <div class="image" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56bcca53643135000e110000/feature.jpg?1455213138);">
+            <div class="like"></div>
+            <div class="social">
+                <div class="facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.coolhunting.com/link/dogs-nyfw-instagram-2016', 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></div>
+                <div class="twitter" onclick="javascript:window.open('http://twitter.com/share?text=What%27s better than NYFW? Dogs at %23NYFW %23ChloeKardoggian&url=http://www.coolhunting.com/link/dogs-nyfw-instagram-2016', 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+                <div class="gplus" onclick="javascript:window.open('https://plus.google.com/share?url=http://www.coolhunting.com/link/dogs-nyfw-instagram-2016','', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></div>
+                <div class="pinterest" onclick="window.open('https://pinterest.com/pin/create/bookmarklet/?http://www.coolhunting.com/link/dogs-nyfw-instagram-2016&description=Dogs of NYFW&media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56bcca53643135000e110000/feature.jpg?1455213138', 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+            </div>
+        </div>
+        <div class="title">Dogs of NYFW</div>
+        <div class="link_url" style="display:none;">/link/dogs-nyfw-instagram-2016</div>
+        <div class="source">via mashable.com</div>
+        <div class="description">Whether you're following NYFW or not, these pooches all dolled up for Fashion Week will surely help pique your sartorial interest. From Chloe Kardoggian to Ralphie The Cockapoo, each furry friend is ready to attend, shoot or walk in a show—and no doubt set the cute bar incredibly high for the humans taking part in NYC's crazy previews of fall collections.</div>
+    </div>
+</a>
+            <a href="http://sites.vans.com/customculture" onClick="recordOutboundLink(this, 'Linkout', 'http://sites.vans.com/customculture'); return true;" target="_blank">
+    <div class="link feature">
+        <div class="image" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56bcd2e964313500060f0000/feature.jpg?1455215337);">
+            <div class="like"></div>
+            <div class="social">
+                <div class="facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.coolhunting.com/link/vans-custom-culture-competition', 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></div>
+                <div class="twitter" onclick="javascript:window.open('http://twitter.com/share?text=.@VANS_66 is offering high school art programs $50K through their Custom Culture design competition&url=http://www.coolhunting.com/link/vans-custom-culture-competition', 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+                <div class="gplus" onclick="javascript:window.open('https://plus.google.com/share?url=http://www.coolhunting.com/link/vans-custom-culture-competition','', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></div>
+                <div class="pinterest" onclick="window.open('https://pinterest.com/pin/create/bookmarklet/?http://www.coolhunting.com/link/vans-custom-culture-competition&description=Vans is Offering High School Art Programs $50K&media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56bcd2e964313500060f0000/feature.jpg?1455215337', 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+            </div>
+        </div>
+        <div class="title">Vans is Offering High School Art Programs $50K</div>
+        <div class="link_url" style="display:none;">/link/vans-custom-culture-competition</div>
+        <div class="source">via vans.com</div>
+        <div class="description">Through end-of-day on 12 February 2016, high school art teachers can register their school for the seventh edition of the Vans Custom Culture competition. It's all very easy: the program ships four pairs of blank canvas Vans to schools across the nation, sets specific themes and allows student teams to submit designs back. The winning designers' school will receive a $50K grant for funding additional arts programming. Further, there's the potential for the winning design to hit shelves down the line—an empowering feat for young designers. </div>
+    </div>
+</a>
+          </div>
+          <div class="column">
+            <a href="http://www.nytimes.com/2016/02/10/sports/olympics/ucla-gymnastics-whip-nae-nae-sophina-dejesus.html?smprod=nytcore-ipad&amp;smid=nytcore-ipad-share&amp;_r=0" onClick="recordOutboundLink(this, 'Linkout', 'http://www.nytimes.com/2016/02/10/sports/olympics/ucla-gymnastics-whip-nae-nae-sophina-dejesus.html?smprod=nytcore-ipad&amp;smid=nytcore-ipad-share&amp;_r=0'); return true;" target="_blank">
+    <div class="link feature">
+        <div class="image" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56bcc5b8643135000e0c0000/feature.jpg?1455211960);">
+            <div class="like"></div>
+            <div class="social">
+                <div class="facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.coolhunting.com/link/sophina-deJesus-ucla-gymnastics-viral-routine', 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></div>
+                <div class="twitter" onclick="javascript:window.open('http://twitter.com/share?text=With some 27,203,845 views, Sophina DeJesus%27 fantastic gymnastics routine deserves the attention &url=http://www.coolhunting.com/link/sophina-deJesus-ucla-gymnastics-viral-routine', 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+                <div class="gplus" onclick="javascript:window.open('https://plus.google.com/share?url=http://www.coolhunting.com/link/sophina-deJesus-ucla-gymnastics-viral-routine','', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></div>
+                <div class="pinterest" onclick="window.open('https://pinterest.com/pin/create/bookmarklet/?http://www.coolhunting.com/link/sophina-deJesus-ucla-gymnastics-viral-routine&description=Sophina DeJesus&#39; Viral Gymnastics Routine&media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56bcc5b8643135000e0c0000/feature.jpg?1455211960', 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+            </div>
+        </div>
+        <div class="title">Sophina DeJesus&#39; Viral Gymnastics Routine</div>
+        <div class="link_url" style="display:none;">/link/sophina-deJesus-ucla-gymnastics-viral-routine</div>
+        <div class="source">via nytimes.com</div>
+        <div class="description">With her teammates cheering her every step (and leap) of the way, UCLA's Sophina DeJesus (a 21-year-old sociology major) has performed a super-playful and very viral gymnastics routine that has the world watching over and over again. Her hip-hop-inspired moves aren't traditional of floor routines and that is exactly why it's so enjoyable to watch—not to mention how much fun she is having herself. </div>
+    </div>
+</a>
+            <a href="http://www.booooooom.com/2016/02/09/tumblr-of-the-day-oozing-bacteria-like-animated-gifs-by-artists-protobacillus/" onClick="recordOutboundLink(this, 'Linkout', 'http://www.booooooom.com/2016/02/09/tumblr-of-the-day-oozing-bacteria-like-animated-gifs-by-artists-protobacillus/'); return true;" target="_blank">
+    <div class="link feature">
+        <div class="image" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56ba60fb303235000e310000/feature.jpg?1455055099);">
+            <div class="like"></div>
+            <div class="social">
+                <div class="facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.coolhunting.com/link/trippy-gifs-or-bacteria-animations', 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></div>
+                <div class="twitter" onclick="javascript:window.open('http://twitter.com/share?text=Watch these mesmerizing, trippy bacteria-like GIFs via @Booooooom&url=http://www.coolhunting.com/link/trippy-gifs-or-bacteria-animations', 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+                <div class="gplus" onclick="javascript:window.open('https://plus.google.com/share?url=http://www.coolhunting.com/link/trippy-gifs-or-bacteria-animations','', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></div>
+                <div class="pinterest" onclick="window.open('https://pinterest.com/pin/create/bookmarklet/?http://www.coolhunting.com/link/trippy-gifs-or-bacteria-animations&description=Trippy GIFs of Bacteria-Like Animations&media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56ba60fb303235000e310000/feature.jpg?1455055099', 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+            </div>
+        </div>
+        <div class="title">Trippy GIFs of Bacteria-Like Animations</div>
+        <div class="link_url" style="display:none;">/link/trippy-gifs-or-bacteria-animations</div>
+        <div class="source">via booooooom.com</div>
+        <div class="description">On their Tumblr page Protobacillus, Brazilian artist duo Gustavo Spredemann and Leono Simonetti share scintillating GIFs of bacteria-like animations. Some wiggle and ooze while others flare-up with bursts of color, each depicting what you might imagine brain cells look like during a hallucination. Head to BOOOOOOOM to see more of the trippy animations, but beware, they might not be safe for those sensitive to flashing lights.
+</div>
+    </div>
+</a>
+            <a href="https://www.theguardian.com/science/2016/feb/10/horses-can-recognise-human-emotion-new-study-shows" onClick="recordOutboundLink(this, 'Linkout', 'https://www.theguardian.com/science/2016/feb/10/horses-can-recognise-human-emotion-new-study-shows'); return true;" target="_blank">
+    <div class="link feature">
+        <div class="image" style="background-image:url(http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56bb6329393732000a010000/feature.jpg?1455121192);">
+            <div class="like"></div>
+            <div class="social">
+                <div class="facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=www.coolhunting.com/link/horses-can-read-human-emotions', 'Share on Facebook','left=20,top=20,width=500,height=280,toolbar=0,resizable=0'); return false;"></div>
+                <div class="twitter" onclick="javascript:window.open('http://twitter.com/share?text=According to a new study, horses can read human emotions just by looking at a picture&url=http://www.coolhunting.com/link/horses-can-read-human-emotions', 'Share on Twitter','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+                <div class="gplus" onclick="javascript:window.open('https://plus.google.com/share?url=http://www.coolhunting.com/link/horses-can-read-human-emotions','', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></div>
+                <div class="pinterest" onclick="window.open('https://pinterest.com/pin/create/bookmarklet/?http://www.coolhunting.com/link/horses-can-read-human-emotions&description=Horses Can Read Human Emotions&media=http://assets.coolhunting.com/coolhunting/chad-assets/cover_photos/2016/2/56bb6329393732000a010000/feature.jpg?1455121192', 'Share on Pinterest','left=20,top=20,width=500,height=280toolbar=1,resizable=0'); return false;"></div>
+            </div>
+        </div>
+        <div class="title">Horses Can Read Human Emotions</div>
+        <div class="link_url" style="display:none;">/link/horses-can-read-human-emotions</div>
+        <div class="source">via theguardian.com</div>
+        <div class="description">A new study conducted by psychologists at Sussex University has revealed the surprising sophistication of horses' social capabilities. They're able to recognize human emotions through facial expressions and can even do so through a picture. The team showed large prints of human faces—both smiling and frowning—to 28 horses, and their reactions were clear. Horses reacting to angry facial expressions had an increase in heart rate and turned their head to look at the face with their left eye—the eye most closely linked to the part of the brain that deals with scary stimuli. Read more about the discovery at The Guardian.</div>
+    </div>
+</a>
+          </div>
+        </div>
+      </div>
+    </div>
+      <a class="load-more" id="load-more" href="#">
+      <div>Loading More...</div>
+  </a>
+
+  </div>
+</div>
+
+<script>
+$(".facebook").click(function() {
+    _gaq.push(['_trackEvent', 'Share', 'Facebook', '/link/otherworldly-images-of-a-glass-recyling-factory']);
+});
+$(".twitter").click(function() {
+    _gaq.push(['_trackEvent', 'Share', 'Twitter', '/link/otherworldly-images-of-a-glass-recyling-factory']);
+});
+$(".gplus").click(function() {
+    _gaq.push(['_trackEvent', 'Share', 'Google Plus', '/link/otherworldly-images-of-a-glass-recyling-factory']);
+});
+$(".pinterest").click(function() {
+    _gaq.push(['_trackEvent', 'Share', 'Pinterest', '/link/otherworldly-images-of-a-glass-recyling-factory']);
+});
+</script>
+
+    
+        <div class="section dark hidden" id="search">
+  <div class="search-bar">
+    <div class="icon"></div>
+    <input id="search-input" type="text" placeholder="Start typing" />
+    <div id="search-clear" class="clear"></div>
+    <div id="search-close" class="close"></div>
+  </div>
+  <div class="search scrollable">
+    <div class="no-results">
+    <div class="info">
+        <h1>No matches for your search</h1>
+        <p>Unfortunately, we don't have any articles that match your search. Try again or explore some of these links:</p>
+    </div>
+</div>
+
+
+    <div class="search-links">
+  <div class="more">
+    <div class="more-title">
+      <div>CATEGORIES</div>
+    </div>
+    <div class="sections">
+      <a href="/search?search=Design">Design</a>
+      <a href="/search?search=Tech">Tech</a>
+      <a href="/search?search=Culture">Culture</a>
+      <a href="/search?search=Travel">Travel</a>
+      <a href="/search?search=Style">Style</a>
+      <a href="/search?search=Food+Drink">Food + Drink</a>
+    </div>
+  </div>
+  <div class="more">
+    <div class="more-title">
+      <div>FEATURES</div>
+    </div>
+    <div class="sections">
+      <a href="/search?search=Word+of+Mouth">Word of Mouth</a>
+      <a href="/search?search=Interviews">Interviews</a>
+      <a href="/search?search=Studio+Visits">Studio Visits</a>
+      <a href="/search?search=Off+Piste">Off Piste</a>
+      <a href="/search?search=Scene+by+All">Scene by All</a>
+      <a href="/search?search=Song+of+the+Car">Song of the Car</a>
+      <a href="/search?search=Cool+Hunting+Video">Cool Hunting Video</a>
+    </div>
+  </div>
+  <div class="more">
+    <div class="more-title">
+      <div>PEOPLE</div>
+    </div>
+    <div class="sections">
+      <a href="/search?search=Artists">Artists</a>
+      <a href="/search?search=Illustrators">Illustrators</a>
+      <a href="/search?search=Graphic+Designers">Graphic Designers</a>
+      <a href="/search?search=Product+Designers">Product Designers</a>
+      <a href="/search?search=Fashion+Designers">Fashion Designers</a>
+      <a href="/search?search=Architects">Architects</a>
+      <a href="/search?search=Scientists">Scientists</a>
+      <a href="/search?search=Makers">Makers</a>
+      <a href="/search?search=Entrepreneurs">Entrepreneurs</a>
+      <a href="/search?search=Inventors">Inventors</a>
+    </div>
+  </div>
+  <div class="more">
+    <div class="more-title">
+      <div>THINGS</div>
+    </div>
+    <div class="sections">
+      <a href="/search?search=Cars">Cars</a>
+      <a href="/search?search=Watches">Watches</a>
+      <a href="/search?search=Bags">Bags</a>
+      <a href="/search?search=Bicycles">Bicycles</a>
+      <a href="/search?search=Motorcycles">Motorcycles</a>
+      <a href="/search?search=Cameras">Cameras</a>
+      <a href="/search?search=Jewelry">Jewelry</a>
+      <a href="/search?search=Gadgets">Gadgets</a>
+      <a href="/search?search=Snacks">Snacks</a>
+      <a href="/search?search=Websites">Websites</a>
+    </div>
+  </div>
+  <div class="more">
+    <div class="more-title">
+      <div>TOPICS</div>
+    </div>
+    <div class="sections">
+      <a href="/search?search=Sustainability">Sustainability</a>
+      <a href="/search?search=Collecting">Collecting</a>
+      <a href="/search?search=Invention">Invention</a>
+    </div>
+  </div>
+</div>
+    <div class="search-results">
+
+      <div class="filter">
+        <div class="query" id="search-details"></div>
+        <div class="category-filter">
+          <!-- classes: null(nothing), disabled, active -->
+            <div class="search-filter icon active" id="search-all"></div>
+      <div class="search-filter icon" id="search-read"></div>
+      <div class="search-filter icon" id="search-look"></div>
+      <div class="search-filter icon" id="search-travel"></div>
+      <div class="search-filter icon" id="search-buy"></div>
+      <div class="search-filter icon" id="search-link"></div>
+      <div class="search-filter icon" id="search-listen"></div>
+        </div>
+        <div class="time-filter-relevance">Show Best Matches</div>
+      </div>
+      <div class="scrollable">
+        <div class="results four-column-row" id="infinite_search"></div>
+        <a class="load-more" id="load-more-search" href="#">
+            <div>Loading More...</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        <script src="http://f.vimeocdn.com/js_opt/froogaloop2.min.js?bfeb60ee"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+        <script src="http://assets.coolhunting.com/assets/redesign-6863435db683b74b0d7999402c9278cc.js"></script>
+        <script type="text/javascript">
+            ch.init();
+            if ($('.ch25-landing-hub').length) {
+                ch25.init();
+            }
+        </script>
+    <script>
+      window.ad_section = 'home';
+        (function() {
+            function async_load(script_url){
+                var protocol = ('https:' == document.location.protocol ? 'https://' : 'http://');
+                var s = document.createElement('script'); s.src = protocol + script_url;
+                var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+            }
+            bm_website_code = 'AE9136517D994BF7';
+            jQuery(document).ready(function(){async_load('asset.pagefair.com/measure.min.js')});
+            jQuery(document).ready(function(){async_load('asset.pagefair.net/ads.min.js')});
+        })();
+
+        (function(d, s, id) {
+        var js, pjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id; js.async = true;
+        js.src = "//cdn.pubexchange.com/modules/partner/cool_hunting";
+        pjs.parentNode.insertBefore(js, pjs);
+        }(document, "script", "pubexchange-jssdk"));
+
+        //(function() {
+      //  window._pa = window._pa || {};
+      //  // _pa.orderId = "myOrderId"; // OPTIONAL: attach unique conversion identifier to conversions
+      //  // _pa.revenue = "19.99"; // OPTIONAL: attach dynamic purchase values to conversions
+      //  // _pa.productId = "myProductId"; // OPTIONAL: Include product ID for use with dynamic ads
+      //  var pa = document.createElement('script'); pa.type = 'text/javascript'; pa.async = true;
+      //  pa.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + "//tag.marinsm.com/serve/554be8e61a34417dd0000003.js";
+      //  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(pa, s);
+      //})();
+    </script>
+    <!-- CHARTBEAT -->
+<script>
+var _sf_async_config={};
+/** CONFIGURATION START **/
+_sf_async_config.uid = 22766;
+_sf_async_config.domain = "coolhunting.com"; /** CHANGE THIS **/
+/** CONFIGURATION END **/
+(function(){
+  function loadChartbeat() {
+    window._sf_endpt=(new Date()).getTime();
+    var e = document.createElement("script");
+    e.setAttribute("language", "javascript");
+    e.setAttribute("type", "text/javascript");
+    e.setAttribute('src', '//static.chartbeat.com/js/chartbeat.js');
+    document.body.appendChild(e);
+  }
+  var oldonload = window.onload;
+  window.onload = (typeof window.onload != "function") ?
+     loadChartbeat : function() { oldonload(); loadChartbeat(); };
+})();
+</script>
+
+
+<!-- START Parse.ly Include: Standard -->
+<div id="parsely-root" style="display: none">
+<div id="parsely-cfg" data-parsely-site="coolhunting.com"></div>
+</div>
+<script>
+(function(s, p, d) {
+var h=d.location.protocol, i=p+"-"+s,
+e=d.getElementById(i), r=d.getElementById(p+"-root"),
+u=h==="https:"?"d1z2jf7jlzjs58.cloudfront.net"
+:"static."+p+".com";
+if (e) return;
+e = d.createElement(s); e.id = i; e.async = true;
+e.src = h+"//"+u+"/p.js"; r.appendChild(e);
+})("script", "parsely", document);
+</script>
+<!-- END Parse.ly Include -->
+
+
+
+<!-- Quantcast Tag -->
+<script>
+var _qevents = _qevents || [];
+
+(function() {
+var elem = document.createElement('script');
+elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+elem.async = true;
+elem.type = "text/javascript";
+var scpt = document.getElementsByTagName('script')[0];
+scpt.parentNode.insertBefore(elem, scpt);
+})();
+
+_qevents.push({
+qacct:"p-e2TbO07-5R-JE"
+});
+</script>
+
+<noscript>
+<div style="display:none;">
+<img src="//pixel.quantserve.com/pixel/p-e2TbO07-5R-JE.gif" border="0" height="1" width="1" alt="Quantcast"/>
+</div>
+</noscript>
+<!-- End Quantcast tag -->
+
+<!-- True Anthem Tag -->
+<script>
+    (function (w, d) {
+        var s1 = d.getElementsByTagName('script')[0],
+            s = d.createElement('script'),
+            cid = '350';
+        s.src = '//tru.am/scripts/ta-pagesocial-sdk.js';
+        if (s.addEventListener) {
+            s.addEventListener('load', function () {
+                w.TRUE_ANTHEM.configure(cid);
+            }, false);
+        } else {
+            s.onreadystatechange = function () {
+                if (s.readyState in {loaded: 1, complete: 1}) {
+                    s.onreadystatechange = null;
+                    w.TRUE_ANTHEM.configure(cid);
+                }
+            };
+        }
+        s1.parentNode.insertBefore(s, s1);
+    }(window, document));
+</script>
+<!-- End True Anthem Tag -->
+    
+<!-- Google Analytics Events -->
+<script>
+$(".menu-button").click(function() {
+    _gaq.push(["_trackEvent", "Navigation", "Hamburger Menu", "Desktop"]);
+});
+$("#desktop-nav div#nav-cover, #desktop-nav-landing div#nav-cover").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Today Home", "Desktop"]);
+});
+$("#phone-nav div#nav-cover, #phone-nav-landing div#nav-cover").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Today Home", "Mobile"]);
+});
+$("#tablet-nav div#nav-cover, #tablet-nav-landing div#nav-cover").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Today Home", "Tablet"]);
+});
+
+  $("#desktop-nav div#nav-read, #desktop-nav-landing div#nav-read").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Read Home", "Desktop"]);
+     //alert("desktop nav clicked!");
+  });
+  $("#desktop-nav div#nav-read a, #desktop-nav-landing div#nav-read a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Read Landing", "Desktop"]);
+  });
+  $("#phone-nav div#nav-read, #phone-nav-landing div#nav-read").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Read Home", "Mobile"]);
+     //alert("mobile nav clicked!");
+  });
+  $("#phone-nav div#nav-read a, #phone-nav-landing div#nav-read a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Read Landing", "Mobile"]);
+  });
+  $("#tablet-nav div#nav-read, #tablet-nav-landing div#nav-read").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Read Home", "Tablet"]);
+     //alert("tablet nav clicked!");
+  });
+  $("#tablet-nav div#nav-read a, #tablet-nav-landing div#nav-read a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Read Landing", "Tablet"]);
+  });
+  $("#desktop-nav div#nav-look, #desktop-nav-landing div#nav-look").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Look Home", "Desktop"]);
+     //alert("desktop nav clicked!");
+  });
+  $("#desktop-nav div#nav-look a, #desktop-nav-landing div#nav-look a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Look Landing", "Desktop"]);
+  });
+  $("#phone-nav div#nav-look, #phone-nav-landing div#nav-look").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Look Home", "Mobile"]);
+     //alert("mobile nav clicked!");
+  });
+  $("#phone-nav div#nav-look a, #phone-nav-landing div#nav-look a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Look Landing", "Mobile"]);
+  });
+  $("#tablet-nav div#nav-look, #tablet-nav-landing div#nav-look").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Look Home", "Tablet"]);
+     //alert("tablet nav clicked!");
+  });
+  $("#tablet-nav div#nav-look a, #tablet-nav-landing div#nav-look a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Look Landing", "Tablet"]);
+  });
+  $("#desktop-nav div#nav-travel, #desktop-nav-landing div#nav-travel").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Travel Home", "Desktop"]);
+     //alert("desktop nav clicked!");
+  });
+  $("#desktop-nav div#nav-travel a, #desktop-nav-landing div#nav-travel a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Travel Landing", "Desktop"]);
+  });
+  $("#phone-nav div#nav-travel, #phone-nav-landing div#nav-travel").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Travel Home", "Mobile"]);
+     //alert("mobile nav clicked!");
+  });
+  $("#phone-nav div#nav-travel a, #phone-nav-landing div#nav-travel a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Travel Landing", "Mobile"]);
+  });
+  $("#tablet-nav div#nav-travel, #tablet-nav-landing div#nav-travel").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Travel Home", "Tablet"]);
+     //alert("tablet nav clicked!");
+  });
+  $("#tablet-nav div#nav-travel a, #tablet-nav-landing div#nav-travel a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Travel Landing", "Tablet"]);
+  });
+  $("#desktop-nav div#nav-buy, #desktop-nav-landing div#nav-buy").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Buy Home", "Desktop"]);
+     //alert("desktop nav clicked!");
+  });
+  $("#desktop-nav div#nav-buy a, #desktop-nav-landing div#nav-buy a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Buy Landing", "Desktop"]);
+  });
+  $("#phone-nav div#nav-buy, #phone-nav-landing div#nav-buy").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Buy Home", "Mobile"]);
+     //alert("mobile nav clicked!");
+  });
+  $("#phone-nav div#nav-buy a, #phone-nav-landing div#nav-buy a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Buy Landing", "Mobile"]);
+  });
+  $("#tablet-nav div#nav-buy, #tablet-nav-landing div#nav-buy").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Buy Home", "Tablet"]);
+     //alert("tablet nav clicked!");
+  });
+  $("#tablet-nav div#nav-buy a, #tablet-nav-landing div#nav-buy a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Buy Landing", "Tablet"]);
+  });
+  $("#desktop-nav div#nav-listen, #desktop-nav-landing div#nav-listen").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Listen Home", "Desktop"]);
+     //alert("desktop nav clicked!");
+  });
+  $("#desktop-nav div#nav-listen a, #desktop-nav-landing div#nav-listen a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Listen Landing", "Desktop"]);
+  });
+  $("#phone-nav div#nav-listen, #phone-nav-landing div#nav-listen").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Listen Home", "Mobile"]);
+     //alert("mobile nav clicked!");
+  });
+  $("#phone-nav div#nav-listen a, #phone-nav-landing div#nav-listen a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Listen Landing", "Mobile"]);
+  });
+  $("#tablet-nav div#nav-listen, #tablet-nav-landing div#nav-listen").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Listen Home", "Tablet"]);
+     //alert("tablet nav clicked!");
+  });
+  $("#tablet-nav div#nav-listen a, #tablet-nav-landing div#nav-listen a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Listen Landing", "Tablet"]);
+  });
+  $("#desktop-nav div#nav-link, #desktop-nav-landing div#nav-link").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Link Home", "Desktop"]);
+     //alert("desktop nav clicked!");
+  });
+  $("#desktop-nav div#nav-link a, #desktop-nav-landing div#nav-link a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Link Landing", "Desktop"]);
+  });
+  $("#phone-nav div#nav-link, #phone-nav-landing div#nav-link").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Link Home", "Mobile"]);
+     //alert("mobile nav clicked!");
+  });
+  $("#phone-nav div#nav-link a, #phone-nav-landing div#nav-link a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Link Landing", "Mobile"]);
+  });
+  $("#tablet-nav div#nav-link, #tablet-nav-landing div#nav-link").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Link Home", "Tablet"]);
+     //alert("tablet nav clicked!");
+  });
+  $("#tablet-nav div#nav-link a, #tablet-nav-landing div#nav-link a").click(function() {
+    _gaq.push(['_trackEvent', "Navigation", "Link Landing", "Tablet"]);
+  });
+
+  $("#read-design-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Read - Design', 'Desktop']);
+  });
+  $("#read-tech-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Read - Tech', 'Desktop']);
+  });
+  $("#read-style-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Read - Style', 'Desktop']);
+  });
+  $("#read-culture-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Read - Culture', 'Desktop']);
+  });
+  $("#read-food-drink-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Read - Food-drink', 'Desktop']);
+  });
+  $("#read-travel-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Read - Travel', 'Desktop']);
+  });
+
+  $("#look-design-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Look - Design', 'Desktop']);
+  });
+  $("#look-tech-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Look - Tech', 'Desktop']);
+  });
+  $("#look-style-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Look - Style', 'Desktop']);
+  });
+  $("#look-culture-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Look - Culture', 'Desktop']);
+  });
+  $("#look-food-drink-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Look - Food-drink', 'Desktop']);
+  });
+  $("#look-travel-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Look - Travel', 'Desktop']);
+  });
+  $("#look-ch-video-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Look - Ch-video', 'Desktop']);
+  });
+  $("#look-rough-cuts-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Look - Rough-cuts', 'Desktop']);
+  });
+  $("#look-capsule-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Look - Capsule', 'Desktop']);
+  });
+  $("#look-slideshow-filter").click(function() {
+    _gaq.push(['_trackEvent', 'Filter', 'Look - Slideshow', 'Desktop']);
+  });
+
+</script>
+<!-- End Google Analytics tag -->
+    <script type="text/javascript" src="//s.skimresources.com/js/77721X1528342.skimlinks.js"></script>
+</body>
+</html>
