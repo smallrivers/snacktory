@@ -120,6 +120,9 @@ public class ArticleTextExtractor {
         aMap.put("efytimes.com", Arrays.asList(
                 "*[class=data-para]"
             ));
+        aMap.put("wn.com", Arrays.asList(
+                "*[class=caroufredsel_wrapper]"
+            ));
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -142,12 +145,12 @@ public class ArticleTextExtractor {
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
                 + "|arti(cle|kel)|instapaper_body|storybody|short-story");
-        setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|articleBody|article-body|html-view-content|entry__body");
+        setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|articleBody|article-body|html-view-content|entry__body|^main-article$");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate");
         setHighlyNegative("policy-blk|FollowLinkedInSignIn");
-        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails");
+        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -1887,6 +1890,7 @@ public class ArticleTextExtractor {
      * @param doc document to strip unlikely candidates from
      */
     protected void stripUnlikelyCandidates(Document doc) {
+
         for (Element child : doc.select("body").select("*")) {
             String className = child.className().toLowerCase();
             String id = child.id().toLowerCase();
