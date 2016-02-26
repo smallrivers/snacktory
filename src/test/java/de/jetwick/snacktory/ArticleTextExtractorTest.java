@@ -1713,6 +1713,19 @@ public class ArticleTextExtractorTest {
         // compareDates("2016-02-08 12:30:00", res.getDate());
     }
 
+    @Test
+    public void testBizJournal() throws Exception {
+        // http://www.bizjournals.com/austin/blog/techflash/2014/10/rackspace-plans-500-new-jobs-at-highland-mall.html?page=all
+        JResult res = new JResult();
+        res.setUrl("http://www.bizjournals.com/austin/blog/techflash/2014/10/rackspace-plans-500-new-jobs-at-highland-mall.html?page=all");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("bizjournals.html")));
+        assertEquals("Rackspace plans 500 new jobs at Highland Mall, seeks incentives", res.getTitle());
+        assertEquals("http://www.bizjournals.com/austin/blog/techflash/2014/10/rackspace-plans-500-new-jobs-at-highland-mall.html", res.getCanonicalUrl());
+        assertTrue(res.getText(), res.getText().startsWith("Rackspace Inc., the San Antonio-based Web"));
+        assertTrue(res.getText(), res.getText().endsWith("and other fixtures."));
+        compareDates("2014-10-21 12:48:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
