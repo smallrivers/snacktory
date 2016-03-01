@@ -53,6 +53,12 @@
           <version>18.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>net.sourceforge.htmlcleaner</groupId>
+            <artifactId>htmlcleaner</artifactId>
+            <version>2.16</version>
+        </dependency>
+
         <!-- only needed to make logging work during tests -->
         <dependency>
             <groupId>org.slf4j</groupId>

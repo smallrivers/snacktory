@@ -27,6 +27,9 @@ import org.slf4j.LoggerFactory;
 import org.apache.commons.lang.time.*;
 import org.apache.commons.lang3.*;
 import com.google.common.net.InternetDomainName;
+import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.CleanerProperties;
+import org.htmlcleaner.TagNode;
 
 /**
  * This class is thread safe.
@@ -41,6 +44,19 @@ public class ArticleTextExtractor {
     private static final Logger logger = LoggerFactory.getLogger(ArticleTextExtractor.class);
     // Interesting nodes
     private static final Pattern NODES = Pattern.compile("p|div|article|section");
+
+    private HtmlCleaner cleaner = new HtmlCleaner();
+    // take default cleaner properties
+    private CleanerProperties props = cleaner.getProperties();
+
+    // Helper function to try to determine whether the input text contains html tags
+    //private Pattern HTML_PATTERN = Pattern.compile(".*\\<[^>]{0,15}>.*");
+    private Pattern HTML_PATTERN = Pattern.compile(".*<\\s{0,5}[(?:div|p|b|a|li)]\\s{0,5}>.*");
+    public boolean hasHTMLTags(String text){
+        Matcher matcher = HTML_PATTERN.matcher(text);
+        return matcher.matches();
+    }
+
     // Unlikely candidates
     private String unlikelyStr;
     private Pattern UNLIKELY;
@@ -134,8 +150,9 @@ public class ArticleTextExtractor {
     private static final boolean DEBUG_WEIGHTS = false;
     private static final boolean DEBUG_BASE_WEIGHTS = false;
     private static final boolean DEBUG_CHILDREN_WEIGHTS = false;
-    private static final int MAX_LOG_LENGTH = 200;
+    private static final int MAX_LOG_LENGTH = 1000;
     private static final int MIN_WEIGHT_TO_SHOW_IN_LOG = 10;
+
 
     public ArticleTextExtractor() {
         setUnlikely("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
@@ -245,106 +262,16 @@ public class ArticleTextExtractor {
             throw new IllegalArgumentException("html string is empty!?");
 
         // http://jsoup.org/cookbook/extracting-data/selector-syntax
-        return extractContent(res, Jsoup.parse(html), formatter, extractImages, extractAuthor, extractDate, maxContentSize);
-    }
+        final JResult result = extractContent(res, Jsoup.parse(html), formatter, extractImages, extractAuthor, extractDate, maxContentSize);
 
-    // Returns the best node match based on the weights (see getWeight for strategy)
-    private Element getBestMatchElement(Collection<Element> nodes){
-        Map.Entry<Integer, Element> firstEntry = getBestMatchElements(nodes).firstEntry();
-        if (firstEntry!=null){
-            return firstEntry.getValue();
+        // Do a sanity check, if the result content contains HTML tags most likely it is a bad
+        // extraction, this may happen due to malformed HTML; try again using HTML cleaned with a
+        // different library.
+        if(hasHTMLTags(result.getText())){
+            final TagNode node = cleaner.clean(html);
+            return extractContent(res, Jsoup.parse(cleaner.getInnerHtml(node)), formatter, extractImages, extractAuthor, extractDate, maxContentSize);
         }
-        return null;
-    }
-
-    // Returns a TreeMap of nodes sorted by their weight.
-    private TreeMap<Integer, Element> getBestMatchElements(Collection<Element> nodes){
-        int maxWeight = -200;        // why -200 now instead of 0?
-        //Element bestMatchElement = null;
-
-        // Note that nodes with most weight are sorted first.
-        TreeMap<Integer, Element> sortedResults = new TreeMap<Integer, Element>(Collections.reverseOrder());
-        Map<Integer, ElementDebug> sortedElementsMap = new TreeMap<Integer, ElementDebug>();
-
-        //boolean ignoreMaxWeightLimit = false;
-        boolean hasHighlyPositive = false;
-        for (Element entry : nodes) {
-
-            LogEntries logEntries = null;
-            if (DEBUG_WEIGHTS)
-                logEntries = new LogEntries();
-
-            Weight val = getWeight(entry, false, hasHighlyPositive, logEntries);
-            int currentWeight = val.weight;
-            hasHighlyPositive = val.hasHighlyPositive;
-            if (DEBUG_WEIGHTS){
-                if(currentWeight>MIN_WEIGHT_TO_SHOW_IN_LOG){
-                    ElementDebug elementdDebug = new ElementDebug();
-                    elementdDebug.logEntries = logEntries;
-                    elementdDebug.entry = entry;
-                    sortedElementsMap.put(currentWeight, elementdDebug);
-                }
-            }
-            if (currentWeight > maxWeight) {
-                maxWeight = currentWeight;
-                //bestMatchElement = entry;
-                sortedResults.put(currentWeight, entry);
-
-                /*
-                // NOTE: This optimization fails with large pages that
-                contains chunks of text that can be mistaken by articles, since we 
-                want the best accuracy possible, I am disabling it for now. AP.
-
-                // The original code had a limit of 200, the intention was that
-                // if a node had a weight greater than it, then it most likely
-                // it was the main content.
-                // However this assumption fails when the amount of text in the 
-                // children (or grandchildren) is too large. If we detect this
-                // case then the limit is ignored and we try all the nodes to select
-                // the one with the absolute maximum weight.
-                if (maxWeight > 500){
-                    ignoreMaxWeightLimit = true;
-                    continue;
-                } 
-                
-                // formerly 200, increased to 250 to account for the fact
-                // we are not adding the weights of the grand children to the
-                // tally.
-                
-                if (maxWeight > 250 && !ignoreMaxWeightLimit) 
-                    break;
-                */
-            }
-        }
-
-        if (DEBUG_WEIGHTS){
-            int mapSize = sortedElementsMap.size();
-            int entryCount = 0;
-            for(Map.Entry<Integer,ElementDebug> mapEntry : sortedElementsMap.entrySet()) {
-                Integer currentWeight = mapEntry.getKey();
-                ElementDebug elementDebug = mapEntry.getValue();
-                Element entry = elementDebug.entry;
-                LogEntries logEntries = elementDebug.logEntries;
-
-                entryCount+=1;
-                // Only show the N last nodes (highest weight)
-                if ((mapSize - entryCount) > 5){
-                    continue;
-                }
-                System.out.println("");
-                System.out.println("\t\t--------------- START NODE --------------------");
-                String outerHtml = entry.outerHtml();
-                if (outerHtml.length() > MAX_LOG_LENGTH)
-                    outerHtml = outerHtml.substring(0, MAX_LOG_LENGTH);
-                System.out.println("        HTML: " + outerHtml);
-                logEntries.print();
-                System.out.println("\t\t======================================");
-                System.out.println("                  TOTAL WEIGHT:" + String.format("%3d", currentWeight));
-                System.out.println("\t\t--------------- END NODE ----------------------");
-            }
-        }
-
-        return sortedResults;
+        return result;
     }
 
     public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, 
@@ -353,6 +280,8 @@ public class ArticleTextExtractor {
         Document origDoc = doc.clone();
         JResult result = extractContent(res, doc, formatter, extractImages, extractAuthor, extractDate, maxContentSize, true);
         //System.out.println("result.getText().length()="+result.getText().length());
+
+        // If the result is empty try again without cleaning the scripts.
         if (result.getText().length() == 0) {
             result = extractContent(res, origDoc, formatter, extractImages, extractAuthor, extractDate, maxContentSize, false);
         }
@@ -528,6 +457,105 @@ public class ArticleTextExtractor {
         }
 
         return res;
+    }
+
+    // Returns the best node match based on the weights (see getWeight for strategy)
+    private Element getBestMatchElement(Collection<Element> nodes){
+        Map.Entry<Integer, Element> firstEntry = getBestMatchElements(nodes).firstEntry();
+        if (firstEntry!=null){
+            return firstEntry.getValue();
+        }
+        return null;
+    }
+
+    // Returns a TreeMap of nodes sorted by their weight.
+    private TreeMap<Integer, Element> getBestMatchElements(Collection<Element> nodes){
+        int maxWeight = -200;        // why -200 now instead of 0?
+        //Element bestMatchElement = null;
+
+        // Note that nodes with most weight are sorted first.
+        TreeMap<Integer, Element> sortedResults = new TreeMap<Integer, Element>(Collections.reverseOrder());
+        Map<Integer, ElementDebug> sortedElementsMap = new TreeMap<Integer, ElementDebug>();
+
+        //boolean ignoreMaxWeightLimit = false;
+        boolean hasHighlyPositive = false;
+        for (Element entry : nodes) {
+
+            LogEntries logEntries = null;
+            if (DEBUG_WEIGHTS)
+                logEntries = new LogEntries();
+
+            Weight val = getWeight(entry, false, hasHighlyPositive, logEntries);
+            int currentWeight = val.weight;
+            hasHighlyPositive = val.hasHighlyPositive;
+            if (DEBUG_WEIGHTS){
+                if(currentWeight>MIN_WEIGHT_TO_SHOW_IN_LOG){
+                    ElementDebug elementdDebug = new ElementDebug();
+                    elementdDebug.logEntries = logEntries;
+                    elementdDebug.entry = entry;
+                    sortedElementsMap.put(currentWeight, elementdDebug);
+                }
+            }
+            if (currentWeight > maxWeight) {
+                maxWeight = currentWeight;
+                //bestMatchElement = entry;
+                sortedResults.put(currentWeight, entry);
+
+                /*
+                // NOTE: This optimization fails with large pages that
+                contains chunks of text that can be mistaken by articles, since we 
+                want the best accuracy possible, I am disabling it for now. AP.
+
+                // The original code had a limit of 200, the intention was that
+                // if a node had a weight greater than it, then it most likely
+                // it was the main content.
+                // However this assumption fails when the amount of text in the 
+                // children (or grandchildren) is too large. If we detect this
+                // case then the limit is ignored and we try all the nodes to select
+                // the one with the absolute maximum weight.
+                if (maxWeight > 500){
+                    ignoreMaxWeightLimit = true;
+                    continue;
+                } 
+                
+                // formerly 200, increased to 250 to account for the fact
+                // we are not adding the weights of the grand children to the
+                // tally.
+                
+                if (maxWeight > 250 && !ignoreMaxWeightLimit) 
+                    break;
+                */
+            }
+        }
+
+        if (DEBUG_WEIGHTS){
+            int mapSize = sortedElementsMap.size();
+            int entryCount = 0;
+            for(Map.Entry<Integer,ElementDebug> mapEntry : sortedElementsMap.entrySet()) {
+                Integer currentWeight = mapEntry.getKey();
+                ElementDebug elementDebug = mapEntry.getValue();
+                Element entry = elementDebug.entry;
+                LogEntries logEntries = elementDebug.logEntries;
+
+                entryCount+=1;
+                // Only show the N last nodes (highest weight)
+                if ((mapSize - entryCount) > 5){
+                    continue;
+                }
+                System.out.println("");
+                System.out.println("\t\t--------------- START NODE --------------------");
+                String outerHtml = entry.outerHtml();
+                if (outerHtml.length() > MAX_LOG_LENGTH)
+                    outerHtml = outerHtml.substring(0, MAX_LOG_LENGTH);
+                System.out.println("        HTML: " + outerHtml);
+                logEntries.print();
+                System.out.println("\t\t======================================");
+                System.out.println("                  TOTAL WEIGHT:" + String.format("%3d", currentWeight));
+                System.out.println("\t\t--------------- END NODE ----------------------");
+            }
+        }
+
+        return sortedResults;
     }
 
     private static String getSnippet(String data){
