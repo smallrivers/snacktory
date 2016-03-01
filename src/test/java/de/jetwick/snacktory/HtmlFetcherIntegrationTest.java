@@ -45,13 +45,22 @@ public class HtmlFetcherIntegrationTest {
         res = new HtmlFetcher().fetchAndExtract("http://on.fb.me/IKFRtL", 10000, true);
         assertEquals("https://www.facebook.com/", res.getUrl());
 
-        // Not found.
+        // 404 - Not found.
+        try {
+            res = new HtmlFetcher().fetchAndExtract("http://www.cnn.com/some/article", 10000, true);
+            fail( "Must throw SnacktoryNotFoundException" );
+        } catch (SnacktoryNotFoundException ex){
+            // do nothing
+        }
+
+        /*
+        // 500 - Server error (seems an UA issue).
         try {
             res = new HtmlFetcher().fetchAndExtract("http://www.azcentral.com/videos/news/12-news/arizona-midday/2014/11/26/19550567/", 10000, true);
             fail( "Must throw SnacktoryNotFoundException" );
         } catch (SnacktoryNotFoundException ex){
             // do nothing
-        }
+        }*/
     }
 
     @Test
