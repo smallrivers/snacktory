@@ -1655,6 +1655,18 @@ public class ArticleTextExtractorTest {
         compareDates("2014-10-21 12:48:00", res.getDate());
     }
 
+    @Test
+    public void testBillboard() throws Exception {
+        // http://www.billboard.com/articles/columns/the-juice/6770023/taylor-bennett-chance-the-rapper-broad-shoulders
+        JResult res = new JResult();
+        res.setUrl("http://www.billboard.com/articles/columns/the-juice/6770023/taylor-bennett-chance-the-rapper-broad-shoulders");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("billboard.html")));
+        assertEquals("Taylor Bennett Debuts 'Broad Shoulders,' Featuring Big Bro Chance the Rapper", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Talent runs in Chance the Rapper’s family."));
+        assertTrue(res.getText(), res.getText().endsWith("their brotherly love below."));
+        compareDates("2015-11-19 22:44:03", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
