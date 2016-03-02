@@ -1738,6 +1738,17 @@ public class ArticleTextExtractorTest {
         compareDates("2015-11-19 22:44:03", res.getDate());
     }
 
+    @Test
+    public void testFoxBusiness() throws Exception {
+        // http://video.foxbusiness.com/v/4779323511001/is-trump-too-divisive-to-win-the-election/?#sp=show-clips
+        JResult res = new JResult();
+        res.setUrl("http://video.foxbusiness.com/v/4779323511001/is-trump-too-divisive-to-win-the-election/?#sp=show-clips");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("foxbusiness.html")));
+        assertEquals("Is Trump too divisive to win the election?", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Feb. 29, 2016 - 6:52 - Former Hillary Clinton Chief Strategist Mark Penn on the 2016 presidential race."));
+        compareDates("2016-02-29 00:00:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
