@@ -141,6 +141,17 @@ public class ArticleTextExtractor {
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
+    // Define custom rules to select nodes for specific domains
+    // TODO: Load this from yaml/settings file
+    private static final Map<String, List> BEST_ELEMENT_PER_DOMAIN;
+    static {
+        Map<String, List> aMap = new LinkedHashMap<String, List>();
+        aMap.put("video.foxbusiness.com", Arrays.asList(
+                "div[class=video-meta]"
+            ));
+        BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
+    }
+
     private static final int MAX_AUTHOR_DESC_LENGHT = 1000;
     private static final int MAX_IMAGE_LENGHT = 255;
 
@@ -150,7 +161,7 @@ public class ArticleTextExtractor {
     private static final boolean DEBUG_WEIGHTS = false;
     private static final boolean DEBUG_BASE_WEIGHTS = false;
     private static final boolean DEBUG_CHILDREN_WEIGHTS = false;
-    private static final int MAX_LOG_LENGTH = 1000;
+    private static final int MAX_LOG_LENGTH = 200;
     private static final int MIN_WEIGHT_TO_SHOW_IN_LOG = 10;
 
 
@@ -319,66 +330,36 @@ public class ArticleTextExtractor {
         // Always remove unlikely candidates
         stripUnlikelyCandidates(doc);
 
+        // check for domain specific rules
+        if(!res.getUrl().equals("")){
+            InternetDomainName domain = getDomain(res.getUrl());
+            String topPrivateDomain = domain.topPrivateDomain().toString();
+            removeNodesPerDomain(doc, domain.toString());
+            removeNodesPerDomain(doc, topPrivateDomain);
+        }
 
-        // init elements and get the one with highest weight (see getWeight for strategy)
-        Collection<Element> nodes = getNodes(doc);
-        TreeMap<Integer, Element> bestMatchElements = getBestMatchElements(nodes);
-        Set bestMatchElementsSet = bestMatchElements.entrySet();
-        Iterator i = bestMatchElementsSet.iterator();
-
-        while(i.hasNext()) {
-            Map.Entry currentEntry = (Map.Entry)i.next();
-            Element bestMatchElement = (Element)currentEntry.getValue();
-
-            if (extractimages) {
-                List<ImageResult> images = new ArrayList<ImageResult>();
-                Element imgEl = determineImageSource(bestMatchElement, images);
-                if (imgEl != null) {
-                    res.setImageUrl(SHelper.replaceSpaces(imgEl.attr("src")));
-                    // TODO remove parent container of image if it is contained in bestMatchElement
-                    // to avoid image subtitles flooding in
-                    res.setImages(images);
+        // first evaluate if there is any domain specific rules.
+        Element bestMatchElement = getBestMatchElementPerURL(doc, res.getUrl());
+        if (bestMatchElement != null){
+            processBestElement(res, extractimages, maxContentSize, bestMatchElement);
+        } else {
+            // init elements and get the one with highest weight (see getWeight for strategy)
+            Collection<Element> nodes = getNodes(doc);
+            TreeMap<Integer, Element> bestMatchElements = getBestMatchElements(nodes);
+            Set bestMatchElementsSet = bestMatchElements.entrySet();
+            Iterator i = bestMatchElementsSet.iterator();
+            while(i.hasNext()) {
+                Map.Entry currentEntry = (Map.Entry)i.next();
+                bestMatchElement = (Element)currentEntry.getValue();
+                if (!processBestElement(res, extractimages, maxContentSize, bestMatchElement)){
+                    continue;
                 }
+                // if we got to this point it means the current entry is the best element.
+                break;
             }
+        }
 
-            // check for domain specific rules to remove unwanted nodes.
-            if(!res.getUrl().equals("")){
-                String domain = getTopPrivateDomain(res.getUrl());
-                if (domain!=null){
-                    List<String> selectorList = NODES_TO_REMOVE_PER_DOMAIN.get(domain);
-                    if (selectorList!=null){
-                        for (String selector : selectorList) {
-                            Elements itemsToRemove = bestMatchElement.select(selector);
-                            for (Element item : itemsToRemove) {
-                                item.remove();
-                            }
-                        }
-                    }
-                }
-            }
-
-            // clean before grabbing text
-            String text = formatter.getFormattedText(bestMatchElement, true);
-            text = removeTitleFromText(text, res.getTitle());
-            // Sanity check
-            if (text.length()==0){
-                // Empty best element (pick next one instead)
-                if(DEBUG_WEIGHTS){
-                    System.out.println("Empty best element!!!");
-                }
-                continue;
-            }
-
-            // this fails for short facebook post and probably tweets: text.length() > res.getDescription().length()
-            if (text.length() > res.getTitle().length()) {
-                if (maxContentSize > 0){
-                    if (text.length() > maxContentSize){
-                        text = utf8truncate(text, maxContentSize);
-                    }
-                }
-                res.setText(text);
-            }
-
+        if(bestMatchElement!=null){
             // extract links from the same best element
             String fullhtml = bestMatchElement.toString();
             Elements children = bestMatchElement.select("a[href]"); // a with href = link
@@ -391,9 +372,6 @@ public class ArticleTextExtractor {
                 res.addLink(child.attr("abs:href"), child.text(), linkpos);
                 lastlinkpos = linkpos;
             }
-
-            // if we got to this point it means the current entry is the best element.
-            break;
         }
 
         if (extractimages) {
@@ -430,6 +408,75 @@ public class ArticleTextExtractor {
         }
 
         return res;
+    }
+
+    private boolean processBestElement(JResult res, Boolean extractimages, 
+                                       int maxContentSize, Element bestMatchElement){
+        if (extractimages) {
+            List<ImageResult> images = new ArrayList<ImageResult>();
+            Element imgEl = determineImageSource(bestMatchElement, images);
+            if (imgEl != null) {
+                res.setImageUrl(SHelper.replaceSpaces(imgEl.attr("src")));
+                // TODO remove parent container of image if it is contained in bestMatchElement
+                // to avoid image subtitles flooding in
+                res.setImages(images);
+            }
+        }
+
+        // clean before grabbing text
+        String text = formatter.getFormattedText(bestMatchElement, true);
+        text = removeTitleFromText(text, res.getTitle());
+        // Sanity check
+        if (text.length()==0){
+            // Empty best element (pick next one instead)
+            if(DEBUG_WEIGHTS){
+                System.out.println("Empty best element!!!");
+            }
+            return false;
+        }
+
+        // this fails for short facebook post and probably tweets: text.length() > res.getDescription().length()
+        if (text.length() > res.getTitle().length()) {
+            if (maxContentSize > 0){
+                if (text.length() > maxContentSize){
+                    text = utf8truncate(text, maxContentSize);
+                }
+            }
+            res.setText(text);
+        }
+
+        return true;
+    }
+
+
+    private Element getBestMatchElementPerURL(Document doc, String url){
+        if (url==null || url.length()==0){
+            return null;
+        }
+        InternetDomainName domain = getDomain(url);
+        String topPrivateDomain = domain.topPrivateDomain().toString();
+        Element vDomain = getBestMatchElementPerDomain(doc, domain.toString());
+        if (vDomain!=null){
+            return vDomain;
+        }
+        Element vTopDomain = getBestMatchElementPerDomain(doc, topPrivateDomain);
+        if (vTopDomain!=null){
+            return vTopDomain;
+        }
+        return null;
+    }
+
+    private Element getBestMatchElementPerDomain(Document doc, String domainName){
+        List<String> selectorList = BEST_ELEMENT_PER_DOMAIN.get(domainName);
+        if (selectorList!=null){
+            for (String selector : selectorList) {
+                Elements items = doc.select(selector);
+                if (items.size()>0){
+                    return items.get(0);
+                }
+            }
+        }
+        return null;
     }
 
     // Returns the best node match based on the weights (see getWeight for strategy)
@@ -1931,6 +1978,26 @@ public class ArticleTextExtractor {
         }
     }
 
+    /*
+     *  Apply the domain specific rules to remove domains
+     */
+    private void removeNodesPerDomain(Document doc, String domainName){
+        if (domainName!=null){
+            List<String> selectorList = NODES_TO_REMOVE_PER_DOMAIN.get(domainName);
+            if (selectorList!=null){
+                for (String selector : selectorList) {
+                    Elements itemsToRemove = doc.select(selector);
+                    for (Element item : itemsToRemove) {
+                        if(DEBUG_REMOVE_RULES){
+                            print("REMOVE:", item);
+                        }
+                        item.remove();
+                    }
+                }
+            }
+        }
+    }
+
     private void removeScriptsAndStyles(Document doc) {
         Elements scripts = doc.getElementsByTag("script");
         for (Element item : scripts) {
@@ -2043,11 +2110,10 @@ public class ArticleTextExtractor {
         return SHelper.innerTrim(res.toString());
     }
 
-    public static String getTopPrivateDomain(String url) {
+    public static InternetDomainName getDomain(String url) {
         try {
             String host = new URI(url).getHost();
-            InternetDomainName domainName = InternetDomainName.from(host);
-            return domainName.topPrivateDomain().toString();
+            return InternetDomainName.from(host);
         } catch(URISyntaxException ex){
             return null;
         } catch(java.lang.IllegalStateException ex){
