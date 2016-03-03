@@ -1120,6 +1120,20 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testCanonical2() throws Exception {
+        // Article html modified to test extracting canonical from og:url
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cio2.com.html")));
+        assertEquals("http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html", res.getCanonicalUrl());
+    }
+
+    @Test
+    public void testCanonical3() throws Exception {
+        // Article html modified to test extracting canonical from twitter:url
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cio3.com.html")));
+        assertEquals("http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html", res.getCanonicalUrl());
+    }
+
+    @Test
     public void testYahooMobile() throws Exception {
         // https://m.yahoo.com/w/legobpengine/finance/news/stevia-first-corp-stvf-looks-123500390.html?.intl=us&.lang=en-us
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("m_yahoo.html")));
@@ -1744,6 +1758,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://video.foxbusiness.com/v/4779323511001/is-trump-too-divisive-to-win-the-election/?#sp=show-clips");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("foxbusiness.html")));
+        assertEquals("http://video.foxbusiness.com/v/4779323511001/is-trump-too-divisive-to-win-the-election/", res.getCanonicalUrl());
         assertEquals("Is Trump too divisive to win the election?", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Feb. 29, 2016 - 6:52 - Former Hillary Clinton Chief Strategist Mark Penn on the 2016 presidential race."));
         compareDates("2016-02-29 00:00:00", res.getDate());
