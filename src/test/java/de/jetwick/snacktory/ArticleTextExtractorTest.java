@@ -1693,6 +1693,31 @@ public class ArticleTextExtractorTest {
         compareDates("2016-02-29 00:00:00", res.getDate());
     }
 
+    @Test
+    public void testFintech() throws Exception {
+        // http://www.fintech.finance/fintech-tv/lawrence-whittle-persado/
+        JResult res = new JResult();
+        res.setUrl("http://www.fintech.finance/fintech-tv/lawrence-whittle-persado/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("fintech.html")));
+        assertEquals("http://www.fintech.finance/fintech-tv/lawrence-whittle-persado/", res.getCanonicalUrl());
+        assertEquals("Lawrence Whittle, Persado", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Lawrence Whittle from Persado talks to us about ways to improve the custoemr experiance while at Finovate Europe."));
+        compareDates("2016-02-16 09:51:31", res.getDate());
+    }
+
+    @Test
+    public void testReuters2() throws Exception {
+        // http://www.reuters.com/article/us-adobe-systems-results-idUSKCN0RH2SD20150917
+        JResult res = new JResult();
+        res.setUrl("http://www.reuters.com/article/us-adobe-systems-results-idUSKCN0RH2SD20150917");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("reuters2.html")));
+        assertEquals("http://www.reuters.com/article/us-adobe-systems-results-idUSKCN0RH2SD20150917", res.getCanonicalUrl());
+        //assertEquals("Adobe revenue, profit forecast miss estimates, shares slip", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Adobe Systems Inc's lower-than-expected revenue"));
+        assertTrue(res.getText(), res.getText().endsWith("Editing by Sriraj Kalluvila)"));
+        compareDates("2015-09-17 22:46:18", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

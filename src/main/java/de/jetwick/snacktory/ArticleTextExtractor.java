@@ -138,6 +138,10 @@ public class ArticleTextExtractor {
         aMap.put("wn.com", Arrays.asList(
                 "*[class=caroufredsel_wrapper]"
             ));
+        aMap.put("www.reuters.com", Arrays.asList(
+                "*[class=section main-content]", // odd case the "section main-content" class actually contains only the title.
+                "div[id=specialFeature]"         // remove non-article section
+            ));
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -177,7 +181,7 @@ public class ArticleTextExtractor {
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate");
         setHighlyNegative("policy-blk|FollowLinkedInSignIn");
-        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$");
+        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
