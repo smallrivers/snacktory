@@ -113,6 +113,10 @@ public class ArticleTextExtractor {
         Pattern.compile("Posted on(.*)", Pattern.CASE_INSENSITIVE),
         Pattern.compile("Posted:(.*)", Pattern.CASE_INSENSITIVE),
         Pattern.compile("Posted(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("Updated on:(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("Updated on(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("Updated:(.*)", Pattern.CASE_INSENSITIVE),
+        Pattern.compile("Updated(.*)", Pattern.CASE_INSENSITIVE),
         Pattern.compile("on:(.*)", Pattern.CASE_INSENSITIVE),
         Pattern.compile("on(.*)", Pattern.CASE_INSENSITIVE),
         Pattern.compile("(.*)Uhr", Pattern.CASE_INSENSITIVE)
@@ -156,6 +160,9 @@ public class ArticleTextExtractor {
         aMap.put("video.foxbusiness.com", Arrays.asList(
                 "div[class=video-meta]"
             ));
+        aMap.put("macnn.com", Arrays.asList(
+                "div[class=container-wrapper]"
+            ));
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -181,7 +188,7 @@ public class ArticleTextExtractor {
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings|title|avatar|follow-me-twitter|truncate");
         setHighlyNegative("policy-blk|FollowLinkedInSignIn");
-        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$");
+        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -991,7 +998,7 @@ public class ArticleTextExtractor {
             }
         }
 
-        elems = doc.select("*[class=published-date], *[class*=postedAt], *[class=published], *[class*=blogdate], *[class*=posted_date], *[class*=post_date], *[class*=origin-date], *[class*=xn-chron], *[class*=article-timestamp]");
+        elems = doc.select("*[class=published-date], *[class*=postedAt], *[class=published], *[class*=blogdate], *[class*=posted_date], *[class*=post_date], *[class*=origin-date], *[class*=xn-chron], *[class*=article-timestamp], *[class=post-date]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
@@ -1220,7 +1227,8 @@ public class ArticleTextExtractor {
             "EEE MMM dd HH:mm:ss z yyyy", // Thu Feb 07 00:00:00 EST 2013
             "yyyy-MM-dd HH:mm:ss.'0'",// 2015-12-28 06:30:00.0
             "yyyy-MM-dd HH:mm:ss z", //2016-01-17 15:21:00 -0800
-            "MMM dd yyyy" //October 05 2015
+            "MMM dd yyyy", //October 05 2015
+            "hh:mm a z',' EEE MMM dd',' yyyy" // 08:51 am EST, Thu March 3, 2016
         };
 
         try {
