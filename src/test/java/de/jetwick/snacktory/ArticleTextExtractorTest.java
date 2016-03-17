@@ -1025,6 +1025,19 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testQualcomm2() throws Exception {
+        // https://www.qualcomm.com/news/onq/2016/02/29/2015-qualcomm-sustainability-report-connecting-world-through-innovation-and
+        JResult res = new JResult();
+        res.setUrl("https://www.qualcomm.com/news/onq/2016/02/29/2015-qualcomm-sustainability-report-connecting-world-through-innovation-and");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("qualcomm2.html")));
+        assertEquals("https://www.qualcomm.com/news/onq/2016/02/29/2015-qualcomm-sustainability-report-connecting-world-through-innovation-and", res.getCanonicalUrl());
+        assertEquals("https://www.qualcomm.com/news/onq/2016/02/29/2015-qualcomm-sustainability-report-connecting-world-through-innovation-and", res.getUrl());
+        assertEquals("Connecting the world through innovation and collaboration", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Today I am excited to announce the launch"));
+        compareDates("2016-02-29 08:00:00", res.getDate());
+    }
+
+    @Test
     public void testApplePR() throws Exception {
         // http://www.apple.com/pr/library/2015/04/27Apple-Expands-Capital-Return-Program-to-200-Billion.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("applepr.html")));
