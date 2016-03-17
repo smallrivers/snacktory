@@ -230,11 +230,13 @@ public class JResult implements Serializable {
     }
 
     public void addLink(String url, String text, Integer pos) {
-        Map link = new HashMap();
-        link.put("url", url);
-        link.put("text", text);
-        link.put("offset", String.valueOf(pos));
-        links.add(link);
+        if (url.length() > 0){
+            Map link = new HashMap();
+            link.put("url", url);
+            link.put("text", text);
+            link.put("offset", String.valueOf(pos));
+            links.add(link);
+        }
     }
 
     public List<Map<String,String>> getLinks() {
