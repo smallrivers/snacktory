@@ -310,7 +310,6 @@ public class ArticleTextExtractor {
         return result;
     }
 
-
     // main workhorse
     public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, 
                                   boolean extractImages, boolean extractAuthor, boolean extractDate,
@@ -439,6 +438,13 @@ public class ArticleTextExtractor {
             res.setImageUrl("");
         }
 
+        return res;
+    }
+
+    // extract only the canonical URL
+    public JResult extractCanonical(JResult res, String html) throws Exception {
+        Document doc = Jsoup.parse(html);
+        res.setCanonicalUrl(extractCanonicalUrl(res.getUrl(), doc));
         return res;
     }
 
