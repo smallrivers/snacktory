@@ -423,6 +423,11 @@ public class ArticleTextExtractor {
     // extract only the canonical URL
     public JResult extractCanonical(JResult res, String html) throws Exception {
         Document doc = Jsoup.parse(html);
+        extractCanonical(res, doc);
+        return res;
+    }
+
+    public JResult extractCanonical(JResult res, Document doc) throws Exception {
         res.setCanonicalUrl(extractCanonicalUrl(res.getUrl(), doc));
         return res;
     }
