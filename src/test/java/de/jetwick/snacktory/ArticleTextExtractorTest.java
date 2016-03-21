@@ -1076,6 +1076,16 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testCanonical4() throws Exception {
+        // http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html
+        String url = "http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html";
+        JResult res = new JResult();
+        res.setUrl(url);
+        res = extractor.extractCanonical(res, c.streamToString(getClass().getResourceAsStream("cio.com.html")));
+        assertEquals("http://www.techworld.com/news/startups/rackspace-mongodb-execs-take-iot-hype-down-notch-3617731/", res.getCanonicalUrl());
+    }
+
+    @Test
     public void testYahooMobile() throws Exception {
         // https://m.yahoo.com/w/legobpengine/finance/news/stevia-first-corp-stvf-looks-123500390.html?.intl=us&.lang=en-us
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("m_yahoo.html")));

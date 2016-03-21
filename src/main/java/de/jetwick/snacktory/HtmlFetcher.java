@@ -206,13 +206,18 @@ public class HtmlFetcher {
         return charset;
     }
 
+    public JResult fetchAndExtractCanonical(String url, int timeout, boolean resolve) throws Exception {
+        return fetchAndExtract(url, timeout, resolve, 0, false, true);
+    }
+
     public JResult fetchAndExtract(String url, int timeout, boolean resolve) throws Exception {
-        return fetchAndExtract(url, timeout, resolve, 0, false);
+        return fetchAndExtract(url, timeout, resolve, 0, false, false);
     }
 
     // main workhorse to call externally
     public JResult fetchAndExtract(String url, int timeout, boolean resolve, 
-                                   int maxContentSize, boolean forceReload) throws Exception {
+                                   int maxContentSize, boolean forceReload,
+                                   boolean onlyExtractCanonical) throws Exception {
         String originalUrl = url;
         url = SHelper.removeHashbang(url);
         String gUrl = SHelper.getUrlFromUglyGoogleRedirect(url);
@@ -283,30 +288,41 @@ public class HtmlFetcher {
                 if(forceReload){
                     urlToDownload = getURLtoBreakCache(url);
                 } 
-                extractor.extractContent(result, fetchAsString(urlToDownload, timeout), maxContentSize);
+
+                if (!onlyExtractCanonical){
+                    extractor.extractContent(result, fetchAsString(urlToDownload, timeout), maxContentSize);
+                } else {
+                    extractor.extractCanonical(result, fetchAsString(urlToDownload, timeout));
+                }
             } catch (FileNotFoundException fe){
                 throw new SnacktoryNotFoundException();
             } catch (IOException io){
                 // do nothing
                 logger.error("Exception for URL: " + url + ":" + io);
             }
-            if (result.getFaviconUrl().isEmpty())
-                result.setFaviconUrl(SHelper.getDefaultFavicon(url));
 
-            // some links are relative to root and do not include the domain of the url :(
-            if(!result.getFaviconUrl().isEmpty())
-                result.setFaviconUrl(fixUrl(url, result.getFaviconUrl()));
+            if (!onlyExtractCanonical){
+                if (result.getFaviconUrl().isEmpty())
+                    result.setFaviconUrl(SHelper.getDefaultFavicon(url));
 
-            if(!result.getImageUrl().isEmpty())
-                result.setImageUrl(fixUrl(url, result.getImageUrl()));
+                // some links are relative to root and do not include the domain of the url :(
+                if(!result.getFaviconUrl().isEmpty())
+                    result.setFaviconUrl(fixUrl(url, result.getFaviconUrl()));
 
-            if(!result.getVideoUrl().isEmpty())
-                result.setVideoUrl(fixUrl(url, result.getVideoUrl()));
+                if(!result.getImageUrl().isEmpty())
+                    result.setImageUrl(fixUrl(url, result.getImageUrl()));
 
-            if(!result.getRssUrl().isEmpty())
-                result.setRssUrl(fixUrl(url, result.getRssUrl()));
+                if(!result.getVideoUrl().isEmpty())
+                    result.setVideoUrl(fixUrl(url, result.getVideoUrl()));
+
+                if(!result.getRssUrl().isEmpty())
+                    result.setRssUrl(fixUrl(url, result.getRssUrl()));
+            }
         }
-        result.setText(lessText(result.getText()));
+
+        if (!onlyExtractCanonical){
+            result.setText(lessText(result.getText()));
+        }
         synchronized (result) {
             result.notifyAll();
         }
