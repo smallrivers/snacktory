@@ -1828,6 +1828,20 @@ public class ArticleTextExtractorTest {
         assertEquals(12, res.getLinks().size());
     }
 
+
+    @Test
+    public void testHRC() throws Exception {
+        // http://www.hrc.org/blog/more-than-100-tech-leaders-call-for-nationwide-lgbt-non-discrimination-prot/
+        JResult res = new JResult();
+        res.setUrl("http://www.hrc.org/blog/more-than-100-tech-leaders-call-for-nationwide-lgbt-non-discrimination-prot/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("hrc.html")));
+        assertEquals("http://www.hrc.org/blog/more-than-100-tech-leaders-call-for-nationwide-lgbt-non-discrimination-prot/", res.getCanonicalUrl());
+        assertEquals("More Than 100 Tech Leaders Call for Nationwide LGBT Non-Discrimination Protections", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Reflecting an ever-increasing wave of support for LGBT equality"));
+        assertTrue(res.getText(), res.getText().endsWith("Product Innovation & New Businesses, Verizon"));
+        compareDates("2015-04-06", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
