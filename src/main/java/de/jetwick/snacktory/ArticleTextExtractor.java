@@ -983,7 +983,7 @@ public class ArticleTextExtractor {
             }
         }
 
-        elems = doc.select("*[class=published-date], *[class*=postedAt], *[class=published], *[class*=blogdate], *[class*=posted_date], *[class*=post_date], *[class*=origin-date], *[class*=xn-chron], *[class*=article-timestamp], *[class=post-date], *[class*=masthead__date]");
+        elems = doc.select("*[class=published-date], *[class*=postedAt], *[class=published], *[class*=blogdate], *[class*=posted_date], *[class*=post_date], *[class*=origin-date], *[class*=xn-chron], *[class*=article-timestamp], *[class=post-date], *[class*=masthead__date], *[class*=content-container__date]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
