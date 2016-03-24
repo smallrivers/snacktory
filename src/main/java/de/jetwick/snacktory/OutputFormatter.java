@@ -19,6 +19,8 @@ import org.jsoup.nodes.TextNode;
  */
 public class OutputFormatter {
 
+    // For debugging
+    private static final boolean DEBUG_OUTPUT = false;
     public static final int MIN_FIRST_PARAGRAPH_TEXT = 50; // Min size of first paragraph
     public static final int MIN_PARAGRAPH_TEXT = 30;       // Min size of any other paragraphs
     private static final List<String> NODES_TO_REPLACE = Arrays.asList("strong", "b", "i");
@@ -26,7 +28,7 @@ public class OutputFormatter {
     protected final int minFirstParagraphText;
     protected final int minParagraphText;
     protected final List<String> nodesToReplace;
-    protected String nodesToKeepCssSelector = "p, ol";
+    protected String nodesToKeepCssSelector = "p, ol, em";
 
     public OutputFormatter() {
         this(MIN_FIRST_PARAGRAPH_TEXT, MIN_PARAGRAPH_TEXT, NODES_TO_REPLACE);
@@ -109,6 +111,10 @@ public class OutputFormatter {
         // is select more costly then getElementsByTag?
         MAIN:
         for (Element e : node.select(tagName)) {
+
+            if(DEBUG_OUTPUT)
+                System.out.println("1) Tag:" + e.tagName() + "| text:" + e.text() + "|");
+
             Element tmpEl = e;
             // check all elements until 'node'
             while (tmpEl != null && !tmpEl.equals(node)) {
@@ -118,18 +124,31 @@ public class OutputFormatter {
             }
 
             String text = node2Text(e);
-            if (text.isEmpty() || text.length() < getMinParagraph(paragraphWithTextIndex) 
-                || text.length() > SHelper.countLetters(text) * 2){
-                continue;
+
+            if(DEBUG_OUTPUT)
+                System.out.println("2) Tag:" + e.tagName() + "| text:" + text + "|");
+
+            if (e.tagName()!="em"){
+                if (text.isEmpty() || text.length() < getMinParagraph(paragraphWithTextIndex) 
+                    || text.length() > SHelper.countLetters(text) * 2){
+                    continue;
+                }
             }
+
 
             if (e.tagName().equals("p")){
                 countOfP++;
             }
 
+            /* Don't prepend an space to a dot */
+            if (paragraphWithTextIndex > 0 && text.length() > 1 )
+                sb.append("\n\n");
             sb.append(text);
-            sb.append("\n\n");
+            
             paragraphWithTextIndex+=1;
+
+            if(DEBUG_OUTPUT)
+                System.out.println("SB:" + sb + "|");
         }
 
         return countOfP;
