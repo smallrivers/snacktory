@@ -1784,6 +1784,19 @@ public class ArticleTextExtractorTest {
         assertEquals("By Leta Soza |", res.getAuthorName());
     }
 
+    @Test
+    public void testInvestors() throws Exception {
+        // http://www.investors.com/news/technology/blackberry-q4-revenue-falls-way-short-of-estimates-as-stock-tumbles/
+        JResult res = new JResult();
+        res.setUrl("http://www.investors.com/news/technology/blackberry-q4-revenue-falls-way-short-of-estimates-as-stock-tumbles/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("investors.html")));
+        assertEquals("http://www.investors.com/news/technology/blackberry-q4-revenue-falls-way-short-of-estimates-as-stock-tumbles/", res.getCanonicalUrl());
+        assertEquals("BlackBerry Q4 Revenue Falls Far Short Of Estimates As Stock Tumbles", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Deep in a turnaround effort that aims to slow its sinking revenue growth and return it to profitability"));
+        assertTrue(res.getText(), res.getText().endsWith("to other smartphones and operating systems."));
+        compareDates("2016-04-01 18:56:15", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
