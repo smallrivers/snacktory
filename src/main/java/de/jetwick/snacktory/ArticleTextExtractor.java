@@ -149,6 +149,11 @@ public class ArticleTextExtractor {
                 "*[class=section main-content]", // odd case the "section main-content" class actually contains only the title.
                 "div[id=specialFeature]"         // remove non-article section
             ));
+        aMap.put("investors.com", Arrays.asList(
+                "*[class=special-report",
+                "*[class=more-news]"
+            ));
+
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -188,7 +193,7 @@ public class ArticleTextExtractor {
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings|title|avatar|follow-me-twitter|truncate");
         setHighlyNegative("policy-blk|FollowLinkedInSignIn");
-        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments");
+        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
