@@ -1797,6 +1797,19 @@ public class ArticleTextExtractorTest {
         compareDates("2016-04-01 18:56:15", res.getDate());
     }
 
+    @Test
+    public void testAfr() throws Exception {
+        // http://www.afr.com/leadership/management/mindfulness-tips-to-skip-workplace-stress-this-silly-season-20151201-glcnq1
+        JResult res = new JResult();
+        res.setUrl("http://www.afr.com/leadership/management/mindfulness-tips-to-skip-workplace-stress-this-silly-season-20151201-glcnq1");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("afr.html")));
+        assertEquals("http://www.afr.com/leadership/management/mindfulness-tips-to-skip-workplace-stress-this-silly-season-20151201-glcnq1", res.getCanonicalUrl());
+        assertEquals("Mindfulness tips to skip workplace stress this silly season", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("December is again upon us, a time when many workplaces engage"));
+        //assertTrue(res.getText(), res.getText().endsWith("to other smartphones and operating systems."));
+        compareDates("2015-12-03 02:32:05", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
