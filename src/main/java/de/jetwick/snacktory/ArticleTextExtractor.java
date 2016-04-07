@@ -325,7 +325,7 @@ public class ArticleTextExtractor {
         // get the easy stuff
         res.setTitle(extractTitle(doc));
         res.setDescription(extractDescription(doc));
-        res.setCanonicalUrl(extractCanonicalUrl(res.getUrl(), doc));
+        res.setCanonicalUrl(extractCanonicalUrl(res.getUrl(), doc, false));
         res.setType(extractType(doc));
         res.setSitename(extractSitename(doc));
         res.setLanguage(extractLanguage(doc));
@@ -448,13 +448,21 @@ public class ArticleTextExtractor {
 
     // extract only the canonical URL
     public JResult extractCanonical(JResult res, String html) throws Exception {
+        return extractCanonical(res, html, false);
+    }
+
+    public JResult extractCanonical(JResult res, String html, boolean use_external) throws Exception {
         Document doc = Jsoup.parse(html);
-        extractCanonical(res, doc);
+        extractCanonical(res, doc, use_external);
         return res;
     }
 
     public JResult extractCanonical(JResult res, Document doc) throws Exception {
-        res.setCanonicalUrl(extractCanonicalUrl(res.getUrl(), doc));
+        return extractCanonical(res, doc, false);
+    }
+
+    public JResult extractCanonical(JResult res, Document doc, Boolean use_external) throws Exception {
+        res.setCanonicalUrl(extractCanonicalUrl(res.getUrl(), doc, use_external));
         return res;
     }
 
@@ -680,7 +688,7 @@ public class ArticleTextExtractor {
         return StringEscapeUtils.unescapeHtml4(title);
     }
 
-    protected String extractCanonicalUrl(String baseURL, Document doc) {
+    protected String extractCanonicalUrl(String baseURL, Document doc, Boolean use_external) {
         String url = SHelper.replaceSpaces(doc.select("head link[rel=canonical]").attr("href"));
         if (url.isEmpty()) {
             url = SHelper.replaceSpaces(doc.select("head meta[property=og:url]").attr("content"));
@@ -692,11 +700,23 @@ public class ArticleTextExtractor {
         if (!url.isEmpty()) {
             try {
                 url = new URI(baseURL).resolve(url).toString();
+
+                // if this parameter is false, then don't select canonicals that point to
+                // external domains.
+                if (!use_external){
+                     // baseURL shouldn't never be null but some old test are missing it.
+                    if (baseURL!=null && baseURL.length() > 0){
+                        if (!getTopPrivateDomain(baseURL).equals(getTopPrivateDomain(url))){
+                            return baseURL;
+                        }
+                    }
+                }
             } catch (URISyntaxException ex) {
                 // bad url?
                 logger.error("Bad URL: " + url + ":" + ex);
             }
         }
+
         return url;
     }
 
@@ -2182,6 +2202,17 @@ public class ArticleTextExtractor {
             // Handles case: java.lang.IllegalStateException: Not under a public suffix: developer.team
             return null;
         }
+    }
+
+    // Returns the portion of this domain name that is one level beneath the public suffix. 
+    // For example, for x.adwords.google.co.uk it returns google.co.uk, since co.uk is a public suffix.
+    // See: http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/net/InternetDomainName.html#topPrivateDomain()
+    public static String getTopPrivateDomain(String url) {
+        InternetDomainName domain = getDomain(url);
+        if (domain!=null){
+            return domain.topPrivateDomain().toString();
+        }
+        return null;
     }
 
     /**

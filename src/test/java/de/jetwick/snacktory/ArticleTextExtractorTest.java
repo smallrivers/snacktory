@@ -1152,8 +1152,18 @@ public class ArticleTextExtractorTest {
         String url = "http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html";
         JResult res = new JResult();
         res.setUrl(url);
-        res = extractor.extractCanonical(res, c.streamToString(getClass().getResourceAsStream("cio.com.html")));
+        res = extractor.extractCanonical(res, c.streamToString(getClass().getResourceAsStream("cio.com.html")), true);
         assertEquals("http://www.techworld.com/news/startups/rackspace-mongodb-execs-take-iot-hype-down-notch-3617731/", res.getCanonicalUrl());
+    }
+
+    @Test
+    public void testCanonical5() throws Exception {
+        // http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html
+        String url = "http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html";
+        JResult res = new JResult();
+        res.setUrl(url);
+        res = extractor.extractCanonical(res, c.streamToString(getClass().getResourceAsStream("cio.com.html")), false);
+        assertEquals("http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html", res.getCanonicalUrl());
     }
 
     @Test
@@ -1862,11 +1872,26 @@ public class ArticleTextExtractorTest {
         res.setUrl("http://www.afr.com/leadership/management/mindfulness-tips-to-skip-workplace-stress-this-silly-season-20151201-glcnq1");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("afr.html")));
         assertEquals("http://www.afr.com/leadership/management/mindfulness-tips-to-skip-workplace-stress-this-silly-season-20151201-glcnq1", res.getCanonicalUrl());
-        assertEquals("Mindfulness tips to skip workplace stress this silly season", res.getTitle());
+        assertEquals("Is your workplace silly season getting stressful? Try this", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("December is again upon us, a time when many workplaces engage"));
         //assertTrue(res.getText(), res.getText().endsWith("to other smartphones and operating systems."));
         compareDates("2015-12-03 02:32:05", res.getDate());
     }
+
+    @Test
+    public void testMyPalmBeachPost() throws Exception {
+        // http://www.mypalmbeachpost.com/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/
+        JResult res = new JResult();
+        res.setUrl("http://www.mypalmbeachpost.com/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("mypalmbeachpost.html")));
+        assertEquals("http://www.mypalmbeachpost.com/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/", res.getUrl());
+        assertEquals("http://www.mypalmbeachpost.com/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/", res.getCanonicalUrl());
+        assertEquals("Consumer Confidence In Buying Homes Online Has Increased", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Owners.com, an online brokerage firm"));
+        assertTrue(res.getText(), res.getText().endsWith("consider relocating."));
+        //compareDates("2016-04-01 10:00:00", res.getDate());
+    }
+
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;

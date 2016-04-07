@@ -1,0 +1,1940 @@
+
+<!DOCTYPE html><!--[if IE 7]><html class="ie7" lang="en"><![endif]--><!--[if IE 8]><html class="ie8" lang="en"><![endif]--><!--[if IE 9]><html class="ie9" lang="en"><![endif]--><!--[if gt IE 9]><!--><html lang="en"><!--<![endif]--><head prefix="og: http://ogp.me/ns#"><!-- no Optimizely site setting --><title>Consumer Confidence In Buying Homes Online Has Increased | www.mypalmbeachpost.com</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"UA8DVFJACgQIXVlSAw=="};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o||e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(t,e,n){function r(t){try{s.console&&console.log(t)}catch(e){}}var o,i=t("ee"),a=t(14),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,-1!==o.indexOf("dev")&&(s.dev=!0),-1!==o.indexOf("nr_dev")&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,e,n){r(n.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,e){return t}).join(", ")))},{}],2:[function(t,e,n){function r(t,e,n,r,o){try{d?d-=1:i("err",[o||new UncaughtException(t,e,n)])}catch(s){try{i("ierr",[s,(new Date).getTime(),!0])}catch(c){}}return"function"==typeof f?f.apply(this,a(arguments)):!1}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function o(t){i("err",[t,(new Date).getTime()])}var i=t("handle"),a=t(15),s=t("ee"),c=t("loader"),f=window.onerror,u=!1,d=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(l){"stack"in l&&(t(8),t(7),"addEventListener"in window&&t(5),c.xhrWrappable&&t(9),u=!0)}s.on("fn-start",function(t,e,n){u&&(d+=1)}),s.on("fn-err",function(t,e,n){u&&(this.thrown=!0,o(n))}),s.on("fn-end",function(){u&&!this.thrown&&d>0&&(d-=1)}),s.on("internal-error",function(t){i("ierr",[t,(new Date).getTime(),!0])})},{}],3:[function(t,e,n){t("loader").features.ins=!0},{}],4:[function(t,e,n){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(8),s=t(7);t("loader").features.stn=!0,t(6);var c=NREUM.o.EV;o.on("fn-start",function(t,e){var n=t[0];n instanceof c&&(this.bstStart=Date.now())}),o.on("fn-end",function(t,e){var n=t[0];n instanceof c&&i("bst",[n,e,this.bstStart,Date.now()])}),a.on("fn-start",function(t,e,n){this.bstStart=Date.now(),this.bstType=n}),a.on("fn-end",function(t,e){i("bstTimer",[e,this.bstStart,Date.now(),this.bstType])}),s.on("fn-start",function(){this.bstStart=Date.now()}),s.on("fn-end",function(t,e){i("bstTimer",[e,this.bstStart,Date.now(),"requestAnimationFrame"])}),o.on("pushState-start",function(t){this.time=Date.now(),this.startPath=location.pathname+location.hash}),o.on("pushState-end",function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),"addEventListener"in window.performance&&(window.performance.clearResourceTimings?window.performance.addEventListener("resourcetimingbufferfull",function(t){i("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.clearResourceTimings()},!1):window.performance.addEventListener("webkitresourcetimingbufferfull",function(t){i("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.webkitClearResourceTimings()},!1)),document.addEventListener("scroll",r,!1),document.addEventListener("keypress",r,!1),document.addEventListener("click",r,!1)}},{}],5:[function(t,e,n){function r(t){for(var e=t;e&&!e.hasOwnProperty(u);)e=Object.getPrototypeOf(e);e&&o(e)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,e){return t[1]}var a=t("ee").get("events"),s=t(16)(a),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";e.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,e){if(t[1]){var n=t[1];if("function"==typeof n){var r=c(n,"nr@wrapped",function(){return s(n,"fn-",null,n.name||"anonymous")});this.wrapped=t[1]=r}else"function"==typeof n.handleEvent&&s.inPlace(n,["handleEvent"],"fn-")}}),a.on(d+"-start",function(t){var e=this.wrapped;e&&(t[1]=e)})},{}],6:[function(t,e,n){var r=t("ee").get("history"),o=t(16)(r);e.exports=r,o.inPlace(window.history,["pushState","replaceState"],"-")},{}],7:[function(t,e,n){var r=t("ee").get("raf"),o=t(16)(r);e.exports=r,o.inPlace(window,["requestAnimationFrame","mozRequestAnimationFrame","webkitRequestAnimationFrame","msRequestAnimationFrame"],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],8:[function(t,e,n){function r(t,e,n){t[0]=a(t[0],"fn-",null,n)}function o(t,e,n){this.method=n,this.timerDuration="number"==typeof t[1]?t[1]:0,t[0]=a(t[0],"fn-",this,n)}var i=t("ee").get("timer"),a=t(16)(i);e.exports=i,a.inPlace(window,["setTimeout","setImmediate"],"setTimer-"),a.inPlace(window,["setInterval"],"setInterval-"),a.inPlace(window,["clearTimeout","clearImmediate"],"clearTimeout-"),i.on("setInterval-start",r),i.on("setTimer-start",o)},{}],9:[function(t,e,n){function r(t,e){d.inPlace(e,["onreadystatechange"],"fn-",s)}function o(){var t=this,e=u.context(t);t.readyState>3&&!e.resolved&&(e.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,v,"fn-",s)}function i(t){w.push(t),h&&(g=-g,b.data=g)}function a(){for(var t=0;t<w.length;t++)r([],w[t]);w.length&&(w=[])}function s(t,e){return e}function c(t,e){for(var n in t)e[n]=t[n];return e}t(5);var f=t("ee"),u=f.get("xhr"),d=t(16)(u),l=NREUM.o,p=l.XHR,h=l.MO,m="readystatechange",v=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],w=[];e.exports=u;var y=window.XMLHttpRequest=function(t){var e=new p(t);try{u.emit("new-xhr",[e],e),e.addEventListener(m,o,!1)}catch(n){try{u.emit("internal-error",[n])}catch(r){}}return e};if(c(p,y),y.prototype=p.prototype,d.inPlace(y.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,e){r(t,e),i(e)}),u.on("open-xhr-start",r),h){var g=1,b=document.createTextNode(g);new h(a).observe(b,{characterData:!0})}else f.on("fn-end",function(t){t[0]&&t[0].type===m||a()})},{}],10:[function(t,e,n){function r(t){var e=this.params,n=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;l>r;r++)t.removeEventListener(d[r],this.listener,!1);if(!e.aborted){if(n.duration=(new Date).getTime()-this.startTime,4===t.readyState){e.status=t.status;var i=o(t,this.lastSize);if(i&&(n.rxSize=i),this.sameOrigin){var a=t.getResponseHeader("X-NewRelic-App-Data");a&&(e.cat=a.split(", ").pop())}}else e.status=0;n.cbTime=this.cbTime,u.emit("xhr-done",[t],t),c("xhr",[e,n,this.startTime])}}}function o(t,e){var n=t.responseType;if("json"===n&&null!==e)return e;var r="arraybuffer"===n||"blob"===n||"json"===n?t.response:t.responseText;return i(r)}function i(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(e){return}}}function a(t,e){var n=f(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.sameOrigin=n.sameOrigin}var s=t("loader");if(s.xhrWrappable){var c=t("handle"),f=t(11),u=t("ee"),d=["load","error","abort","timeout"],l=d.length,p=t("id"),h=t(13),m=window.XMLHttpRequest;s.features.xhr=!0,t(9),u.on("new-xhr",function(t){var e=this;e.totalCbs=0,e.called=0,e.cbTime=0,e.end=r,e.ended=!1,e.xhrGuids={},e.lastSize=null,h&&(h>34||10>h)||window.opera||t.addEventListener("progress",function(t){e.lastSize=t.loaded},!1)}),u.on("open-xhr-start",function(t){this.params={method:t[0]},a(this,t[1]),this.metrics={}}),u.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),u.on("send-xhr-start",function(t,e){var n=this.metrics,r=t[0],o=this;if(n&&r){var a=i(r);a&&(n.txSize=a)}this.startTime=(new Date).getTime(),this.listener=function(t){try{"abort"===t.type&&(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof e.onload))&&o.end(e)}catch(n){try{u.emit("internal-error",[n])}catch(r){}}};for(var s=0;l>s;s++)e.addEventListener(d[s],this.listener,!1)}),u.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),u.on("xhr-load-added",function(t,e){var n=""+p(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),u.on("xhr-load-removed",function(t,e){var n=""+p(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),u.on("addEventListener-end",function(t,e){e instanceof m&&"load"===t[0]&&u.emit("xhr-load-added",[t[1],t[2]],e)}),u.on("removeEventListener-end",function(t,e){e instanceof m&&"load"===t[0]&&u.emit("xhr-load-removed",[t[1],t[2]],e)}),u.on("fn-start",function(t,e,n){e instanceof m&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=(new Date).getTime()))}),u.on("fn-end",function(t,e){this.xhrCbStart&&u.emit("xhr-cb-time",[(new Date).getTime()-this.xhrCbStart,this.onload,e],e)})}},{}],11:[function(t,e,n){e.exports=function(t){var e=document.createElement("a"),n=window.location,r={};e.href=t,r.port=e.port;var o=e.href.split("://");!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=e.hostname||n.hostname,r.pathname=e.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname);var i=!e.protocol||":"===e.protocol||e.protocol===n.protocol,a=e.hostname===document.domain&&e.port===n.port;return r.sameOrigin=i&&(!e.hostname||a),r}},{}],12:[function(t,e,n){function r(t,e){return function(){o(t,[(new Date).getTime()].concat(a(arguments)),null,e)}}var o=t("handle"),i=t(14),a=t(15);"undefined"==typeof window.newrelic&&(newrelic=NREUM);var s=["setPageViewName","addPageAction","setCustomAttribute","finished","addToTrace","inlineHit"],c=["addPageAction"],f="api-";i(s,function(t,e){newrelic[e]=r(f+e,"api")}),i(c,function(t,e){newrelic[e]=r(f+e)}),e.exports=newrelic,newrelic.noticeError=function(t){"string"==typeof t&&(t=new Error(t)),o("err",[t,(new Date).getTime()])}},{}],13:[function(t,e,n){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),e.exports=r},{}],14:[function(t,e,n){function r(t,e){var n=[],r="",i=0;for(r in t)o.call(t,r)&&(n[i]=e(r,t[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],15:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(0>o?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=r},{}],16:[function(t,e,n){function r(t){return!(t&&"function"==typeof t&&t.apply&&!t[a])}var o=t("ee"),i=t(15),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;e.exports=function(t){function e(t,e,n,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof n?n(r,a):n||{}}catch(u){d([u,"",[r,a,o],s])}f(e+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(l){throw f(e+"err",[r,a,l],s),l}finally{f(e+"end",[r,a,c],s)}}return r(t)?t:(e||(e=""),nrWrapper[a]=t,u(t,nrWrapper),nrWrapper)}function n(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function f(e,n,r){if(!c){c=!0;try{t.emit(e,n,r)}catch(o){d([o,e,n,r])}c=!1}}function u(t,e){if(Object.defineProperty&&Object.keys)try{var n=Object.keys(t);return n.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(r){d([r])}for(var o in t)s.call(t,o)&&(e[o]=t[o]);return e}function d(e){try{t.emit("internal-error",e)}catch(n){}}return t||(t=o),e.inPlace=n,e.flag=a,e}},{}],ee:[function(t,e,n){function r(){}function o(t){function e(t){return t&&t instanceof r?t:t?s(t,a,i):i()}function n(n,r,o){t&&t(n,r,o);for(var i=e(o),a=l(n),s=a.length,c=0;s>c;c++)a[c].apply(i,r);var u=f[v[n]];return u&&u.push([w,n,r,i]),i}function d(t,e){m[t]=l(t).concat(e)}function l(t){return m[t]||[]}function p(t){return u[t]=u[t]||o(n)}function h(t,e){c(t,function(t,n){e=e||"feature",v[n]=e,e in f||(f[e]=[])})}var m={},v={},w={on:d,emit:n,get:p,listeners:l,context:e,buffer:h};return w}function i(){return new r}var a="nr@context",s=t("gos"),c=t(14),f={},u={},d=e.exports=o();d.backlog=f},{}],gos:[function(t,e,n){function r(t,e,n){if(o.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[e]=r,r}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){o.buffer([t],r),o.emit(t,e,n)}var o=t("ee").get("handle");e.exports=r,r.ee=o},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!m++){var t=h.info=NREUM.info,e=u.getElementsByTagName("script")[0];if(t&&t.licenseKey&&t.applicationID&&e){c(l,function(e,n){t[e]||(t[e]=n)});var n="https"===d.split(":")[0]||t.sslForHttp;h.proto=n?"https://":"http://",s("mark",["onload",a()],null,"api");var r=u.createElement("script");r.src=h.proto+t.agent,e.parentNode.insertBefore(r,e)}}}function o(){"complete"===u.readyState&&i()}function i(){s("mark",["domContent",a()],null,"api")}function a(){return(new Date).getTime()}var s=t("handle"),c=t(14),f=window,u=f.document;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:f.XMLHttpRequest,REQ:f.Request,EV:f.Event,PR:f.Promise,MO:f.MutationObserver},t(12);var d=""+location,l={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-918.min.js"},p=window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent),h=e.exports={offset:a(),origin:d,features:{},xhrWrappable:p};u.addEventListener?(u.addEventListener("DOMContentLoaded",i,!1),f.addEventListener("load",r,!1)):(u.attachEvent("onreadystatechange",o),f.attachEvent("onload",r)),s("mark",["firstbyte",a()],null,"api");var m=0},{}]},{},["loader",2,10,4,3]);</script><script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","queueTime":0,"licenseKey":"aaf23b031f","agent":"","transactionName":"MQYHNRZYCkZVBxcKVghMIxQKWhBcWwpMAVwSFwATB1gHXVFKFQpcERBfIwFNEFBGMgoGTkgEABU=","applicationID":"2789804","errorBeacon":"bam.nr-data.net","applicationTime":7}</script><link rel="dns-prefetch" href="//media.cmgdigital.com"><link rel="apple-touch-icon" href="/favicon-apple-touch-icon.png"><meta name="viewport" content="shrink-to-fit=no, width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1"><meta name="apple-mobile-web-app-title" content="mypbp"><!-- templates/common/web/includes/extended_meta.html --><meta name="description" content="MoneyTipsOwners." /><meta name="keywords" content="borrowing,mortgage refinance,Home Purchase Loan,money tips for lakana" /><meta name="cmg_revpath" content="/re/477/5642588/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/" /><meta property="og:title" content="Consumer Confidence In Buying Homes Online Has Increased" /><meta property="og:url" content="http://www.mypalmbeachpost.com/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/" /><meta property="og:description" content="MoneyTipsOwners." /><link rel="image_src" href="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/site/www_mypalmbeachpost_com/images/logo.png" /><meta property="vr:canonical" content="http://www.mypalmbeachpost.com/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/" /><meta property="og:type" content="article" /><meta property="og:image" content="http://media.cmgdigital.com/shared/img/photos/2016/04/02/c8/f6/tmpirfvqM-mdly-photo.png" /><link rel="canonical" href="http://www.moneytips.com/consumer-confidence-in-buying-homes-online-has-increased/485" /><link rel="shortcut icon" href="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/site/www_mypalmbeachpost_com/images/favicon.ico" /><link rel="apple-touch-icon" href="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/site/www_mypalmbeachpost_com/images/favicon-apple-touch-icon.png" /><link rel="stylesheet" href="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/css/master.css" /><link rel="stylesheet" href="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/css/master-responsive.css" /><link rel="stylesheet" href="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/site/www_mypalmbeachpost_com/css/site.css" /><!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]--><script type="text/javascript" src="http://www.mypalmbeachpost.com/dolphin/js/"></script><!-- dtm header code --><script src="//assets.adobedtm.com/20d5deb47c9e7fe47a9f969db01578a739d7179d/satelliteLib-b390ecb549d616b2fefbb125cce0fa0c7637ad42.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/javascript/core.premium.js?version=2016-04-07"></script><script type="text/javascript">
+
+    var has_local_storage = (function () {
+        // source:
+        // https://mathiasbynens.be/notes/localstorage-pattern
+
+        var test_token = (new Date()).toString();
+        var result;
+        try {
+            localStorage.setItem(test_token, test_token);
+            result = localStorage.getItem(test_token) === test_token;
+            localStorage.removeItem(test_token);
+            return !!(result && localStorage);
+        } catch (exception) {
+            return false;
+        }
+    })();
+
+    cmg._logger = new function() {
+        var storage_logs_name = "cmg_logger";
+
+        var that = this;
+
+        if (has_local_storage) {
+            this.storage_logs = JSON.parse(
+                localStorage.getItem(storage_logs_name) || "[]"
+            );
+            if (this.storage_logs.length > 30) {
+                this.storage_logs.length = [];
+            }
+        } else {
+            this.storage_logs = [];
+        }
+
+        this.log = function (source, msg, info) {
+
+            var info = info || {};
+            var signin_selector = "#cmJanrainAuthLinks .cmUserAuthed a";
+
+            function save_logs (janrain_session_info) {
+                that.storage_logs.push({
+                    timestamp: (new Date()).toUTCString(),
+                    source: source,
+                    msg: msg,
+                    path: window.location.href,
+                    janus_auth_cookie: cmg.query.cookie(
+                        'janus.authorization'),
+                    janrain_session_info: janrain_session_info,
+                    info: info,
+                });
+
+                if (has_local_storage) {
+                    localStorage.setItem(storage_logs_name,
+                                         JSON.stringify(that.storage_logs));
+                } else {
+                    console.log(
+                        "LOG Info not saved to storage because localStorage is not available")
+                }
+                console.log("LOGS:  ", msg, info,
+                            "For details look in cmg._logger.storage_logs");
+            }
+
+            if (typeof(janrain) !== "undefined") {
+                // We're interested in instances where the user has signed in to Janrain
+
+                if (typeof(janrain.capture) === "undefined") {
+                    janrain.on("cmg_ready", function () {
+                        janrain.events.onCaptureSessionFound.addHandler(function (result){
+                            save_logs({
+                                token: result,
+                                signin: cmg.query(signin_selector).eq(0).text(),
+                            });
+                        });
+                    });
+                } else if (janrain.capture.ui.hasActiveSession()) {
+                    save_logs({
+                        has_active_session: true,
+                        signin: cmg.query(signin_selector).eq(0).text(),
+                    });
+                }
+            } else {
+                save_logs("janrain not defined at log time");
+            }
+        }
+    };
+
+    function premium_failed_fetch_handler_after_janrain_session(log_source, log_msg, log_info) {
+        cmg._logger.log(log_source, log_msg, log_info);
+
+        
+    }
+
+    
+
+    cmg.mediaurl = 'http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/';
+    cmg.site_meta = {
+        domain: 'www.mypalmbeachpost.com',
+        media_type: 'premium',
+        site_name: 'mypbp',
+        premium_status: ''
+    };
+    
+    cmg.parse_qs = function parse_qs(str) {
+        if (!str) { return {}; }
+        if (str[0] === '?') { str = str.slice(1); }
+        var ret = {};
+        var query_args = str.split('&');
+        for (var key in query_args) {
+            if (!query_args.hasOwnProperty(key)) { continue; }
+            var tuple = query_args[key].split('=');
+            ret[tuple[0]] = tuple[1];
+        }
+        return ret;
+    };
+
+    cmg.update_auth_message = function() {
+        
+        
+            cmg.query('#cmHeaderUserRegistration').css('visibility', 'visible');
+        
+
+        var cookie = cmg.query.cookie('ur_name', {path:'/'});
+        if (typeof cookie === 'string' &&
+            typeof janrain !== 'undefined' &&
+            janrain.capture && janrain.capture.ui &&
+            janrain.capture.ui.hasActiveSession())
+        {
+            if (cookie.length > 14) {
+                cookie = cookie.slice(0,11) + '...';
+            }
+
+            
+
+            cmg.query('.cmUserAuthed').show();
+            cmg.query('.cmUserAnonymous').hide();
+        } else {
+            cmg.query('.cmUserAuthed').hide();
+            cmg.query('.cmUserAnonymous').show();
+        }
+    }
+
+    var metrics_signin = 0;
+
+    
+    cmg.query.ajaxSetup({ cache: true });
+
+    
+    
+
+    
+    
+
+
+try { localStorage.test = 2; } catch(error) {
+    cmg.query(document).ready(function(){
+        
+        janrain.on("cmg_ready", function () {
+            cmg.query('body').undelegate('.cmOpenJanrainModal', 'click');
+            cmg.query('.cmOpenJanrainModal').unbind('click');
+            cmg.query('body').delegate('.cmOpenJanrainModal', 'click', function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                var friendly_name = "myPalmBeachPost.com";
+                if(!friendly_name){
+                    friendly_name = cmg.site_meta.site_name;
+                }
+                alert(
+                    
+                        
+                            "Did you know Private Browsing is turned on?\n\nTo log in to " + friendly_name + ", please turn Private Browsing off in your browser settings, reload the page, and try again."
+                        
+                    
+                );
+            });
+        });
+    });
+}
+
+</script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/hoverIntent.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/cmg-header.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/cmg-footer.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/lib/lazythumbs/js/lazythumbs.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/javascript/jquery.mobile-events.min.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/jquery.placeholder.min.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/javascript/writeCapture.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/javascript/jquery.writeCapture.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/javascript/marimo.js"></script><script type="text/javascript">marimo.init(cmg.query);</script><!-- these are all the possible bootstrap plugins you can use, disabled until we need them --><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/bootstrap-transition.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/bootstrap-modalmanager.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/bootstrap-modal-ext.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/bootstrap-dropdown.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/bootstrap-tooltip.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/bootstrap-popover.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/bootstrap-collapse.js"></script><!-- not minifying to retain MIT license and file is already minified --><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/dotdotdot.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/truncate.js"></script><script type="text/javascript">
+    cmg.site_meta = cmg.site_meta || {};
+    cmg.site_meta.truncation_abbr = "";
+</script><script type="text/javascript">
+    cmg.janrain_capture_server = 'https://users.cmgdigital.com';
+    cmg.janrain_js_url = 'widget-cdn.rpxnow.com/load/login.cmgdigital.com';
+    cmg.janrain_app_id = '6z4jnndkpe6dmfx7vdg4c7hkmz';
+    cmg.janrain_federate_server = 'https://sso.cmgdigital.com';
+    cmg.janrain_client_id = "p78ru6cbfeyyaq5xuxq4dxzay95g3jc3" || 'qyynzpmgrk4kgx5yg2kfurbnk639qfcf';
+</script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/v2newspaper/javascript/vendor/loginClient/lib/loginClient.js"></script><script>
+    janrain.init();
+    janrain.on('cmg_ready', cmg._(cmg.update_auth_message).bind(cmg));
+    if (janrain && janrain.settings && janrain.settings.capture) {
+        janrain.settings.capture.backplane = true;
+        janrain.settings.capture.backplaneBusName = "coxmediagroup.com";
+        janrain.settings.capture.backplaneVersion = 1.2;
+    }
+</script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/javascript/jquery.ui.core.min.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/share_code.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/sharing.js"></script><style id="cm-adutil-styles"></style><script>(function(){var $jsi={};if(flipper.is_active('yieldbot')){window.ybotq=window.ybotq||[];}else{window.ybotq={push:function(cb){cb();}};}}());</script><script src="//www.googletagservices.com/tag/js/gpt.js"></script><script>
+    var googletag = googletag || {},
+        ybotq = ybotq || [];
+
+    googletag.cmd = googletag.cmd || [];
+    cmg.harmony = Harmony({
+        forceLog: flipper.is_active('reqctrl')
+    });
+    cmg.ads.size.expand();
+
+    
+
+    ybotq.push(function () {
+        googletag.cmd.push(function () {
+            var urlparams,
+                pubads = googletag.pubads();
+
+            pubads.set('page_url', location.href);
+            pubads.collapseEmptyDivs(true);
+
+            
+        });
+    });
+</script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/javascript/ndn_script_injector.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/access_meter.js"></script><script type="text/javascript">
+    (function() {
+        /* collect variables for init, and call it */
+        
+        var metered_object_types = {
+            "weblogs.medleyblog": 1, "feed_importer.importedfeeditem": 1, "photos.medleygallery": 1, "news.medleydocument": 1, "overrides.myflatpage": 1, "weblogs.medleyentry": 1, "videos.vendorvideo": 1, "apjobs.apstory": 1, "apjobs.apphoto": 1, "news.medleystory": 1, "maps.staticmap": 1, "photos.medleyphoto": 1, 
+        };
+        
+
+        
+        var modal_content_names = {
+            
+            "ROADBLOCK_MODAL": "pq-passage-quota-block",
+            
+            "VISITS_COUNT": "pq-passage-quota-count",
+            
+            "SUBSCRIBER_LINK": "pq-modal-subscriber-link",
+            
+            "STICKY_MODAL": "pq-passage-quota-sticky",
+            
+            "VIEW_OFFERS": "pq-passage-quota-view-offers",
+            
+            "MAX_VISITS": "pq-passage-quota-max",
+            
+            "WELCOME_MODAL": "pq-passage-quota-welcome",
+            
+            "DSS_MATCH_LINK": "pq-dss-match",
+            
+        };
+        
+
+        var config = {
+                janus_auth_url: 'http://www.mypalmbeachpost.com/profile/janus-auth/',
+                django_metered_object_type: {"type_set": 1, "object_type": "feed_importer.importedfeeditem"},
+                metered_object_types: metered_object_types,
+                modal_content_names: modal_content_names,
+                open_house_req_registration: "" === "true",
+                reg_visits_threshold: parseInt("4"),
+                open_house_enabled: "false" === "true",
+                crisis_enabled: "false" === "true",
+                whitelisted_urls: "/,\u000D\u000A/services/*, \u000D\u000A/visitor_agreement/, \u000D\u000A/privacy_policy/, \u000D\u000A/weather/, \u000D\u000A/Bonus_Content_Index,\u000D\u000A/category/*,\u000D\u000A/author/*,\u000D\u000A/subscriptionlanding/,\u000D\u000A/digitalsubscription/"
+            };
+
+        if (cmg.access_metering) {
+            cmg.access_metering.init(config);
+        }
+    })();
+</script><!-- Begin comScore Tag --><script type="text/javascript">
+      var _comscore = _comscore || [];
+      _comscore.push({ c1: "2", c2: "6035944" });
+      (function() {
+        var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+        s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+        el.parentNode.insertBefore(s, el);
+      })();
+    </script><noscript><img src="http://b.scorecardresearch.com/p?c1=2&c2=6035944&cv=2.0&cj=1" /></noscript><!-- End comScore Tag --><!-- begin google analytics --><script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', "UA-12952108-50"]);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script><!-- end google analytics -->
+
+
+
+<script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/font-size-control.js"></script>
+<script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/sticky.js"></script>
+<script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/javascript/qualtrics.js?zid=ZN_bKIYCXcqUXo8yrj&rate=100"></script>
+
+
+
+    
+    
+        
+
+<script type="text/javascript" src="/dolphin/js/"></script><script>
+  cmg.query(function($) {
+
+        var $related = $('#article-related');
+        var $lead_related_photo = $('#lead-related-photo');
+        var $ad = $('.ad-medium');
+        
+        var $lead_related = {
+            "title": "None",
+            "content_type": "",
+            "width": "",
+            "size": ""
+        };
+
+        cmg.henka({
+          max: 599
+        }).on(function(){
+            
+            if ($('.story-well').length == 0) {
+                $('#article-related-placeholder').after($related);
+            }
+            $('.lead-related-video.video-medium').addClass('video-large');
+            bindSticky(false);
+        }).update(true);
+
+        cmg.henka({
+          min: 600,
+          max: 767
+        }).on(function(){
+            
+            $ad.after($related);
+            $('.lead-related-video.video-medium').addClass('video-large');
+            if ($('.story-well').length != 0) {
+                if (($related.length == 0 || $('#article-related .premium-auth-hidden').length !=0) && $('.category-list').length == 0) {
+                    $('.article').addClass('article-wide');
+                }
+            }
+            bindSticky(true);
+        }).update(true);
+
+        cmg.henka({
+          min: 768
+        }).on(function(){
+            // Make sure there is a lead related object before we do anything
+            if ($lead_related.title !== "None") {
+                if ($('.story-well').length > 0 && $lead_related.content_type === "medleyphoto" && $lead_related.width >= 430 && $lead_related.size != "405") {
+                    $lead_related_photo.insertBefore('.article');
+                }
+                
+                if ($lead_related.content_type === "medleyphoto" && $lead_related.width >= 430 && $lead_related.size === "405") {
+                    $ad.append($related);
+                } else {
+                    $ad.after($related);
+                };
+                if ($lead_related.content_type === "vendorvideo") {
+                    $('.lead-related-video.video-medium').removeClass('video-large');
+                };
+            } else {
+                $ad.after($related);
+            }
+            if ($('.story-well').length != 0) {
+                $('.article').removeClass('article-wide');
+            }
+            bindSticky(true);
+        }).update(true);
+    });
+
+    function bindSticky(enabled){
+        if (cmg.query('.story-well').length != 0) {
+            var sticky_element = cmg.query('.category-list');
+            if (sticky_element.length > 0) {
+                sticky_element.sticky({'enabled': enabled, 'parent': cmg.query('.sidebar'), 'object': cmg.query('.article')});
+                
+                setTimeout(function() {
+                    sticky_element.sticky({'enabled': enabled, 'parent': cmg.query('.sidebar'), 'object': cmg.query('.article')});
+                }, 8000);
+            }
+        }
+    }
+</script><!-- requires premium/js/font-size-control.js --></head><body data-spy="scroll" data-target=".subnav" data-offset="50"  id="feeditem_5642588" class="body feeditem_detail"><div class="ad-tracking-pixel"><div class="adgeletti-ad-div BP01 bp-0px-infinity" id="adgeletti-ad-div-BP01-0px-infinity" style="display:none"></div></div><!-- Sign In, commented out all useless divs and will remove them when done --><div style="display:none;" id="signIn"><div class="cm-janrain-wrapper"><div id="signIn_Container"><div class="cm-janrain-header"><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/site/www_mypalmbeachpost_com/images/logo.png" name="www.mypalmbeachpost.com" class="header-logo" alt="www.mypalmbeachpost.com Logo" /><span class="cm-janrain-h1">Sign In</span></div><div class="container-fluid"><div class="row"><div class="col-lg-14"></div><div class="col-lg-4"><div class="cm-janrain-or-divider">OR</div></div><div class="col-lg-14"></div><div class="cm-login"><h2>Sign in using your myPalmBeachPost.com profile</h2><p>Need a Profile? <a href="#" id="cmJanrainRegistration" data-capturescreen="traditionalRegistration">Register Now.</a></p>
+        {* #userInformationForm *}
+
+          <div class="cm-form-label">*EMAIL</div>
+          {* traditionalSignIn_emailAddress *}
+
+          <div class="cm-form-label">*PASSWORD</div><a href="#" data-capturescreen="forgotPassword">Forgot your password?</a>
+          {* traditionalSignIn_password *}
+
+          {* traditionalSignIn_signInButton *}
+        {* /userInformationForm *}
+      </div><div class="cm-social-login"><h2>Sign in using your existing account</h2>
+        {* loginWidget *}
+      </div></div></div></div></div></div><!-- Social Return --><div style="display:none;" id="returnSocial"><div class="cm-janrain-wrapper"><div id="signIn_Container"><div class="cm-janrain-header"><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/site/www_mypalmbeachpost_com/images/logo.png" name="www.mypalmbeachpost.com" class="header-logo" alt="www.mypalmbeachpost.com Logo" /><span class="cm-janrain-h1">Sign In</span></div><div class="container-fluid"><div class="row"><div class="col-lg-14"></div><div class="col-lg-4"><div class="cm-janrain-or-divider">OR</div></div><div class="col-lg-14"></div><div class="cm-login"><h2>Sign in using your myPalmBeachPost.com profile</h2><p>Need a Profile? <a href="#" id="cmJanrainRegistration" data-capturescreen="traditionalRegistration">Register Now.</a></p>
+        {* #userInformationForm *}
+
+          <div class="cm-form-label">*EMAIL</div>
+          {* traditionalSignIn_emailAddress *}
+
+          <div class="cm-form-label">*PASSWORD</div><a href="#" data-capturescreen="forgotPassword">Forgot your password?</a>
+          {* traditionalSignIn_password *}
+
+          {* traditionalSignIn_signInButton *}
+        {* /userInformationForm *}
+      </div><div class="cm-social-login"><h2>Sign in using your existing account</h2>
+        {* loginWidget *}
+      </div></div></div></div></div></div><!-- Traditional Return --><div style="display:none;" id="returnTraditional"><div class="cm-janrain-wrapper"><div id="signIn_Container"><div class="cm-janrain-header"><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/site/www_mypalmbeachpost_com/images/logo.png" name="www.mypalmbeachpost.com" class="header-logo" alt="www.mypalmbeachpost.com Logo" /><span class="cm-janrain-h1">Sign In</span></div><div class="container-fluid"><div class="row"><div class="col-lg-14"></div><div class="col-lg-4"><div class="cm-janrain-or-divider">OR</div></div><div class="col-lg-14"></div><div class="cm-login"><h2>Sign in using your myPalmBeachPost.com profile</h2><p>Need a Profile? <a href="#" id="cmJanrainRegistration" data-capturescreen="traditionalRegistration">Register Now.</a></p>
+        {* #userInformationForm *}
+
+          <div class="cm-form-label">*EMAIL</div>
+          {* traditionalSignIn_emailAddress *}
+
+          <div class="cm-form-label">*PASSWORD</div><a href="#" data-capturescreen="forgotPassword">Forgot your password?</a>
+          {* traditionalSignIn_password *}
+
+          {* traditionalSignIn_signInButton *}
+        {* /userInformationForm *}
+      </div><div class="cm-social-login"><h2>Sign in using your existing account</h2>
+        {* loginWidget *}
+      </div></div></div></div></div></div><!-- Social Reg --><div style="display:none;" id="socialRegistration"><div class="cm-janrain-wrapper"><span class="cm-janrain-h1">You're Almost Done!</span><h2>Please confirm the information below before signing in.</h2><div class="cm-janrain-required">*Required</div>
+        {* #socialRegistrationForm *}
+            {* socialRegistration_displayName *}
+            {* socialRegistration_emailAddress *}
+
+            <div class="cm-janrain-tocnotice">By submitting your registration information, you agree to our
+              <a href="" target="_blank">Visitor Agreement</a> and <a href="" target="_blank">Privacy Policy</a>.</div>
+            {* socialRegistration_signInButton *}
+        {* /socialRegistrationForm *}
+    </div></div><!-- Traditional Reg --><div style="display:none;" id="traditionalRegistration"><div class="cm-janrain-wrapper"><span class="cm-janrain-h1">Register</span><div class="cm-janrain-required">*Required</div>
+        {* #registrationForm *}
+
+            {* traditionalRegistration_emailAddress *}
+            {* traditionalRegistration_password *}
+            {* traditionalRegistration_passwordConfirm *}
+
+            {* traditionalRegistration_displayName *}
+
+            
+            <div class="cm-janrain-tocnotice">By submitting your registration information, you agree to our
+              <a href="" target="_blank">Visitor Agreement</a> and <a href="" target="_blank">Privacy Policy</a>.</div>
+
+            {* createAccountButton *}
+        {* /registrationForm *}
+    </div></div><!-- Traditional Reg Blank --><div style="display:none;" id="traditionalRegistrationBlank"><div class="cm-janrain-wrapper"><span class="cm-janrain-h1">Create a New Account</span><div class="cm-janrain-required">*Required</div>
+        {* #registrationFormBlank *}
+
+            {* traditionalRegistration_emailAddressBlank *}
+            {* traditionalRegistration_passwordBlank *}
+            {* traditionalRegistration_passwordConfirmBlank *}
+            {* traditionalRegistration_displayName *}
+            
+            <div class="cm-janrain-tocnotice">By submitting your registration information, you agree to our
+                <a href="#" target="blank">Visitor Agreement</a> and <a href="#" target="blank">Privacy Policy</a>.</div>
+
+            {* createAccountButton *}
+        {* /registrationForm *}
+    </div></div><!-- Reg Success with activation --><div style="display:none;" id="registrationSuccess"><div class="cm-janrain-wrapper"><span class="cm-janrain-h1">Just One More Thing...</span><p>We have sent you a verification email. Please check your email and click on the link to activate your profile.</p><p>If you do not receive the verification message within a few minutes of signing up, please check your Spam or Junk folder.</p><span onclick="janrain.capture.ui.modal.close()" class="capture_btn capture_primary">Close</span></div></div><!-- Reg Success confirmed --><div style="display:none;" id="registrationSuccessConfirmed"><div class="cm-janrain-wrapper"><span class="cm-janrain-h1">Thank you for registering!</span><p>We look forward to seeing you on [website] frequently. Visit us and sign in to update your profile, receive the latest news and keep up to date with mobile alerts.</p><p>
+        Click <a href="#"  onclick="janrain.capture.ui.modal.close()">here</a> to return to the page you were visiting.
+        </p></div></div><!-- Forgot Pass --><div style="display:none;" id="forgotPassword"><div class="cm-janrain-wrapper"><span class="cm-janrain-h1">Create a new password</span><p>Don't worry, it happens. We'll send you a link to create a new password.</p>
+        {* #forgotPasswordForm *}
+        {* forgotPassword_emailAddress *}
+        {* forgotPassword_sendButton *}
+        {* /forgotPasswordForm *}
+    </div></div><!-- Forgot Pass Success --><div style="display:none;" id="forgotPasswordSuccess"><div class="cm-janrain-wrapper"><span class="cm-janrain-h1">Email sent</span><p>We have sent you an email with a link to change your password.</p><a href="#" onclick="janrain.capture.ui.modal.close()" class="capture_btn capture_primary">Close</a></div></div><!-- Merge --><div style="display:none;" id="mergeAccounts">
+    {* mergeAccounts *}
+</div><!-- Auth Merge --><div style="display:none;" id="traditionalAuthenticateMerge"><div class="cm-janrain-wrapper"><span class="cm-janrain-h1">Sign in to complete account merge</span>
+        {* #tradAuthenticateMergeForm *}
+            {* traditionalSignIn_emailAddress *}
+            {* mergePassword *}
+            {* backButton *}
+            {* traditionalSignIn_signInButton *}
+        {* /tradAuthenticateMergeForm *}
+    </div></div><div style="display:none;" id="resendVerification"><div class="cm-janrain-wrapper"><div class="capture_header"><span class="cm-janrain-h1">Resend Email Verification</span></div><p>Click submit to receive another verification email</p>
+        {* #resendVerificationForm *}
+            {* traditionalSignIn_emailAddress *}
+            <div class="capture_footer"><input type="submit" value="Submit" class="capture_btn capture_primary" /></div>
+         {* /resendVerificationForm *}
+     </div></div><div style="display:none;" id="resendVerificationSuccess"><div class="cm-janrain-wrapper"><div class="capture_header"><span class="cm-janrain-h1">Your Verification Email Has Been Sent</span></div><div class="hr"></div><p>Check your email for a verification link</p><div class="capture_footer"><button onclick="janrain.capture.ui.modal.close()" class="capture_btn capture_primary">Close</button></div></div></div><script type="text/javascript">
+        marimo.add_widgets([]);
+        marimo.make_request();
+        marimo.emit('widgets_added');
+    </script><header class="main-header"><div class="toolbar-container"><div class="toolbar-desktop"><div class="toolbar-logo"><a href="/" title="www.mypalmbeachpost.com"><img id="toolbar-logo" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/site/www_mypalmbeachpost_com/images/logo_expanded.svg" name="www.mypalmbeachpost.com" alt="www.mypalmbeachpost.com Logo"></a></div><nav class="toolbar-nav"><ul><li><a href="http://www.palmbeachpost.com/s/autos/">Autos</a></li><li><a href="http://www.palmbeachpost.com/s/floridahome/">Real Estate</a></li><li><a href="http://www.palmbeachpost.com/s/jobs/">Jobs</a></li><li><a href="http://www.palmbeachpost.com/s/classifieds/">Classified</a></li><li><a href="/services/products/">Help</a></li><li class="toolbar-weather"><a href="/weather/?icmp=mypalmbeachpost_internallink_weather_upperleft" class="main-header-weather"><div class="weather-icon x-small"><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common//premium/images/sprites/weather/sprites-2-lightbg.png"></div><span class="weather-temp">--</span></a></li><li class="toolbar-traffic"><a href="http://www.palmbeachpost.com/traffic/" class="cm-icon-car" target="_blank"></a></li><li class="toolbar-search"><a href="#" class="cm-icon-search"></a><form class="toolbar-search-form" action="/search" method="get"><input type="text" class="toolbar-search-input" id="search" name="q" value=""><a href="#" class="toolbar-search-close"></a></form></li></ul></nav></div></div><div class="main-nav-container"><nav class="main-nav-v2"><ul class="main-nav-list"><li class="main-nav-item main-nav-logo"><a href="/" title="www.mypalmbeachpost.com"><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/site/www_mypalmbeachpost_com/images/logo_collapsed.svg" name="www.mypalmbeachpost.com" alt="www.mypalmbeachpost.com Logo"></a></li><li class="main-nav-item main-nav-item-subnav" data-menu="10983"><a href="/s/news/local/">Local</a><div class="main-nav-flyout"><ul class="flyout-subnav"><h4 class="subnav-title">In Local</h4><li class="flyout-subnav-item"><a href="/s/news/community/">Community</a></li><li class="flyout-subnav-item"><a href="/flist/news/state-regional/florida-headlines/f5p/">State</a></li><li class="flyout-subnav-item"><a href="/flist/news/local-education/education-headlines/f5t/">Education</a></li><li class="flyout-subnav-item"><a href="/flist/business/business-headlines/f5w/">Business</a></li><li class="flyout-subnav-item"><a href="/s/news/localelections/">Elections</a></li><li class="flyout-subnav-item"><a href="/flist/news/opinion/opinion-debate-starts-here/f5x/">Opinion</a></li><li class="flyout-subnav-item"><a href="/flist/entertainment/things-do-south-florida/f5y/">Things To Do</a></li></ul><div class="main-nav-flyout-content"></div></div></li><li class="main-nav-item main-nav-item-subnav" data-menu="13945"><a href="/s/nation-world/">U.S./World</a><div class="main-nav-flyout"><ul class="flyout-subnav"><h4 class="subnav-title">In U.S./World</h4><li class="flyout-subnav-item"><a href="/s/news/politics/">Politics</a></li><li class="flyout-subnav-item"><a href="/s/news/nationalelections/">Elections</a></li><li class="flyout-subnav-item"><a href="/flist/news/technology-headlines/f9K/">Technology</a></li><li class="flyout-subnav-item"><a href="/flist/news/weird-news-headlines/f9L/">Weird News</a></li></ul><div class="main-nav-flyout-content"></div></div></li><li class="main-nav-item main-nav-item-subnav no-subnav" data-menu="10984"><a href="/s/exclusives/">Exclusives</a><div class="main-nav-flyout"><div class="main-nav-flyout-content"></div></div></li><li class="main-nav-item main-nav-item-subnav no-subnav" data-menu="10986"><a href="http://weatherplus.blog.mypalmbeachpost.com/">Weather</a><div class="main-nav-flyout"><div class="main-nav-flyout-content"></div></div></li><li class="main-nav-item main-nav-item-subnav" data-menu="10987"><a href="/s/sports/">Sports</a><div class="main-nav-flyout"><ul class="flyout-subnav"><h4 class="subnav-title">In Sports</h4><li class="flyout-subnav-item"><a href="/s/sports/dolphins/">Dolphins</a></li><li class="flyout-subnav-item"><a href="/flist/sports/miami-heat-headlines/f7B/">Heat</a></li><li class="flyout-subnav-item"><a href="/flist/sports/miami-hurricanes-headlines/f69/">Hurricanes</a></li><li class="flyout-subnav-item"><a href="/flist/sports/florida-state-seminoles-headlines/f68/">Seminoles</a></li><li class="flyout-subnav-item"><a href="/flist/sports/florida-gators-headlines/f67/">Gators</a></li><li class="flyout-subnav-item"><a href="http://www.pbgametime.com/">High Schools</a></li><li class="flyout-subnav-item"><a href="/flist/sports/fitness-extra/fCCq/">Fitness Extra</a></li><li class="flyout-subnav-item"><a href="http://games.mypalmbeachpost.com/">Games</a></li></ul><div class="main-nav-flyout-content"></div></div></li><li class="main-nav-item main-nav-item-subnav no-subnav" data-menu="10989"><a href="/s/travel/">Travel</a><div class="main-nav-flyout"><div class="main-nav-flyout-content"></div></div></li><li class="main-nav-item main-nav-item-subnav no-subnav" data-menu="10993"><a href="/s/food/">Food</a><div class="main-nav-flyout"><div class="main-nav-flyout-content"></div></div></li><li class="main-nav-item main-nav-item-subnav no-subnav" data-menu="15609"><a href="https://myaccount.palmbeachpost.com/access.aspx?product=eEditionPBPDesktop">Epaper</a><div class="main-nav-flyout"><div class="main-nav-flyout-content"></div></div></li><li class="cmUserAuthed main-nav-item"><a class="capture_end_session cmLogout" href="/auth/logout">Log Out</a><a class="cm-icon-profilecircle" href="/profile/edit/private"></a></li><li class="cmUserAnonymous main-nav-item"><a href="#" class="cmOpenJanrainModal">Log In</a><span class="cm-icon-user"></span></li><li class="main-nav-item main-nav-item-subscribe"><a href="https://subscribe.palmbeachpost.com/subscriptionpanel">Subscribe<span>as low as 99¢</span></a></li></ul></nav></div><!-- DISPLAYS BELOW 960px --><div class="toolbar-mobile"><ul class="toolbar-items"><li class="toolbar-item toolbar-weather"><a href="/weather/?icmp=mypalmbeachpost_internallink_weather_upperleft" class="main-header-weather"><div class="weather-icon x-small"><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common//premium/images/sprites/weather/sprites-2-lightbg.png"></div><span class="weather-temp">--</span></a></li><li class="toolbar-item toolbar-traffic"><a href="http://www.palmbeachpost.com/traffic/" class="cm-icon-car" target="_blank"></a></li><li class="toolbar-item toolbar-flex"></li><li class="toolbar-item toolbar-subscribe"><a href="https://subscribe.palmbeachpost.com/subscriptionpanel">Subscribe<span>as low as 99¢</span></a></li><li class="toolbar-item toolbar-search"><a href="#" class="cm-icon-search"></a><form class="toolbar-search-form" action="/search" method="get"><input type="text" class="toolbar-search-input" id="search" name="q" value=""><a href="#" class="toolbar-search-close"></a></form></li></ul></div><div class="main-nav-container-mobile"><ul class="main-nav-items"><li class="main-nav-item main-nav-flyout-btn"></li><li class="main-nav-item main-nav-logo main-nav-logo-expanded fixed-hide"><a href="/" title="www.mypalmbeachpost.com"><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/site/www_mypalmbeachpost_com/images/logo_expanded.svg" class="logo" name="www.mypalmbeachpost.com" alt="www.mypalmbeachpost.com Logo"></a></li><li class="main-nav-item main-nav-logo main-nav-logo-collapsed fixed-show"><a href="/" title="www.mypalmbeachpost.com"><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/site/www_mypalmbeachpost_com/images/logo_collapsed.svg" class="logo" name="www.mypalmbeachpost.com" alt="www.mypalmbeachpost.com Logo"></a></li><li class="cmUserAuthed main-nav-item fixed-hide"><a class="capture_end_session cmLogout" href="/auth/logout">Log Out</a><a class="cm-icon-profilecircle" href="/profile/edit/private"></a></li><li class="cmUserAnonymous main-nav-item fixed-hide"><a href="#" class="cmOpenJanrainModal">Log In</a><span class="cm-icon-user"></span></li><li class="main-nav-item main-nav-subscribe fixed-show"><a href="https://subscribe.palmbeachpost.com/subscriptionpanel">Subscribe<span>as low as 99¢</span></a></li></ul></div><div class="flyout-container-mobile"><div class="flyout-mobile"><ul class="flyout-main-nav"><li class="flyout-item"><div class="flyout-item-info flyout-closer flyout-closer-x"></div></li><li class="flyout-item flyout-item-subnav"><div class="flyout-item-info"><div class="flyout-item-caret"></div><a href="/s/news/local/">Local</a></div><ul class="flyout-item-submenu"><li class="submenu-item"><a href="/s/news/community/" class="submenu-link">Community</a></li><li class="submenu-item"><a href="/flist/news/state-regional/florida-headlines/f5p/" class="submenu-link">State</a></li><li class="submenu-item"><a href="/flist/news/local-education/education-headlines/f5t/" class="submenu-link">Education</a></li><li class="submenu-item"><a href="/flist/business/business-headlines/f5w/" class="submenu-link">Business</a></li><li class="submenu-item"><a href="/s/news/localelections/" class="submenu-link">Elections</a></li><li class="submenu-item"><a href="/flist/news/opinion/opinion-debate-starts-here/f5x/" class="submenu-link">Opinion</a></li><li class="submenu-item"><a href="/flist/entertainment/things-do-south-florida/f5y/" class="submenu-link">Things To Do</a></li></ul></li><li class="flyout-item flyout-item-subnav"><div class="flyout-item-info"><div class="flyout-item-caret"></div><a href="/s/nation-world/">U.S./World</a></div><ul class="flyout-item-submenu"><li class="submenu-item"><a href="/s/news/politics/" class="submenu-link">Politics</a></li><li class="submenu-item"><a href="/s/news/nationalelections/" class="submenu-link">Elections</a></li><li class="submenu-item"><a href="/flist/news/technology-headlines/f9K/" class="submenu-link">Technology</a></li><li class="submenu-item"><a href="/flist/news/weird-news-headlines/f9L/" class="submenu-link">Weird News</a></li></ul></li><li class="flyout-item flyout-item-subnav"><div class="flyout-item-info"><a href="/s/exclusives/">Exclusives</a></div></li><li class="flyout-item flyout-item-subnav"><div class="flyout-item-info"><a href="http://weatherplus.blog.mypalmbeachpost.com/">Weather</a></div></li><li class="flyout-item flyout-item-subnav"><div class="flyout-item-info"><div class="flyout-item-caret"></div><a href="/s/sports/">Sports</a></div><ul class="flyout-item-submenu"><li class="submenu-item"><a href="/s/sports/dolphins/" class="submenu-link">Dolphins</a></li><li class="submenu-item"><a href="/flist/sports/miami-heat-headlines/f7B/" class="submenu-link">Heat</a></li><li class="submenu-item"><a href="/flist/sports/miami-hurricanes-headlines/f69/" class="submenu-link">Hurricanes</a></li><li class="submenu-item"><a href="/flist/sports/florida-state-seminoles-headlines/f68/" class="submenu-link">Seminoles</a></li><li class="submenu-item"><a href="/flist/sports/florida-gators-headlines/f67/" class="submenu-link">Gators</a></li><li class="submenu-item"><a href="http://www.pbgametime.com/" class="submenu-link">High Schools</a></li><li class="submenu-item"><a href="/flist/sports/fitness-extra/fCCq/" class="submenu-link">Fitness Extra</a></li><li class="submenu-item"><a href="http://games.mypalmbeachpost.com/" class="submenu-link">Games</a></li></ul></li><li class="flyout-item flyout-item-subnav"><div class="flyout-item-info"><a href="/s/travel/">Travel</a></div></li><li class="flyout-item flyout-item-subnav"><div class="flyout-item-info"><a href="/s/food/">Food</a></div></li><li class="flyout-item flyout-item-subnav"><div class="flyout-item-info"><a href="https://myaccount.palmbeachpost.com/access.aspx?product=eEditionPBPDesktop">Epaper</a></div></li><li class="flyout-item"><div class="flyout-item-info flyout-subscribe"><a href="https://subscribe.palmbeachpost.com/subscriptionpanel">Subscribe<span>as low as 99¢</span></a></div></li></ul><div class="flyout-weather-traffic"><h3 class="flyout-heading">Weather and Traffic</h3><div class="flyout-weather"><a href="/weather/?icmp=mypalmbeachpost_internallink_weather_upperleft" class="main-header-weather"><h2 class="weather-temp">--</h2><div class="weather-icon x-small"><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common//premium/images/sprites/weather/sprites-2-lightbg.png"></div></a></div><a href="http://www.palmbeachpost.com/traffic/" class="flyout-traffic" target="_blank"><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/site/www_mypalmbeachpost_com/images/traffic_map.png" class="flyout-traffic-location"></a></div><div class="cmUserAuthed flyout-item"><a class="cm-icon-profilecircle" href="/profile/edit/private"></a><a class="capture_end_session cmLogout flyout-auth flyout-logout" href="/auth/logout">Log Out</a></div><div class="cmUserAnonymous flyout-item"><span class="cm-icon-user"></span><a href="#" class="cmOpenJanrainModal flyout-auth flyout-login">Log In</a></div><div class="flyout-search"><form class="flyout-search-form" action="/search" method="get"><input type="text" class="flyout-search-input" id="search" name="q" value=""><button type="submit" class="cm-icon-search"></button></form></div><div class="flyout-closer flyout-closer-x flyout-closer-section"><a href="#">Close</a></div></div><div class="flyout-closer"></div></div></header><script>
+    var weather_widget_path = '/weather/widget/';
+    var subnav_url = '?icmp=mypalmbeachpost_internallink_megamenu_link';
+    var subnav_image = '?icmp=mypalmbeachpost_internallink_megamenu_image';
+
+    cmg.mainHeader.init();
+</script><div class="container"><!-- retargeting header --><div id="writecapture22375230"></div><script type="text/javascript">
+    marimo.emit('writecapture22375230_ready');
+    marimo.add_widget({"wc_compatibility_mode": false, "html": "$NEWLINE                $BEGINSCRIPT>(function() { $NEWLINE  var _fbq = window._fbq || (window._fbq = []); $NEWLINE  if (!_fbq.loaded) { $NEWLINE    var fbds = document.createElement('script'); $NEWLINE    fbds.async = true; $NEWLINE    fbds.src = '//connect.facebook.net/en_US/fbds.js'; $NEWLINE    var s = document.getElementsByTagName('script')[0]; $NEWLINE    s.parentNode.insertBefore(fbds, s); $NEWLINE    _fbq.loaded = true; $NEWLINE  } $NEWLINE  _fbq.push(['addPixelId', '636355699785194']); $NEWLINE})(); $NEWLINEwindow._fbq = window._fbq || []; $NEWLINEwindow._fbq.push(['track', 'PixelInitialized', {}]); $NEWLINE$ENDSCRIPT $NEWLINE<noscript><img height=\"1\" width=\"1\" alt=\"\" style=\"display:none\" src=\"https://www.facebook.com/tr?id=636355699785194&ev=PixelInitialized\" /></noscript>$NEWLINE            ", "id": "writecapture22375230", "widget_prototype": "writecapture_widget"});
+</script><!-- end retargeting header --><header class="subhead" id="subhead"><div class="breaking-news"><span class="breaking-news-title">Breaking News</span><p class="breaking-news-headline"><a href="http://www.mypalmbeachpost.com/news/news/crime-law/pbso-identifies-victim-of-possible-hit-and-run-cra/nq2Hy/"
+                 target="_blank">
+                  PBSO identifies victim of possible hit-and-run crash
+              </a></p></div></header><!-- retargeting body --><div id="writecapture58002130"></div><script type="text/javascript">
+    marimo.emit('writecapture58002130_ready');
+    marimo.add_widget({"wc_compatibility_mode": false, "html": "$NEWLINE                $NEWLINE            ", "id": "writecapture58002130", "widget_prototype": "writecapture_widget"});
+</script><!-- end retargeting body --><div class="cm-top-ad ad cm-320-hide cm-768-show"><div class="adgeletti-ad-div HP00 bp-dynamic" id="adgeletti-ad-div-HP00-dynamic" style="display:none"></div></div><div class="row-ad ad-mobile cm-320-show cm-768-hide"><div class="ad center"><div class="adgeletti-ad-div MP01 bp-dynamic" id="adgeletti-ad-div-MP01-dynamic" style="display:none"></div></div></div><article id="article-well" class="article-well story-well content row"><header><h1 class="article-headline">Consumer Confidence In Buying Homes Online Has Increased</h1></header><div class="cm-category cm-breadcrumb"><a href="/s/consumeradvice/">Consumer Advice</a></div><span class="cm-story-share" 
+
+data-link="http://www.mypalmbeachpost.com/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/" data-summary="MoneyTipsOwners.com, an online brokerage firm, has released the results of a survey regarding confidence in the property-buying process and in using the Internet to find and make real estate purchases. The company asked 1,000 potential new buyers a number of questions that, when analyzed, shows that consumers are fairly confident that they understand how to purchase a home and are more self-reliant.
+
+Out of those who responded, 69 percent stated that they would rate their knowledge of the..." data-headline="Consumer Confidence In Buying Homes Online Has Increased"><a href="#" class="cm-share cm-share-facebook" title="Share on Facebook" target="_blank"></a><a href="#" class="cm-share cm-share-twitter" title="Share on Twitter" target="_blank"></a><a href="#" class="cm-share cm-share-icon" data-placement="auto top" tabindex="0" role="button"></a><a href="#comments" class="cm-share cm-story-comments"><span class="cm-comment-count">0</span></a></span><div class="video-medium">
+                    ﻿
+    <div class="ndn_embed" id="ndn-video-player-1" data-config-distributor-id="90068" data-config-height="9/16w"></div></div><time pubdate class="time-stamp"><p>Updated: 10:37 a.m. Thursday, April 7, 2016<span>&nbsp;&nbsp;&#124;&nbsp;&nbsp;</span>Posted: 10:00 a.m. Friday, April 1, 2016</p></time><div class="article"><hr class="cm-thick-thin"><div class="article-content"><script type="text/javascript">
+                        var story_premium_failed_fetch_handler_after_janrain_session = (
+                            premium_failed_fetch_handler_after_janrain_session ||
+                            function () { console.log("error callback missing") }
+                        );
+
+                        function handle_persistent_story_paywall(source, msg, kwargs) {
+                            if (cmg.query("#invitation_chunk").is(":visible")) {
+                                story_premium_failed_fetch_handler_after_janrain_session(source, msg, kwargs);
+                            }
+                        }
+                    </script><p><a href="http://www.moneytips.com" target="_blank">MoneyTips</a></p><p><div><p>Owners.com, an online brokerage firm, has released the results of a survey regarding confidence in the property-buying process and in using the Internet to find and make real estate purchases. The company asked 1,000 potential new buyers a number of questions that, when analyzed, shows that consumers are fairly confident that they understand how to purchase a home and are more self-reliant.
+</p><p>Out of those who responded, 69 percent stated that they would rate their knowledge of the home-buying process as either an A or a B, showing that they are quite confident in their understanding of the market and of the <a href="http://www.moneytips.com/mastering-the-mortgage-checklist" target="_blank" title="Mastering the Mortgage Checklist | MoneyTips">mortgage process</a>.
+</p><p>Several questions asked participants about using the Internet in their search for a property. A total of 73 percent stated that they would use the Internet to search for homes, while 53 percent said they would book property tours online. Another 43 percent said they would use online financing products, while 27 percent would actually make an offer online.
+</p><p>Homebuyers are also looking for more technologically advanced homes with luxuries. Almost 30 percent said they wanted a smart kitchen, while another 19 stated they would prefer a property with a spa bathroom. About a third (33 percent) want to <a href="http://www.moneytips.com/how-to-sell-your-house-while-buying-a-better-home" target="_blank" title="How to Sell Your House While Buying a Better Home | MoneyTips">move up to a nicer house</a>, while 25 percent are looking to <a href="http://www.moneytips.com/secrets-to-financing-investment-property" target="_blank" title="Secrets to Financing Investment Property | MoneyTips">invest in real estate</a>. Finally, another 24 percent have stated that they would consider relocating.
+</p></div></p><p>Originally Posted at: <a href="http://www.moneytips.com/consumer-confidence-in-buying-homes-online-has-increased/485" target="_blank">http://www.moneytips.com/consumer-confidence-in-buying-homes-online-has-increased/485</a></p><p><a href="http://www.moneytips.com/detroit-launches-home-mortgage-initiative/471" target="_blank">Detroit Launches Home Mortgage Initiative</a></p><div class="inline-related cm-inline cm-inline-medleyphoto cm-inline"><div class="module"><div class="photo related-photo"><figure><a class="img-modal lba2_9248633" data-asset_id="9248633" href="#modal-9248633" title="Click to View Larger" data-toggle="modal"><span class="enlarge">+</span><img height="175" src="http://media.cmgdigital.com/shared/lt/lt_cache/thumbnail/300/img/photos/2016/04/02/c8/f6/tmpirfvqM-mdly-photo.png" width="300" alt="12221 photo" title="12221" class="dtm-event--nongalleryphoto" data-content-type="medleyphoto" onclick="fire_omniture_event(cmg.s_coxnews, 'event10', '12221'); fire_omniture_event(cmg.s_coxnews, 'event40', 'LightBox photo');" /></a><figcaption class="photo-credit"><span><a rel="nofollow" target="_blank" href="http://www.moneytips.com/">
+    Courtesy of MoneyTips.com
+</a></span></figcaption></figure></div><span class="related-photo-caption"></span><div class="modal hide fade modal-photo" id="modal-9248633" tabindex="-1" aria-hidden="true"><div class="modal-content" data-dismiss="modal"><figure><img src="http://media.cmgdigital.com/shared/img/photos/2016/04/02/c8/f6/tmpirfvqM-mdly-photo.png" data-ltmaxwidth="600" data-ltmaxheight="350" class="dtm-event--nongalleryphoto" data-content-type="medleyphoto" onclick="fire_omniture_event(cmg.s_coxnews, 'event10', '12221'); fire_omniture_event(cmg.s_coxnews, 'event40', 'LightBox photo');" /><figcaption class="photo-credit"><span><a rel="nofollow" target="_blank" href="http://www.moneytips.com/">
+    Courtesy of MoneyTips.com
+</a></span></figcaption></figure></div><div class="modal-footer"><span class="related-photo-caption"></span></div><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button></div></div></div><p><a href="http://www.moneytips.com/owner-financing-for-homeowners-101" target="_blank">Owner Financing For Homeowners 101</a></p><p><a href="http://www.moneytips.com/owner-financing-for-buyers-101" target="_blank">Owner Financing For Buyers 101</a></p><span class="premium-auth-toggled"></span></div></div><div class="sidebar"><div class="ad cm-320-hide cm-768-hide cm-960-show cm-ad-rp04"><div class="adgeletti-ad-div RP04 bp-972px-infinity" id="adgeletti-ad-div-RP04-972px-infinity" style="display:none"></div></div><div class="storypage-sidebar"><hr class="cm-thin-thick "><div class="cm-referral-box cm-newsletter-tease cm-center"><div class="cm-referral-inner"><div id="writecapture18031600"></div><script type="text/javascript">
+    marimo.emit('writecapture18031600_ready');
+    marimo.add_widget({"wc_compatibility_mode": false, "html": "$NEWLINE                            <h1 class=\"cm-referral-header\">NEED TO KNOW MORE?</h1>$NEWLINE $NEWLINE<p><a href=\"http://www.palmbeachpost.com/newsletters/subscriptions/\">Sign up</a> for FREE Post<br> newsletters. Travel, News, Golf and more. Choose your favorites and we\u2019ll deliver.</p>$NEWLINE                        ", "id": "writecapture18031600", "widget_prototype": "writecapture_widget"});
+</script></div></div></div><div class="cm-sticky-scroll cm-320-hide cm-768-hide"><div class="cm-popular-container"><div class="cm-popular cm-sidebar-list"><hr class="cm-thick-thin"><h4 class="cm-list-header">Popular</h4><div id="cm-popular-container"></div><hr class="cm-thin-thick"></div><script id="cm-most-read-item-template" type="text/template"><article class="story"><div class="cm-list-index"><%= story_index %></div><h3 class="story-title"><a href="<%= story_link %>"><%= story_headline %></a></h3></article></script><script>(function(){var $jsi={'chartbeat_proxypoint_name':'premium-chartbeat-top-widget','free_div_id':'#cm-popular-container','free_site_domain':'mypalmbeachpost.com','chartbeat_number_of_stories':3,};var rule_attribute_map={'PA':'path','TI':'i'},rule_operator_map={'CO':function(s,x){return s.indexOf(x)!==-1;},'SW':function(s,x){return s.indexOf(x)===0;},'EW':function(s,x){return s.indexOf(x,s.length-x.length)!==-1;},'EQ':function(s,x){return s===x;}};function htmlEncode(s)
+{var el=document.createElement("div");el.innerText=el.textContent=s;s=el.innerHTML;s=s.replace(/'/g,"&#39;").replace(/-/g,"&#45;");return s;}
+function unblacklist(pages,blacklistRules){blacklistRules=blacklistRules||[];return pages.filter(function(page){return!blacklistRules.some(function(rule){var operator=rule_operator_map[rule.operator]||function(){return false;};var attribute=page[rule_attribute_map[rule.attribute]];var attributeLower=attribute&&attribute.toLowerCase();var valueLower=rule.value&&rule.value.toLowerCase();var special_char_index=page.i.indexOf('&#');if(special_char_index!=-1){valueLower=htmlEncode(valueLower);}
+var blacklisted=attributeLower&&valueLower&&operator(attributeLower,valueLower);if(blacklisted&&window.console){console.log('Trending now page excluded: '+JSON.stringify(page));}
+return blacklisted;});});};function ChartbeatTrending($){var $div_id,$most_read=$('.cm-most-read'),number_of_trending_containers=$most_read.find(' > div[id^="cm-most-read"]').length;function cleanDomain(domain){return domain.replace(/^https?:\/\//i,'').replace(/\s*/g,'').replace(/^(www\.)/i,'').replace(/\/.*/g,'').replace(/[^0-9A-Za-z\.-]*/g,'');}
+return{limit:3,mobileDifferentDomain:true,Callback:function(data){var display_limit=cmg.utility.chartbeat_trending.limit||3;$.ajax({url:'/analytics/blacklist-rules/',dataType:'json'}).done(function(bl_rules){data=unblacklist(data,bl_rules);cmg.utility.chartbeat_trending.Render(data.slice(0,display_limit));}).fail(function(){cmg.utility.chartbeat_trending.Render(data.slice(0,display_limit));});},Render:function(data){var that=this;var $list_item=cmg._.template($('#cm-most-read-item-template').html());if(data.length){$(data).each(function(x,story){if(story.path.indexOf($jsi.premium_site_domain)>-1){$div_id=$($jsi.premium_div_id);}else{$div_id=$($jsi.free_div_id);if(story.path.indexOf('/')===0){story.path=$jsi.free_site_domain+story.path;}}
+$div_id.append($list_item({story_index:x+1,story_link:'http://'+encodeURI(story.path)+'?ref=cbTopWidget',story_headline:story.i}));});if(typeof cmg.site_meta.is_mobile!="undefined"){if(cmg.site_meta.is_mobile){cmg.query('.cm-social-share-btn-most-read').off().on('click',cmg.socialShare.onClickFunction);}}}else{$div_id.append($list_item({story_index:'',story_link:'#',story_headline:'Currently no pages listed.'}));if(typeof cmg.site_meta.is_mobile!="undefined"){if(cmg.site_meta.is_mobile){$div_id.find(".cm-list-key").each(function(i,ldiv){$(ldiv).html("");});$div_id.find(".cm-social-share-btn-most-read").each(function(i,button){$(button).hide();});}}}},Init:function(div_id,endpoint,domain,limit){var domain=cleanDomain(domain||location.host),req_limit=6;if(limit){req_limit=limit*2;cmg.utility.chartbeat_trending.limit=limit;}
+if(endpoint){$div_id=$(div_id);$div_id.addClass('initialized');if(this.mobileDifferentDomain&&typeof cmg.site_meta.is_mobile!="undefined"){if(cmg.site_meta.is_mobile){domain="m."+domain;}}
+$.ajax({url:'http://'+location.host+'/api/proxyapi/'+endpoint+'/',type:'GET',data:{host:domain,limit:req_limit,jsonp:'cmg.utility.chartbeat_trending.Callback'},crossdomain:true,cache:true,timeout:3000,error:function(jqXHR,status,error){if(number_of_trending_containers>1){$div_id.hide();}else{$most_read.hide();}
+throw'There was an error ('+error+') fetching the data from chartbeat.';}});}else{if(number_of_trending_containers>1){$div_id.hide();}else{$most_read.hide();}}}}}
+cmg.utility.chartbeat_trending=ChartbeatTrending(cmg.query);cmg.query(document).on('ready',function($){if(!cmg.query($jsi.free_div_id).hasClass('initialized')){if(!$jsi.chartbeat_proxypoint_name){$jsi.chartbeat_proxypoint_name='chartbeat-top-widget';}
+cmg.utility.chartbeat_trending.Init($jsi.free_div_id,$jsi.chartbeat_proxypoint_name,$jsi.free_site_domain,$jsi.chartbeat_number_of_stories);}
+if($jsi.premium_div_id){cmg.utility.chartbeat_trending.Init($jsi.premium_div_id,'premium-chartbeat-top-widget',$jsi.premium_site_domain);}});}());</script></div><div class="ad cm-960-show cm-ad-rp05"><div class="adgeletti-ad-div RP05 bp-972px-infinity" id="adgeletti-ad-div-RP05-972px-infinity" style="display:none"></div></div></div></div><!-- requires premium/js/sticky.js --><script>
+  cmg.query(function($) {
+        var $sticky_item = $('.cm-sticky-scroll'),
+            $sticky_parent = $('.sidebar'),
+            sticky_opts = {
+                'parent': $sticky_parent,
+                'object': $('div.article'),
+                'adjustPosition': $('.main-nav-container').height() || 0
+            },
+            sticky_unbind = function() {
+                if (typeof $sticky_item.sticky !== 'undefined') {
+                    // this disables the original sticky call
+                    // in order to avoid multi-binding
+                    // (and the bad things that ensue as a result)
+                    sticky_opts.enabled = false;
+                    $sticky_item.sticky(sticky_opts);
+                }
+            },
+            sticky_trigger = function() {
+                if ($sticky_item.length != 0 && sticky_opts.object.height() > $sticky_parent.height() && typeof $sticky_item.sticky !== 'undefined') {
+                    sticky_opts.enabled = true;
+                    $sticky_item.sticky(sticky_opts);
+                }
+            },
+            $popular_container_wired = $('.cm-popular-container'),
+            $popular_container_mobile = $('.cm-popular-container-mobile'),
+            $popular_content;
+
+        // move popular to the mobile slot3 as necessary
+        cmg.henka({
+            max: 971
+        }).on(function() {
+            $popular_content = $popular_container_wired.html();
+            $popular_container_wired.html('');
+            $popular_container_mobile.html($popular_content);
+        }).update(true);
+
+        // move popular back to the 972+ slot3 (if/as necessary)
+        cmg.henka({
+            min: 972
+        }).on(function() {
+            if ($popular_container_mobile.html().length) {
+                $popular_content = $popular_container_mobile.html();
+                $popular_container_mobile.html('');
+                $popular_container_wired.html($popular_content);
+            }
+        }).update(true);
+
+        // make the right rail sticky at resolution >= 972
+        cmg.henka({
+          min: 972
+        }).on(function(){
+            cmg.harmony.slot('RP04').on('slotRenderEnded', function () {
+                setTimeout(function() {
+                    sticky_opts.object = $('div.article');
+                    sticky_opts.windowTopMin = $sticky_item.offset().top;
+                    sticky_trigger();
+                }, 2000);
+            });
+            $(window).on('channel-more-loaded', function() {
+                sticky_opts.object = $('div.article');
+                sticky_unbind();
+                sticky_trigger();
+            });
+        }).update(true);
+
+        // remove stickiness if/when the resolution drops below the 972 breakpoint
+        cmg.henka({
+          max: 971
+        }).on(function() {
+            if ($sticky_item.length != 0 && typeof $sticky_item.sticky !== 'undefined') {
+                sticky_unbind();
+            }
+        }).update(true);
+
+        // show & hide dynamic ads at various breakpoints
+        // MP01 & MP05 ads
+        cmg.henka({
+          max: 767
+        }).on(function() {
+            cmg.harmony.show.slot('MP01');
+            cmg.harmony.show.slot('MP02');
+            cmg.harmony.show.slot('MP05');
+
+            cmg.harmony.hide.slot('HP00');
+        }).update(true);
+
+        // HP00 ad
+        cmg.henka({
+          min: 768
+        }).on(function() {
+            cmg.harmony.show.slot('HP00');
+
+            cmg.harmony.hide.slot('MP01');
+            cmg.harmony.show.slot('MP02');
+            cmg.harmony.hide.slot('MP05');
+        }).update(true);
+
+        // RP01 & RP06 ads
+        cmg.henka({
+          min: 768,
+          max: 971
+        }).on(function() {
+            cmg.harmony.show.slot('RP01');
+            cmg.harmony.show.slot('RP06');
+        }).update(true);
+    });
+</script></article><div class="article-well content row"><hr class="cm-thick-thin"><a name="comments"></a><div class="cm-lc-widget"><div class="cm-lc-container"><div class="cm-lc-widget-container"><h3 class="comments-header widgettitle">
+                Reader Comments
+                <span class="cm-comment-count"></span><span class="cm-comment-toggle collapsed"></span></h3><div class="cm-lc-view" id="livefyre-chatter-app" style="display: none;"></div></div><div class="cm-lc-footer"></div></div></div><script>
+(function($) {
+    var janrain_timeout_int = 500,
+        livefyre_livecomments = null,
+        $comment_count_display = $('.cm-comment-count'),
+        set_comment_count = function() {
+            var comment_count = $('.fyre-stream-stats .fyre-comment-count').text().replace(/[^0-9]+/g, '');
+            $comment_count_display.text(comment_count);
+        },
+        update_comment_count = function(count) {
+            $comment_count_display.text(count);
+        },
+        livefyre_commenting_init = function() {
+            var lf_conv_config = [{
+                    siteId: '380906',
+                    collectionMeta: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJodHRwOi8vd3d3LmNtZ3NoYXJlZGNvbnRlbnQuY29tL2ZlZWQvYnVzaW5lc3MvY29uc3VtZXItYWR2aWNlL2NvbnN1bWVyLWNvbmZpZGVuY2UtaW4tYnV5aW5nLWhvbWVzLW9ubGluZS1oYXMvZkNLV1hGLyIsInRhZ3MiOiJib3Jyb3dpbmcsbW9ydGdhZ2VfcmVmaW5hbmNlLGhvbWVfcHVyY2hhc2VfbG9hbixtb25leV90aXBzX2Zvcl9sYWthbmEiLCJhcnRpY2xlSWQiOiI1NjQyNTg4IiwidGl0bGUiOiJDb25zdW1lciBDb25maWRlbmNlIEluIEJ1eWluZyBIb21lcyBPbmxpbmUgSGFzIEluY3JlYXNlZCJ9.N3iI1WHPShCSjTaEfdYPI_8uibPvN-qrRH3BMi_Q0HE',
+                    checkSum: '3dd4cf959fe20f0974672b67088951e8',
+                    articleId: '5642588',
+                    el: 'livefyre-chatter-app',
+                    browserType: 'web',
+                    initialNumVisible: 10
+                }];
+            Livefyre.require(['fyre.conv#3'], function(Conv){
+                var $fyreStreamMore = $('div.fyre-stream-more');
+                new Conv({
+                    "network": 'palmbeachnews.fyre.co'
+                    },
+                    lf_conv_config,
+                    function (widget) {
+                        widget.on('commentCountUpdated', function(data){
+                            if (data > 0) {
+                                $('.cm-lc-nocontent').hide();
+                                $('.cm-comment-count').text(data);
+                            }
+                        });
+                        widget.on('initialRenderComplete', function() {
+                            set_comment_count();
+                            if ($('.fyre-auth .fyre-user-loggedin').length) {
+                                $('.cm-lc-nocontent .cm-lc-not-logged-in').hide();
+                            }
+                            if (flipper.is_active('DTMmetrics_Enable')){
+                                if($fyreStreamMore.length){
+                                    $fyreStreamMore.find('*').on('click',function(e){
+                                        cmg.DDO.action("additionalComments");
+                                    });
+                                }
+                            }
+                        });
+                    });
+                });
+            };
+
+    $(document).on('ready', function(e) {
+        var $comment_arrow = $('.cm-comment-toggle'),
+            $comments_header = $('.comments-header');
+
+        $(window).on('livefyre.load_failure', function() {
+            $('.cm-lc-widget').hide();
+        });
+        $(window).on('livefyre.auth_initialized', function() {
+            livefyre_commenting_init();
+        });
+
+        $('a.cm-story-comments').on('click', function() {
+            if ($comment_arrow.hasClass('collapsed')) {
+                $comments_header.trigger('click');
+            }
+        });
+        $comments_header.on('click', function(e) {
+            var $this = $(this);
+            $('#livefyre-chatter-app').toggle();
+            if ($comment_arrow.hasClass('collapsed')) {
+                $comment_arrow.removeClass('collapsed');
+                var $nav_offset = $('.main-nav-container').height() || 0,
+                    $widget_top = $('.cm-lc-widget').offset().top;
+                $(window).scrollTop( $widget_top - $nav_offset );
+            } else {
+                $comment_arrow.addClass('collapsed');
+            }
+        });
+    });
+}(cmg.query));
+</script><hr class="cm-thin-thick"><div class="cm-category-list"><h4>Next Up in Business</h4><div class="list-section" data-page="1" ><div class="cm-story"><a href="http://www.mypalmbeachpost.com/news/business/fpls-smart-meters-will-begin-detecting-enclosure-p/nq2Km/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/04/07/14/8c/020614-meter-petition.jpg" width="240" title="FPL’s smart meters will begin detecting enclosure problems" alt="FPL’s smart meters will begin detecting enclosure problems" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/news/business/fpls-smart-meters-will-begin-detecting-enclosure-p/nq2Km/">FPL’s smart meters will begin detecting enclosure problems</a></h5><p class="story-byline">
+          by Susan Salisbury, <span class="story-source">Palm Beach Post Staff Writer</span></p><div class="story-text">
+        
+            Florida Power & Light Co.’s smart meters can now detect whether a customer-owned meter enclosure is about to need repairs or replacement, and...
+        
+    </div></div><div class="cm-story"><a href="http://www.mypalmbeachpost.com/news/business/honda-apologizes-double-charging-car-payment-glitc/nq2H9/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/04/07/5a/bc/honda_financial_services.PNG" width="240" title="Honda apologizes for double-charging car payment glitch" alt="Honda apologizes for double-charging car payment glitch" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/news/business/honda-apologizes-double-charging-car-payment-glitc/nq2H9/">Honda apologizes for double-charging car payment glitch</a></h5><p class="story-byline">
+          by Cox Media Group National Content Desk
+        </p><div class="story-text">
+        
+            If you use Honda Financial Services to make your car payments, you may want to check your bank account.
+        
+    </div></div><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/federal-reserve-101/fCKJsc/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/03/29/40/cb/tmpR4Ci0d-mdly-photo.jpeg" width="240" title="Federal Reserve 101" alt="Federal Reserve 101" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/federal-reserve-101/fCKJsc/">Federal Reserve 101</a></h5><div class="story-text">
+        
+            MoneyTipsFinancial news is filled with references to the Federal Reserve, especially given the recent interest rate hike and the hundreds of articles...
+        
+    </div></div><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/tax-impact-of-the-affordable-care-act/fCKKFh/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/03/29/29/4f/tmpwHjBAO-mdly-photo.jpeg" width="240" title="Tax Impact Of The Affordable Care Act" alt="Tax Impact Of The Affordable Care Act" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/tax-impact-of-the-affordable-care-act/fCKKFh/">Tax Impact Of The Affordable Care Act</a></h5><div class="story-text">
+        
+            MoneyTipsThe Affordable Care Act (ACA, or Obamacare if you prefer) has probably had a significant impact on your health insurance.
+        
+    </div></div><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/retailers-continue-to-put-off-updating-to-chip/fCKLwM/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/03/30/8b/51/tmp3V2xAl-mdly-photo.png" width="240" title="Retailers Continue To Put Off Updating To Chip Readers" alt="Retailers Continue To Put Off Updating To Chip Readers" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/retailers-continue-to-put-off-updating-to-chip/fCKLwM/">Retailers Continue To Put Off Updating To Chip Readers</a></h5><div class="story-text">
+        
+            MoneyTipsSix months ago, credit card companies expected the majority of retailers to have transitioned over from terminals that read the magnetic...
+        
+    </div></div></div><div class="list-section" data-page="2" style="display:none;"><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/credit-card-fees-consumers-may-not-know-about/fCKMPH/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/03/30/0e/0c/tmpFONsvz-mdly-photo.png" width="240" title="Credit Card Fees Consumers May Not Know About" alt="Credit Card Fees Consumers May Not Know About" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/credit-card-fees-consumers-may-not-know-about/fCKMPH/">Credit Card Fees Consumers May Not Know About</a></h5><div class="story-text">
+        
+            MoneyTipsWhen making a purchase using a credit card, consumers aren’t simply buying merchandise or paying for services from a merchant; instead, they...
+        
+    </div></div><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/todays-headlines-are-we-economically-desensitized/fCKMmH/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/03/30/ff/c8/tmp5FvMbU-mdly-photo.jpeg" width="240" title="Today’s Headlines: Are We Economically Desensitized To Terrorism?" alt="Today’s Headlines: Are We Economically Desensitized To Terrorism?" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/todays-headlines-are-we-economically-desensitized/fCKMmH/">Today’s Headlines: Are We Economically Desensitized To Terrorism?</a></h5><div class="story-text">
+        
+            MoneyTipsTerrorist Attacks and Stock Markets Europe suffered another orchestrated terror attack last week as suicide bombers simultaneously attacked...
+        
+    </div></div><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/no-w-2-tax-form-what-to-do/fCKMzd/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/03/30/1a/1c/tmp7E7Y7t-mdly-photo.jpeg" width="240" title="No W-2 Tax Form? What To Do" alt="No W-2 Tax Form? What To Do" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/no-w-2-tax-form-what-to-do/fCKMzd/">No W-2 Tax Form? What To Do</a></h5><div class="story-text">
+        
+            MoneyTipsThese days, you probably want to file your taxes as early as possible to prevent identity thieves from filing a false return in your name —...
+        
+    </div></div><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/experts-warn-medical-debt-could-greatly-damage/fCKPnX/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/03/31/17/7a/tmpcfHOsX-mdly-photo.png" width="240" title="Experts Warn Medical Debt Could Greatly Damage Credit" alt="Experts Warn Medical Debt Could Greatly Damage Credit" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/experts-warn-medical-debt-could-greatly-damage/fCKPnX/">Experts Warn Medical Debt Could Greatly Damage Credit</a></h5><div class="story-text">
+        
+            MoneyTipsMedical debt affects the credit of many Americans. In fact, a study done by the Consumer Financial Protection Bureau (CFPB) in 2014 revealed...
+        
+    </div></div><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/pet-tax-deductibility/fCKP4X/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/03/31/dd/7f/tmpHBg2yN-mdly-photo.jpeg" width="240" title="Pet Tax Deductibility" alt="Pet Tax Deductibility" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/pet-tax-deductibility/fCKP4X/">Pet Tax Deductibility</a></h5><div class="story-text">
+        
+            MoneyTipsIn general, deducting pet expenses on your tax return can get you into hot water with the Internal Revenue Service (IRS).
+        
+    </div></div></div><div class="list-section" data-page="3" style="display:none;"><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/are-my-social-security-benefits-taxable/fCKQJR/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/03/31/3e/3a/tmpDoYeS9-mdly-photo.jpeg" width="240" title="Are My Social Security Benefits Taxable?" alt="Are My Social Security Benefits Taxable?" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/are-my-social-security-benefits-taxable/fCKQJR/">Are My Social Security Benefits Taxable?</a></h5><div class="story-text">
+        
+            MoneyTipsSocial Security is generally considered a tax-free benefit, but that is not always the case.
+        
+    </div></div><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/tax-benefits-of-parenthood/fCKQXX/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/03/31/e7/7d/tmpaMANR9-mdly-photo.jpeg" width="240" title="Tax Benefits Of Parenthood" alt="Tax Benefits Of Parenthood" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/tax-benefits-of-parenthood/fCKQXX/">Tax Benefits Of Parenthood</a></h5><div class="story-text">
+        
+            MoneyTipsCongratulations! You have just been handed your first little bundle of joy in the hospital and have embarked on the long journey of...
+        
+    </div></div><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/do-i-have-to-pay-taxes-when-i-inherit-money/fCKSW9/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/04/01/5d/b4/tmpCOci0q-mdly-photo.jpeg" width="240" title="Do I Have To Pay Taxes When I Inherit Money?" alt="Do I Have To Pay Taxes When I Inherit Money?" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/do-i-have-to-pay-taxes-when-i-inherit-money/fCKSW9/">Do I Have To Pay Taxes When I Inherit Money?</a></h5><div class="story-text">
+        
+            MoneyTipsYou have just received an inheritance. What do you do now? You could spend it on some extravagance, but you would be better off doing two...
+        
+    </div></div><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/wheres-my-tax-refund/fCKSkq/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/04/01/20/21/tmpWJnZnz-mdly-photo.jpeg" width="240" title="Where&#39;s My Tax Refund?" alt="Where&#39;s My Tax Refund?" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/wheres-my-tax-refund/fCKSkq/">Where&#39;s My Tax Refund?</a></h5><div class="story-text">
+        
+            MoneyTipsYou have bought an expensive new toy in expectation of your tax refund, and are now desperately waiting for the refund to arrive before the...
+        
+    </div></div><div class="cm-story"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/investors-want-to-retire-earlier-but-lack/fCKS8H/" class="story-photo-link"><img height="135" src="http://media.cmgdigital.com/shared/lt/lt_cache/aresize/240x135/img/photos/2016/04/01/31/d5/tmp_KDO7c-mdly-photo.gif" width="240" title="Investors Want To Retire Earlier, But Lack Financial Plans (Infographic)" alt="Investors Want To Retire Earlier, But Lack Financial Plans (Infographic)" /><span class=""></span></a><h5 class="story-title"><a href="http://www.mypalmbeachpost.com/feed/business/consumer-advice/investors-want-to-retire-earlier-but-lack/fCKS8H/">Investors Want To Retire Earlier, But Lack Financial Plans (Infographic)</a></h5><div class="story-text">
+        
+            MoneyTipsHow confident do you feel investing in the current climate? What are your main investing goals this year?
+        
+    </div></div></div><div class="cm-load-more" data-next-page="2">More  Stories</div></div><script>
+        function triggerDomEvent(event_name) {
+            var element, ev;
+            if (event_name) {
+                if (document.createEvent) { // W3C
+                    ev = document.createEvent('Event');
+                    ev.initEvent(event_name, true, true);
+                    window.dispatchEvent(ev);
+                } else { // IE
+                    element = document.documentElement;
+                    ev = document.createEventObject();
+                    element.fireEvent(event_name, ev);
+                }
+            }
+        }
+
+        (function($) {
+            $(document).on('ready', function() {
+                /* "More Stories" */
+                var $more_trigger = $('.cm-load-more'),
+                    next_page_index = $more_trigger.data('next-page') * 1,
+                    $next_page_stories = $('.list-section"[data-page=' + next_page_index + ']');
+
+                if ($next_page_stories.html() !== '') {
+                    $more_trigger.on('click', function(e) {
+                        // trigger resize event to call lazythumbs' update_responsive_images function
+                        // (i.e. load the "more stories" images)
+                        triggerDomEvent('resize');
+                        $(window).trigger('channel-more-loaded');
+                        $next_page_stories.fadeIn('slow');
+                        // update the next page index & other data attributes
+                        next_page_index++;
+                        $more_trigger.data('next-page', next_page_index);
+                        $next_page_stories = $('.list-section[data-page=' + next_page_index + ']');
+                        if (!$next_page_stories.length) {
+                            $more_trigger.hide();
+                        }
+                    });
+                } else {
+                    $more_trigger.hide();
+                }
+            });
+        }(jQuery));
+    </script><div class="row-ad ad-mobile cm-320-show cm-768-hide"><hr class="cm-thin-thick"><div class="ad center"><div class="adgeletti-ad-div MP05 bp-dynamic" id="adgeletti-ad-div-MP05-dynamic" style="display:none"></div></div></div><div class="cm-popular-container-mobile"></div></div><script>
+        // Setup event for lazythumbs.js to listen for, to
+        // request the initial batches of responsive images.
+        var event = new Event('lt-tags-ready');
+
+        // Dispatch the event.
+        window.dispatchEvent(event);
+    </script></div><!-- /container --><footer class="mastfoot"><!-- retargeting footer --><div id="writecapture68531294"></div><script type="text/javascript">
+    marimo.emit('writecapture68531294_ready');
+    marimo.add_widget({"wc_compatibility_mode": false, "html": "$NEWLINE                $NEWLINE            ", "id": "writecapture68531294", "widget_prototype": "writecapture_widget"});
+</script><!-- end retargeting footer --><div class="row"><div class="footer-menu"><div class="container"><div class="footer-section"><h5>News<span class="arrow"></span></h5><div><div><ul class="unstyled"><li><a href="http://www.mypalmbeachpost.com/" title="MyPalmBeachPost.com">MyPalmBeachPost.com</a></li><li><a href="http://www.mypalmbeachpost.com/s/news/local/" title="Local">Local</a></li><li><a href="http://www.mypalmbeachpost.com/s/nation-world/" title="U.S./World ">U.S./World</a></li><li><a href="http://www.mypalmbeachpost.com/s/exclusives/" title="Exclusives">Exclusives</a></li><li><a href="http://www.mypalmbeachpost.com/flist/weather/weather-news-and-forecasts/f5z/" title="Weather">Weather</a></li><li><a href="http://www.mypalmbeachpost.com/flist/news/crime-law/crime-and-safety/f5N/" title="Crime/Safety ">Crime/Safety</a></li><li><a href="http://www.mypalmbeachpost.com/s/sports/" title="Sports">Sports</a></li><li><a href="http://www.mypalmbeachpost.com/s/travel/" title="Travel">Travel</a></li><li><a href="http://www.mypalmbeachpost.com/s/food/" title="Food">Food</a></li></ul><ul class="unstyled"><li><a href="http://www.mypalmbeachpost.com/services/archives/" title="Archive" target="_blank">Archive</a></li><li><a href="https://www.facebook.com/mypalmbeachpost/" title="Facebook" target="_blank">Facebook</a></li><li><a href="http://twitter.com/pbpost" title="Twitter" target="_blank">Twitter</a></li><li><a href="http://www.palmbeachpost.com/newsletters/signup/" title="Newsletters" target="_blank">Newsletters</a></li><li><a href="http://www.mogreet.com/clients/229/v2/cmg-subscriptions.rb?&property=palmbeachpost.com" title="Mobile Alerts" target="_blank">Mobile Alerts</a></li><li><a href="http://www.palmbeachpost.com" title="palmbeachpost.com">palmbeachpost.com</a></li></ul></div></div></div><div class="footer-section"><h5>Marketplace<span class="arrow"></span></h5><div><div><ul class="unstyled"><li><a href="http://www.palmbeachpost.com/s/jobs/" title="Jobs" target="_blank">Jobs</a></li><li><a href="http://www.palmbeachpost.com/s/autos/" title="Autos" target="_blank">Autos</a></li><li><a href="http://www.palmbeachpost.com/s/classifieds/" title="Classifieds" target="_blank">Classifieds</a></li><li><a href="http://www.palmbeachpost.com/s/floridahome/" title="Real Estate" target="_blank">Real Estate</a></li></ul><ul class="unstyled"><li><a href="http://findnsave.palmbeachpost.com/" title="Shopping">Shopping</a></li><li><a href="http://www2.palmbeachpost.com/projects/classifieds/place-an-ad.php" title="Place an Ad" target="_blank">Place An  Ad</a></li><li><a href="http://realsolutions.palmbeachpost.com/" title="Advertise" target="_blank">Advertise</a></li><li><a href="http://www.ideabarmedia.com/" title="IdeaBar" target="_blank">IdeaBar</a></li></ul></div></div></div><div class="footer-section"><h5>Affiliates<span class="arrow"></span></h5><div><div><ul class="unstyled"><li><a href="http://www.palmbeachpost.com/s/autos/" title="Cars at AutoTrader" target="_blank">Cars at AutoTrader</a></li><li><a href="http://www.kudzu.com/" title="Local Services at Kudzu" target="_blank">Local Services at Kudzu</a></li><li><a href="https://www.valpak.com/" target="_blank" title="Coupons at Valpak">Coupons at Valpak</a></li></ul></div></div></div><div class="footer-section"><h5>About Us<span class="arrow"></span></h5><div><div><ul class="unstyled"><li><a href="https://myaccount.palmbeachpost.com" title="Customer Care" target="_blank">Customer Care</a></li><li><a href="https://myaccount.palmbeachpost.com/feedback.aspx" title="Feedback" target="_blank">Feedback</a></li><li><a href="https://myaccount.palmbeachpost.com/feedback.aspx" title="Technical Support" target="_blank">Technical Support</a></li><li><a href="https://subscribe.palmbeachpost.com/subscriptionpanel?premium=y&product=desktop&return=http://www.mypalmbeachpost.com/" title="Subscribe" target="_blank">Subscribe</a></li><li><a href="http://www.mypalmbeachpost.com/services/products/" title="Digital Products" target="_blank">Digital Products</a></li><li><a href="http://www.mypalmbeachpost.com/services/products/faqs/" title="FAQs" target="_blank">FAQs</a></li></ul></div></ul></div></div><a href="#toolbar-logo" id="to-top">Top<span class="up-arrow"></span></a></div></div><div class="footer-terms"><div class="container"><p>&#169; <span class="current-year">2016</span>&nbsp;<a href="http://www.coxmediagroup.com" target="_blank">Cox Media Group</a>. By using this website, you accept the terms of our <a href="/visitor_agreement/">Visitor Agreement</a> and <a href="/privacy_policy/">Privacy Policy</a>, and understand your options regarding <a href="/privacy_policy/#ad-choices">Ad Choices</a><img border="0" src="http://media.cmgdigital.com/shared/img/photos/2012/02/29/d3/da/ad_choices_logo.png" alt="AdChoices" style="margin: 0 0 -4px 4px;" />. Learn about <a href="http://jobs.coxmediagroup.com/" target="_blank">careers at Cox Media Group</a></p></div></div></div></footer><!-- begin analytics block --><script type="text/javascript">
+        var domain = window.location.host || '';
+        var _sf_async_config;
+        if (domain.indexOf("www.") == 0) {
+            _sf_async_config = {uid:31585,domain:"mypalmbeachpost.com",path:"/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/",title:"Consumer Confidence In Buying Homes Online Has Increased"};
+        } else {
+            var new_domain = "m." + "mypalmbeachpost.com";
+            _sf_async_config={uid:31585,domain:new_domain,path:"/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/",title:"Consumer Confidence In Buying Homes Online Has Increased"};
+        }
+        _sf_async_config.playerdomain = "c.brightcove.com";
+        (function(){
+            function loadChartbeat() {
+                window._sf_endpt=(new Date()).getTime();
+                var e = document.createElement('script');
+                e.setAttribute('language', 'javascript');
+                e.setAttribute('type', 'text/javascript');
+                e.setAttribute('src',
+                   (("https:" == document.location.protocol) ? "https://a248.e.akamai.net/chartbeat.download.akamai.com/102508/" :     "http://static.chartbeat.com/") +
+                   "js/chartbeat.js");
+                document.body.appendChild(e);
+            }
+            var oldonload = window.onload;
+            window.onload = (typeof window.onload != 'function') ? loadChartbeat : function() { oldonload(); loadChartbeat(); };
+        })();
+    </script><span style="display:none;" id="cm_s_code"></span><!-- SiteCatalyst code version: H.25.5.
+        Copyright 1996-2013 Adobe, Inc. All Rights Reserved
+        More info available at http://www.omniture.com --><script type="text/javascript">//<![CDATA[
+            
+            
+            
+
+            
+            var cx_siteName = "mypbp";
+            var cx_rsID = "coxpalmbeachpost";
+            var cx_marketpath = "fl: west palm beach";
+            var cx_medium = "newspaper";
+
+            var s_account = cx_rsID;
+
+            
+            if (("prod" == "prod") &&
+                (!((/www.prod.mypalmbeachpost/.test(window.location.host))
+                || (/m.prod.mypalmbeachpost/.test(window.location.host))))) {
+                    if (cx_medium == "radio" || cx_medium == "tv" || cx_medium == "newspaper" ) {
+                        s_account = s_account+",coxglobal";
+                    }
+                }
+            else {
+                
+                s_account = "coxradiodev,coxnewspaperdev,coxtvdev";
+            }
+        //]]></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/javascript/AppMeasurement.js"></script><script type="text/javascript" src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/bower_libs/omniture_utilities/omniture_utilities.min.js"></script><script type="text/javascript">//<![CDATA[
+
+        (function() { "use strict";
+
+            
+            cmg.s_coxnews.siteName=cx_siteName;
+            cmg.s_coxnews.linkInternalFilters = "javascript:,doubleclick.net,alt.coxnewsweb.com,legacy.com,uclick.com,signin.cmgdigital.com,www.mypalmbeachpost.com,outbrain.com";
+            cmg.s_coxnews.server = window.location.host;
+            cmg.s_coxnews.prop13 = cmg.s_coxnews.eVar13 = document.title.replace("| www.mypalmbeachpost.com", "");
+
+            if (metrics_signin == 1) {
+                cmg.s_coxnews.prop22 = cmg.s_coxnews.eVar22 = "gur";
+            }
+
+            
+            cmg.s_coxnews.prop63 = cmg.s_coxnews.eVar63 = location.protocol + '//' + location.host + location.pathname + location.search;
+
+            
+            if (cmg.s_coxnews.prop13.length == 0) {
+                cmg.s_coxnews.prop13 = cmg.s_coxnews.eVar13 = "no page title available";
+            }
+            cmg.s_coxnews.hier3 = cmg.s_coxnews.channel = cmg.s_coxnews.eVar56 = "no category";
+
+            
+
+            
+            if(cx_medium=="radio" || cx_medium=="tv" || cx_medium=="newspaper") {
+                cmg.s_coxnews.hier1 = cx_marketpath+"|"+cx_medium+"|"+cx_siteName;
+                cmg.s_coxnews.hier2 = cx_medium+"|"+cx_marketpath+"|"+cx_siteName;
+                
+                var search_page_re = new RegExp(cmg.s_coxnews.server+"\/search");
+                var search_match = search_page_re.exec(window.location);
+                
+                if (cmg.s_coxnews.hasOwnProperty('getQueryParam')) {
+                    var queryParam = cmg.s_coxnews.getQueryParam;
+                } else {
+                    var queryParam = cmg.s_coxnews.Util.getQueryParam;
+                }
+                if(search_match !== null && typeof cx_no_results !== 'undefined'){
+                    cmg.s_coxnews.eVar1 = queryParam('q');
+                    if(cx_no_results){
+                        cmg.s_coxnews.events = "event13,event14";
+                        cmg.s_coxnews.prop46 = "no";
+                    } else {
+                        cmg.s_coxnews.events = "event13";
+                        cmg.s_coxnews.prop46 = "yes";
+                    }
+                    if (queryParam("searchType") == "web") {
+                        cmg.s_coxnews.eVar45=cmg.s_coxnews.prop45 = "web";
+                    } else {
+                        cmg.s_coxnews.eVar45=cmg.s_coxnews.prop45 = "site";
+                    }
+                }
+                if (cx_medium == "radio") {
+                    cmg.s_coxnews.eVar43=cmg.s_coxnews.prop43 = "";
+                }
+                else if (cx_medium == "tv") {
+                    cmg.s_coxnews.eVar43=cmg.s_coxnews.prop43 = "tv";
+                }
+                else if (cx_medium == "newspaper") {
+                   cmg.s_coxnews.eVar43=cmg.s_coxnews.prop43 = "newspaper";
+                }
+            }
+
+            
+            
+cmg.s_coxnews.prop9 = "moneytips";
+cmg.s_coxnews.eVar9 = "moneytips";
+cmg.s_coxnews.hier3 = "business|consumer advice";
+cmg.s_coxnews.list1 = "borrowing,mortgage refinance,home purchase loan,money tips for lakana";
+cmg.s_coxnews.prop21 = "cmgsharedcontent";
+cmg.s_coxnews.eVar21 = "cmgsharedcontent";
+cmg.s_coxnews.prop16 = "non-mobile site";
+cmg.s_coxnews.eVar16 = "non-mobile site";
+cmg.s_coxnews.prop22 = "article";
+cmg.s_coxnews.eVar22 = "article";
+cmg.s_coxnews.prop23 = "none";
+cmg.s_coxnews.eVar23 = "none";
+cmg.s_coxnews.prop42 = "mypbp";
+cmg.s_coxnews.eVar42 = "mypbp";
+cmg.s_coxnews.prop14 = "consumer advice";
+cmg.s_coxnews.eVar14 = "consumer advice";
+cmg.s_coxnews.prop4 = "";
+cmg.s_coxnews.eVar4 = "";
+cmg.s_coxnews.prop5 = "";
+cmg.s_coxnews.eVar5 = "";
+cmg.s_coxnews.prop6 = "";
+cmg.s_coxnews.eVar6 = "";
+cmg.s_coxnews.prop7 = "24";
+cmg.s_coxnews.eVar7 = "24";
+cmg.s_coxnews.prop17 = "";
+cmg.s_coxnews.eVar17 = "";
+cmg.s_coxnews.prop1 = "1057";
+cmg.s_coxnews.eVar12 = "1057";
+cmg.s_coxnews.prop2 = "";
+cmg.s_coxnews.eVar2 = "";
+cmg.s_coxnews.prop3 = "";
+cmg.s_coxnews.eVar3 = "";
+cmg.s_coxnews.pageName = "/re/477/5642588/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fckwxf/";
+cmg.s_coxnews.eVar55 = "/re/477/5642588/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fckwxf/";
+cmg.s_coxnews.prop33 = "5642588";
+cmg.s_coxnews.eVar33 = "5642588";
+cmg.s_coxnews.channel = "business";
+cmg.s_coxnews.eVar56 = "business";
+
+            var revpathArray = document.getElementsByName("cmg_revpath");
+            var pathNameStr = "";
+            if(revpathArray.length > 0 && revpathArray[0].content !== ""){
+                pathNameStr = revpathArray[0].content;
+            } else {
+                pathNameStr = window.location.pathname.split(/[#?]/)[0];
+                if(pathNameStr === "/"){
+                    pathNameStr = "/homepage/";
+                }
+            }
+            if(cmg.s_coxnews.prop22 == "404 page"){
+                pathNameStr = "/404_page" + pathNameStr;
+            }
+
+            if(pathNameStr.length > 99){
+                pathNameStr = pathNameStr.substr(0,98) + "/";
+            }
+
+            
+                cmg.s_coxnews.pageName = cmg.s_coxnews.eVar55 = pathNameStr.toLowerCase();
+            
+
+            
+
+            var authPromise = null;
+
+            function authType(json) {
+                
+
+                var backend_user_type_from_cookie = get_backend_user_type_from_cookie();
+
+                if (!json.authorized && !backend_user_type_from_cookie) {
+                    return get_non_subscribed_type();
+                } else if (backend_user_type_from_cookie) {
+                    
+                    return backend_user_type_from_cookie;
+                }
+
+                
+                var type = cmg.authorization.auth_type(json.authType);
+                var map = {
+                    medleystaff: "staffuser",
+                    mg2: "premium"
+                };
+
+                return map[type] || get_non_subscribed_type();
+
+                function get_non_subscribed_type () {
+                    
+                    if ((cmg.s_coxnews.prop2 && cmg.s_coxnews.prop2 !== "") ||
+                        (cmg.s_coxnews.eVar2 && cmg.s_coxnews.eVar2 !== "")) {
+                            return "standard";
+                    } else {
+                        return "anonymous";
+                    }
+                }
+
+                function get_backend_user_type_from_cookie () {
+                    return cmg.query.cookie('ur_backend_user_type');
+                }
+            }
+
+            
+            var cookie = cmg.query.cookie('ur_metrics');
+            if (cookie) {
+                
+                if (cookie.charAt(0) === '"') {
+                    cookie = cookie.slice(1, -1);
+                }
+                
+                var cpp = {"prop2": {"start": 25, "length": 50}, "eVar2": {"start": 25, "length": 50}, "eVar12": {"start": 0, "length": 4}, "prop6": {"start": 18, "length": 5}, "prop4": {"start": 8, "length": 5}, "prop5": {"start": 13, "length": 5}, "eVar3": {"start": 4, "length": 4}, "prop7": {"start": 23, "length": 2}, "eVar5": {"start": 13, "length": 5}, "prop1": {"start": 0, "length": 4}, "eVar7": {"start": 23, "length": 2}, "eVar6": {"start": 18, "length": 5}, "eVar4": {"start": 8, "length": 5}, "prop3": {"start": 4, "length": 4}};
+                for (var prop in cpp) {
+                    cmg.s_coxnews[prop] = cmg.query.trim(cookie.substr(cpp[prop].start, cpp[prop].length));
+                }
+            }
+
+            if (cmg.site_meta && !cmg.site_meta.is_mobile) {
+                authPromise = new Promise(function(resolve) {
+                    var auth_url = 'http://www.mypalmbeachpost.com/profile/janus-auth/';
+                    cmg.authorization.check(auth_url, function(json) {
+                        resolve();
+                        json = json || {};
+
+                        if (cmg.site_meta && cmg.site_meta.media_type === 'premium' &&
+                            cmg.site_meta.premium_status === 'premium') {
+                                cmg.s_coxnews.eVar52 = cmg.s_coxnews.prop52 = json.authorized ? "full page" : "stubbed";
+                        }
+
+                        cmg.s_coxnews.eVar48 = cmg.s_coxnews.prop48 = authType(json);
+                    });
+                });
+            }
+
+            
+            if (cmg.site_meta && cmg.site_meta.media_type !== 'premium' &&
+                cmg.site_meta.premium_status === 'premium') {
+                    cmg.s_coxnews.eVar52=cmg.s_coxnews.prop52 = "stubbed";
+            }
+
+            
+            
+            
+
+            
+            for (var key in cmg.s_coxnews) {
+                if (cmg.s_coxnews[key] && key.match(/prop|eVar|hier/) !== null) {
+                    cmg.s_coxnews[key] = cmg.s_coxnews[key].toLowerCase();
+                }
+            }
+
+            Promise.resolve(authPromise).then(function() {
+                cmg.query(document).ready(function () {
+                    if (typeof cmg.metrics_consolidator !== "undefined") {
+                        
+
+                        cmg.metrics_consolidator.apply_on_ready(cmg_t, 'base');
+                    } else {
+                        cmg_t();
+                    }
+
+                    function cmg_t() {
+                        
+                        var s_code = cmg.s_coxnews.t();
+                        if (s_code) { cmg.query('#cm_s_code').text(s_code); }
+                    }
+                });
+            });
+
+        })();
+
+        //]]></script><noscript><a href="http://www.omniture.com" title="Web Analytics"><img src="https://coxnet.112.2o7.net/b/ss/coxpalmbeachpost/1/H.25.1--NS/0" height="1" width="1" border="0" alt="" /></a></noscript><script>
+        cmg.cbp = {
+            category: '',
+            author: ''
+        };
+        if (!flipper.is_active('DTMmetrics_Enable')) {
+            if (cmg.cbp.category === '') {
+                // no story object, use omniture variables
+                switch (cmg.s_coxnews.eVar22) {
+                    case 'homepage':
+                        cmg.cbp.category = 'homepage';
+                        break;
+                    case 'section front':
+                        cmg.cbp.category = cmg.s_coxnews.eVar56;
+                        break;
+                    case 'blog entry':
+                        cmg.cbp.category = cmg.s_coxnews.eVar41;
+                        cmg.cbp.author = cmg.s_coxnews.eVar23;
+                        break;
+                }
+            }
+        }else{
+            if (cmg.cbp.category === '') {
+                switch ('article') {
+                        case 'homepage':
+                            cmg.cbp.category = 'homepage';
+                            break;
+                        case 'section front':
+                            cmg.cbp.category = 'Business';
+                            break;
+                        case 'blog entry':
+                            cmg.cbp.category = '';
+                            cmg.cbp.author = 'None';
+                            break;
+                }
+            }
+        }
+
+        var isMobile = window.location.host.indexOf('m.') === 0,
+            domain = 'mypalmbeachpost.com';
+
+        var _sf_async_config = {
+            uid: 31585,
+            domain: isMobile ? 'm.' + domain : domain,
+            path: location.pathname,
+            sections: cmg.cbp.category,
+            authors: cmg.cbp.author,
+            playerdomain: 'c.brightcove.com',
+            // Remove | url from page title.
+            title: document.title.replace(/ *\|.*/, '')
+        };
+        // Chartbeat boilerplate
+    (function(){function a(){window._sf_endpt=(new Date()).getTime();var c=document.createElement("script");c.setAttribute("language","javascript");c.setAttribute("type","text/javascript");c.setAttribute("src","//static.chartbeat.com/js/chartbeat.js");document.body.appendChild(c)}var b=window.onload;window.onload=(typeof window.onload!="function")?a:function(){b();a()}}());
+    </script><!-- Quantcast Tag --><script type="text/javascript">
+        var _qevents = _qevents || [];
+
+        (function() {
+            var elem = document.createElement('script');
+            elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+            elem.async = true;
+            elem.type = "text/javascript";
+            var scpt = document.getElementsByTagName('script')[0];
+            scpt.parentNode.insertBefore(elem, scpt);
+        })();
+
+        _qevents.push({
+            qacct:"p-38KriKc8Foyx-",
+            labels:".newspaper"
+        });
+    </script><noscript><div style="display:none;"><img src="//pixel.quantserve.com/pixel/p-38KriKc8Foyx-.gif" border="0" height="1" width="1" alt="Quantcast"/></div></noscript><!-- End Quantcast tag --><!-- Qualtrics Tag --><!-- requires javascript/qualtrics.js?zid="{{qz_id}}"&rate="{{qz_samplerate}}" --><div id="qualtrics_zone"><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div><noscript><a target="_blank" href="http://www.qualtrics.com/enterprise-feedback-management">Enterprise Feedback Management</a><br/><a target="_blank" href="http://www.qualtrics.com/survey-software">Survey Software</a><br/></noscript><!-- End Qualtrics tag --><!-- end analytics block --><script>
+    cmg.ads.config = {"slots": [{"instance_id": 0, "targeting": {"ad_slot": "BP01", "breakpoint": "0px-infinity"}, "sizes": [[1, 1]], "companion": false, "breakpoint": "0px-infinity", "total_count": 1, "adunit": "12523293/www.mypalmbeachpost.com-wired/business/consumer_advice", "id": "adgeletti-ad-div-BP01-0px-infinity", "name": "BP01"}, {"instance_id": 0, "targeting": {"ad_slot": "HP00", "breakpoint": "dynamic"}, "sizes": [[728, 90]], "companion": false, "breakpoint": "dynamic", "total_count": 1, "adunit": "12523293/www.mypalmbeachpost.com-wired/business/consumer_advice", "id": "adgeletti-ad-div-HP00-dynamic", "name": "HP00"}, {"instance_id": 0, "targeting": {"ad_slot": "MP01", "breakpoint": "dynamic"}, "sizes": [[320, 50]], "companion": false, "breakpoint": "dynamic", "total_count": 1, "adunit": "12523293/www.mypalmbeachpost.com-wired/business/consumer_advice", "id": "adgeletti-ad-div-MP01-dynamic", "name": "MP01"}, {"instance_id": 0, "targeting": {"ad_slot": "MP05", "breakpoint": "dynamic"}, "sizes": [[300, 250]], "companion": false, "breakpoint": "dynamic", "total_count": 1, "adunit": "12523293/www.mypalmbeachpost.com-wired/business/consumer_advice", "id": "adgeletti-ad-div-MP05-dynamic", "name": "MP05"}, {"instance_id": 0, "targeting": {"ad_slot": "RP04", "breakpoint": "972px-infinity"}, "sizes": [[300, 250], [300, 600]], "companion": false, "breakpoint": "972px-infinity", "total_count": 1, "adunit": "12523293/www.mypalmbeachpost.com-wired/business/consumer_advice", "id": "adgeletti-ad-div-RP04-972px-infinity", "name": "RP04"}, {"instance_id": 0, "targeting": {"ad_slot": "RP05", "breakpoint": "972px-infinity"}, "sizes": [[300, 250]], "companion": false, "breakpoint": "972px-infinity", "total_count": 1, "adunit": "12523293/www.mypalmbeachpost.com-wired/business/consumer_advice", "id": "adgeletti-ad-div-RP05-972px-infinity", "name": "RP05"}], "targeting": {"obj_type": "477", "obj_id": "5642588", "topics": ["borrowing", "mortgage refinance", "Home Purchase Loan", "money tips for lakana"], "type_name": "imported_feed_story", "sky": "Scattered Clouds", "mediatype": "premium", "environ": "prod", "temp_range": "80 to 84"}} || {};
+    cmg.ads.config.slots = cmg.ads.config.slots || [];
+    cmg.ads.config.targeting = cmg.ads.config.targeting || {};
+    cmg.ads.config.targeting.type_name = cmg.ads.config.targeting.type_name || 'unknown';
+    cmg.ads.config.targeting.mediatype = cmg.ads.config.targeting.mediatype || 'unknown';
+    cmg.ads.config.targeting.environ = cmg.ads.config.targeting.environ || 'unknown';
+
+    cmg.ads.config.slots.forEach(function (slotconf) {
+        var slot = cmg.query('#' + slotconf.id);
+        slot.data('name', slotconf.name);
+        slot.data('breakpoint', slotconf.breakpoint);
+    });
+</script><script>
+    (function() {
+    if (window.newrelic) {
+        var tokens = location.hostname.split('.'),
+        siteType = tokens.shift(),
+        hostname = tokens.join('.');
+
+        if (siteType === 'www') {
+            siteType = 'wired';
+        } else if (siteType === 'm') {
+            siteType = 'mobile';
+        } else {
+            siteType = 'other';
+        }
+
+        newrelic.setCustomAttribute('site_type', siteType);
+        newrelic.setCustomAttribute('hostname', hostname);
+        newrelic.setCustomAttribute('page_type', cmg.ads.config.targeting.type_name);
+        newrelic.setCustomAttribute('media_type', cmg.ads.config.targeting.mediatype);
+        newrelic.setCustomAttribute('environment', cmg.ads.config.targeting.environ);
+
+        function parse_query_params() {
+            var query = location.search.substring(1),
+                params = query.split('&'),
+                vals = {};
+            for (var i = 0; i < params.length; i++) {
+                var param = params[i],
+                    eq = param.indexOf('=');
+                if (eq != -1) {
+                    var key = decodeURIComponent(param.substring(0, eq)),
+                        val = decodeURIComponent(param.substring(eq+1)).replace(/\+/g, ' ');
+                    vals[key] = val;
+                }
+            }
+            return vals;
+        }
+
+        var params = parse_query_params();
+        if ('disable_template' in params) {
+            newrelic.setCustomAttribute('disable_template', params.disable_template);
+        }
+    }
+})();
+
+    if (window.newrelic) {
+    newrelic.addPageAction('ads_pageload');
+    cmg.harmony.one('ready', function () {
+        newrelic.addPageAction('ads_allowed');
+    });
+}
+
+</script><script>
+    ybotq.push(function () {
+        googletag.cmd.push(function () {
+            
+            if (window.newrelic) {
+                googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+                    if (!event.isEmpty) {
+                        newrelic.addPageAction('ad_eligible', {
+                            slot_name: event.slot.name
+                        });
+                    }
+                });
+            }
+
+            
+            
+                
+
+
+
+var conf = cmg.ads.config,
+    srmset,
+    loaded = false;
+
+
+function makeAdCalls() {
+    cmg.ads.size.bind();
+    
+    googletag.enableServices();
+    cmg.harmony.show.breakpoint('0px-infinity');
+}
+
+
+    cmg.harmony.load(conf);
+    makeAdCalls();
+    cmg.query(window).trigger('ads/ready');
+    cmg.harmony.trigger('ready');
+
+
+            
+        });
+    });
+</script><!--
+/* -----===== Begin Ad Logs =====----- */
+
+Taxonomy
+----------
+business/consumer_advice
+
+Targeting
+----------
+{
+  "obj_type": "477", 
+  "obj_id": "5642588", 
+  "topics": [
+    "borrowing", 
+    "mortgage refinance", 
+    "Home Purchase Loan", 
+    "money tips for lakana"
+  ], 
+  "type_name": "imported_feed_story", 
+  "sky": "Scattered Clouds", 
+  "mediatype": "premium", 
+  "environ": "prod", 
+  "temp_range": "80 to 84"
+}
+
+Ad slots in this page
+----------
+[u'BP01', u'MP01', u'HP00', u'MP05', u'RP04', u'RP05']
+
+Slot size and breakpoint configuration
+----------
+Slot BP01 (1) displays sizes [[1, 1]] at 0px-infinity
+Slot HP00 (1) displays sizes [[728, 90]] at dynamic
+Slot MP01 (1) displays sizes [[320, 50]] at dynamic
+Slot MP05 (1) displays sizes [[300, 250]] at dynamic
+Slot RP04 (1) displays sizes [[300, 250], [300, 600]] at 972px-infinity
+Slot RP05 (1) displays sizes [[300, 250]] at 972px-infinity
+
+System Messages
+----------
+Adgeletti version 3.0.5
+Harmony version 2.0.0
+
+/* -----====== End Ad Logs ======----- */
+--><!-- dtm footer code --><script type="text/javascript">
+            if (window._satellite) {
+                _satellite.pageBottom();
+            }
+        </script><script type='text/javascript'></script><script src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/js/plate_share_code.js"></script><div id="pq-passage-quota-block" class="pq-modal-content pq-master-inherit" ><div class="pq-modal-screen"></div><div class="pq-modal-wrap-container pq-modal-roadblock-container"><div class="pq-access-meter-modal pq-access-meter-modal-limit"><header class="pq-access-limit-header"><p>You have reached your limit of <span class="pq-passage-quota-max"></span> free articles this month.</p><h2>
+                    Enjoy unlimited access to myPalmBeachPost.com.
+                </h2><h5>Starting at just 99¢ for 8 weeks.</h5></header><div class="pq-access-limit-body"><p class="pq-access-limit-hero-head">GREAT REASONS TO SUBSCRIBE TODAY!</p><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/images/modal-access-limit-hero-pbp.png" class="pq-access-limit-hero"><ul class="pq-access-limit-reasons"><li>IN-DEPTH REPORTING</li><li>INTERACTIVE STORYTELLING</li><li>NEW TOPICS & COVERAGE</li><li>ePAPER</li></ul></div><footer class="pq-access-limit-footer"><div class="pq-limit-footer-container"><p>Already a Paid Subscriber?</p><a href="#" class="pq-access-meter-link cmOpenJanrainModal pq-modal-subscriber-link">I have a login for digital access</a><a href="https://myaccount.palmbeachpost.com/dssMatch.aspx?premium=y&product=desktop&icid=pbp_internallink_mypbpinvitationbox_feb2014_viewoffers&return=http://www.mypalmbeachpost.com/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/?icid=pbp_internallink_mypbpinvitationbox_feb2014_viewoffers_post-purchase" class="pq-dss-match pq-access-meter-link">I need to create a login for digital access</a></div><a href="https://subscribe.palmbeachpost.com/subscriptionpanel?premium=y&product=desktop&icid=pbp_internallink_mypbpinvitationbox_feb2014_viewoffers&return=http://www.mypalmbeachpost.com/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/?icid=pbp_internallink_mypbpinvitationbox_feb2014_viewoffers_post-purchase" class="pq-access-meter-btn pq-passage-quota-view-offers">
+                    VIEW ALL OFFERS
+                </a></footer></div></div></div><div id="pq-passage-quota-sticky" class="pq-modal-sticky pq-master-inherit" ><div class="pq-access-meter-modal pq-access-meter-modal-count"><header class="pq-access-welcome-header"><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/images/modal-access-pbp.svg" class="pq-access-welcome-logo"><a href="#" class="pq-access-meter-close pq-close-modal">X</a></header><div class="pq-access-body"><h1>You have read <span class="pq-passage-quota-count"></span> of <span class="pq-passage-quota-max"></span> free premium articles.</h1><p>Get unlimited access to all of our breaking news, in-depth coverage and bonus content- exclusively for subscribers. Starting at just 99¢ for 8 weeks.</p><footer class="pq-access-footer"><a href="https://subscribe.palmbeachpost.com/subscriptionpanel?premium=y&product=desktop&icid=pbp_internallink_mypbpinvitationbox_feb2014_viewoffers&return=http://www.mypalmbeachpost.com/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/?icid=pbp_internallink_mypbpinvitationbox_feb2014_viewoffers_post-purchase" class="pq-access-meter-btn pq-passage-quota-view-offers">
+                    VIEW ALL OFFERS
+                </a><div><p>Already a Paid Subscriber?</p><a href="#" class="pq-access-meter-link cmOpenJanrainModal pq-modal-subscriber-link">I have a login for digital access</a><a href="https://myaccount.palmbeachpost.com/dssMatch.aspx?premium=y&product=desktop&icid=pbp_internallink_mypbpinvitationbox_feb2014_viewoffers&return=http://www.mypalmbeachpost.com/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/?icid=pbp_internallink_mypbpinvitationbox_feb2014_viewoffers_post-purchase" class="pq-dss-match pq-access-meter-link">I need to create a login for digital access</a></div></footer></div></div></div><div id="pq-passage-quota-welcome" class="pq-modal-content pq-master-inherit" ><div class="pq-modal-screen"></div><div class="pq-modal-wrap-container pq-modal-welcome-container"><div class="pq-access-meter-modal pq-access-meter-modal-welcome"><header class="pq-access-welcome-header"><img src="http://media.cmgdigital.com/shared/media/2016-04-07-13-05-15/web/common/premium/images/modal-access-pbp.svg" class="pq-access-welcome-logo"><a href="#" class="pq-access-meter-close pq-close-modal">X</a></header><div class="pq-access-body"><h1>
+                    Welcome to myPalmBeachPost.com
+                </h1><p>This subscriber-only site gives you exclusive access to breaking news, in-depth coverage, exclusive interactives and bonus content.</p><p>
+                    You can read <span class="pq-passage-quota-max"></span> free articles of your choice a month that are only available on myPalmBeachPost.com.
+                </p><footer class="pq-access-footer"><div class="pq-welcome-links"><p>Already a Paid Subscriber?</p><a id="pq-welcome-signin" href="#" class="pq-access-meter-link cmOpenJanrainModal pq-modal-subscriber-link">I have a login for digital access</a><a id="pq-welcome-create-login" href="https://myaccount.palmbeachpost.com/dssMatch.aspx?premium=y&product=desktop&icid=pbp_internallink_mypbpinvitationbox_feb2014_viewoffers&return=http://www.mypalmbeachpost.com/feed/business/consumer-advice/consumer-confidence-in-buying-homes-online-has/fCKWXF/?icid=pbp_internallink_mypbpinvitationbox_feb2014_viewoffers_post-purchase" class="pq-dss-match pq-access-meter-link">I need to create a login for digital access</a></div><a id="pq-welcome-continue" href="#" class="pq-access-meter-btn pq-close-modal">
+                        CONTINUE TO YOUR 1<sup>ST</sup> FREE ARTICLE
+                    </a></footer></div></div></div></div><style>
+@import "http://fonts.googleapis.com/css?family=Oswald:300,400,700";
+
+.pq-modal-content {
+  display: none;
+}
+.pq-modal-content .pq-modal-screen {
+  top: 0;
+  position: fixed;
+  z-index: 1000;
+  background-color: black;
+  opacity: 0.4;
+  width: 100%;
+  height: 100%;
+}
+.pq-modal-content .pq-modal-wrap-container {
+  width: 100%;
+  position: fixed;
+  z-index: 1001;
+}
+.pq-modal-content .pq-modal-wrap-container.pq-modal-roadblock-container {
+  top: 11%;
+}
+.pq-modal-content .pq-modal-wrap-container.pq-modal-welcome-container {
+  top: 23%;
+}
+.pq-modal-sticky {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  bottom: 0;
+}
+.pq-master-inherit {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 20px;
+  color: #000000;
+  background-color: #ffffff;
+}
+.pq-master-inherit * {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  position: static;
+  text-transform: none;
+}
+.pq-master-inherit *:link {
+  border-bottom-style: none;
+}
+.pq-master-inherit h1 {
+  font-size: 36px;
+  line-height: 40px;
+}
+.pq-master-inherit img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  border: 0;
+}
+/* Global Access Meter modal styles */
+.pq-access-meter-modal {
+  margin-left: auto;
+  margin-right: auto;
+  font-family: Arial, sans-serif;
+  box-shadow: -5px 3px 36px 0px rgba(0, 0, 0, 0.75);
+}
+.pq-access-meter-modal * {
+  margin: 0;
+}
+.pq-access-meter-modal a:focus,
+.pq-access-meter-modal a:active,
+.pq-access-meter-modal a:hover {
+  text-decoration: none;
+}
+.pq-access-meter-modal .pq-access-meter-btn {
+  padding: 13px 35px;
+  font: 14px 'Oswald', sans-serif;
+  text-decoration: none;
+  color: #fff;
+  background-color: #006cb8;
+}
+.pq-access-meter-modal .pq-access-meter-btn sup {
+  font-size: 9px;
+}
+.pq-access-meter-modal .pq-access-meter-btn:hover {
+  color: #fff;
+}
+.pq-access-meter-modal .pq-access-meter-link {
+  font-size: 10px;
+  color: #fff;
+  text-decoration: underline;
+}
+.pq-access-meter-modal .pq-access-meter-link:focus,
+.pq-access-meter-modal .pq-access-meter-link:active,
+.pq-access-meter-modal .pq-access-meter-link:hover {
+  color: #fff;
+}
+.pq-access-meter-modal .pq-access-welcome-header {
+  position: relative;
+  height: 50px;
+  background: #fff;
+  box-shadow: inset 0px 4px 30px rgba(40, 40, 40, 0.38);
+}
+.pq-access-meter-modal .pq-access-welcome-header .pq-access-welcome-logo {
+  padding-top: 12px;
+  max-width: 95%;
+  height: 24px;
+}
+.pq-access-meter-modal .pq-access-meter-close {
+  font-size: 22px;
+  line-height: normal;
+  text-decoration: none;
+}
+/* Access Meter welcome */
+.pq-access-meter-modal-welcome {
+  max-width: 786px;
+}
+.pq-access-meter-modal-welcome .pq-access-welcome-header {
+  padding: 0 25px;
+}
+.pq-access-meter-modal-welcome .pq-access-welcome-header .pq-access-meter-close {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  line-height: 50px;
+  color: #000;
+}
+.pq-access-meter-modal-welcome .pq-access-body {
+  position: relative;
+  padding: 25px 25px 40px 25px;
+  background: #252222;
+  color: #fff;
+}
+.pq-access-meter-modal-welcome .pq-access-body > h1 {
+  margin-bottom: 30px;
+  line-height: normal;
+  font-family: Arial, sans-serif;
+  color: #ffffff;
+}
+.pq-access-meter-modal-welcome .pq-access-body > p {
+  line-height: normal;
+  font-size: 22px;
+}
+.pq-access-meter-modal-welcome .pq-access-body > p:first-of-type {
+  margin-bottom: 30px;
+}
+.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer {
+  padding-top: 45px;
+  text-align: center;
+}
+.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer .pq-access-meter-btn {
+  display: inline-block;
+  margin-bottom: 35px;
+}
+.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer .pq-access-meter-link {
+  display: block;
+}
+.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer .pq-welcome-links {
+  padding-bottom: 30px;
+  line-height: 17px;
+}
+/* Access Meter count */
+.pq-access-meter-modal-count {
+  max-width: 527px;
+}
+.pq-access-meter-modal-count .pq-access-welcome-header {
+  position: relative;
+  padding: 0 20px;
+}
+.pq-access-meter-modal-count .pq-access-welcome-header .pq-access-meter-close {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  line-height: 50px;
+  color: #000;
+}
+.pq-access-meter-modal-count .pq-access-body {
+  padding: 20px;
+  background: #252222;
+  color: #fff;
+}
+.pq-access-meter-modal-count .pq-access-body > h1 {
+  margin-bottom: 15px;
+  font: bold 16px / normal Arial, sans-serif;
+  color: #fff;
+}
+.pq-access-meter-modal-count .pq-access-body > p {
+  margin-bottom: 0;
+  font-size: 14px;
+}
+.pq-access-meter-modal-count .pq-access-body .pq-access-footer {
+  height: 47px;
+  padding-top: 25px;
+}
+.pq-access-meter-modal-count .pq-access-body .pq-access-footer .pq-access-meter-btn {
+  float: right;
+}
+.pq-access-meter-modal-count .pq-access-body .pq-access-footer a.pq-access-meter-link {
+  display: block;
+  line-height: inherit;
+}
+/* Access Meter limit */
+.pq-access-meter-modal-limit {
+  max-width: 527px;
+}
+.pq-access-meter-modal-limit .pq-access-limit-header {
+  padding: 29px 38px;
+  background: #252222;
+  color: #fff;
+}
+.pq-access-meter-modal-limit .pq-access-limit-header p {
+  margin-bottom: 48px;
+  font-size: 18px;
+  text-align: center;
+}
+.pq-access-meter-modal-limit .pq-access-limit-header h2 {
+  margin-bottom: 29px;
+  font-size: 36px;
+  line-height: normal;
+  font-style: normal;
+  font-weight: bold;
+  color: #ffffff;
+}
+.pq-access-meter-modal-limit .pq-access-limit-header h5 {
+  font-size: 22px;
+  font-weight: normal;
+  color: #fff;
+}
+.pq-access-meter-modal-limit .pq-access-limit-body {
+  padding: 23px 0;
+  text-align: center;
+  background: #fff;
+  background: -moz-linear-gradient(top, #b2b2b2 63%, #ffffff 63%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(63%, #b2b2b2), color-stop(63%, #ffffff));
+  background: -webkit-linear-gradient(top, #b2b2b2 63%, #ffffff 63%);
+  background: -o-linear-gradient(top, #b2b2b2 63%, #ffffff 63%);
+  background: -ms-linear-gradient(top, #b2b2b2 63%, #ffffff 63%);
+  background: linear-gradient(to bottom, #b2b2b2 63%, #ffffff 63%);
+}
+.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-hero-head {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-hero {
+  height: 221px;
+  margin-bottom: -10px;
+  vertical-align: middle;
+  display: inline;
+}
+.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-reasons {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0 38px;
+  list-style: none;
+}
+.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-reasons li {
+  width: 90px;
+  font: bold 11px / normal Arial, sans-serif;
+  text-align: center;
+}
+.pq-access-meter-modal-limit .pq-access-limit-footer {
+  height: inherit;
+  padding: 0 38px;
+  background: #252222;
+}
+.pq-access-meter-modal-limit .pq-access-limit-footer .pq-access-meter-link {
+  line-height: 93px;
+}
+.pq-access-meter-modal-limit .pq-access-limit-footer .pq-access-meter-btn {
+  position: relative;
+  top: -50px;
+  float: right;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.pq-access-meter-modal-limit .pq-access-limit-footer .pq-limit-footer-container {
+  padding: 20px 0 20px 0;
+}
+.pq-access-meter-modal-limit .pq-access-limit-footer .pq-limit-footer-container p {
+  color: white;
+}
+.pq-access-meter-modal-limit .pq-access-limit-footer .pq-limit-footer-container a.pq-access-meter-link {
+  line-height: inherit;
+  display: block;
+}
+/* MEDIA QUERIES */
+@media (max-width: 414px) and (max-height: 764px) {
+  .pq-access-meter-modal {
+    /* Access Meter welcome */
+    /* /Access Meter welcome */
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-welcome-header {
+    padding: 0 15px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body {
+    padding: 15px 15px 20px 15px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body > h1 {
+    margin-bottom: 15px;
+    padding-right: 20px;
+    font-size: 26px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body > p {
+    font-size: 18px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body > p:first-of-type {
+    margin-bottom: 20px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer {
+    padding-top: 30px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer .pq-access-btn {
+    margin-bottom: 25px;
+  }
+}
+@media (max-width: 414px), (max-height: 764px) {
+  .pq-access-meter-modal {
+    /* Access Meter limit */
+    /* /Access Meter limit */
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-header {
+    padding: 25px 19px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-header p {
+    margin-bottom: 24px;
+    text-align: left;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-header h2 {
+    margin-bottom: 18px;
+    font-size: 22px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-header h5 {
+    font-size: 18px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-body {
+    padding: 10px 0 15px 0;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-hero-head {
+    font-size: 14px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-hero {
+    height: 175px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-reasons {
+    padding: 0 15px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-footer {
+    padding: 0 19px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-footer .pq-access-meter-link {
+    line-height: 73px;
+  }
+}
+@media (max-width: 320px), (max-height: 568px) {
+  .pq-modal-content .pq-modal-wrap-container.pq-modal-roadblock-container .pq-access-limit-footer .pq-access-meter-btn {
+    right: -10px;
+  }
+  .pq-modal-content .pq-modal-wrap-container.pq-modal-roadblock-container,
+  .pq-modal-content .pq-modal-wrap-container.pq-modal-welcome-container {
+    top: 0;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-header {
+    padding: 20px 19px;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-header p {
+    margin-bottom: 20px;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-header h2 {
+    margin-bottom: 13px;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-body .pq-access-limit-hero {
+    height: 150px;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-body .pq-access-limit-reasons {
+    padding: 0 7px;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-body .pq-access-limit-reasons li {
+    font-size: 10px;
+  }
+}
+@media (max-width: 320px) and (max-height: 480px) {
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-body .pq-access-limit-reasons {
+    padding: 0;
+  }
+}
+@media (max-width: 399px) {
+  .pq-modal-content .pq-modal-wrap-container.pq-modal-roadblock-container .pq-access-limit-footer .pq-access-meter-btn {
+    padding: 10px 4px;
+    font-size: 13px;
+  }
+}
+@media (max-height: 400px) {
+  .pq-modal-content .pq-modal-wrap-container {
+    position: absolute;
+  }
+}
+@media (max-width: 599px) {
+  .pq-modal-content .pq-modal-wrap-container.pq-modal-roadblock-container {
+    top: 0%;
+  }
+  .pq-modal-sticky .pq-access-meter-modal-count .pq-access-body .pq-access-footer {
+    height: 153px;
+    padding-top: 0px;
+  }
+  .pq-modal-sticky .pq-access-meter-modal-count .pq-access-body .pq-access-footer .pq-access-meter-btn {
+    float: inherit;
+    left: 50%;
+    position: relative;
+    margin: -80px;
+    top: 115px;
+  }
+}
+@media (min-width: 600px) {
+  .pq-access-meter-modal-welcome .pq-access-body footer.pq-access-footer .pq-welcome-links {
+    display: inline-block;
+    text-align: initial;
+  }
+  .pq-access-meter-modal-welcome .pq-access-body footer.pq-access-footer #pq-welcome-continue {
+    margin-left: 100px;
+    position: relative;
+    top: -16px;
+  }
+}
+@media (max-width: 320px), (max-height: 512px) {
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body > h1 {
+    font-size: 25px;
+    word-wrap: normal;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body > p {
+    font-size: 17px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer {
+    padding-top: 25px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer .pq-welcome-links {
+    padding-bottom: 25px;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-body .pq-access-limit-hero {
+    height: 130px;
+  }
+}
+@media (min-width: 768px) and (min-height: 700px){
+  .pq-fixed-janrain-modal {
+      position: fixed !important;
+      top: 50% !important;
+      transform: translate(0, -50%);
+      -webkit-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+  }
+}
+</style><div id="cm-sharing-panel-container"><div class="cm-sharing-panel"><a href="#" class="cm-share cm-share-facebook" title="Share on Facebook" target="_blank"></a><a href="#" class="cm-share cm-share-twitter" title="Share on Twitter" target="_blank"></a><a href="#" class="cm-share cm-share-gplus" title="Share on Google+" target="_blank"></a><a href="#" class="cm-share cm-share-reddit" title="Share on Reddit" target="_blank"></a><a href="#" class="cm-share cm-share-email" title="Share via Email"></a></div></div><div id="fb-root"></div><script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId      : '166812116992807',
+                    xfbml      : true,
+                    version    : 'v2.0'
+                });
+            };
+
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script><script type="text/javascript">
+    cmg.query(document).ready(function() {
+        var $ = cmg.query,
+            cmg_ping_to_pull = function() {
+                if (typeof janrain !== 'undefined' && localStorage && localStorage.getItem('janrainCaptureProfileData')) {
+                    var profileData = localStorage.getItem('janrainCaptureProfileData');
+                    profileData = typeof profileData == "string" ? JSON.parse(profileData) : profileData;
+                    if (profileData.uuid) {
+                        jQuery.get('/auth/ajax/ping-pull/' + profileData.uuid, function(data) {
+                            if (data.indexOf('http') !== -1) {
+                                jQuery.get(data, function(response) {
+                                    // do nothing; the request kicks off a sync on livefyre's side
+                                });
+                            } else {
+                                //console.error(data);
+                            }
+                        });
+                    } else {
+                        //console.error('Problem with uuid/profileData: ', profileData);
+                    }
+                }
+            },
+            clear_livefyre_creds = function() {
+                var yesterday = new Date();
+                yesterday.setTime(yesterday.getTime() + (-1 * 24 * 60 * 60 * 1000));
+                document.cookie = 'backplane-channel' + '=; expires=' + yesterday.toUTCString() + '; path=/';
+                localStorage.removeItem('fyre-auth');
+            },
+            check_janrain_loggedin_status = function() {
+                var cookie_ur_name = cmg.query.cookie('ur_name', {path: '/'});
+                if (!janrain.capture.ui.hasActiveSession() && typeof cookie_ur_name !== 'string') {
+                    // not signed in but livefyre thinks we are
+                    // delete the backplane-channel cookie and
+                    // remove the fyre-auth entry from localstorage
+                    clear_livefyre_creds();
+                }
+            },
+            initLivefyreAuth = function() {
+                if (typeof window.Backplane === 'function') {
+                    Livefyre.require(['auth', 'backplane-auth-plugin#0'], function(auth, backplanePluginFactory){
+                        auth.plugin(backplanePluginFactory('palmbeachnews.fyre.co'));
+                        auth.delegate({
+                            login: function(callback) {
+                                // Send a backplane message
+                                var successCallback = function(e) {
+                                    janrain.events.onCaptureLoginSuccess.removeHandler(successCallback);
+                                    cmg_ping_to_pull();
+                                    callback(e);
+                                };
+                                var modalCloseCallback = function(e) {
+                                    janrain.events.onModalClose.removeHandler(modalCloseCallback);
+                                    janrain.events.onCaptureLoginSuccess.removeHandler(successCallback);
+                                    callback(e);
+                                };
+                                var logoutCallback = function(e) {
+                                    auth.logout();
+                                };
+                                janrain.events.onCaptureLoginSuccess.addHandler(successCallback);
+                                janrain.events.onCaptureSessionEnded.addHandler(logoutCallback);
+                                cmg.query('.janrain-close-modal').click(modalCloseCallback);
+                                janrain.on('cmg_login_complete', modalCloseCallback);
+                                cmg.query('.cmOpenJanrainModal').trigger('click');
+                                window.Backplane.expectMessages('identity/login');
+                                janrain.events.onCaptureLoginFailed.addHandler(check_janrain_loggedin_status);
+                            },
+                            editProfile: function(delegate, author) {
+                                location.href = '/profile/edit/private?next=' + location.href;
+                            },
+                            viewProfile: function(delegate, author) {
+                                cmg_ping_to_pull();
+                            },
+                            logout: function(delegate) {
+                                clear_livefyre_creds();
+                                Backplane.resetCookieChannel();
+                                janrain.capture.ui.endCaptureSession();
+                                delegate();
+                            }
+                        });
+                        window.livefyre_auth = auth;
+                        $(window).trigger('livefyre.auth_initialized');
+                    });
+                } else {
+                    setTimeout(initLivefyreAuth, 500);
+                }
+            };
+
+        $.getScript('//cdn.livefyre.com/Livefyre.js')
+            .done(initLivefyreAuth)
+            .fail(function() {
+                $(window).trigger('livefyre.load_failure');
+                if (typeof console !== 'undefined') {
+                    console.error('Fetch of //cdn.livefyre.com/Livefyre.js failed.  Hiding commenting.');
+                }
+            });
+
+        // make sure to logout out of livefyre
+        $('.cmLogout').on('click', function() {
+            window.livefyre_auth.logout();
+        });
+    });
+</script></body></html>

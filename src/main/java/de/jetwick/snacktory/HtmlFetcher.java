@@ -302,7 +302,7 @@ public class HtmlFetcher {
                 if (!onlyExtractCanonical){
                     extractor.extractContent(result, fetchAsString(urlToDownload, timeout), maxContentSize);
                 } else {
-                    extractor.extractCanonical(result, fetchAsString(urlToDownload, timeout));
+                    extractor.extractCanonical(result, fetchAsString(urlToDownload, timeout), false);
                 }
             } catch (FileNotFoundException fe){
                 throw new SnacktoryNotFoundException();
