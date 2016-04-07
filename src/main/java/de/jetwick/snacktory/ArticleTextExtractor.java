@@ -689,6 +689,9 @@ public class ArticleTextExtractor {
                 // bad url?
                 logger.error("Bad URL: " + url + ":" + ex);
             }
+        } else {
+            // if canonical is empty just return the base url.
+            return baseURL;
         }
 
         return url;
