@@ -1844,6 +1844,20 @@ public class ArticleTextExtractorTest {
         //compareDates("2016-04-01 10:00:00", res.getDate());
     }
 
+    @Test
+    public void testAmbienteja() throws Exception {
+        // http://ambienteja.info/2016/04/08/sanctions-wont-solve-north-korea-nuclear-issue-envoy-says.html
+        JResult res = new JResult();
+        res.setUrl("http://ambienteja.info/2016/04/08/sanctions-wont-solve-north-korea-nuclear-issue-envoy-says.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("ambienteja.html")));
+        assertEquals("http://ambienteja.info/2016/04/08/sanctions-wont-solve-north-korea-nuclear-issue-envoy-says.html", res.getUrl());
+        assertEquals("http://ambienteja.info/2016/04/08/sanctions-wont-solve-north-korea-nuclear-issue-envoy-says.html", res.getCanonicalUrl());
+        assertEquals("Sanctions won't solve North Korea nuclear issue, envoy says", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Kim, the North Korean banking officia"));
+        assertTrue(res.getText(), res.getText().endsWith("use trade as leverage against North Korea."));
+        compareDates("2016-04-08 00:00:00", res.getDate());
+    }
+
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
