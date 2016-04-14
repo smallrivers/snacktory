@@ -704,6 +704,16 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testCnet1() throws Exception {
+        //http://www.cnet.com/news/adobe-to-buy-omniture-for-1-8-billion/
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cnet1.html")));
+        assertEquals("Adobe to buy Omniture for $1.8 billion", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Adobe said on Tuesday"));
+        assertTrue(res.getText(), res.getText().endsWith("earth-shattering thus far."));
+        compareDates("2009-09-15 20:29:00", res.getDate());
+    }
+
+    @Test
     public void testBloomberg() throws Exception {
         //String url = "http://www.bloomberg.com/news/2010-11-01/china-becomes-boss-in-peru-on-50-billion-mountain-bought-for-810-million.html";
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("bloomberg.html")));
