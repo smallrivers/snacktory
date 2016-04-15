@@ -410,10 +410,10 @@ public class SHelper {
                 monthCounter = counter;
             } else if (str.length() == 8) {
                 String[] parsePatterns = {
-                    "yyyymmdd"
+                    "yyyyMMdd"
                 };
                 try {
-                Date d = DateUtils.parseDateStrictly(str, parsePatterns);
+                    Date d = DateUtils.parseDateStrictly(str, parsePatterns);
                     if (isValidDate(d)){
                         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
                         return df.format(d);
