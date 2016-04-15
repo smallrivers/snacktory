@@ -1868,6 +1868,19 @@ public class ArticleTextExtractorTest {
         compareDates("2016-04-08 00:00:00", res.getDate());
     }
 
+    @Test
+    public void testModernhealthcare() throws Exception {
+        // http://www.modernhealthcare.com/article/20160409/MAGAZINE/304099982
+        JResult res = new JResult();
+        res.setUrl("http://www.modernhealthcare.com/article/20160409/MAGAZINE/304099982");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("modernhealthcare.html")));
+        assertEquals("http://www.modernhealthcare.com/article/20160409/MAGAZINE/304099982", res.getUrl());
+        assertEquals("http://www.modernhealthcare.com/article/20160409/MAGAZINE/304099982", res.getCanonicalUrl());
+        assertEquals("Hospitals dive into venture capital to nurture startups - Modern Healthcare Modern Healthcare business news, research, data and events", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("When Cedars-Sinai Health System launched a program last year"));
+        //assertTrue(res.getText(), res.getText().endsWith("he said."));
+        compareDates("2016-04-09 00:00:00", res.getDate());
+    }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
