@@ -1111,7 +1111,7 @@ public class ArticleTextExtractor {
             }
         }
 
-        elems = doc.select("*[class*=articlePosted], *[class*=_date -body-copy]");
+        elems = doc.select("*[class*=articlePosted], *[class*=_date -body-copy], *[class=date-display-single]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();

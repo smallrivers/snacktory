@@ -1882,6 +1882,19 @@ public class ArticleTextExtractorTest {
         compareDates("2016-04-09 00:00:00", res.getDate());
     }
 
+    @Test
+    public void testMobileiron() throws Exception {
+        // https://www.mobileiron.com/en/smartwork-blog/mobile-weekly-recap-rsa-2016-amazon-fire-drops-encryption-and-threats-apple-pay
+        JResult res = new JResult();
+        res.setUrl("https://www.mobileiron.com/en/smartwork-blog/mobile-weekly-recap-rsa-2016-amazon-fire-drops-encryption-and-threats-apple-pay");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("mobileiron.html")));
+        assertEquals("https://www.mobileiron.com/en/smartwork-blog/mobile-weekly-recap-rsa-2016-amazon-fire-drops-encryption-and-threats-apple-pay", res.getUrl());
+        assertEquals("https://www.mobileiron.com/en/smartwork-blog/mobile-weekly-recap-rsa-2016-amazon-fire-drops-encryption-and-threats-apple-pay", res.getCanonicalUrl());
+        assertEquals("Mobile Weekly Recap: RSA 2016, Amazon Fire Drops Encryption, and Threats to Apple Pay", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("RSA 2016 took place earlier this week at Moscone Center in San Francisco"));
+        compareDates("2016-03-04 00:00:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
