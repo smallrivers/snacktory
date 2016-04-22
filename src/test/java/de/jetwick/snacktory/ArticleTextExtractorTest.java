@@ -1968,6 +1968,20 @@ public class ArticleTextExtractorTest {
         assertEquals("Tom Goodmanson is president and CEO of Calabrio, a provider of customer engagement and analytics technology. LinkedIn: Tom Goodmanson", res.getAuthorDescription());
     }
 
+    @Test
+    public void testTheCountryCaller() throws Exception {
+        // http://www.thecountrycaller.com/39011-general-electric-company-ge-crosses-the-finish-line-completes-metem-corp-merger/
+        JResult res = new JResult();
+        res.setUrl("http://www.thecountrycaller.com/39011-general-electric-company-ge-crosses-the-finish-line-completes-metem-corp-merger/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("thecountrycaller.html")));
+        assertEquals("http://www.thecountrycaller.com/39011-general-electric-company-ge-crosses-the-finish-line-completes-metem-corp-merger", res.getCanonicalUrl());
+        assertEquals("General Electric Company (GE) Crosses The Finish Line: Completes Metem Corp Merger", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("General Electric Company"));
+        assertTrue(res.getText(), res.getText().endsWith("$290.93 billion."));
+        compareDates("2016-04-05 08:21:34", res.getDate());
+        assertEquals("Ramsha Amir", res.getAuthorName());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

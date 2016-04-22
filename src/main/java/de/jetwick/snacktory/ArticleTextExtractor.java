@@ -1170,6 +1170,20 @@ public class ArticleTextExtractor {
             }
         }
 
+        // thecountrycaller.com
+        elems = doc.select("*[itemprop=datePublished dateModified]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.attr("content");
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-itemprop=datePublished-2"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
 
