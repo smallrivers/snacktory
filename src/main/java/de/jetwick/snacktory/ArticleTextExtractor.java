@@ -105,6 +105,7 @@ public class ArticleTextExtractor {
     // TODO: Replace this ugly list with a function that remove all the
     // non numeric characters (except puntuaction, AM/PM and TZ)
     private static final List<Pattern> CLEAN_DATE_PATTERNS = Arrays.asList(
+        Pattern.compile("Published ([A-Zaz]* \\d{1,2}, \\d{4}).*", Pattern.CASE_INSENSITIVE), // sys-con.com
         Pattern.compile("Published on:(.*)", Pattern.CASE_INSENSITIVE),
         Pattern.compile("Published on(.*)", Pattern.CASE_INSENSITIVE),
         Pattern.compile("Published:(.*)", Pattern.CASE_INSENSITIVE),
@@ -1183,6 +1184,22 @@ public class ArticleTextExtractor {
                 }
             }
         }
+
+        // thecountrycaller.com
+        elems = doc.select("p[class=story-footer]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-itemprop=datePublished-2"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
+        
 
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;

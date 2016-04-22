@@ -1982,6 +1982,21 @@ public class ArticleTextExtractorTest {
         assertEquals("Ramsha Amir", res.getAuthorName());
     }
 
+    @Test
+    public void testSyscon() throws Exception {
+        // http://news.sys-con.com/node/3047362
+        JResult res = new JResult();
+        res.setUrl("http://news.sys-con.com/node/3047362");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("sys-con.html")));
+        assertEquals("http://news.sys-con.com/node/3047362", res.getCanonicalUrl());
+        assertEquals("BOXPARK Selects Magento and PayPal to Power Virtual Market Place and Omnichannel Commerce", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Magento and PayPal"));
+        assertTrue(res.getText(), res.getText().endsWith("More information about the company can be found at www.paypal-media.com."));
+        compareDates("2014-04-08 00:00:00", res.getDate());
+    }
+
+
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
