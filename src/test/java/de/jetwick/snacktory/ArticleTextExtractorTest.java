@@ -1953,6 +1953,21 @@ public class ArticleTextExtractorTest {
         compareDates("2016-03-04 00:00:00", res.getDate());
     }
 
+    @Test
+    public void testMarketingprofs() throws Exception {
+        // http://www.marketingprofs.com/opinions/2016/29685/the-inbound-marketing-channel-that-most-executives-are-missing
+        JResult res = new JResult();
+        res.setUrl("http://www.marketingprofs.com/opinions/2016/29685/the-inbound-marketing-channel-that-most-executives-are-missing");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("marketingprofs.html")));
+        assertEquals("http://www.marketingprofs.com/opinions/2016/29685/the-inbound-marketing-channel-that-most-executives-are-missing", res.getCanonicalUrl());
+        assertEquals("Marketing Strategy - The Inbound Marketing Channel That Most Executives Are Missing : MarketingProfs Article", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("When marketing executives consider inbound marketing"));
+        compareDates("2016-04-07 00:00:00", res.getDate());
+        assertTrue(res.getText(), res.getText().startsWith("When marketing executives consider inbound marketing"));
+        assertEquals("Tom Goodmanson is president and CEO of Calabrio", res.getAuthorName());
+        assertEquals("Tom Goodmanson is president and CEO of Calabrio, a provider of customer engagement and analytics technology. LinkedIn: Tom Goodmanson", res.getAuthorDescription());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

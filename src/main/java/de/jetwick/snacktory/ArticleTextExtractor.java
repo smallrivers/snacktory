@@ -1400,6 +1400,11 @@ public class ArticleTextExtractor {
                         matches = doc.select("*[class*=bd author_name]");
                     }
 
+                    // a hack for http://marketingprofs.com/
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("*[id*=contentbios]");
+                    }
+
                     // select the best element from them
 					if(matches != null){
 						Element bestMatch = getBestMatchElement(matches);
@@ -1450,7 +1455,7 @@ public class ArticleTextExtractor {
         if (matches!= null && matches.size() > 0){
             Element bestMatch = matches.first(); // assume it is the first.
             authorDesc = bestMatch.text();
-            return authorDesc;
+            return SHelper.innerTrim(authorDesc);
         }
         
         // Special case for huffingtonpost.com
@@ -1458,7 +1463,7 @@ public class ArticleTextExtractor {
         if (matches!= null && matches.size() > 0){
             Element bestMatch = matches.first(); // assume it is the first.
             authorDesc = bestMatch.text();
-            return authorDesc;
+            return SHelper.innerTrim(authorDesc);
         }
 
         // Special case for jdsupra.com
@@ -1466,8 +1471,17 @@ public class ArticleTextExtractor {
         if (matches!= null && matches.size() > 0){
             Element bestMatch = matches.first(); // assume it is the first.
             authorDesc = bestMatch.text();
-            return authorDesc;
+            return SHelper.innerTrim(authorDesc);
         }
+
+        // Special case for marketingprofs.com
+        matches = doc.select("*[id*=contentbios]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            return SHelper.innerTrim(authorDesc);
+        }
+
 
         try {
             Elements nodes = doc.select(":containsOwn(" + authorName + ")");
@@ -1478,7 +1492,7 @@ public class ArticleTextExtractor {
             // Avoid error when selector is invalid
         }
 
-        return authorDesc;
+        return SHelper.innerTrim(authorDesc);
     }
 
     protected Collection<String> extractKeywords(Document doc) {
