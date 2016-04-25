@@ -1202,7 +1202,19 @@ public class ArticleTextExtractor {
             }
         }
 
-        
+        // yahoo
+        elems = doc.select("[data-reactid][class=date]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-[data-reactid][class=date]"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
 
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;

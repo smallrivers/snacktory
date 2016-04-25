@@ -2008,6 +2008,18 @@ public class ArticleTextExtractorTest {
         compareDates("2015-08-05 18:52:09", res.getDate());
     }
 
+    @Test
+    public void testYahoo1() throws Exception {
+        // https://www.yahoo.com/style/6-sensational-ways-to-see-the-1363675292811318.html
+        JResult res = new JResult();
+        res.setUrl("https://www.yahoo.com/style/6-sensational-ways-to-see-the-1363675292811318.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("yahoo1.html")));
+        assertEquals("https://www.yahoo.com/travel/6-sensational-ways-to-see-the-1363675292811318.html", res.getCanonicalUrl());
+        assertEquals("6 Sensational Ways to See the World for Free", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("To see the world for free"));
+        compareDates("2016-02-15", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
