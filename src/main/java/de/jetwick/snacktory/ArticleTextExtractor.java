@@ -730,6 +730,9 @@ public class ArticleTextExtractor {
         if (dateStr == "") {
             dateStr = SHelper.innerTrim(doc.select("meta[property=article:published]").attr("content"));
         }
+        if (dateStr == "") {
+            dateStr = SHelper.innerTrim(doc.select("meta[property=og:article:published_time]").attr("content"));
+        }
         if (dateStr != "") {
             if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-name=ptime"); }
             Date d = parseDate(dateStr);
@@ -1286,7 +1289,8 @@ public class ArticleTextExtractor {
             "yyyy-MM-dd HH:mm:ss.'0'",// 2015-12-28 06:30:00.0
             "yyyy-MM-dd HH:mm:ss z", //2016-01-17 15:21:00 -0800
             "MMM dd yyyy", //October 05 2015
-            "hh:mm a z',' EEE MMM dd',' yyyy" // 08:51 am EST, Thu March 3, 2016
+            "hh:mm a z',' EEE MMM dd',' yyyy", // 08:51 am EST, Thu March 3, 2016
+            "yyyy-MM-dd'T'HH:mm:ss.SS000z", // 2015-08-05T11:52:09.720380-0700
         };
 
         try {
@@ -1318,6 +1322,9 @@ public class ArticleTextExtractor {
         // Workaround for Zulu timezone not support in DateUtil formats
         // see: http://stackoverflow.com/questions/2580925/simpledateformat-parsing-date-with-z-literal
         dateStr = dateStr.replaceAll("Z$", "+0000");
+
+        // Workaround for not being able to parse dates with microseconds
+        dateStr = dateStr.replaceAll("(\\d){5}", "");
 
         // Workaround for issue with DateUtil format not supporting semicolon
         // on the tz format, see: http://stackoverflow.com/questions/6841067/date-format-error-with-2011-07-27t0641110000
