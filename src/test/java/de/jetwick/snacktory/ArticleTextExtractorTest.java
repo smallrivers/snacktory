@@ -1995,7 +1995,18 @@ public class ArticleTextExtractorTest {
         compareDates("2014-04-08 00:00:00", res.getDate());
     }
 
-
+    @Test
+    public void testRiaBiz() throws Exception {
+        // http://www.riabiz.com/a/4974745007161344/in-a-six-month-mark-reality-check-walt-bettinger-recasts-schwabs-retail-robo-advice-as-a-tool----but-a-handy-one
+        JResult res = new JResult();
+        res.setUrl("http://www.riabiz.com/a/4974745007161344/in-a-six-month-mark-reality-check-walt-bettinger-recasts-schwabs-retail-robo-advice-as-a-tool----but-a-handy-one");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("riabiz.html")));
+        assertEquals("http://riabiz.com/a/4974745007161344/in-a-six-month-mark-reality-check-walt-bettinger-recasts-schwabs-retail-robo-advice-as-a-tool----but-a-handy-one", res.getCanonicalUrl());
+        assertEquals("In a six-month-mark reality check, Walt Bettinger recasts Schwab's retail robo-advice as a 'tool' -- but a handy one", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Brooke’s Note: In the spirit of the wiki-era,"));
+        assertTrue(res.getText(), res.getText().endsWith("it back to brand and distribution.”"));
+        compareDates("2015-08-05 18:52:09", res.getDate());
+    }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
