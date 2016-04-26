@@ -2020,6 +2020,18 @@ public class ArticleTextExtractorTest {
         compareDates("2016-02-15", res.getDate());
     }
 
+    @Test
+    public void testAjmc() throws Exception {
+        // http://www.ajmc.com/newsroom/fda-approves-cabozantinib-for-advanced-renal-cell-carcinoma
+        JResult res = new JResult();
+        res.setUrl("http://www.ajmc.com/newsroom/fda-approves-cabozantinib-for-advanced-renal-cell-carcinoma");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("ajmc.html")));
+        assertEquals("http://www.ajmc.com/newsroom/fda-approves-cabozantinib-for-advanced-renal-cell-carcinoma", res.getCanonicalUrl());
+        assertEquals("FDA Approves Cabozantinib for Advanced Renal Cell Carcinoma", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("FDA Approves Cabozantinib for Advanced Renal Cell Carcinoma"));
+        compareDates("2016-04-25", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
