@@ -2059,6 +2059,19 @@ public class ArticleTextExtractorTest {
         compareDates("2016-04-28 14:15:00", res.getDate());
     }
 
+    @Test
+    public void testNewsobserver() throws Exception {
+        // http://www.newsobserver.com/news/article52385500.html
+        JResult res = new JResult();
+        res.setUrl("http://www.newsobserver.com/news/article52385500.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("newsobserver.html")));
+        assertEquals("http://www.newsobserver.com/news/article52385500.html", res.getCanonicalUrl());
+        assertEquals("Photo Gallery: The Day's Best | 12.30.15", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("In this aerial photo, flood water covers Interstate 44"));
+        assertTrue(res.getText(), res.getText().endsWith("of last year.' Chip Somodevilla"));
+        assertFalse(res.getText(), res.getText().contains("Getty Images"));
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
