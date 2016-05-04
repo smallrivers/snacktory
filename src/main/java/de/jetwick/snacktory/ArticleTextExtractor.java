@@ -173,9 +173,6 @@ public class ArticleTextExtractor {
         aMap.put("selling-stock.com", Arrays.asList(
                 "div[class=storycontent]"
             ));
-
-
-        
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -201,7 +198,7 @@ public class ArticleTextExtractor {
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings|title|avatar|follow-me-twitter|truncate");
         setHighlyNegative("policy-blk|FollowLinkedInSignIn|^signupbox$");
-        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$");
+        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {

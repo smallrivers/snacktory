@@ -2045,6 +2045,20 @@ public class ArticleTextExtractorTest {
         //compareDates("2016-04-28", res.getDate());
     }
 
+    @Test
+    public void testCosmopolitan() throws Exception {
+        // http://www.cosmopolitan.com/food-cocktails/news/g5647/foods-that-make-you-constipated/
+        JResult res = new JResult();
+        res.setUrl("http://www.cosmopolitan.com/food-cocktails/news/g5647/foods-that-make-you-constipated/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("cosmopolitan.html")));
+        assertEquals("http://www.cosmopolitan.com/food-cocktails/news/g5647/foods-that-make-you-constipated/", res.getCanonicalUrl());
+        assertEquals("19 Surprising Foods That Make You Constipated", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("This is the type of story you probably"));
+        assertTrue(res.getText(), res.getText().endsWith("according to USDA data."));
+        assertFalse(res.getText(), res.getText().contains("Getty Images"));
+        compareDates("2016-04-28 14:15:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
