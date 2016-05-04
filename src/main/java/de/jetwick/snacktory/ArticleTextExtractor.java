@@ -167,6 +167,12 @@ public class ArticleTextExtractor {
         aMap.put("macnn.com", Arrays.asList(
                 "div[class=container-wrapper]"
             ));
+        aMap.put("selling-stock.com", Arrays.asList(
+                "div[class=storycontent]"
+            ));
+
+
+        
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -189,12 +195,12 @@ public class ArticleTextExtractor {
                 + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-                + "|arti(cle|kel)|instapaper_body|storybody|short-story");
+                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent");
         setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|articleBody|article-body|html-view-content|entry__body|^main-article$|^article__content$");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate");
-        setHighlyNegative("policy-blk|FollowLinkedInSignIn");
+        setHighlyNegative("policy-blk|FollowLinkedInSignIn|^signupbox$");
         setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$");
     }
 

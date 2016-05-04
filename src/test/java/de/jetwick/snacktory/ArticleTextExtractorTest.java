@@ -1974,6 +1974,19 @@ public class ArticleTextExtractorTest {
         compareDates("2016-04-25", res.getDate());
     }
 
+    @Test
+    public void testSellingStock() throws Exception {
+        // http://www.selling-stock.com/ViewArticle.aspx?code=JMP6663
+        JResult res = new JResult();
+        res.setUrl("http://www.selling-stock.com/ViewArticle.aspx?code=JMP6663");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("selling-stock.html")));
+        assertEquals("http://www.selling-stock.com/ViewArticle.aspx?code=JMP6663", res.getCanonicalUrl());
+        assertEquals("Top Footage Distributors", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("More and more photographers have started to produce stock footage"));
+        assertTrue(res.getText(), res.getText().endsWith("“What are the best companies to represent my work?”"));
+        //compareDates("2016-04-28", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
