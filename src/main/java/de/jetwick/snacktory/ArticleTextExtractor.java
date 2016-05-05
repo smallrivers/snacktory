@@ -192,18 +192,18 @@ public class ArticleTextExtractor {
                 + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent");
-        setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|articleBody|article-body|html-view-content|entry__body|^main-article$|^article__content$");
+                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext");
+        setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
-                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate");
-        setHighlyNegative("policy-blk|FollowLinkedInSignIn|^signupbox$");
-        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$");
+                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate|slider|^sectioncolumns$");
+        setHighlyNegative("policy-blk|followlinkedinsignin|^signupbox$");
+        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
         this.unlikelyStr = unlikelyStr;
-        UNLIKELY = Pattern.compile(unlikelyStr);
+        UNLIKELY = Pattern.compile(unlikelyStr, Pattern.CASE_INSENSITIVE);
         return this;
     }
 
@@ -213,13 +213,13 @@ public class ArticleTextExtractor {
 
     public ArticleTextExtractor setPositive(String positiveStr) {
         this.positiveStr = positiveStr;
-        POSITIVE = Pattern.compile(positiveStr);
+        POSITIVE = Pattern.compile(positiveStr, Pattern.CASE_INSENSITIVE);
         return this;
     }
 
     public ArticleTextExtractor setHighlyPositive(String highlyPositiveStr) {
         this.highlyPositiveStr = highlyPositiveStr;
-        HIGHLY_POSITIVE = Pattern.compile(highlyPositiveStr);
+        HIGHLY_POSITIVE = Pattern.compile(highlyPositiveStr, Pattern.CASE_INSENSITIVE);
         return this;
     }
 
@@ -229,13 +229,13 @@ public class ArticleTextExtractor {
 
     public ArticleTextExtractor setNegative(String negativeStr) {
         this.negativeStr = negativeStr;
-        NEGATIVE = Pattern.compile(negativeStr);
+        NEGATIVE = Pattern.compile(negativeStr, Pattern.CASE_INSENSITIVE);
         return this;
     }
 
     public ArticleTextExtractor setHighlyNegative(String highlyNegativeStr) {
         this.highlyNegativeStr = highlyNegativeStr;
-        HIGHLY_NEGATIVE = Pattern.compile(highlyNegativeStr);
+        HIGHLY_NEGATIVE = Pattern.compile(highlyNegativeStr, Pattern.CASE_INSENSITIVE);
         return this;
     }
 
@@ -246,7 +246,7 @@ public class ArticleTextExtractor {
 
     public ArticleTextExtractor setToRemove(String toRemoveStr) {
         this.toRemoveStr = toRemoveStr;
-        TO_REMOVE = Pattern.compile(toRemoveStr);
+        TO_REMOVE = Pattern.compile(toRemoveStr, Pattern.CASE_INSENSITIVE);
         return this;
     }
 
