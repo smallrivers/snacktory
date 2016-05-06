@@ -2,7 +2,7 @@ import sbt._
 import Keys._
 
 object Dependencies {
-  val Jsoup = "org.jsoup" % "jsoup" % "1.9.1"
+  val Jsoup = "org.jsoup" % "jsoup" % "1.8.3"
   val Slf4jApi = "org.slf4j" % "slf4j-api" % "1.6.6"
   val Slf4jLog4j12 = "org.slf4j" % "slf4j-log4j12" % "1.6.6" 
   val CommonsLang = "commons-lang" % "commons-lang" % "2.6"
