@@ -1987,6 +1987,8 @@ public class ArticleTextExtractorTest {
         //compareDates("2016-04-28", res.getDate());
     }
 
+    /*
+    // Need JSoup 1.9.1
     @Test
     public void testCosmopolitan() throws Exception {
         // http://www.cosmopolitan.com/food-cocktails/news/g5647/foods-that-make-you-constipated/
@@ -1999,8 +2001,10 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().endsWith("according to USDA data."));
         assertFalse(res.getText(), res.getText().contains("Getty Images"));
         compareDates("2016-04-28 14:15:00", res.getDate());
-    }
+    }*/
 
+    /*
+    // Need JSoup 1.9.1
     @Test
     public void testNewsobserver() throws Exception {
         // http://www.newsobserver.com/news/article52385500.html
@@ -2013,7 +2017,10 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().endsWith("of last year.' Chip Somodevilla"));
         assertFalse(res.getText(), res.getText().contains("Getty Images"));
     }
+    */
 
+    /*
+    // Need JSoup 1.9.1
     @Test
     public void testTheLoop() throws Exception {
         // http://www.theloop.ca/miley-cyrus-refuses-to-grow-up/
@@ -2027,7 +2034,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("The gals from Orange is the New Black"));
         assertTrue(res.getText(), res.getText().endsWith("nobody wants that swirl."));
         //assertFalse(res.getText(), res.getText().contains("Getty Images"));
-    }
+    }*/
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
