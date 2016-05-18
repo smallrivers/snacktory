@@ -2161,6 +2161,23 @@ public class ArticleTextExtractorTest {
         //assertFalse(res.getText(), res.getText().contains("Getty Images"));
     }
 
+    @Test
+    public void testMittelstand() throws Exception {
+        // http://www.mittelstand-nachrichten.de/meinung/umfrage-fast-alle-unternehmen-in-europa-nutzen-cloud-basierte-it-services-20160309.html
+        JResult res = new JResult();
+        res.setUrl("http://www.mittelstand-nachrichten.de/meinung/umfrage-fast-alle-unternehmen-in-europa-nutzen-cloud-basierte-it-services-20160309.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("mittelstand-nachrichten.de.html")));
+        assertEquals("http://www.mittelstand-nachrichten.de/meinung/umfrage-fast-alle-unternehmen-in-europa-nutzen-cloud-basierte-it-services-20160309.html", res.getCanonicalUrl());
+        assertEquals("Umfrage: Fast alle Unternehmen in Europa nutzen Cloud-basierte IT-Services", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Eine neue Studie untersucht die Einstellungen"));
+        assertTrue(res.getText(), res.getText().endsWith("Dienst und das Finanzwesen."));
+        assertTrue(res.getText(), res.getText().contains("Microsoft Azure"));
+
+        //compareDates("2016-03-09", res.getDate());
+    }
+
+    // http://www.pcadvisor.co.uk/news/enterprise/amazon-microsoft-and-salesforce-top-forrester-cloud-platform-list-3604588/
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
