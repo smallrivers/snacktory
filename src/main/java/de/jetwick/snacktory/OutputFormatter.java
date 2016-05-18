@@ -28,7 +28,7 @@ public class OutputFormatter {
     protected final int minFirstParagraphText;
     protected final int minParagraphText;
     protected final List<String> nodesToReplace;
-    protected String nodesToKeepCssSelector = "p, ol, em";
+    protected String nodesToKeepCssSelector = "p, ol, em, ul, li";
 
     public OutputFormatter() {
         this(MIN_FIRST_PARAGRAPH_TEXT, MIN_PARAGRAPH_TEXT, NODES_TO_REPLACE);
@@ -108,12 +108,24 @@ public class OutputFormatter {
     protected int append(Element node, StringBuilder sb, String tagName) {
         int countOfP = 0; // Number of P elements in the article
         int paragraphWithTextIndex = 0;
+        boolean hasParagraph = false;
+
         // is select more costly then getElementsByTag?
         MAIN:
         for (Element e : node.select(tagName)) {
 
             if(DEBUG_OUTPUT)
                 System.out.println("1) Tag:" + e.tagName() + "| text:" + e.text() + "|");
+
+            // If the list is at the beginning of the content we assume it is not part of it.
+            if (!hasParagraph){
+                if (e.tagName().equals("ul") ||
+                    e.tagName().equals("li")){
+                    continue;
+                } else {
+                    hasParagraph = true;
+                }
+            }
 
             Element tmpEl = e;
             // check all elements until 'node'
