@@ -2046,6 +2046,18 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testCbcCa() throws Exception {
+        // http://www.cbc.ca/news/raw-rana-bokhari-speaks-after-loss-to-wab-kinew-1.3544135
+        JResult res = new JResult();
+        res.setUrl("http://www.cbc.ca/news/raw-rana-bokhari-speaks-after-loss-to-wab-kinew-1.3544135");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("cbc.ca.html")));
+        assertEquals("http://www.cbc.ca/news/raw-rana-bokhari-speaks-after-loss-to-wab-kinew-1.3544135", res.getCanonicalUrl());
+        assertEquals("RAW: Rana Bokhari speaks after loss to Wab Kinew", res.getTitle());
+        assertEquals("Manitoba Liberal Leader Rana Bokhari speaks to the media after losing to the NDP's Wab Kinew in Fort Rouge.", res.getText());
+        compareDates("2016-04-20", res.getDate());
+    }
+
+    @Test
     public void testCosmopolitan() throws Exception {
         // http://www.cosmopolitan.com/food-cocktails/news/g5647/foods-that-make-you-constipated/
         JResult res = new JResult();

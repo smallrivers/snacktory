@@ -192,13 +192,13 @@ public class ArticleTextExtractor {
                 + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext");
+                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext|story-primary");
         setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings|title|avatar|follow-me-twitter|truncate|slider|^sectioncolumns$");
         setHighlyNegative("policy-blk|FollowLinkedInSignIn|^signupbox$");
-        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$");
+        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
