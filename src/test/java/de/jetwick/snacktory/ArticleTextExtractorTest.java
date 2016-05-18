@@ -2070,6 +2070,31 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testTheGlobeAndMail() throws Exception {
+        // http://www.theglobeandmail.com/report-on-business/top-10-wind-power-producers-dec-2015/article29683113/
+        JResult res = new JResult();
+        res.setUrl("http://www.theglobeandmail.com/report-on-business/top-10-wind-power-producers-dec-2015/article29683113/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("theglobeandmail.html")));
+        assertEquals("http://www.theglobeandmail.com/report-on-business/top-10-wind-power-producers-dec-2015/article29683113/", res.getCanonicalUrl());
+        assertEquals("Top 10 wind power producers (Dec. 2015)", res.getTitle());
+        assertEquals("Top 10 wind power producers (Dec. 2015) Add to ... Published Tuesday, Apr. 19, 2016 7:18PM EDT Last updated Tuesday, Apr. 19, 2016 7:18PM EDT", res.getText());
+        compareDates("2016-04-19 23:04:19", res.getDate());
+    }
+
+    @Test
+    public void testTheGlobeAndMail2() throws Exception {
+        // http://www.theglobeandmail.com/news/politics/ndp-accuses-trudeau-of-elbowing-another-mp-pm-says-it-was-an-accident/article30087176/
+        JResult res = new JResult();
+        res.setUrl("http://www.theglobeandmail.com/news/politics/ndp-accuses-trudeau-of-elbowing-another-mp-pm-says-it-was-an-accident/article30087176/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("theglobeandmail2.html")));
+        assertEquals("http://www.theglobeandmail.com/news/politics/ndp-accuses-trudeau-of-elbowing-another-mp-pm-says-it-was-an-accident/article30087176/", res.getCanonicalUrl());
+        assertEquals("MP says Trudeau elbowed her on the floor of the Commons; PM apologizes", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("The House of Commons erupted in chaos Wednesday as a New Democrat "));
+        assertTrue(res.getText(), res.getText().endsWith("privileges as an MP had been breached."));
+        compareDates("2016-05-18 22:05:47", res.getDate());
+    }
+
+    @Test
     public void testCosmopolitan() throws Exception {
         // http://www.cosmopolitan.com/food-cocktails/news/g5647/foods-that-make-you-constipated/
         JResult res = new JResult();
