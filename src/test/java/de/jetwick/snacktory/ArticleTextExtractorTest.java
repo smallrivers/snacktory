@@ -2011,6 +2011,31 @@ public class ArticleTextExtractorTest {
         compareDates("2016-05-14 17:02:26", res.getDate());
     }
 
+    @Test
+    public void testTheGlobeAndMail() throws Exception {
+        // http://www.theglobeandmail.com/report-on-business/top-10-wind-power-producers-dec-2015/article29683113/
+        JResult res = new JResult();
+        res.setUrl("http://www.theglobeandmail.com/report-on-business/top-10-wind-power-producers-dec-2015/article29683113/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("theglobeandmail.html")));
+        assertEquals("http://www.theglobeandmail.com/report-on-business/top-10-wind-power-producers-dec-2015/article29683113/", res.getCanonicalUrl());
+        assertEquals("Top 10 wind power producers (Dec. 2015) - The Globe and Mail", res.getTitle());
+        assertEquals("Top 10 wind power producers (Dec. 2015) Add to ... Published Tuesday, Apr. 19, 2016 7:18PM EDT Last updated Tuesday, Apr. 19, 2016 7:18PM EDT", res.getText());
+        compareDates("2016-04-19 23:04:19", res.getDate());
+    }
+
+    @Test
+    public void testTheGlobeAndMail2() throws Exception {
+        // http://www.theglobeandmail.com/news/politics/ndp-accuses-trudeau-of-elbowing-another-mp-pm-says-it-was-an-accident/article30087176/
+        JResult res = new JResult();
+        res.setUrl("http://www.theglobeandmail.com/news/politics/ndp-accuses-trudeau-of-elbowing-another-mp-pm-says-it-was-an-accident/article30087176/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("theglobeandmail2.html")));
+        assertEquals("http://www.theglobeandmail.com/news/politics/ndp-accuses-trudeau-of-elbowing-another-mp-pm-says-it-was-an-accident/article30087176/", res.getCanonicalUrl());
+        assertEquals("MP says Trudeau elbowed her on the floor of the Commons; PM apologizes - The Globe and Mail", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("The House of Commons erupted in chaos Wednesday as a New Democrat "));
+        assertTrue(res.getText(), res.getText().endsWith("privileges as an MP had been breached."));
+        compareDates("2016-05-18 22:05:47", res.getDate());
+    }
+
     /*
     // Need JSoup 1.9.1
     @Test
