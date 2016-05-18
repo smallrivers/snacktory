@@ -1999,6 +1999,18 @@ public class ArticleTextExtractorTest {
         compareDates("2016-04-20", res.getDate());
     }
 
+    @Test
+    public void testHeadlinesNews() throws Exception {
+        // http://www.headlines-news.com/2016/05/14/1202189/congress-has-a-constitutional-duty-to-fix-puerto-rico-debt-crisis
+        JResult res = new JResult();
+        res.setUrl("http://www.headlines-news.com/2016/05/14/1202189/congress-has-a-constitutional-duty-to-fix-puerto-rico-debt-crisis");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("headlines-news.html")));
+        assertEquals("http://www.headlines-news.com/2016/05/14/1202189/congress-has-a-constitutional-duty-to-fix-puerto-rico-debt-crisis", res.getCanonicalUrl());
+        assertTrue(res.getText(), res.getText().startsWith("By Brian Robertson, contributor"));
+        assertTrue(res.getText(), res.getText().endsWith("the mainland with their own serious Next »"));
+        compareDates("2016-05-14 17:02:26", res.getDate());
+    }
+
     /*
     // Need JSoup 1.9.1
     @Test
