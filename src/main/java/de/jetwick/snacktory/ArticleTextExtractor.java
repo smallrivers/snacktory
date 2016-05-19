@@ -353,9 +353,13 @@ public class ArticleTextExtractor {
         // check for domain specific rules
         if(!res.getUrl().equals("")){
             InternetDomainName domain = getDomain(res.getUrl());
-            String topPrivateDomain = domain.topPrivateDomain().toString();
-            removeNodesPerDomain(doc, domain.toString());
-            removeNodesPerDomain(doc, topPrivateDomain);
+            if(domain!=null){
+                InternetDomainName topPrivateDomain = getTopPrivateDomain(domain);
+                if (topPrivateDomain!=null){
+                    removeNodesPerDomain(doc, domain.toString());
+                    removeNodesPerDomain(doc, topPrivateDomain.toString());
+                }
+            }
         }
 
         // first evaluate if there is any domain specific rules.
@@ -484,24 +488,26 @@ public class ArticleTextExtractor {
             }
             res.setText(text);
         }
-
         return true;
     }
-
 
     private Element getBestMatchElementPerURL(Document doc, String url){
         if (url==null || url.length()==0){
             return null;
         }
         InternetDomainName domain = getDomain(url);
-        String topPrivateDomain = domain.topPrivateDomain().toString();
-        Element vDomain = getBestMatchElementPerDomain(doc, domain.toString());
-        if (vDomain!=null){
-            return vDomain;
-        }
-        Element vTopDomain = getBestMatchElementPerDomain(doc, topPrivateDomain);
-        if (vTopDomain!=null){
-            return vTopDomain;
+        if(domain!=null){
+            InternetDomainName topPrivateDomain = getTopPrivateDomain(domain);
+            if(topPrivateDomain!=null){
+                Element vDomain = getBestMatchElementPerDomain(doc, domain.toString());
+                if (vDomain!=null){
+                    return vDomain;
+                }
+                Element vTopDomain = getBestMatchElementPerDomain(doc, topPrivateDomain.toString());
+                if (vTopDomain!=null){
+                    return vTopDomain;
+                }
+            }
         }
         return null;
     }
@@ -685,7 +691,11 @@ public class ArticleTextExtractor {
                 if (!use_external){
                      // baseURL shouldn't never be null but some old test are missing it.
                     if (baseURL!=null && baseURL.length() > 0){
-                        if (!getTopPrivateDomain(baseURL).equals(getTopPrivateDomain(url))){
+                        InternetDomainName baseUrlDomain = getTopPrivateDomain(baseURL);
+                        InternetDomainName urlDomain = getTopPrivateDomain(url);
+                        // if it point to an external domain, don't use the canonical
+                        if (baseUrlDomain!=null && urlDomain!=null 
+                            && !baseUrlDomain.toString().equals(urlDomain.toString())){
                             return baseURL;
                         }
                     }
@@ -2272,10 +2282,27 @@ public class ArticleTextExtractor {
     // Returns the portion of this domain name that is one level beneath the public suffix. 
     // For example, for x.adwords.google.co.uk it returns google.co.uk, since co.uk is a public suffix.
     // See: http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/net/InternetDomainName.html#topPrivateDomain()
-    public static String getTopPrivateDomain(String url) {
+    public static InternetDomainName getTopPrivateDomain(String url) {
         InternetDomainName domain = getDomain(url);
         if (domain!=null){
-            return domain.topPrivateDomain().toString();
+            try {
+                return domain.topPrivateDomain();
+            } catch (java.lang.IllegalStateException ex) {
+                // Exception thrown when processing some URLs under not
+                // public TLDs, i.e: 
+            }
+        }
+        return null;
+    }
+
+    public static InternetDomainName getTopPrivateDomain(InternetDomainName domain) {
+        if (domain!=null){
+            try {
+                return domain.topPrivateDomain();
+            } catch (java.lang.IllegalStateException ex) {
+                // Exception thrown when processing some URLs under not
+                // public TLDs, i.e: 
+            }
         }
         return null;
     }
