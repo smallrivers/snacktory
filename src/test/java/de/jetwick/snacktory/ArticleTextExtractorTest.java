@@ -2024,16 +2024,16 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
-    public void testTheGlobeAndMail2() throws Exception {
-        // http://www.theglobeandmail.com/news/politics/ndp-accuses-trudeau-of-elbowing-another-mp-pm-says-it-was-an-accident/article30087176/
+    public void testPetaPixel() throws Exception {
+        // http://petapixel.com/2016/05/11/russian-man-takes-flying-drone-spear-historical-reenactment/
         JResult res = new JResult();
-        res.setUrl("http://www.theglobeandmail.com/news/politics/ndp-accuses-trudeau-of-elbowing-another-mp-pm-says-it-was-an-accident/article30087176/");
-        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("theglobeandmail2.html")));
-        assertEquals("http://www.theglobeandmail.com/news/politics/ndp-accuses-trudeau-of-elbowing-another-mp-pm-says-it-was-an-accident/article30087176/", res.getCanonicalUrl());
-        assertEquals("MP says Trudeau elbowed her on the floor of the Commons; PM apologizes - The Globe and Mail", res.getTitle());
-        assertTrue(res.getText(), res.getText().startsWith("The House of Commons erupted in chaos Wednesday as a New Democrat "));
-        assertTrue(res.getText(), res.getText().endsWith("privileges as an MP had been breached."));
-        compareDates("2016-05-18 22:05:47", res.getDate());
+        res.setUrl("http://petapixel.com/2016/05/11/russian-man-takes-flying-drone-spear-historical-reenactment/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("petapixel.html")));
+        assertEquals("http://petapixel.com/2016/05/11/russian-man-takes-flying-drone-spear-historical-reenactment/", res.getCanonicalUrl());
+        assertEquals("Russian Man Takes Out Flying Drone with a Spear at History Festival", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("You can add “Russian guy with a spear”"));
+        assertTrue(res.getText(), res.getText().endsWith(" takedown followed by the video below:"));
+        compareDates("2016-05-11 10:47:55", res.getDate());
     }
 
     /*
