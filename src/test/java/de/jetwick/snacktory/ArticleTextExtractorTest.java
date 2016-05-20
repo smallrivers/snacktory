@@ -2095,6 +2095,19 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testDigitalisationworld() throws Exception {
+        // https://digitalisationworld.com/article/36485/
+        JResult res = new JResult();
+        res.setUrl("https://digitalisationworld.com/article/36485/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("digitalisationworld.html")));
+        assertEquals("https://digitalisationworld.com/article/36485/", res.getCanonicalUrl());
+        assertEquals("DevOps will become front of mind for UK enterprises", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("As we move into 2015,"));
+        assertTrue(res.getText(), res.getText().endsWith("community activity as well as an internal one."));
+        compareDates("2015-01-05", res.getDate());
+    }
+
+    @Test
     public void testCosmopolitan() throws Exception {
         // http://www.cosmopolitan.com/food-cocktails/news/g5647/foods-that-make-you-constipated/
         JResult res = new JResult();
