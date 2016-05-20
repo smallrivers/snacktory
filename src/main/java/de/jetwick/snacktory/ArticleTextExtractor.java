@@ -669,6 +669,12 @@ public class ArticleTextExtractor {
                 title = cleanTitle(title);
             }
 
+            // custom case: digitalisationworld.com
+            String possibleTitle = SHelper.innerTrim(doc.select("h2[class=page-title]:first-of-type").text());
+            if(!possibleTitle.isEmpty()){
+                title = possibleTitle;
+            }
+
         }
         return title;
     }
@@ -1218,6 +1224,20 @@ public class ArticleTextExtractor {
             }
         }
 
+        // digitalisationworld
+        elems = doc.select("span[class=entry-date]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-*[span=entry-date]"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
 
@@ -1385,6 +1405,9 @@ public class ArticleTextExtractor {
 
         // http://mobile.slashdot.org/story/15/11/12/1516255/mozilla-launches-firefox-for-ios
         dateStr = dateStr.replaceAll("@", "");
+
+        // Remove ordinal indicators
+        dateStr = dateStr.replaceAll("(\\d)(?:st|nd|rd|th)", "$1");
 
         dateStr = StringUtils.strip(dateStr);
         return dateStr;
@@ -2288,8 +2311,7 @@ public class ArticleTextExtractor {
             try {
                 return domain.topPrivateDomain();
             } catch (java.lang.IllegalStateException ex) {
-                // Exception thrown when processing some URLs under not
-                // public TLDs, i.e: 
+                // Handle exception: Not under a public suffix
             }
         }
         return null;
@@ -2300,8 +2322,7 @@ public class ArticleTextExtractor {
             try {
                 return domain.topPrivateDomain();
             } catch (java.lang.IllegalStateException ex) {
-                // Exception thrown when processing some URLs under not
-                // public TLDs, i.e: 
+                // Handle exception: Not under a public suffix
             }
         }
         return null;

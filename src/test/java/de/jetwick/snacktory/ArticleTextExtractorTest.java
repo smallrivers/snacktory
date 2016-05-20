@@ -2036,6 +2036,19 @@ public class ArticleTextExtractorTest {
         compareDates("2016-05-11 10:47:55", res.getDate());
     }
 
+    @Test
+    public void testDigitalisationworld() throws Exception {
+        // https://digitalisationworld.com/article/36485/
+        JResult res = new JResult();
+        res.setUrl("https://digitalisationworld.com/article/36485/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("digitalisationworld.html")));
+        assertEquals("https://digitalisationworld.com/article/36485/", res.getCanonicalUrl());
+        assertEquals("DevOps will become front of mind for UK enterprises", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("As we move into 2015,"));
+        assertTrue(res.getText(), res.getText().endsWith("community activity as well as an internal one."));
+        compareDates("2015-01-05", res.getDate());
+    }
+
     /*
     // Need JSoup 1.9.1
     @Test
