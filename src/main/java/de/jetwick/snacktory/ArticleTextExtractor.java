@@ -88,7 +88,7 @@ public class ArticleTextExtractor {
         setHighlyPositive("storybody");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
-                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|avatar|follow-me-twitter");
+                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings|title|avatar|follow-me-twitter");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -884,6 +884,10 @@ public class ArticleTextExtractor {
 
         for (Element child : rootEl.children()) {
             String ownText = child.ownText();
+
+            // if you are on a paragraph, grab all the text including that surrounded by additional formatting.
+            if (child.tagName().equals("p")) ownText = child.text();
+
             int ownTextLength = ownText.length();
             if (ownTextLength < 20)
                 continue;

@@ -69,6 +69,18 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testData6() throws Exception {
+        JResult res = extractor.extractContent(readFileAsString("test_data/6.html"));
+        assertTrue("data6:" + res.getText(), res.getText().equals("Acting Governor of Balkh province, Atta Mohammad Noor, said that differences between leaders of the National Unity Government (NUG) – namely President Ashraf Ghani and CEO Abdullah Abdullah— have paved the ground for mounting insecurity. To watch the whole news bulletin, click here: Hundreds of worried relatives gathered outside Kabul hospitals on Tuesday desperate for news of loved ones following the deadly suicide bombing earlier in the day."));
+    }
+
+    @Test
+    public void testData7() throws Exception {
+        JResult res = extractor.extractContent(readFileAsString("test_data/7.html"));
+        assertTrue("data7:" + res.getText(), res.getText().startsWith("Over 100 school girls have been poisoned in western Farah province of Afghanistan during the school hours."));
+    }
+
+    @Test
     public void testCNN() throws Exception {
         // http://edition.cnn.com/2011/WORLD/africa/04/06/libya.war/index.html?on.cnn=1
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cnn.html")));
@@ -102,9 +114,9 @@ public class ArticleTextExtractorTest {
     public void testBBCNoCSS() throws Exception {
         // http://www.bbc.co.uk/news/magazine-21206964
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("bbc_nocss.html")));
-        assertEquals("Digital artists inspired by the GIF's resurgence", res.getTitle());
-        assertEquals("http://news.bbcimg.co.uk/media/images/65563000/jpg/_65563632_gifpromo.jpg", res.getImageUrl());
-        assertTrue("bbc no css:" + res.getText(), res.getText().startsWith("They were created in the late-1980s, but recent years have seen a resurgence in popularity of GIF animated files."));
+        assertEquals("Digital artists inspired by the gif's resurgence - BBC News", res.getTitle());
+        assertEquals("http://ichef-1.bbci.co.uk/news/1024/media/images/65563000/jpg/_65563610_gifpromo.jpg", res.getImageUrl());
+        assertTrue("bbc no css:" + res.getText(), res.getText().startsWith("They were created in the late-1980s, but recent years have seen a resurgence in popularity of gif animated files."));
     }
 
     @Test

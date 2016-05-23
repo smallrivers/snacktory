@@ -33,7 +33,7 @@ public class HtmlFetcherIntegrationTest {
         JResult res = new HtmlFetcher().fetchAndExtract("http://www.tumblr.com/xeb22gs619", 10000, true);
 //        System.out.println("tumblr:" + res.getUrl());
 
-        res = new HtmlFetcher().fetchAndExtract("http://www.faz.net/-01s7fc", 10000, true);
+//        res = new HtmlFetcher().fetchAndExtract("http://www.faz.net/-01s7fc", 10000, true);
 //        System.out.println("faz:" + res.getUrl());
 
         res = new HtmlFetcher().fetchAndExtract("http://www.google.com/url?sa=x&q=http://www.taz.de/1/politik/asien/artikel/1/anti-atomkraft-nein-danke/&ct=ga&cad=caeqargbiaaoataaoabaltmh7qrialaawabibwrllurf&cd=d5glzns5m_4&usg=afqjcnetx___sph8sjwhjwi-_mmdnhilra&utm_source=twitterfeed&utm_medium=twitter", 10000, true);
@@ -96,7 +96,7 @@ public class HtmlFetcherIntegrationTest {
 
     @Test
     public void testFurther() throws Exception {
-        JResult res = new HtmlFetcher().fetchAndExtract("http://linksunten.indymedia.org/de/node/41619?utm_source=twitterfeed&utm_medium=twitter", 10000, true);
+        JResult res = new HtmlFetcher().fetchAndExtract("https://linksunten.indymedia.org/de/node/41619?utm_source=twitterfeed&utm_medium=twitter", 10000, true);
         assertTrue(res.getText(), res.getText().startsWith("Es gibt kein ruhiges Hinterland! Schon wieder den "));
     }
 
@@ -108,7 +108,7 @@ public class HtmlFetcherIntegrationTest {
 
     @Test
     public void testXml() throws Exception {
-        String str = new HtmlFetcher().fetchAsString("http://blogs.adobe.com/comments/feed", 10000);
+        String str = new HtmlFetcher().fetchAsString("https://karussell.wordpress.com/feed/", 10000);
         assertTrue(str, str.startsWith("<?xml version="));
     }
 
