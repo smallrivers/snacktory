@@ -17,6 +17,7 @@ package de.jetwick.snacktory;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.apache.commons.lang.time.*;
 
 /**
  *
@@ -36,19 +37,24 @@ public class HtmlFetcherIntegrationTest {
 //        System.out.println("faz:" + res.getUrl());
 
         res = new HtmlFetcher().fetchAndExtract("http://www.google.com/url?sa=x&q=http://www.taz.de/1/politik/asien/artikel/1/anti-atomkraft-nein-danke/&ct=ga&cad=caeqargbiaaoataaoabaltmh7qrialaawabibwrllurf&cd=d5glzns5m_4&usg=afqjcnetx___sph8sjwhjwi-_mmdnhilra&utm_source=twitterfeed&utm_medium=twitter", 10000, true);
-        assertEquals("http://www.taz.de/1/politik/asien/artikel/1/anti-atomkraft-nein-danke/", res.getUrl());
+        assertTrue(res.getUrl(), res.getUrl().startsWith("http://www.taz.de/!"));
 //        System.out.println("google redirect:" + res.getUrl());
 
-        res = new HtmlFetcher().fetchAndExtract("http://bit.ly/gyFxfv", 10000, true);
-        assertEquals("http://www.obiavi-bg.com/obiava_688245-6|260|262|/%D0%BF%D1%80%D0%BE%D0%BB%D0%B5%D1%82%D0%BD%D0%B0-%D0%BF%D1%80%D0%BE%D0%BC%D0%BE%D1%86%D0%B8%D1%8F-%D0%B4%D0%B0-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%B8%D1%80%D0%B0%D0%BC%D0%B5-%D1%81-java.html?utm_source=twitterfeed&utm_medium=twitter",
-                res.getUrl());
+        // Two levels of redirection:
+        // http://on.fb.me/IKFRtL --> http://www.facebook.com --> https://www.facebook.com
+        res = new HtmlFetcher().fetchAndExtract("http://on.fb.me/IKFRtL", 10000, true);
+        assertEquals("https://www.facebook.com/", res.getUrl());
+
+        // Redirection.
+        res = new HtmlFetcher().fetchAndExtract("http://www.azcentral.com/videos/news/12-news/arizona-midday/2014/11/26/19550567/", 10000, true);
+        assertEquals("http://www.azcentral.com/videos/news/12-news/arizona-midday/2014/11/26/19550567/", res.getUrl());
     }
 
     @Test
     public void testWithTitle() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://www.midgetmanofsteel.com/2011/03/its-only-matter-of-time-before-fox-news.html", 10000, true);
         assertEquals("It's Only a Matter of Time Before Fox News Takes Out a Restraining Order", res.getTitle());
-        assertEquals("2011/03", res.getDate());
+        assertEquals("2011/03/02", DateFormatUtils.format(res.getDate(), "yyyy/MM/dd"));
     }
 
     // do not support this uglyness
@@ -63,6 +69,8 @@ public class HtmlFetcherIntegrationTest {
 //        JResult res = new HtmlFetcher().fetchAndExtract("http://twitpic.com/4kuem8", 12000, true);
 //        assertTrue(res.getText(), res.getText().contains("*Not* what you want to see"));
 //    }
+
+    // TODO: Change test so they depend on external pages anymore
     @Test
     public void testEncoding() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://www.yomiuri.co.jp/science/", 10000, true);
@@ -95,7 +103,7 @@ public class HtmlFetcherIntegrationTest {
     @Test
     public void testDoubleResolve() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://t.co/eZRKcEYI", 10000, true);
-        assertTrue(res.getTitle(), res.getTitle().startsWith("GitHub - teleject/Responsive-Web-Design-Artboards"));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("teleject/Responsive-Web-Design-Artboards"));
     }
 
     @Test
@@ -103,4 +111,17 @@ public class HtmlFetcherIntegrationTest {
         String str = new HtmlFetcher().fetchAsString("https://karussell.wordpress.com/feed/", 10000);
         assertTrue(str, str.startsWith("<?xml version="));
     }
+
+    @Test
+    public void testYahooMobile() throws Exception {
+        JResult res  = new HtmlFetcher().fetchAndExtract("https://m.yahoo.com/w/legobpengine/finance/news/stevia-first-corp-stvf-looks-123500390.html?.intl=us&.lang=en-us", 10000, true);
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Stevia First Corp. (STVF) Looks to Disrupt Flavor Industry"));
+    }
+
+    /* FIXME: This test fails with a java.io.IOException: Invalid Http response 
+    @Test
+    public void testWeixin() throws Exception {
+        JResult res  = new HtmlFetcher().fetchAndExtract("http://mp.weixin.qq.com/s?3rd=MzA3MDU4NTYzMw%3D%3D&__biz=MzA4MTQ0Njc2Nw%3D%3D&idx=4&mid=207614885&scene=6&sn=eda80bb13406fb31cb25f70d12e6e7dc", 10000, true);
+        assertTrue(res.getTitle(), res.getTitle().startsWith("缺少IT支持成跨境电商发展阻力"));
+    }*/
 }

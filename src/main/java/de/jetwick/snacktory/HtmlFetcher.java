@@ -215,6 +215,12 @@ public class HtmlFetcher {
     }
 
     public JResult fetchAndExtract(String url, int timeout, boolean resolve) throws Exception {
+        return fetchAndExtract(url, timeout, resolve, 0, false);
+    }
+
+    // main workhorse to call externally
+    public JResult fetchAndExtract(String url, int timeout, boolean resolve, 
+                                   int maxContentSize, boolean forceReload) throws Exception {
         String originalUrl = url;
         url = SHelper.removeHashbang(url);
         String gUrl = SHelper.getUrlFromUglyGoogleRedirect(url);
@@ -232,7 +238,11 @@ public class HtmlFetcher {
             if (res != null)
                 return res;
 
-            String resUrl = getResolvedUrl(url, timeout);
+            String resUrl = getResolvedUrl(url, timeout, 0);
+            /*
+            // There are some cases when the resolved URL is empty (some sites
+            don't like the HEAD request, in that case instead of returning an
+            empty result try to access the site normally with GET.)
             if (resUrl.isEmpty()) {
                 if (logger.isDebugEnabled())
                     logger.warn("resolved url is empty. Url is: " + url);
@@ -241,10 +251,10 @@ public class HtmlFetcher {
                 if (cache != null)
                     cache.put(url, result);
                 return result.setUrl(url);
-            }
+            }*/
 
-            // if resolved url is longer then use it!
-            if (resUrl != null && resUrl.trim().length() > url.length()) {
+            // if resolved url is different then use it!
+            if (resUrl != null && !resUrl.isEmpty() && resUrl != url) {
                 // this is necessary e.g. for some homebaken url resolvers which return
                 // the resolved url relative to url!
                 url = SHelper.useDomainOfFirstArg4Second(url, resUrl);
@@ -260,7 +270,6 @@ public class HtmlFetcher {
         // or should we use? <link rel="canonical" href="http://www.N24.de/news/newsitem_6797232.html"/>
         result.setUrl(url);
         result.setOriginalUrl(originalUrl);
-        result.setDate(SHelper.estimateDate(url));
 
         // Immediately put the url into the cache as extracting content takes time.
         if (cache != null) {
@@ -268,6 +277,7 @@ public class HtmlFetcher {
             cache.put(url, result);
         }
 
+        // extract content to the extent appropriate for content type
         String lowerUrl = url.toLowerCase();
         if (SHelper.isDoc(lowerUrl) || SHelper.isApp(lowerUrl) || SHelper.isPackage(lowerUrl)) {
             // skip
@@ -276,21 +286,51 @@ public class HtmlFetcher {
         } else if (SHelper.isImage(lowerUrl)) {
             result.setImageUrl(url);
         } else {
-            extractor.extractContent(result, fetchAsString(url, timeout));
+            try {
+                String urlToDownload = url;
+                if(forceReload){
+                    urlToDownload = getURLtoBreakCache(url);
+                } 
+                extractor.extractContent(result, fetchAsString(urlToDownload, timeout), maxContentSize);
+            } catch (IOException io){
+                // do nothing
+                logger.error("Exception for URL: " + url + ":" + io);
+            }
             if (result.getFaviconUrl().isEmpty())
                 result.setFaviconUrl(SHelper.getDefaultFavicon(url));
 
             // some links are relative to root and do not include the domain of the url :(
-            result.setFaviconUrl(fixUrl(url, result.getFaviconUrl()));
-            result.setImageUrl(fixUrl(url, result.getImageUrl()));
-            result.setVideoUrl(fixUrl(url, result.getVideoUrl()));
-            result.setRssUrl(fixUrl(url, result.getRssUrl()));
+            if(!result.getFaviconUrl().isEmpty())
+                result.setFaviconUrl(fixUrl(url, result.getFaviconUrl()));
+
+            if(!result.getImageUrl().isEmpty())
+                result.setImageUrl(fixUrl(url, result.getImageUrl()));
+
+            if(!result.getVideoUrl().isEmpty())
+                result.setVideoUrl(fixUrl(url, result.getVideoUrl()));
+
+            if(!result.getRssUrl().isEmpty())
+                result.setRssUrl(fixUrl(url, result.getRssUrl()));
         }
         result.setText(lessText(result.getText()));
         synchronized (result) {
             result.notifyAll();
         }
         return result;
+    }
+
+    // Ugly hack to break free from any cached versions, a few URLs required this.
+    public String getURLtoBreakCache(String url) {
+        try {
+            URL aURL = new URL(url);
+            if (aURL.getQuery() != "") {
+                return url + "?1";
+            } else {
+                return url + "&1";
+            }
+        } catch(MalformedURLException e){
+            return url;
+        }
     }
 
     public String lessText(String text) {
@@ -312,6 +352,7 @@ public class HtmlFetcher {
         return fetchAsString(urlAsString, timeout, true);
     }
 
+    // main routine to get raw webpage content
     public String fetchAsString(String urlAsString, int timeout, boolean includeSomeGooseOptions)
             throws MalformedURLException, IOException {
         HttpURLConnection hConn = createUrlConnection(urlAsString, timeout, includeSomeGooseOptions);
@@ -345,7 +386,8 @@ public class HtmlFetcher {
      * @return the resolved url if any. Or null if it couldn't resolve the url
      * (within the specified time) or the same url if response code is OK
      */
-    public String getResolvedUrl(String urlAsString, int timeout) {
+    public String getResolvedUrl(String urlAsString, int timeout, 
+                                 int num_redirects) {
         String newUrl = null;
         int responseCode = -1;
         try {
@@ -362,16 +404,26 @@ public class HtmlFetcher {
                 return urlAsString;
 
             newUrl = hConn.getHeaderField("Location");
-            if (responseCode / 100 == 3 && newUrl != null) {
+            // Note that the max recursion level is 5.
+            if (responseCode / 100 == 3 && newUrl != null && num_redirects<5) {
                 newUrl = newUrl.replaceAll(" ", "+");
                 // some services use (none-standard) utf8 in their location header
-                if (urlAsString.startsWith("http://bit.ly") || urlAsString.startsWith("http://is.gd"))
+                if (urlAsString.startsWith("http://bit.ly") 
+                    || urlAsString.startsWith("http://is.gd"))
                     newUrl = encodeUriFromHeader(newUrl);
 
+                // AP: This code is not longer need, instead we always follow
+                // multiple redirects.
+                //
                 // fix problems if shortened twice. as it is often the case after twitters' t.co bullshit
-                if (furtherResolveNecessary.contains(SHelper.extractDomain(newUrl, true)))
-                    newUrl = getResolvedUrl(newUrl, timeout);
+                //if (furtherResolveNecessary.contains(SHelper.extractDomain(newUrl, true)))
+                //    newUrl = getResolvedUrl(newUrl, timeout);
 
+                // Add support for URLs with multiple levels of redirection,
+                // call getResolvedUrl until there is no more redirects or a
+                // max number of redirects is reached.
+                newUrl = SHelper.useDomainOfFirstArg4Second(urlAsString, newUrl);
+                newUrl = getResolvedUrl(newUrl, timeout, num_redirects+1);
                 return newUrl;
             } else
                 return urlAsString;
@@ -381,7 +433,8 @@ public class HtmlFetcher {
             return "";
         } finally {
             if (logger.isDebugEnabled())
-                logger.debug(responseCode + " url:" + urlAsString + " resolved:" + newUrl);
+                logger.debug(responseCode + " url:" + urlAsString 
+                             + " resolved:" + newUrl);
         }
     }
 
