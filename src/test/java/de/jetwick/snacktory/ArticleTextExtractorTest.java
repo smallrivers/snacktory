@@ -2049,6 +2049,18 @@ public class ArticleTextExtractorTest {
         compareDates("2015-01-05", res.getDate());
     }
 
+    @Test
+    public void testYardbarker() throws Exception {
+        // http://www.yardbarker.com/mlb/articles/greinke_diamondbacks_too_much_for_cardinals_7_2/s1_13180_20959717
+        JResult res = new JResult();
+        res.setUrl("http://www.yardbarker.com/mlb/articles/greinke_diamondbacks_too_much_for_cardinals_7_2/s1_13180_20959717");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("yardbarker.html")));
+        assertEquals("http://www.yardbarker.com/mlb/articles/greinke_diamondbacks_too_much_for_cardinals_7_2/s1_13180_20959717", res.getCanonicalUrl());
+        assertEquals("Greinke, Diamondbacks too much for Cardinals, 7-2", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("ST. LOUIS (AP) Zack Greinke"));
+        assertTrue(res.getText(), res.getText().endsWith("hits in 2 1-3 innings."));
+    }
+
     /*
     // Need JSoup 1.9.1
     @Test
