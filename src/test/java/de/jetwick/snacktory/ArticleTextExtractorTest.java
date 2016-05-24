@@ -1024,7 +1024,7 @@ public class ArticleTextExtractorTest {
     public void testCloudComputingExpo2() throws Exception {
         // http://www.cloudcomputingexpo.com/node/3346367
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("cloudcomputingexpo2.html")));
-        assertTrue(res.getText(), res.getText().startsWith("Merck, a leading company for innovative, top-quality high-tech"));
+        assertTrue(res.getText(), res.getText().startsWith("\"More than a Mother\" will first be implemented in Kenya in partnership"));
         assertTrue(res.getText(), res.getText().endsWith("EMD Millipore and EMD Performance Materials."));
         // test it doesn't extract outside the article content
         assertFalse("Extracted text outside the content", res.getText().contains("Sandy Carter"));
@@ -2126,6 +2126,8 @@ public class ArticleTextExtractorTest {
     }
 
     // http://www.pcadvisor.co.uk/news/enterprise/amazon-microsoft-and-salesforce-top-forrester-cloud-platform-list-3604588/
+
+    // https://blogs.adobe.com/digitalmarketing/advertising/source-sell-and-swap-audiences-with-ease-using-adobe-audience-manager/
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
