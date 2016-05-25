@@ -198,7 +198,7 @@ public class ArticleTextExtractor {
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate|slider|^sectioncolumns$");
         setHighlyNegative("policy-blk|followlinkedinsignin|^signupbox$");
-        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs");
+        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -800,6 +800,26 @@ public class ArticleTextExtractor {
                 }
             } else {
                 if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-rnews-2"); }
+                Date d = parseDate(el.text());
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
+        // http://www.pcadvisor.co.uk/ 
+        elems = doc.select("time[class=dateCreated]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            if (el.hasAttr("datetime")) {
+                dateStr = el.attr("datetime");
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("time[class=dateCreated]"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            } else {
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("time[class=dateCreated]"); }
                 Date d = parseDate(el.text());
                 if(d!=null){
                     return d;
