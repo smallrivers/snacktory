@@ -2121,13 +2121,38 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("Eine neue Studie untersucht die Einstellungen"));
         assertTrue(res.getText(), res.getText().endsWith("Dienst und das Finanzwesen."));
         assertTrue(res.getText(), res.getText().contains("Microsoft Azure"));
-
-        //compareDates("2016-03-09", res.getDate());
     }
 
-    // http://www.pcadvisor.co.uk/news/enterprise/amazon-microsoft-and-salesforce-top-forrester-cloud-platform-list-3604588/
+    @Test
+    public void testpPCAdvisor() throws Exception {
+        // http://www.pcadvisor.co.uk/news/enterprise/amazon-microsoft-and-salesforce-top-forrester-cloud-platform-list-3604588/
+        JResult res = new JResult();
+        res.setUrl("http://www.pcadvisor.co.uk/news/enterprise/amazon-microsoft-and-salesforce-top-forrester-cloud-platform-list-3604588/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("pcadvisor.html")));
+        assertEquals("http://www.pcadvisor.co.uk/news/enterprise/amazon-microsoft-and-salesforce-top-forrester-cloud-platform-list-3604588/", res.getCanonicalUrl());
+        assertEquals("Amazon, Microsoft and Salesforce top Forrester cloud platform list", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Which cloud is best for building new applications?"));
+        assertTrue(res.getText(), res.getText().endsWith("Those end up being the driving factors for choosing providers."));
+        assertFalse(res.getText(), res.getText().contains("Little Girl"));
+        assertEquals(res.getAuthorName(), "Brandon Butler");
+        compareDates("2015-03-17 17:47:00", res.getDate());
+    }
 
-    // https://blogs.adobe.com/digitalmarketing/advertising/source-sell-and-swap-audiences-with-ease-using-adobe-audience-manager/
+    @Test
+    public void testBlogsAdobeCom() throws Exception {
+        //  https://blogs.adobe.com/digitalmarketing/advertising/source-sell-and-swap-audiences-with-ease-using-adobe-audience-manager/
+        JResult res = new JResult();
+        res.setUrl("https://blogs.adobe.com/digitalmarketing/advertising/source-sell-and-swap-audiences-with-ease-using-adobe-audience-manager/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("blogs.adobe.com.html")));
+        assertEquals("https://blogs.adobe.com/digitalmarketing/advertising/source-sell-and-swap-audiences-with-ease-using-adobe-audience-manager/", res.getCanonicalUrl());
+        assertEquals("Source, Sell, and Swap Audiences with Ease using Adobe Audience Manager Audience Marketplace", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Marketers can combine technology, network, and processes"));
+        assertTrue(res.getText(), res.getText().endsWith("and follow us on Twitter @AdobeDMP."));
+        assertTrue(res.getText(), res.getText().contains("Acxiom"));
+        assertTrue(res.getText(), res.getText().contains("Experian"));
+        assertEquals(res.getAuthorName(), "Rich Phillips");
+        compareDates("2015-11-10 03:55:01", res.getDate());
+    }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
