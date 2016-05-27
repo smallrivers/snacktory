@@ -2167,6 +2167,19 @@ public class ArticleTextExtractorTest {
         compareDates("2016-05-23", res.getDate());
     }
 
+    @Test
+    public void testBBCom() throws Exception {
+        // http://www.bbc.com/news/business-35369820
+        JResult res = new JResult();
+        res.setUrl("http://www.bbc.com/news/business-35369820");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("bbc.com.html")));
+        assertEquals("http://www.bbc.com/news/business-35369820", res.getCanonicalUrl());
+        assertEquals("4,000 jobs to go in Pearson shake-up", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Education publisher Pearson is to shed 4,000 jobs"));
+        assertTrue(res.getText(), res.getText().endsWith("shares in Pearson rose by nearly 9%."));
+        compareDates("2016-01-21", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
