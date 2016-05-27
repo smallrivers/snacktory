@@ -149,10 +149,12 @@ public class ArticleTextExtractor {
                 "div[id=specialFeature]"         // remove non-article section
             ));
         aMap.put("investors.com", Arrays.asList(
-                "*[class=special-report",
+                "*[class=special-report]",
                 "*[class=more-news]"
             ));
-
+        aMap.put("einnews.com", Arrays.asList(
+                "*[class=headlines mini]"
+            ));
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 

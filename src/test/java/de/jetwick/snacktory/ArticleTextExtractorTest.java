@@ -2154,6 +2154,19 @@ public class ArticleTextExtractorTest {
         compareDates("2015-11-10 03:55:01", res.getDate());
     }
 
+    @Test
+    public void testITeinnews() throws Exception {
+        // https://it.einnews.com/article_detail/327400938/?lcode=otNalICFi_tU71dBe-4j3A%3D%3D&ref=rss
+        JResult res = new JResult();
+        res.setUrl("https://it.einnews.com/article_detail/327400938/?lcode=otNalICFi_tU71dBe-4j3A%3D%3D&ref=rss");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("it.einnews.com.html")));
+        assertEquals("https://it.einnews.com/article_detail/327400938/?lcode=otNalICFi_tU71dBe-4j3A%3D%3D&ref=rss", res.getCanonicalUrl());
+        assertEquals("Telstra network hurt by faulty hardware - IT Industry Today - EIN News", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Breaking News Business National Business Telecom giant Telstra has blamed"));
+        assertTrue(res.getText(), res.getText().endsWith("(continue reading)"));
+        compareDates("2016-05-23", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
