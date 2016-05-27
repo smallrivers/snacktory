@@ -96,7 +96,8 @@ public class ArticleTextExtractor {
     private static final int MIN_AUTHOR_NAME_LENGTH = 4;
     
     private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
-        Pattern.compile("By\\S*(.*)[\\.,].*")
+        Pattern.compile("By\\S*(.*)[\\.,].*"),
+        Pattern.compile("Door:\\S*(.*)")
     );
 
     // TODO: Replace this ugly list with a function that remove all the 
@@ -194,7 +195,7 @@ public class ArticleTextExtractor {
                 + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext|story-primary");
+                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext|story-primary|^newsContent$");
         setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
@@ -1275,6 +1276,20 @@ public class ArticleTextExtractor {
             }
         }
 
+        // dutchitchannel.nlm
+        elems = doc.select("section[id=publishedContent] span[class=date]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-pulishedContent span[class=date]"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
 
@@ -1388,6 +1403,7 @@ public class ArticleTextExtractor {
             "MMM dd yyyy", //October 05 2015
             "hh:mm a z',' EEE MMM dd',' yyyy", // 08:51 am EST, Thu March 3, 2016
             "yyyy-MM-dd'T'HH:mm:ss.SS000z", // 2015-08-05T11:52:09.720380-0700
+            "dd-MM-yyyy", //20-05-2016
         };
 
         try {
