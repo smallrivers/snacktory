@@ -2231,6 +2231,20 @@ public class ArticleTextExtractorTest {
         compareDates("2016-01-21", res.getDate());
     }
 
+    @Test
+    public void testDutchitchannel() throws Exception {
+        // https://dutchitchannel.nl/553302/salesforce-ziet-groeikansen-met-aws.html
+        JResult res = new JResult();
+        res.setUrl("https://dutchitchannel.nl/553302/salesforce-ziet-groeikansen-met-aws.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("dutchitchannel.html")));
+        assertEquals("https://dutchitchannel.nl/553302/salesforce-ziet-groeikansen-met-aws.html", res.getCanonicalUrl());
+        assertEquals("Salesforce ziet groeikansen met AWS", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Online crm softwareaanbieder Salesforce zag de omzet"));
+        assertTrue(res.getText(), res.getText().endsWith("oktober 2016 in San Francisco."));
+        assertEquals("Witold Kepinski", res.getAuthorName());
+        compareDates("2016-05-20", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
