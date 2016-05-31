@@ -73,7 +73,6 @@ public class OutputFormatter {
             topNodeLength = 1;
         }
 
-
         boolean lowTextRatio = ((str.length() / (topNodeLength * 1.0)) < 0.25);
         if (str.length() > 100 && countOfP > 0 && !lowTextRatio)
             return str;
@@ -100,7 +99,8 @@ public class OutputFormatter {
             int score = getScore(item);
             int paragraphIndex = getParagraphIndex(item);
             if (score < 0 || item.text().length() < getMinParagraph(paragraphIndex)){
-                item.remove();
+                if (item.parent()!=null)
+                    item.remove();
             }
         }
     }

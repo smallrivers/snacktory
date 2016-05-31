@@ -156,6 +156,9 @@ public class ArticleTextExtractor {
         aMap.put("einnews.com", Arrays.asList(
                 "*[class=headlines mini]"
             ));
+        aMap.put("fortune.com", Arrays.asList(
+                "*[id=reprint-modal]"
+            ));
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -372,12 +375,12 @@ public class ArticleTextExtractor {
         } else {
             // init elements and get the one with highest weight (see getWeight for strategy)
             Collection<Element> nodes = getNodes(doc);
-            TreeMap<Integer, Element> bestMatchElements = getBestMatchElements(nodes);
+            TreeMap<ElementKey, ElementDebug> bestMatchElements = getBestMatchElements(nodes);
             Set bestMatchElementsSet = bestMatchElements.entrySet();
             Iterator i = bestMatchElementsSet.iterator();
             while(i.hasNext()) {
                 Map.Entry currentEntry = (Map.Entry)i.next();
-                bestMatchElement = (Element)currentEntry.getValue();
+                bestMatchElement = ((ElementDebug)currentEntry.getValue()).entry;
                 if (!processBestElement(res, extractimages, maxContentSize, bestMatchElement)){
                     continue;
                 }
@@ -477,7 +480,9 @@ public class ArticleTextExtractor {
         if (text.length()==0){
             // Empty best element (pick next one instead)
             if(DEBUG_WEIGHTS){
-                System.out.println("Empty best element!!!");
+                System.out.println("=====Empty best element!!!====");
+                System.out.println(bestMatchElement.outerHtml());
+                System.out.println("==============================");
             }
             return false;
         }
@@ -530,23 +535,44 @@ public class ArticleTextExtractor {
 
     // Returns the best node match based on the weights (see getWeight for strategy)
     private Element getBestMatchElement(Collection<Element> nodes){
-        Map.Entry<Integer, Element> firstEntry = getBestMatchElements(nodes).firstEntry();
+        Map.Entry<ElementKey, ElementDebug> firstEntry = getBestMatchElements(nodes).firstEntry();
         if (firstEntry!=null){
-            return firstEntry.getValue();
+            return firstEntry.getValue().entry;
         }
         return null;
     }
 
     // Returns a TreeMap of nodes sorted by their weight.
-    private TreeMap<Integer, Element> getBestMatchElements(Collection<Element> nodes){
-        int maxWeight = -200;        // why -200 now instead of 0?
-        //Element bestMatchElement = null;
+    private TreeMap<ElementKey, ElementDebug> getBestMatchElements(Collection<Element> nodes){
 
-        // Note that nodes with most weight are sorted first.
-        TreeMap<Integer, Element> sortedResults = new TreeMap<Integer, Element>(Collections.reverseOrder());
-        Map<Integer, ElementDebug> sortedElementsMap = new TreeMap<Integer, ElementDebug>();
+        // Sorted list of nodes. The list is sorted first by weight (from more to less), 
+        // if two nodes have the same weight then sort by position (from 0 to N)
+        TreeMap<ElementKey, ElementDebug> sortedResults = new TreeMap<ElementKey, ElementDebug>(
+            new Comparator<ElementKey>() {
+                @Override
+                public int compare(ElementKey e1, ElementKey e2) {
+                    if (e1.weight < e2.weight) {
+                        return 1;
+                    } else {
+                        if (e1.weight > e2.weight) {
+                            return -1;
+                        } else { // same weight (check position)
+                            if (e1.position < e2.position) {
+                                return -1;
+                            } else {
+                                if (e1.position > e2.position) {
+                                    return 1;
+                                } else {
+                                    return 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        );
 
-        //boolean ignoreMaxWeightLimit = false;
+        int position = 0;
         boolean hasHighlyPositive = false;
         for (Element entry : nodes) {
 
@@ -557,58 +583,40 @@ public class ArticleTextExtractor {
             Weight val = getWeight(entry, false, hasHighlyPositive, logEntries);
             int currentWeight = val.weight;
             hasHighlyPositive = val.hasHighlyPositive;
+
+            ElementKey elementKey = new ElementKey();
+            elementKey.weight = currentWeight;
+            elementKey.position = position;
+
+            ElementDebug elementValue = new ElementDebug();
+            elementValue.entry = entry;
             if (DEBUG_WEIGHTS){
                 if(currentWeight>MIN_WEIGHT_TO_SHOW_IN_LOG){
-                    ElementDebug elementdDebug = new ElementDebug();
-                    elementdDebug.logEntries = logEntries;
-                    elementdDebug.entry = entry;
-                    sortedElementsMap.put(currentWeight, elementdDebug);
+                    elementValue.logEntries = logEntries;
+                    
                 }
             }
-            if (currentWeight > maxWeight) {
-                maxWeight = currentWeight;
-                //bestMatchElement = entry;
-                sortedResults.put(currentWeight, entry);
-
-                /*
-                // NOTE: This optimization fails with large pages that
-                contains chunks of text that can be mistaken by articles, since we 
-                want the best accuracy possible, I am disabling it for now. AP.
-
-                // The original code had a limit of 200, the intention was that
-                // if a node had a weight greater than it, then it most likely
-                // it was the main content.
-                // However this assumption fails when the amount of text in the 
-                // children (or grandchildren) is too large. If we detect this
-                // case then the limit is ignored and we try all the nodes to select
-                // the one with the absolute maximum weight.
-                if (maxWeight > 500){
-                    ignoreMaxWeightLimit = true;
-                    continue;
-                } 
-                
-                // formerly 200, increased to 250 to account for the fact
-                // we are not adding the weights of the grand children to the
-                // tally.
-                
-                if (maxWeight > 250 && !ignoreMaxWeightLimit) 
-                    break;
-                */
-            }
+            sortedResults.put(elementKey, elementValue);
+            position++;
         }
 
+        
         if (DEBUG_WEIGHTS){
-            int mapSize = sortedElementsMap.size();
+
+            if (sortedResults.size()>0)
+                System.out.println("===> LISTING DEBUG ELEMENTS - START");
+
+            int mapSize = sortedResults.size();
             int entryCount = 0;
-            for(Map.Entry<Integer,ElementDebug> mapEntry : sortedElementsMap.entrySet()) {
-                Integer currentWeight = mapEntry.getKey();
+            for(Map.Entry<ElementKey, ElementDebug> mapEntry : sortedResults.descendingMap().entrySet()) {
+                ElementKey elementKey = mapEntry.getKey();
                 ElementDebug elementDebug = mapEntry.getValue();
                 Element entry = elementDebug.entry;
                 LogEntries logEntries = elementDebug.logEntries;
 
                 entryCount+=1;
-                // Only show the N last nodes (highest weight)
-                if ((mapSize - entryCount) > 5){
+                // Only show the N last nodes (highest weight) - Note the list is displayed in reverse order.
+                if ((mapSize - entryCount) >= 5){
                     continue;
                 }
                 System.out.println("");
@@ -617,13 +625,17 @@ public class ArticleTextExtractor {
                 if (outerHtml.length() > MAX_LOG_LENGTH)
                     outerHtml = outerHtml.substring(0, MAX_LOG_LENGTH);
                 System.out.println("        HTML: " + outerHtml);
-                logEntries.print();
+                if(logEntries!=null){
+                    logEntries.print();
+                }
                 System.out.println("\t\t======================================");
-                System.out.println("                  TOTAL WEIGHT:" + String.format("%3d", currentWeight));
+                System.out.println("                  TOTAL WEIGHT:" + String.format("%3d", elementKey.weight));
                 System.out.println("\t\t--------------- END NODE ----------------------");
             }
-        }
 
+            if (sortedResults.size()>0)
+                System.out.println("===> LISTING DEBUG ELEMENTS - END");
+        }
         return sortedResults;
     }
 
@@ -2127,7 +2139,7 @@ public class ArticleTextExtractor {
         int maxWeight = 0;
         Element maxNode = null;
         Elements els = el.select("img");
-        if (els.isEmpty())
+        if (els.isEmpty() && el.parent()!=null)
             els = el.parent().select("img");
 
         double score = 1;
@@ -2468,6 +2480,14 @@ public class ArticleTextExtractor {
     private class ElementDebug {
         LogEntries logEntries;
         Element entry;
+    }
+
+    /**
+     *  Helper class to sort elements by weight and position
+    */
+    private class ElementKey {
+        int weight;
+        int position;
     }
 
     /*
