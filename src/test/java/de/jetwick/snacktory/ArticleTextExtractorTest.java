@@ -1064,9 +1064,11 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
-    public void testForbes() throws Exception {
+    public void testFortune() throws Exception {
         // http://fortune.com/2015/05/11/rackspaces-support-other-cloud/
-        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("forbes.html")));
+        JResult res = new JResult();
+        res.setUrl("http://fortune.com/2015/05/11/rackspaces-support-other-cloud/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("fortune.html")));
         assertEquals("Does Rackspace’s future lie in supporting someone else’s cloud?", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Rackspace, a true cloud computing pioneer, is starting to sound like a company that will"));
         compareDates("2015-05-11 23:01:19", res.getDate());
@@ -2029,6 +2031,7 @@ public class ArticleTextExtractorTest {
         assertEquals("http://www.ajmc.com/newsroom/fda-approves-cabozantinib-for-advanced-renal-cell-carcinoma", res.getCanonicalUrl());
         assertEquals("#cabozantinib provides options for #rcc patients who progress on other anti-angiogenic therapy", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("FDA Approves Cabozantinib for Advanced Renal Cell Carcinoma"));
+        assertTrue(res.getText(), res.getText().endsWith("pleural effusion, diarrhea, and nausea."));
         compareDates("2016-04-25", res.getDate());
     }
 
@@ -2243,6 +2246,19 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().endsWith("oktober 2016 in San Francisco."));
         assertEquals("Witold Kepinski", res.getAuthorName());
         compareDates("2016-05-20", res.getDate());
+    }
+
+    @Test
+    public void testV3() throws Exception {
+        // http://www.v3.co.uk/v3-uk/news/2459075/help-for-heroes-shifting-to-azure-with-support-from-rackspace
+        JResult res = new JResult();
+        res.setUrl("http://www.v3.co.uk/v3-uk/news/2459075/help-for-heroes-shifting-to-azure-with-support-from-rackspace");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("v3.co.uk.html")));
+        assertEquals("http://www.v3.co.uk/v3-uk/news/2459075/help-for-heroes-shifting-to-azure-with-support-from-rackspace", res.getCanonicalUrl());
+        assertEquals("Help for Heroes shifting to Azure with support from Rackspace", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Help for Heroes is shifting its current hybrid cloud"));
+        assertTrue(res.getText(), res.getText().endsWith("he said."));
+        compareDates("2016-05-23 12:48:00", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
