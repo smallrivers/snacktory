@@ -162,6 +162,11 @@ public class ArticleTextExtractor {
         aMap.put("fortune.com", Arrays.asList(
                 "*[id=reprint-modal]"
             ));
+        aMap.put("drimble.nl", Arrays.asList(
+                "*[class=dinfoo]",
+                "*[class=dvv]",
+                "*[class=ip]"
+            ));
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -182,6 +187,15 @@ public class ArticleTextExtractor {
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
+    // Define custom rules to select css nodes per domain in the OutputFormatter
+    // TODO: Load this from yaml/settings file
+    private static final Map<String, String> OUTPUT_FORMATTER_PER_DOMAIN;
+    static {
+        Map<String, String> aMap = new LinkedHashMap<String, String>();
+        aMap.put("drimble.nl", "p, ol, em, ul, li, h2");
+        OUTPUT_FORMATTER_PER_DOMAIN = Collections.unmodifiableMap(aMap);
+    }
+
     // For debugging
     private static final boolean DEBUG_REMOVE_RULES = false;
     private static final boolean DEBUG_DATE_EXTRACTION = false;
@@ -198,7 +212,7 @@ public class ArticleTextExtractor {
                 + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext|story-primary|^newsContent$");
+                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext|story-primary|^newsContent$|dcontainer");
         setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
@@ -337,6 +351,9 @@ public class ArticleTextExtractor {
         res.setTitle(extractTitle(doc));
         res.setDescription(extractDescription(doc));
         res.setCanonicalUrl(extractCanonicalUrl(res.getUrl(), doc, false));
+        res.setDomain(extractDomain(res.getUrl()));
+        res.setTopPrivateDomain(extractTopPrivateDomain(res.getUrl()));
+
         res.setType(extractType(doc));
         res.setSitename(extractSitename(doc));
         res.setLanguage(extractLanguage(doc));
@@ -378,16 +395,8 @@ public class ArticleTextExtractor {
         stripUnlikelyCandidates(doc);
 
         // check for domain specific rules
-        if(!res.getUrl().equals("")){
-            InternetDomainName domain = getDomain(res.getUrl());
-            if(domain!=null){
-                InternetDomainName topPrivateDomain = getTopPrivateDomain(domain);
-                if (topPrivateDomain!=null){
-                    removeNodesPerDomain(doc, domain.toString());
-                    removeNodesPerDomain(doc, topPrivateDomain.toString());
-                }
-            }
-        }
+        removeNodesPerDomain(doc, res.getDomain());
+        removeNodesPerDomain(doc, res.getTopPrivateDomain());
 
         // first evaluate if there is any domain specific rules.
         Element bestMatchElement = getBestMatchElementPerURL(doc, res.getUrl());
@@ -500,8 +509,21 @@ public class ArticleTextExtractor {
             }
         }
 
+        // check for domain specific formatter
+        OutputFormatter customFormatter = null;
+        customFormatter = getOutputFormatterPerDomain(res.getDomain());
+        if(customFormatter==null){
+            customFormatter = getOutputFormatterPerDomain(res.getTopPrivateDomain());
+        }
+
         // clean before grabbing text
-        String text = formatter.getFormattedText(bestMatchElement, true);
+        String text = null;
+        if(customFormatter!=null){
+            text = customFormatter.getFormattedText(bestMatchElement, true);
+        } else {
+            text = formatter.getFormattedText(bestMatchElement, true);
+        }
+
         text = removeTitleFromText(text, res.getTitle());
         // Sanity check
         if (text.length()==0){
@@ -758,6 +780,29 @@ public class ArticleTextExtractor {
         }
 
         return url;
+    }
+
+    protected String extractDomain(String url){
+        if (url!=null && !url.equals("")){
+            InternetDomainName domain = getDomain(url);
+            if(domain!=null){
+                return domain.toString();
+            }
+        }
+        return null;
+    }
+
+    protected String extractTopPrivateDomain(String url){
+        if (url!=null && !url.equals("")){
+            InternetDomainName domain = getDomain(url);
+            if(domain!=null){
+                InternetDomainName topPrivateDomain = getTopPrivateDomain(domain);
+                if (topPrivateDomain!=null){
+                    return topPrivateDomain.toString();
+                }
+            }
+        }
+        return null;
     }
 
     protected String extractDescription(Document doc) {
@@ -1766,15 +1811,6 @@ public class ArticleTextExtractor {
         if(logEntries!=null) logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight)
                                             + " -- 90% OF CHILDREN WEIGHT");
 
-        // Experimental
-        /*
-        // total node text
-        String totalText = formatter.getFormattedText(e, false);
-        int totalTextWeight =(int) Math.round(totalText.length() / 100.0 * 02);
-        val.weight+=totalTextWeight;
-        if(logEntries!=null) logEntries.add("       ===>  TOTAL TEXT WEIGHT:" + String.format("%3d", totalTextWeight));
-        */
-
         // add additional weight using possible 'extragravityscore' attribute
         if (checkextra) {
             Element xelem = e.select("[extragravityscore]").first();
@@ -2272,6 +2308,19 @@ public class ArticleTextExtractor {
                 }
             }
         }
+    }
+
+    /*
+     *  Check if there are any domain specific OutputFormatters
+     */
+    private OutputFormatter getOutputFormatterPerDomain(String domainName){
+        String cssSelectorList = OUTPUT_FORMATTER_PER_DOMAIN.get(domainName);
+        if (cssSelectorList!=null){
+            OutputFormatter formatter = new OutputFormatter();
+            formatter.setNodesToKeepCssSelector(cssSelectorList);
+            return formatter;
+        }
+        return null;
     }
 
     private void removeScriptsAndStyles(Document doc) {
