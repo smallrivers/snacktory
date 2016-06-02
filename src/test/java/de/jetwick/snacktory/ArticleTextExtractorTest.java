@@ -2210,6 +2210,19 @@ public class ArticleTextExtractorTest {
         compareDates("2016-05-23 12:48:00", res.getDate());
     }
 
+    @Test
+    public void testDrimble() throws Exception {
+        // http://drimble.nl/overige/media/35661084/ziggo-ziet-omzet-dalen.html
+        JResult res = new JResult();
+        res.setUrl("http://drimble.nl/overige/media/35661084/ziggo-ziet-omzet-dalen.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("drimble.html")));
+        assertEquals("http://drimble.nl/overige/media/35661084/ziggo-ziet-omzet-dalen.html", res.getCanonicalUrl());
+        assertEquals("Ziggo ziet omzet dalen", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Ziggo zag haar omzet in het eerste"));
+        assertTrue(res.getText(), res.getText().endsWith("Naar verwachting..."));
+        //compareDates("2016-05-10", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
