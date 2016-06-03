@@ -2289,6 +2289,19 @@ public class ArticleTextExtractorTest {
         compareDates("2014-01-11", res.getDate());
     }
 
+    @Test
+    public void testAmericanBanker() throws Exception {
+        // http://www.americanbanker.com/white-papers/how-to-improve-the-wealth-advisor-and-client-experience-1081287-1.html
+        JResult res = new JResult();
+        res.setUrl("http://www.americanbanker.com/white-papers/how-to-improve-the-wealth-advisor-and-client-experience-1081287-1.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("americanbanker.html")));
+        assertEquals("http://www.americanbanker.com/white-papers/how-to-improve-the-wealth-advisor-and-client-experience-1081287-1.html", res.getCanonicalUrl());
+        assertEquals("How to Improve the Wealth Advisor and Client Experience", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Inefficiencies in your client onboarding system are"));
+        assertTrue(res.getText(), res.getText().endsWith("to achieve an increased level of client and advisor satisfaction."));
+        compareDates("2016-06-01 13:52:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
