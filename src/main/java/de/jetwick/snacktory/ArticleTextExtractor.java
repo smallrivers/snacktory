@@ -1374,6 +1374,23 @@ public class ArticleTextExtractor {
             }
         }
 
+        // inforisktoday.com
+        elems = doc.select(".article-byline .text-nowrap");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-pulishedContent span[class=date]"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
+
+
+
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
 

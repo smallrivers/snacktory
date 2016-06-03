@@ -2274,6 +2274,21 @@ public class ArticleTextExtractorTest {
         //compareDates("2016-05-10", res.getDate());
     }
 
+    @Test
+    public void testInfoRiskToday() throws Exception {
+        // http://www.inforisktoday.com/interviews/5-trends-to-sway-cybersecuritys-future-i-2153
+        JResult res = new JResult();
+        res.setUrl("http://www.inforisktoday.com/interviews/5-trends-to-sway-cybersecuritys-future-i-2153");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("inforisktoday.html")));
+        assertEquals("http://www.inforisktoday.com/interviews/5-trends-to-sway-cybersecuritys-future-i-2153", res.getCanonicalUrl());
+        assertEquals("Allan Friedman: 5 Trends to Sway Cybersecurity's Future", res.getTitle());
+        // TODO: The first paragraph is missing: "Five significant trends..." since it is outside children tags
+        // but just a text node of the parent.
+        assertTrue(res.getText(), res.getText().startsWith("Other key trends are the growth of cloud computing"));
+        assertTrue(res.getText(), res.getText().endsWith("Intelligence at the Brookings Institution."));
+        compareDates("2014-01-11", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
