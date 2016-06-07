@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.List;
+import java.util.Map;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import static org.junit.Assert.*;
@@ -2249,6 +2251,25 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("Inefficiencies in your client onboarding system are"));
         assertTrue(res.getText(), res.getText().endsWith("to achieve an increased level of client and advisor satisfaction."));
         compareDates("2016-06-01 13:52:00", res.getDate());
+    }
+
+    @Test
+    public void testCredoMag() throws Exception {
+        // http://www.credomag.com/2011/10/04/what-is-revival-two-options/
+        JResult res = new JResult();
+        res.setUrl("http://www.credomag.com/2011/10/04/what-is-revival-two-options/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("credomag.html")));
+        assertEquals("http://www.credomag.com/2011/10/04/what-is-revival-two-options/", res.getCanonicalUrl());
+        assertEquals("Credo Magazine » What is Revival? Two Options", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Most evangelical Christians are in favor of revival."));
+        assertTrue(res.getText(), res.getText().endsWith("He also blogs at Christian Thought and Tradition."));
+        compareDates("2011-10-04", res.getDate());
+        // Test that link size is not longer than N characters.
+        List<Map<String,String>> links = res.getLinks();
+        for (Map<String,String> link : links) {
+            assertTrue(link.get("url").toString().length() <= 512);
+        }
+
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
