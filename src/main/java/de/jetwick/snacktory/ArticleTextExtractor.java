@@ -207,6 +207,7 @@ public class ArticleTextExtractor {
 
     private static final boolean DEBUG_REMOVE_RULES = false;
     private static final boolean DEBUG_DATE_EXTRACTION = false;
+
     private static final boolean DEBUG_WEIGHTS = false;
     private static final boolean DEBUG_BASE_WEIGHTS = false;
     private static final boolean DEBUG_CHILDREN_WEIGHTS = false;
@@ -226,7 +227,7 @@ public class ArticleTextExtractor {
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings|title|avatar|follow-me-twitter|truncate|slider|^sectioncolumns$");
         setHighlyNegative("policy-blk|FollowLinkedInSignIn|^signupbox$");
-        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$");
+        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
