@@ -202,6 +202,9 @@ public class ArticleTextExtractor {
     }
 
     // For debugging
+    private static final boolean DEBUG_AUTHOR_EXTRACTION = false;
+    private static final boolean DEBUG_AUTHOR_DESC_EXTRACTION = false;
+
     private static final boolean DEBUG_REMOVE_RULES = false;
     private static final boolean DEBUG_DATE_EXTRACTION = false;
     private static final boolean DEBUG_WEIGHTS = false;
@@ -1575,97 +1578,115 @@ public class ArticleTextExtractor {
     }
 
     // Returns the author name or null
-	protected String extractAuthorName(Document doc) {
-		String authorName = "";
-		
+    protected String extractAuthorName(Document doc) {
+        String authorName = "";
+
         // first try the Google Author tag
-		Element result = doc.select("body [rel*=author]").first();
-		if (result != null)
-			authorName = SHelper.innerTrim(result.ownText());
+        Element result = doc.select("body [rel*=author]").first();
+        if (result != null){
+            authorName = SHelper.innerTrim(result.ownText());
+            if(DEBUG_AUTHOR_EXTRACTION) System.out.println("AUTHOR: first try the Google Author tag");
+        }
 
         // if that doesn't work, try some other methods
-		if (authorName.isEmpty()) {
+        if (authorName.isEmpty()) {
 
             // meta tag approaches, get content
             result = doc.select("head meta[name=author]").first();
             if (result != null) {
                 authorName = SHelper.innerTrim(result.attr("content"));
+                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: head meta[name=author]");
             }
 
             if (authorName.isEmpty()) {  // for "opengraph"
                 authorName = SHelper.innerTrim(doc.select("head meta[property=article:author]").attr("content"));
+                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"opengraph\"");
             }
             if (authorName.isEmpty()) { // OpenGraph twitter:creator tag
-            	authorName = SHelper.innerTrim(doc.select("head meta[property=twitter:creator]").attr("content"));
+                authorName = SHelper.innerTrim(doc.select("head meta[property=twitter:creator]").attr("content"));
+                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: OpenGraph twitter:creator tag");
             }
             if (authorName.isEmpty()) {  // for "schema.org creativework"
                 authorName = SHelper.innerTrim(doc.select("meta[itemprop=author], span[itemprop=author]").attr("content"));
+                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\"");
             }
 
             if (authorName.isEmpty()) {  // a hack for http://jdsupra.com/
                 authorName = SHelper.innerTrim(doc.select("*[class*=author_name]").text());
+                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: a hack for http://jdsupra.com/");
             }
 
             // other hacks
-			if (authorName.isEmpty()) {
-				try{
+            if (authorName.isEmpty()) {
+                try {
+
                     // build up a set of elements which have likely author-related terms
                     // .X searches for class X
-					Elements matches = doc.select("a[rel=author],.byline-name,.byLineTag,.byline,.author,.by,.writer,.address");
+                    Elements matches = doc.select("a[rel=author],.byline-name,.byLineTag,.byline,.author,.by,.writer,.address");
 
-					if(matches == null || matches.size() == 0){
-						matches = doc.select("body [class*=author]");
-					}
-					
-					if(matches == null || matches.size() == 0){
-						matches = doc.select("body [title*=author]");
-					}
+                    // hack for mycustomer.com/
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("*[class*=field-name-field-computed-username]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: *[class*=field-name-field-computed-username]");
+                    }
+
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("body [class*=author]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body [class*=author]");
+                    }
+
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("body [title*=author]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body [title*=author]");
+                    }
 
                     // a hack for huffington post
-					if(matches == null || matches.size() == 0){
-						matches = doc.select(".staff_info dl a[href]");
-					}
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select(".staff_info dl a[href]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: .staff_info dl a[href]");
+                    }
 
                     // a hack for http://sports.espn.go.com/
                     if(matches == null || matches.size() == 0){
                         matches = doc.select("cite[class*=source]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: cite[class*=source]");
                     }
 
                     // a hack for http://jdsupra.com/
                     if(matches == null || matches.size() == 0){
                         matches = doc.select("*[class*=bd author_name]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: *[class*=bd author_name]");
                     }
 
                     // a hack for http://marketingprofs.com/
                     if(matches == null || matches.size() == 0){
                         matches = doc.select("*[id*=contentbios]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: *[id*=contentbios]");
                     }
 
                     // select the best element from them
-					if(matches != null){
-						Element bestMatch = getBestMatchElement(matches);
+                    if(matches != null){
+                        Element bestMatch = getBestMatchElement(matches);
+                        if(!(bestMatch == null)) {
+                            authorName = bestMatch.text();
+                            if(authorName.length() < MIN_AUTHOR_NAME_LENGTH){
+                                authorName = bestMatch.text();
+                            }
+                            
+                            authorName = SHelper.innerTrim(IGNORE_AUTHOR_PARTS.matcher(authorName).replaceAll(""));
+                            if(authorName.indexOf(",") != -1){
+                                authorName = authorName.split(",")[0];
+                            }
+                        }
+                    }
+                } catch(Exception e){
+                    System.out.println(e.toString());
+                }
+            }
+        }
 
-						if(!(bestMatch == null))
-						{
-							authorName = bestMatch.text();
-							
-							if(authorName.length() < MIN_AUTHOR_NAME_LENGTH){
-								authorName = bestMatch.text();
-							}
-							
-							authorName = SHelper.innerTrim(IGNORE_AUTHOR_PARTS.matcher(authorName).replaceAll(""));
-							
-							if(authorName.indexOf(",") != -1){
-								authorName = authorName.split(",")[0];
-							}
-						}
-					}
-				}
-				catch(Exception e){
-					System.out.println(e.toString());
-				}
-			}
-		}
+        if(DEBUG_AUTHOR_EXTRACTION)
+            System.out.println("AUTHOR: authorName=" + authorName);
 
         for (Pattern pattern : CLEAN_AUTHOR_PATTERNS) {
             Matcher matcher = pattern.matcher(authorName);
@@ -1682,7 +1703,6 @@ public class ArticleTextExtractor {
     protected String extractAuthorDescription(Document doc, String authorName){
 
         String authorDesc = "";
-
         if(authorName.equals(""))
             return "";
 
@@ -1691,6 +1711,10 @@ public class ArticleTextExtractor {
         if (matches!= null && matches.size() > 0){
             Element bestMatch = matches.first(); // assume it is the first.
             authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION) {
+                System.out.println("AUTHOR_DESC: .byline > .bio");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
             return SHelper.innerTrim(authorDesc);
         }
         
@@ -1699,6 +1723,10 @@ public class ArticleTextExtractor {
         if (matches!= null && matches.size() > 0){
             Element bestMatch = matches.first(); // assume it is the first.
             authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: .byline span[class*=teaser]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            } 
             return SHelper.innerTrim(authorDesc);
         }
 
@@ -1707,6 +1735,10 @@ public class ArticleTextExtractor {
         if (matches!= null && matches.size() > 0){
             Element bestMatch = matches.first(); // assume it is the first.
             authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION) {
+                System.out.println("AUTHOR_DESC: *[class*=author_tag_firm_name]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
             return SHelper.innerTrim(authorDesc);
         }
 
@@ -1715,18 +1747,41 @@ public class ArticleTextExtractor {
         if (matches!= null && matches.size() > 0){
             Element bestMatch = matches.first(); // assume it is the first.
             authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: *[id*=contentbios]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
             return SHelper.innerTrim(authorDesc);
         }
 
+        // Special case for mycustomer.com
+        matches = doc.select("body [class*=user-biography]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: *[id*=user-biography]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
 
         try {
             Elements nodes = doc.select(":containsOwn(" + authorName + ")");
             Element bestMatch = getBestMatchElement(nodes);
-            if (bestMatch != null)
+            if (bestMatch != null){
                 authorDesc = bestMatch.text();
+                if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                    System.out.println("AUTHOR_DESC: containsOwn");
+                    System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+                }
+            }
         } catch(SelectorParseException se){
             // Avoid error when selector is invalid
         }
+
+        if(DEBUG_AUTHOR_DESC_EXTRACTION)
+            System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
 
         return SHelper.innerTrim(authorDesc);
     }

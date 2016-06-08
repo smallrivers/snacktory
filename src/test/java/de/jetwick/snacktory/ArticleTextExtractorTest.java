@@ -2320,7 +2320,21 @@ public class ArticleTextExtractorTest {
         for (Map<String,String> link : links) {
             assertTrue(link.get("url").toString().length() <= 512);
         }
+    }
 
+    @Test
+    public void testMyCustomer() throws Exception {
+        // http://www.mycustomer.com/community/blogs/neilcapel/using-customer-passions-to-lift-retention-rates
+        JResult res = new JResult();
+        res.setUrl("http://www.mycustomer.com/community/blogs/neilcapel/using-customer-passions-to-lift-retention-rates");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("mycustomer.html")));
+        assertEquals("http://www.mycustomer.com/community/blogs/neilcapel/using-customer-passions-to-lift-retention-rates", res.getCanonicalUrl());
+        assertEquals("Using customer passions to lift retention rates", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("On one level, the key to improving customer retention rates"));
+        assertTrue(res.getText(), res.getText().endsWith("represent a useful alternative."));
+        compareDates("2016-05-13 10:46:27", res.getDate());
+        assertEquals("Neil Capel", res.getAuthorName());
+        assertEquals("Neil’s successful track record of working on large-scale, high-demand web systems led him to develop Sailthru's unique Smart Data™ capabilities. Prior to...", res.getAuthorDescription());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
