@@ -2286,6 +2286,22 @@ public class ArticleTextExtractorTest {
         assertEquals("Neil’s successful track record of working on large-scale, high-demand web systems led him to develop Sailthru's unique Smart Data™ capabilities. Prior to...", res.getAuthorDescription());
     }
 
+
+    @Test
+    public void testBdaily() throws Exception {
+        // https://bdaily.co.uk/technology/22-04-2016/sailthru-acquires-carnivalio-expanding-services/
+        JResult res = new JResult();
+        res.setUrl("https://bdaily.co.uk/technology/22-04-2016/sailthru-acquires-carnivalio-expanding-services/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("bdaily.html")));
+        // TODO: Bad canonical URL how we avoid it?
+        assertEquals("https://bdaily.co.ukhttps://bdaily.co.uk/technology/22-04-2016/sailthru-acquires-carnivalio-expanding-services/", res.getCanonicalUrl());
+        assertEquals("Sailthru Acquires Carnival.io Expanding Services", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("At Sailthru we believe that human connections"));
+        assertTrue(res.getText(), res.getText().endsWith("data for mobile marketing automation."));
+        compareDates("2016-04-22", res.getDate());
+        assertEquals("Neil Capel", res.getAuthorName());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

@@ -332,6 +332,7 @@ public class SHelper {
         return sb.toString();
     }
 
+    // Try to get the date from the URL
     public static String estimateDate(String url) {
 
         int index = url.indexOf("://");
@@ -410,7 +411,20 @@ public class SHelper {
                 monthCounter = counter;
             } else if (str.length() == 8) {
                 String[] parsePatterns = {
-                    "yyyyMMdd"
+                    "yyyyMMdd",
+                };
+                try {
+                    Date d = DateUtils.parseDateStrictly(str, parsePatterns);
+                    if (isValidDate(d)){
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+                        return df.format(d);
+                    }
+                } catch(ParseException ex){
+                    // do nothing
+                }
+            } else if (str.length() == 10) {
+                String[] parsePatterns = {
+                    "dd-MM-yyyy",
                 };
                 try {
                     Date d = DateUtils.parseDateStrictly(str, parsePatterns);
