@@ -186,6 +186,11 @@ public class ArticleTextExtractor {
         aMap.put("selling-stock.com", Arrays.asList(
                 "div[class=storycontent]"
             ));
+        aMap.put("prnewswire.com", Arrays.asList(
+                "div[class*=release-body]"
+            ));
+
+
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -529,6 +534,14 @@ public class ArticleTextExtractor {
             }
             res.setText(text);
         }
+
+        /*
+        if(DEBUG_WEIGHTS){
+            System.out.println("===== Best Element Text ====");
+            System.out.println(text);
+            System.out.println("==============================");
+        }*/
+
         return true;
     }
 

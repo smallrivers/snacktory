@@ -2286,7 +2286,6 @@ public class ArticleTextExtractorTest {
         assertEquals("Neil’s successful track record of working on large-scale, high-demand web systems led him to develop Sailthru's unique Smart Data™ capabilities. Prior to...", res.getAuthorDescription());
     }
 
-
     @Test
     public void testBdaily() throws Exception {
         // https://bdaily.co.uk/technology/22-04-2016/sailthru-acquires-carnivalio-expanding-services/
@@ -2300,6 +2299,18 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().endsWith("data for mobile marketing automation."));
         compareDates("2016-04-22", res.getDate());
         assertEquals("Neil Capel", res.getAuthorName());
+    }
+
+    @Test
+    public void testPRnewswire3() throws Exception {
+        // http://www.prnewswire.com/news-releases/azalead-announces-account-based-marketing-for-microsoft-dynamics-crm-582695011.html
+        JResult res = new JResult();
+        res.setUrl("http://www.prnewswire.com/news-releases/azalead-announces-account-based-marketing-for-microsoft-dynamics-crm-582695011.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("prnewswire3.html")));
+        assertEquals("Azalead Announces Account Based Marketing for Microsoft Dynamics CRM", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Azalead, the international leader in Account Based Marketing"));
+        assertTrue(res.getText(), res.getText().endsWith("press@azalead.com"));
+        compareDates("2016-06-13", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
