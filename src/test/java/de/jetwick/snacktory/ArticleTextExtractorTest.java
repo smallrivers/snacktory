@@ -2388,6 +2388,20 @@ public class ArticleTextExtractorTest {
         compareDates("2015-10-07", res.getDate());
     }
 
+    @Test
+    public void testWashingtoncitypaper() throws Exception {
+        //http://www.washingtoncitypaper.com/news/housing-complex/blog/13120863/fsbo-site-totally-lowballs-the-white-house
+        JResult res = new JResult();
+        res.setUrl("http://www.washingtoncitypaper.com/news/housing-complex/blog/13120863/fsbo-site-totally-lowballs-the-white-house");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("washingtoncitypaper.html")));
+        assertEquals("FSBO Site Totally Lowballs the White House", res.getTitle());
+        // TODO: There is an issue with the OutputFormatter that it only select text inside tags, but no text nodes inside the
+        // topNode, for that reason we miss the first few lines of this article.
+        //assertTrue(res.getText(), res.getText().startsWith("Over the weekend, the ever-vigilant Urbanturf"));
+        assertTrue(res.getText(), res.getText().endsWith("So, lesson for those seeking to game the system: Know the market!"));
+        compareDates("2010-06-16 08:47:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

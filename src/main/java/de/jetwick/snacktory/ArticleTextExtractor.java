@@ -1439,6 +1439,19 @@ public class ArticleTextExtractor {
             }
         }
 
+        // washingtoncitypaper.com
+        elems = doc.select("[class=container] [data-bvo-type*=published-date]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-[class=container] [data-bvo-type*=published-date]"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
 
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
@@ -1555,6 +1568,7 @@ public class ArticleTextExtractor {
             "yyyy-MM-dd'T'HH:mm:ss.SS000z", // 2015-08-05T11:52:09.720380-0700
             "dd-MM-yyyy", //20-05-2016
             "HH:mm',' MMM dd yyyy", //15:56, June 15 2016
+            "MMM dd',' yyyy hh:mm a", //June 16, 2010 8:47 a.m.
         };
 
         try {
@@ -1612,6 +1626,10 @@ public class ArticleTextExtractor {
 
         // Remove ordinal indicators
         dateStr = dateStr.replaceAll("(\\d)(?:st|nd|rd|th)", "$1");
+
+        // Change a.m./p.m. indicator to a format that can be parsed.
+        dateStr = dateStr.replaceAll("a\\.m\\.", "AM");
+        dateStr = dateStr.replaceAll("p\\.m\\.", "PM");
 
         dateStr = StringUtils.strip(dateStr);
         return dateStr;
