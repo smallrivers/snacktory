@@ -2364,6 +2364,18 @@ public class ArticleTextExtractorTest {
         compareDates("2016-06-13", res.getDate());
     }
 
+    @Test
+    public void testCbronline() throws Exception {
+        // http://www.cbronline.com/news/cloud/aas/what-is-crm-4924064
+        JResult res = new JResult();
+        res.setUrl("http://www.cbronline.com/news/cloud/aas/what-is-crm-4924064");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("cbronline.html")));
+        assertEquals("What is CRM? - Computer Business Review", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Learn why this is important to managing your customers"));
+        assertTrue(res.getText(), res.getText().endsWith("personalised approach can be developed. Terms & Conditions & Privacy Policy."));
+        compareDates("2016-06-15 15:56:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
