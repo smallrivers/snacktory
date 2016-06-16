@@ -190,7 +190,6 @@ public class ArticleTextExtractor {
                 "div[class*=release-body]"
             ));
 
-
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -232,7 +231,7 @@ public class ArticleTextExtractor {
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate|slider|^sectioncolumns$");
         setHighlyNegative("policy-blk|followlinkedinsignin|^signupbox$");
-        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$");
+        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -1385,8 +1384,19 @@ public class ArticleTextExtractor {
             }
         }
 
-
-
+        // cbronline.com
+        elems = doc.select("header p[class=details]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-header p[class=details]"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
 
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
@@ -1502,6 +1512,7 @@ public class ArticleTextExtractor {
             "hh:mm a z',' EEE MMM dd',' yyyy", // 08:51 am EST, Thu March 3, 2016
             "yyyy-MM-dd'T'HH:mm:ss.SS000z", // 2015-08-05T11:52:09.720380-0700
             "dd-MM-yyyy", //20-05-2016
+            "HH:mm',' MMM dd yyyy", //15:56, June 15 2016
         };
 
         try {
