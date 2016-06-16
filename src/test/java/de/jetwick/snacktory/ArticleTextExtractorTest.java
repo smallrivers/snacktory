@@ -2402,6 +2402,19 @@ public class ArticleTextExtractorTest {
         compareDates("2010-06-16 08:47:00", res.getDate());
     }
 
+    @Test
+    public void testKcci() throws Exception {
+        //http://www.kcci.com/national/bangladesh-arrests-over-5000-in-two-days/40026522
+        JResult res = new JResult();
+        res.setUrl("http://www.kcci.com/national/bangladesh-arrests-over-5000-in-two-days/40026522");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("kcci.html")));
+        assertEquals("Bangladesh arrests more than 11,000 in 4 days", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Authorities in Bangladesh have arrested nearly 150 suspected militants and more than"));
+        assertTrue(res.getText(), res.getText().endsWith("He's never been arrested before,\" she said."));
+        compareDates("2016-06-15 04:30:39", res.getDate());
+        assertFalse(res.getText(), res.getText().contains("Orlando"));
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
