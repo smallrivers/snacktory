@@ -2325,6 +2325,18 @@ public class ArticleTextExtractorTest {
         compareDates("2016-06-15 15:56:00", res.getDate());
     }
 
+    @Test
+    public void testMortgageorb() throws Exception {
+        //http://www.mortgageorb.com/digital-savvy-house-hunters-are-rebooting-the-online-auction-market
+        JResult res = new JResult();
+        res.setUrl("http://www.mortgageorb.com/digital-savvy-house-hunters-are-rebooting-the-online-auction-market");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("mortgageorb.html")));
+        assertEquals("Digital-Savvy House Hunters Are Rebooting The Online Auction Market :: MortgageOrb", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("BLOG VIEW: The new generation of technology-empowered"));
+        assertTrue(res.getText(), res.getText().endsWith("Send an email to pbarnard@zackin.com.)"));
+        compareDates("2015-10-07", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
