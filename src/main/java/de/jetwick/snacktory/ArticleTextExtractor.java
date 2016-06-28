@@ -1469,6 +1469,20 @@ public class ArticleTextExtractor {
             }
         }
 
+        // netskope.com
+        elems = doc.select(".status-update .info");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-.status-update .info"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
 
@@ -1585,6 +1599,7 @@ public class ArticleTextExtractor {
             "dd-MM-yyyy", //20-05-2016
             "HH:mm',' MMM dd yyyy", //15:56, June 15 2016
             "MMM dd',' yyyy hh:mm a", //June 16, 2010 8:47 a.m.
+            "hh:mm a '-' d MMM yy", //11:45 AM - 7 Aug 15
         };
 
         try {

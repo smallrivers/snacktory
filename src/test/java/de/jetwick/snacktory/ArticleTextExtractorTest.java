@@ -2417,14 +2417,27 @@ public class ArticleTextExtractorTest {
 
     @Test
     public void testNetskope() throws Exception {
-        // https://resources.netskope.com/h/i/128883476-movie-line-monday-introspection-best-practices
+        // https://resources.netskope.com/h/i/119331038-gary-yoshimura
         JResult res = new JResult();
-        res.setUrl("https://resources.netskope.com/h/i/128883476-movie-line-monday-introspection-best-practices");
+        res.setUrl("https://resources.netskope.com/h/i/119331038-gary-yoshimura");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("netskope.html")));
         assertEquals("Movie Line Monday - Introspection Best Practices", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("“Man who catch the fly with chopstick accomplish anything."));
         assertTrue(res.getText(), res.getText().endsWith("MovieLineMonday@netskope.com."));
         compareDates("2015-08-27", res.getDate());
+    }
+
+    @Test
+    public void testNetskope2() throws Exception {
+        // https://resources.netskope.com/h/i/128883476-movie-line-monday-introspection-best-practices
+        JResult res = new JResult();
+        res.setUrl("https://resources.netskope.com/h/i/128883476-movie-line-monday-introspection-best-practices");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("netskope2.html")));
+        assertEquals("Gary Yoshimura: @Netskope @jamiecbarnett @bobegilbert Looking ...", res.getTitle());
+        // TODO: Fix body
+        //assertTrue(res.getText(), res.getText().startsWith("“Man who catch the fly with chopstick accomplish anything."));
+        //assertTrue(res.getText(), res.getText().endsWith("MovieLineMonday@netskope.com."));
+        compareDates("2015-08-07 11:45:00", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
