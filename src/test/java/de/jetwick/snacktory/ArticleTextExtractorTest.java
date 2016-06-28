@@ -2364,6 +2364,18 @@ public class ArticleTextExtractorTest {
         assertFalse(res.getText(), res.getText().contains("Orlando"));
     }
 
+    @Test
+    public void testNetskope() throws Exception {
+        // https://resources.netskope.com/h/i/128883476-movie-line-monday-introspection-best-practices
+        JResult res = new JResult();
+        res.setUrl("https://resources.netskope.com/h/i/128883476-movie-line-monday-introspection-best-practices");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("netskope.html")));
+        assertEquals("Movie Line Monday - Introspection Best Practices", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("“Man who catch the fly with chopstick accomplish anything."));
+        assertTrue(res.getText(), res.getText().endsWith("MovieLineMonday@netskope.com."));
+        compareDates("2015-08-27", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
