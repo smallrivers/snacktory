@@ -1224,7 +1224,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("itsalovelylife.html")));
         assertTrue(res.getTitle(), res.getTitle().startsWith("Why Having A Sparkling Smile Is Important To Me"));
         assertTrue(res.getText(), res.getText().startsWith("I am still working my way through my New Year"));
-        compareDates("2015-10-05 00:00:00", res.getDate());
+        compareDates("2015-10-05 11:59:52", res.getDate());
     }
 
     @Test
@@ -1525,7 +1525,7 @@ public class ArticleTextExtractorTest {
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("bild.de.html")));
         assertEquals("Ärzte rieten Eltern zur Abtreibung, jetzt feiert er seinen 1. Geburtstag: Kleiner Jaxon, du bist ein Wunder!", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Jaxon lernt gerade laufen und sprechen."));
-        compareDates("2015-09-27 13:13:00", res.getDate());
+        compareDates("2015-09-27 11:13:45", res.getDate());
     }
 
     @Test
@@ -2438,6 +2438,18 @@ public class ArticleTextExtractorTest {
         //assertTrue(res.getText(), res.getText().startsWith("“Man who catch the fly with chopstick accomplish anything."));
         //assertTrue(res.getText(), res.getText().endsWith("MovieLineMonday@netskope.com."));
         compareDates("2015-08-07 11:45:00", res.getDate());
+    }
+
+    @Test
+    public void testSchwab() throws Exception {
+        // http://www.schwab.com/public/schwab/nn/articles/government-shutdown-stocks
+        JResult res = new JResult();
+        res.setUrl("http://www.schwab.com/public/schwab/nn/articles/government-shutdown-stocks");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("schwab.html")));
+        assertEquals("What Happens to Stocks During Government Shutdowns?", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Every year, prior to October 1, Congress"));
+        assertTrue(res.getText(), res.getText().endsWith("largely insignificant."));
+        compareDates("2015-09-28", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
