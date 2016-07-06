@@ -2401,6 +2401,19 @@ public class ArticleTextExtractorTest {
         compareDates("2015-09-28", res.getDate());
     }
 
+    @Test
+    public void testSeattleTimes() throws Exception {
+        // http://www.seattletimes.com/business/inspired-by-boeing-767-anacortes-firm-makes-devices-to-help-control-small-planes/
+        JResult res = new JResult();
+        res.setUrl("http://www.seattletimes.com/business/inspired-by-boeing-767-anacortes-firm-makes-devices-to-help-control-small-planes/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("seattletimes.html")));
+        assertEquals("Inspired by Boeing 767, Anacortes firm makes devices to help control small planes", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Micro AeroDynamics says it was the first company"));
+        //assertTrue(res.getText(), res.getText().endsWith("Brogan said."));
+        compareDates("2016-07-05 07:02:14", res.getDate());
+        assertFalse(res.getText(), res.getText().contains("Most Read Stories"));
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
