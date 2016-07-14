@@ -176,6 +176,14 @@ public class ArticleTextExtractor {
                 "*[class=article-disclosure]",
                 "*[class=article-call-to-action]"
             ));
+        aMap.put("theverge.com", Arrays.asList(
+                "*[class=m-linkset__entries-item]",
+                "*[class=m-linkset]",
+                "*[class=\"feature-photos-story feature-photos-column\"]",
+                "*[class*=js-carousel-pane]",
+                "*[id=feature-photos-model]"
+            ));
+
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -195,6 +203,9 @@ public class ArticleTextExtractor {
             ));
         aMap.put("prnewswire.com", Arrays.asList(
                 "div[class*=release-body]"
+            ));
+        aMap.put("theverge.com", Arrays.asList(
+                "article[class*=m-feature]"
             ));
 
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
@@ -2461,13 +2472,12 @@ public class ArticleTextExtractor {
         for (Element child : doc.select("body").select("*")) {
             String className = child.className().toLowerCase();
             String id = child.id().toLowerCase();
-            //System.out.println("---> stripUnlikelyCandidates className="+className+"|id="+id);
             if (TO_REMOVE.matcher(className).find()
                     || TO_REMOVE.matcher(id).find()) {
                 if(DEBUG_REMOVE_RULES){
-                    print("REMOVE:", child);
+                    print("1-REMOVE:", child);
                 }
-                child.remove();
+                removeNodeAndChildren(child);
             }
         }
     }
@@ -2482,13 +2492,29 @@ public class ArticleTextExtractor {
                 for (String selector : selectorList) {
                     Elements itemsToRemove = doc.select(selector);
                     for (Element item : itemsToRemove) {
+                        String className = item.className().toLowerCase();
+                        String id = item.id().toLowerCase();
                         if(DEBUG_REMOVE_RULES){
-                            print("REMOVE:", item);
+                            print("2-REMOVE:", item);
                         }
-                        item.remove();
+                        removeNodeAndChildren(item);
                     }
                 }
             }
+        }
+    }
+
+    /*
+     *  Remove recursively the current node all its children.
+     */
+    private void removeNodeAndChildren(Element parent){
+        for (Element child : parent.children()) {
+            removeNodeAndChildren(child);
+        }
+        try {
+            parent.remove();
+        } catch (java.lang.IllegalArgumentException ex){
+            // do nothing
         }
     }
 
