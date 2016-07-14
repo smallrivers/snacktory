@@ -207,6 +207,9 @@ public class ArticleTextExtractor {
         aMap.put("theverge.com", Arrays.asList(
                 "article[class*=m-feature]"
             ));
+        aMap.put("iheart.com", Arrays.asList(
+                "article"
+            ));
 
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
@@ -244,9 +247,9 @@ public class ArticleTextExtractor {
         setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
-                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings|title|avatar|follow-me-twitter|truncate|slider|^sectioncolumns$");
+                + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|post-ratings|title|avatar|follow-me-twitter|truncate|slider|^sectioncolumns$|ad-container");
         setHighlyNegative("policy-blk|FollowLinkedInSignIn|^signupbox$");
-        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup");
+        setToRemove("visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup|outbrain");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -1508,6 +1511,20 @@ public class ArticleTextExtractor {
             }
         }
 
+        // http://kdwb.iheart.com/
+        elems = doc.select("article div[class=date]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-article div[class=date]"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
 
@@ -1625,6 +1642,7 @@ public class ArticleTextExtractor {
             "HH:mm',' MMM dd yyyy", //15:56, June 15 2016
             "MMM dd',' yyyy hh:mm a", //June 16, 2010 8:47 a.m.
             "hh:mm a '-' d MMM yy", //11:45 AM - 7 Aug 15
+            "MMM dd',' yyyy hh:mma", // July 12, 2016  6:31am
         };
 
         try {
@@ -2472,6 +2490,9 @@ public class ArticleTextExtractor {
         for (Element child : doc.select("body").select("*")) {
             String className = child.className().toLowerCase();
             String id = child.id().toLowerCase();
+            if(DEBUG_REMOVE_RULES){
+                print("1-CHECKING-REMOVE:", child);
+            }
             if (TO_REMOVE.matcher(className).find()
                     || TO_REMOVE.matcher(id).find()) {
                 if(DEBUG_REMOVE_RULES){
