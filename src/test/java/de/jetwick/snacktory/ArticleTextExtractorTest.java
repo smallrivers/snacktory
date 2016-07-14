@@ -2486,7 +2486,20 @@ public class ArticleTextExtractorTest {
         assertEquals("Can you find the cell phone 'hidden' on this rug? | The Dave Ryan Show", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("How observant are you? "));
         assertTrue(res.getText(), res.getText().endsWith("Check out this frustrating brainteaser: Photo Credit: Getty"));
-        compareDates("2016-07-12 6:31:00", res.getDate());
+        compareDates("2016-07-12 06:31:00", res.getDate());
+    }
+
+    @Test
+    public void testWMCom() throws Exception {
+        // http://article.wn.com/view/2016/07/07/Celanese_Announces_MIBK_and_Formaldehyde_Price_Increases_Cel/
+        JResult res = new JResult();
+        res.setUrl("http://article.wn.com/view/2016/07/07/Celanese_Announces_MIBK_and_Formaldehyde_Price_Increases_Cel/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("article.wn.com.html")));
+        assertEquals("Celanese Announces MIBK and Formaldehyde Price Increases (Celanese Corporation)", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("DALLAS--(BUSINESS WIRE)-- Celanese Corporation (NYSE: CE)"));
+        assertTrue(res.getText(), res.getText().endsWith("and formaldehyde solutions. The"));
+        compareDates("2016-07-07", res.getDate());
+        assertEquals("", res.getAuthorDescription());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
