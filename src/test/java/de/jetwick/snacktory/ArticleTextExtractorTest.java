@@ -2414,6 +2414,18 @@ public class ArticleTextExtractorTest {
         assertFalse(res.getText(), res.getText().contains("Most Read Stories"));
     }
 
+    @Test
+    public void testTheVerge() throws Exception {
+        // http://www.theverge.com/2016/4/21/11476700/help-me-malcolm-in-the-middle-dewey-lives-inside-my-computer
+        JResult res = new JResult();
+        res.setUrl("http://www.theverge.com/2016/4/21/11476700/help-me-malcolm-in-the-middle-dewey-lives-inside-my-computer");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("theverge.html")));
+        assertEquals("First Click: I'm being chased around the internet by Dewey from Malcolm in the Middle", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Help, I'm being chased around the internet "));
+        assertTrue(res.getText(), res.getText().endsWith("I leave him alone."));
+        compareDates("2016-04-21 11:30:02", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
