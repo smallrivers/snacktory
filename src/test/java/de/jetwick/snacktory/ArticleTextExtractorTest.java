@@ -2426,6 +2426,18 @@ public class ArticleTextExtractorTest {
         compareDates("2016-04-21 11:30:02", res.getDate());
     }
 
+    @Test
+    public void testKdwb() throws Exception {
+        // http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/can-you-find-the-cell-phone-14897836/
+        JResult res = new JResult();
+        res.setUrl("http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/can-you-find-the-cell-phone-14897836/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("kdwb.html")));
+        assertEquals("Can you find the cell phone 'hidden' on this rug? | The Dave Ryan Show", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("How observant are you? "));
+        assertTrue(res.getText(), res.getText().endsWith("Check out this frustrating brainteaser: Photo Credit: Getty"));
+        compareDates("2016-07-12 6:31:00", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
