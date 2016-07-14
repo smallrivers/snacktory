@@ -1872,13 +1872,17 @@ public class ArticleTextExtractor {
         }
 
         try {
-            Elements nodes = doc.select(":containsOwn(" + authorName + ")");
-            Element bestMatch = getBestMatchElement(nodes);
-            if (bestMatch != null){
-                authorDesc = bestMatch.text();
-                if(DEBUG_AUTHOR_DESC_EXTRACTION){
-                    System.out.println("AUTHOR_DESC: containsOwn");
-                    System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            // If not author desc found, try to found a section where the author name
+            // is defined. 
+            if(authorName.length()>8){
+                Elements nodes = doc.select(":containsOwn(" + authorName + ")");
+                Element bestMatch = getBestMatchElement(nodes);
+                if (bestMatch != null){
+                    authorDesc = bestMatch.text();
+                    if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                        System.out.println("AUTHOR_DESC: containsOwn");
+                        System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+                    }
                 }
             }
         } catch(SelectorParseException se){
