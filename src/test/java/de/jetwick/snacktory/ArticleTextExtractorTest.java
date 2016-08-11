@@ -1452,7 +1452,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://www.bild.de/news/ausland/wunder/aerzte-rieten-zur-abtreibung-jaxon-du-bist-ein-wunder-42736638.bild.html");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("bild.de.html")));
-        assertEquals("Ärzte rieten Eltern zur Abtreibung, jetzt feiert er seinen 1. Geburtstag: Kleiner Jaxon, du bist ein Wunder! - News Ausland - Bild.de", res.getTitle());
+        assertEquals("Ärzte rieten Eltern zur Abtreibung, jetzt feiert er seinen 1. Geburtstag: Kleiner Jaxon, du bist ein Wunder!", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Jaxon lernt gerade laufen und sprechen."));
         compareDates("2015-09-27 13:13:00", res.getDate());
     }
@@ -1487,7 +1487,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://www.golocalprov.com/business/friday-financial-five-december-4-2015");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("golocalprov.html")));
-        assertEquals("Friday Financial Five – December 4, 2015", res.getTitle());
+        assertEquals("GoLocalProv | Business | Friday Financial Five – December 4, 2015", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("The end of the year is a great time to review"));
         assertFalse(res.getText(), res.getText().contains("WalletHub"));
         compareDates("2015-12-04 07:14:00", res.getDate());
@@ -1532,7 +1532,7 @@ public class ArticleTextExtractorTest {
     public void testPRnewswire() throws Exception {
         // http://www.prnewswire.com/news-releases/encyclopaedia-britannica-accelerates-its-digital-transformation-with-salesforce-300187911.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("prnewswire2.html")));
-        assertEquals("Encyclopaedia Britannica Accelerates Its Digital Transformation with Salesforce -- SAN FRANCISCO, Dec. 4, 2015 /PRNewswire/ --", res.getTitle());
+        assertEquals("Encyclopaedia Britannica Accelerates Its Digital Transformation with Salesforce", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("SAN FRANCISCO, Dec. 4, 2015 /PRNewswire/"));
         assertTrue(res.getText(), res.getText().contains("240 years"));
         compareDates("2015-12-04", res.getDate());
@@ -1542,7 +1542,7 @@ public class ArticleTextExtractorTest {
     public void testTheStreet() throws Exception {
         // http://www.thestreet.com/video/13404696/avoid-non-traded-reits-annuities-says-wall-street-potholes-author.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("thestreet.com.html")));
-        assertEquals("Avoid Non-Traded REITs, Annuities Says ‘Wall Street Potholes’ Author", res.getTitle());
+        assertEquals("Avoid Non-Traded REITs, Annuities Says ‘Wall Street Potholes’ Author - Video - TheStreet", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Non-traded REITs have highly limited liquidity"));
         compareDates("2015-12-28 06:30:00", res.getDate());
     }
@@ -1562,7 +1562,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://www.beet.tv/2016/01/cesrocketwootton.html");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("beet.tv.html")));
-        assertEquals("Rocket Fuel’s New CEO Targets DISH Moments", res.getTitle());
+        assertEquals("Rocket Fuel’s New CEO Targets DISH Moments | Beet.TV", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("LAS VEGAS — "));
         assertTrue(res.getText(), res.getText().endsWith("sponsored by Adobe."));
         compareDates("2016-01-01", res.getDate());
