@@ -476,7 +476,7 @@ public class ArticleTextExtractor {
                 }
             }
         }
-        return title;
+        return StringEscapeUtils.unescapeHtml4(title);
     }
 
     protected String extractCanonicalUrl(Document doc) {

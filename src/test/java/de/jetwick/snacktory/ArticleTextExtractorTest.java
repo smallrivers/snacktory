@@ -1243,7 +1243,7 @@ public class ArticleTextExtractorTest {
     public void testWamu() throws Exception {
         // https://wamu.org/news/15/10/23/why_calling_slaves_workers_is_more_than_an_editing_error
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wamu.html")));
-        assertTrue(res.getTitle(), res.getTitle().startsWith("Why Calling Slaves 'Workers' Is More Than An Editing Error"));
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Why Calling Slaves &#039;Workers&#039; Is More Than An Editing Error"));
         assertTrue(res.getText(), res.getText().startsWith("Coby Burren was reading his textbook"));
         assertTrue(res.getText(), res.getText().endsWith("\"and that he'll be heard.\""));
         // not supported
