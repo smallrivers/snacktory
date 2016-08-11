@@ -1265,7 +1265,7 @@ public class ArticleTextExtractorTest {
     public void testDailyMail() throws Exception {
         // http://www.dailymail.co.uk/news/article-2763386/With-breath-hero-mom-hid-baby-toilet-helping-daughter-escape-father-shot-head-turning-gun-himself.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("dailymail.co.uk.html")));
-        assertTrue(res.getTitle(), res.getTitle().startsWith("With her 'last breath,' hero mom hid her baby in the toilet, sheltering the infant in the toilet as her boyfriend shot her in the head before turning the gun on himself"));
+        assertEquals("With her 'last breath,' mom helped daughter escape from rampaging dad", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("A mother saved her six-month-old"));
         compareDates("2014-09-20 14:09:55", res.getDate());
     }
@@ -1325,7 +1325,7 @@ public class ArticleTextExtractorTest {
         //http://www.kjrh.com/news/local-news/muskogee-roughers-football-team-collecting-donations-for-jenks-trojans-assistant-coach-bryant-calip
         JResult res = new JResult();
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("kjrh.html")));
-        assertEquals("Muskogee Roughers football team collecting donations for Jenks Trojans assistant coach Bryant Calip - KJRH.com", res.getTitle());
+        assertEquals("Muskogee Roughers football team collecting donations for Jenks Trojans assistant coach Bryant Calip", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("That's the distance that separates two opposing football teams"));
         compareDates("2014-10-21 12:54:43", res.getDate());
     }
@@ -1386,7 +1386,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://www.eurweb.com/2014/09/darren-wilson-fundraisers-end-without-explanation/");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("eurweb.html")));
-        assertEquals("Darren Wilson Online Fundraisers Stop Without Any Reason", res.getTitle());
+        assertEquals("Darren Wilson Fundraisers End Without Explanation", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("*Online fundraisers for embattled Ferguson"));
         compareDates("2014-09-01", res.getDate());
     }
