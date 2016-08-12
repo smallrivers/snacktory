@@ -51,8 +51,8 @@ public class ArticleTextExtractor {
 
     // Helper function to try to determine whether the input text contains html tags
     //private Pattern HTML_PATTERN = Pattern.compile(".*\\<[^>]{0,15}>.*");
-    private Pattern HTML_PATTERN = Pattern.compile(".*<\\s{0,5}[(?:div|p|b|a|li)]\\s{0,5}>.*");
-    public boolean hasHTMLTags(String text){
+    private static final Pattern HTML_PATTERN = Pattern.compile(".*<\\s{0,5}[(?:div|p|b|a|li)]\\s{0,5}>.*");
+    private static boolean hasHTMLTags(String text){
         Matcher matcher = HTML_PATTERN.matcher(text);
         return matcher.matches();
     }
@@ -64,17 +64,14 @@ public class ArticleTextExtractor {
     private String positiveStr;
     private Pattern POSITIVE;
     // Most likely positive candidates
-    private String highlyPositiveStr;
     private Pattern HIGHLY_POSITIVE;
     // Likely negative candidates
     private String negativeStr;
     private Pattern NEGATIVE;
     // Most likely negative candidates
-    private String highlyNegativeStr;
     private Pattern HIGHLY_NEGATIVE;
 
-    // Notes to remove pattterns
-    private String toRemoveStr;
+    // Notes to remove patterns
     private Pattern TO_REMOVE;
 
     private static final Pattern NEGATIVE_STYLE =
@@ -272,7 +269,6 @@ public class ArticleTextExtractor {
     }
 
     public ArticleTextExtractor setHighlyPositive(String highlyPositiveStr) {
-        this.highlyPositiveStr = highlyPositiveStr;
         HIGHLY_POSITIVE = Pattern.compile(highlyPositiveStr, Pattern.CASE_INSENSITIVE);
         return this;
     }
@@ -288,7 +284,6 @@ public class ArticleTextExtractor {
     }
 
     public ArticleTextExtractor setHighlyNegative(String highlyNegativeStr) {
-        this.highlyNegativeStr = highlyNegativeStr;
         HIGHLY_NEGATIVE = Pattern.compile(highlyNegativeStr, Pattern.CASE_INSENSITIVE);
         return this;
     }
@@ -299,7 +294,6 @@ public class ArticleTextExtractor {
     }
 
     public ArticleTextExtractor setToRemove(String toRemoveStr) {
-        this.toRemoveStr = toRemoveStr;
         TO_REMOVE = Pattern.compile(toRemoveStr, Pattern.CASE_INSENSITIVE);
         return this;
     }
@@ -308,11 +302,6 @@ public class ArticleTextExtractor {
         this.formatter = formatter;
     }
 
-    /**
-     * @param html extracts article text from given html string. wasn't tested
-     * with improper HTML, although jSoup should be able to handle minor stuff.
-     * @returns extracted article, all HTML tags stripped
-     */
     public JResult extractContent(Document doc) throws Exception {
         return extractContent(new JResult(), doc, formatter, true, true, true, 0);
     }
@@ -329,6 +318,11 @@ public class ArticleTextExtractor {
         return extractContent(res, html, formatter, true, true, true, 0);
     }
 
+    /**
+     * @param html extracts article text from given html string. wasn't tested
+     * with improper HTML, although jSoup should be able to handle minor stuff.
+     * @returns extracted article, all HTML tags stripped
+     */
     public JResult extractContent(String html) throws Exception {
         return extractContent(html, 0);
     }
@@ -2754,7 +2748,7 @@ public class ArticleTextExtractor {
      * @author Chris Alexander, chris@chris-alexander.co.uk
      *
      */
-    public class ImageComparator implements Comparator<ImageResult> {
+    public static class ImageComparator implements Comparator<ImageResult> {
 
         @Override
         public int compare(ImageResult o1, ImageResult o2) {
@@ -2767,7 +2761,7 @@ public class ArticleTextExtractor {
     /**
     *   Helper class to keep track of log entries.
     */
-    private class LogEntries {
+    private static class LogEntries {
 
         List<String> entries;
 
@@ -2797,7 +2791,7 @@ public class ArticleTextExtractor {
     /**
      *  Helper class to debug element weights calculation
     */
-    private class ElementDebug {
+    private static class ElementDebug {
         LogEntries logEntries;
         Element entry;
     }
@@ -2805,7 +2799,7 @@ public class ArticleTextExtractor {
     /**
      *  Helper class to sort elements by weight and position
     */
-    private class ElementKey {
+    private static class ElementKey {
         int weight;
         int position;
     }
@@ -2813,7 +2807,7 @@ public class ArticleTextExtractor {
     /*
      *  Helper class to pass around the calculated weights
      */
-    private class Weight {
+    private static class Weight {
         int weight;
         boolean hasHighlyPositive;
     }
