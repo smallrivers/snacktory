@@ -855,9 +855,9 @@ public class ArticleTextExtractorTest {
         String text = res.getText();
         assertThat(res.getText(), startsWith("Cristiano Ronaldo a quitté l’entraînement de la sélection portugaise plus tôt que ses coéquipiers ce mercredi. L’attaquant du Real Madrid a rejoint les vestiaires avec une poche de glace sur un genou, comme il l’a déjà fait à plusieurs reprises depuis son arrivée au Brésil."));
         List<String> textList = res.getTextList();
-        assertEquals(3, textList.size());
+        assertEquals(2, textList.size());
         assertTrue(textList.get(0).startsWith(text.substring(0, 15)));
-        assertTrue(textList.get(2).endsWith(text.substring(text.length() - 15, text.length())));
+        assertTrue(textList.get(1).endsWith(text.substring(text.length() - 15, text.length())));
     }
 
     @Test
