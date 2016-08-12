@@ -119,7 +119,10 @@ public class ArticleTextExtractorTest {
     @Test
     public void testBBCNoCSS() throws Exception {
         // http://www.bbc.co.uk/news/magazine-21206964
-        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("bbc_nocss.html")));
+        JResult res = new JResult();
+        res.setUrl("http://www.bbc.co.uk/news/magazine-21206964");
+
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("bbc_nocss.html")));
         assertEquals("Digital artists inspired by the gif's resurgence", res.getTitle());
         assertEquals("http://ichef.bbci.co.uk/news/1024/media/images/65563000/jpg/_65563610_gifpromo.jpg", res.getImageUrl());
         assertTrue("bbc no css:" + res.getText(), res.getText().startsWith("They were created in the late-1980s, but recent years have seen a resurgence in popularity of gif animated files."));
@@ -146,7 +149,7 @@ public class ArticleTextExtractorTest {
         // http://www.golem.de/1104/82797.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("golem.html")));
         assertThat(res.getText(), is(notNullValue()));
-        assertThat(res.getText(), startsWith("Unter dem Namen \"Aurora\" hat Firefox einen neuen Kanal mit Vorabversionen von Firefox eingerichtet."));
+        assertThat(res.getText(), startsWith("Mozilla hat Firefox 5.0a2 veröffentlicht und zugleich eine erste Entwicklerversion von Firefox 6 freigegeben."));
         assertEquals("http://www.golem.de/1104/82797-9183-i.png", res.getImageUrl());
         assertThat(res.getTitle(), equalTo("Vorabversionen von Firefox 5 und 6 veröffentlicht"));
     }

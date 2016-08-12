@@ -43,7 +43,7 @@ public class ArticleTextExtractor {
 
     private static final Logger logger = LoggerFactory.getLogger(ArticleTextExtractor.class);
     // Interesting nodes
-    private static final Pattern NODES = Pattern.compile("p|div|article|section");
+    private static final Pattern NODES = Pattern.compile("p|div|td|h1|h2|article|section");
 
     private HtmlCleaner cleaner = new HtmlCleaner();
     // take default cleaner properties
@@ -183,6 +183,9 @@ public class ArticleTextExtractor {
                 "*[class*=js-carousel-pane]",
                 "*[id=feature-photos-model]"
             ));
+        aMap.put("bbc.co.uk", Arrays.asList(
+              "h1"
+        ));
 
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
