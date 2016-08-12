@@ -77,7 +77,7 @@ public class ArticleTextExtractorTest {
     @Test
     public void testData6() throws Exception {
         JResult res = extractor.extractContent(readFileAsString("test_data/6.html"));
-        assertTrue("data6:" + res.getText(), res.getText().equals("Acting Governor of Balkh province, Atta Mohammad Noor, said that differences between leaders of the National Unity Government (NUG) – namely President Ashraf Ghani and CEO Abdullah Abdullah— have paved the ground for mounting insecurity. To watch the whole news bulletin, click here: Hundreds of worried relatives gathered outside Kabul hospitals on Tuesday desperate for news of loved ones following the deadly suicide bombing earlier in the day."));
+        assertTrue("data6:" + res.getText(), res.getText().equals("Acting Governor of Balkh province, Atta Mohammad Noor, said that differences between leaders of the National Unity Government (NUG) – namely President Ashraf Ghani and CEO Abdullah Abdullah— have paved the ground for mounting insecurity. To watch the whole news bulletin, click here: To watch the whole news bulletin, click here: Hundreds of worried relatives gathered outside Kabul hospitals on Tuesday desperate for news of loved ones following the deadly suicide bombing earlier in the day."));
     }
 
     @Test
