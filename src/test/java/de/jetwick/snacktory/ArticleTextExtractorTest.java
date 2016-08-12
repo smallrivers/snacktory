@@ -2485,7 +2485,7 @@ public class ArticleTextExtractorTest {
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("kdwb.html")));
         assertEquals("Can you find the cell phone 'hidden' on this rug? | The Dave Ryan Show", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("How observant are you? "));
-        assertTrue(res.getText(), res.getText().endsWith("Check out this frustrating brainteaser: Photo Credit: Getty"));
+        assertTrue(res.getText(), res.getText().endsWith("Check out this frustrating brainteaser:"));
         compareDates("2016-07-12 06:31:00", res.getDate());
     }
 
