@@ -855,7 +855,7 @@ public class ArticleTextExtractorTest {
         List<String> textList = res.getTextList();
         assertEquals(3, textList.size());
         assertTrue(textList.get(0).startsWith(text.substring(0, 15)));
-        assertTrue(textList.get(1).endsWith(text.substring(text.length() - 15, text.length())));
+        assertTrue(textList.get(2).endsWith(text.substring(text.length() - 15, text.length())));
     }
 
     @Test
