@@ -2283,7 +2283,7 @@ public class ArticleTextExtractorTest {
         res.setUrl("http://www.inforisktoday.com/interviews/5-trends-to-sway-cybersecuritys-future-i-2153");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("inforisktoday.html")));
         assertEquals("http://www.inforisktoday.com/interviews/5-trends-to-sway-cybersecuritys-future-i-2153", res.getCanonicalUrl());
-        assertEquals("Allan Friedman: 5 Trends to Sway Cybersecurity's Future", res.getTitle());
+        assertEquals("5 Trends to Sway Cybersecurity's Future", res.getTitle());
         // TODO: The first paragraph is missing: "Five significant trends..." since it is outside children tags
         // but just a text node of the parent.
         assertTrue(res.getText(), res.getText().startsWith("Other key trends are the growth of cloud computing"));
@@ -2370,7 +2370,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://www.cbronline.com/news/cloud/aas/what-is-crm-4924064");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("cbronline.html")));
-        assertEquals("What is CRM? - Computer Business Review", res.getTitle());
+        assertEquals("What is CRM?", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Learn why this is important to managing your customers"));
         assertTrue(res.getText(), res.getText().endsWith("personalised approach can be developed. Terms & Conditions & Privacy Policy."));
         compareDates("2016-06-15 15:56:00", res.getDate());
