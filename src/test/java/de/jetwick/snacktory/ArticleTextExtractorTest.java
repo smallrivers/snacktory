@@ -118,7 +118,7 @@ public class ArticleTextExtractorTest {
     public void testBBCNoCSS() throws Exception {
         // http://www.bbc.co.uk/news/magazine-21206964
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("bbc_nocss.html")));
-        assertEquals("Digital artists inspired by the gif's resurgence - BBC News", res.getTitle());
+        assertEquals("Digital artists inspired by the gif's resurgence", res.getTitle());
         assertEquals("http://ichef-1.bbci.co.uk/news/1024/media/images/65563000/jpg/_65563610_gifpromo.jpg", res.getImageUrl());
         assertTrue("bbc no css:" + res.getText(), res.getText().startsWith("They were created in the late-1980s, but recent years have seen a resurgence in popularity of gif animated files."));
     }
@@ -852,7 +852,7 @@ public class ArticleTextExtractorTest {
     public void testSearchEngineJournal() throws Exception {
         // http://www.searchenginejournal.com/planning-progress-18-tips-successful-social-media-strategy/112567/
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("searchenginejournal.html")));
-        assertEquals("18 Tips for a Successful Social Media Strategy | SEJ", res.getTitle());
+        assertEquals("18 Tips for a Successful Social Media Strategy", res.getTitle());
         assertTrue(res.getText(), res.getText().contains("Sharam"));
     }
 
@@ -892,7 +892,7 @@ public class ArticleTextExtractorTest {
     public void testMarthaStewartWeddings() throws Exception {
         // http://www.marthastewartweddings.com/363473/bridal-beauty-diaries-lauren-%25E2%2580%2593-toning-and-cutting-down
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("marthastewartweddings.html")));
-        assertEquals("Bridal Beauty Diaries: Lauren – Toning Up and Cutting Down | Martha Stewart Weddings", res.getTitle());
+        assertEquals("Bridal Beauty Diaries: Lauren – Toning Up and Cutting Down", res.getTitle());
         assertTrue(res.getText(), res.getText().contains("Its “go” time. Approximately seven months until the big day"));
         compareDates("2014-07-02", res.getDate());
     }
@@ -1019,7 +1019,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("https://www.qualcomm.com/news/releases/2014/10/16/qualcomm-declares-quarterly-cash-dividend");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("qualcomm.html")));
-        assertEquals("Qualcomm Declares Quarterly Cash Dividend | Qualcomm", res.getTitle());
+        assertEquals("Qualcomm Declares Quarterly Cash Dividend", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Qualcomm Incorporated (NASDAQ: QCOM) today announced"));
         compareDates("2014-10-16", res.getDate());
     }
@@ -1487,7 +1487,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://www.golocalprov.com/business/friday-financial-five-december-4-2015");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("golocalprov.html")));
-        assertEquals("GoLocalProv | Business | Friday Financial Five – December 4, 2015", res.getTitle());
+        assertEquals("Friday Financial Five – December 4, 2015", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("The end of the year is a great time to review"));
         assertFalse(res.getText(), res.getText().contains("WalletHub"));
         compareDates("2015-12-04 07:14:00", res.getDate());
@@ -1542,7 +1542,7 @@ public class ArticleTextExtractorTest {
     public void testTheStreet() throws Exception {
         // http://www.thestreet.com/video/13404696/avoid-non-traded-reits-annuities-says-wall-street-potholes-author.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("thestreet.com.html")));
-        assertEquals("Avoid Non-Traded REITs, Annuities Says ‘Wall Street Potholes’ Author - Video - TheStreet", res.getTitle());
+        assertEquals("Avoid Non-Traded REITs, Annuities Says ‘Wall Street Potholes’ Author", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Non-traded REITs have highly limited liquidity"));
         compareDates("2015-12-28 06:30:00", res.getDate());
     }
@@ -1562,7 +1562,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://www.beet.tv/2016/01/cesrocketwootton.html");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("beet.tv.html")));
-        assertEquals("Rocket Fuel’s New CEO Targets DISH Moments | Beet.TV", res.getTitle());
+        assertEquals("Rocket Fuel’s New CEO Targets DISH Moments", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("LAS VEGAS — "));
         assertTrue(res.getText(), res.getText().endsWith("sponsored by Adobe."));
         compareDates("2016-01-01", res.getDate());
@@ -1634,7 +1634,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://www.huffingtonpost.com/entry/kesha-fans-protest_us_56a128f5e4b0d8cc109916b1");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("huffingtonpost4.html")));
-        assertEquals("Kesha Fans Set To Protest Sony Music Outside New York Courthouse", res.getTitle());
+        assertEquals("Kesha Fans Set To Protest Sony Outside NYC Courthouse", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("On Tuesday, Jan. 26, Kesha fans will reportedly protest Sony Music "));
         assertTrue(res.getText(), res.getText().endsWith("Care2 petition website."));
         compareDates("2016-01-21 21:16:12", res.getDate());
@@ -1658,7 +1658,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("https://boingboing.net/2016/02/02/doxxing-sherlock-3.html");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("boingboing.net.html")));
-        assertEquals("Exclusive: Snowden intelligence docs reveal UK spooks' malware checklist / Boing Boing", res.getTitle());
+        assertEquals("Exclusive: Snowden intelligence docs reveal UK spooks' malware checklist", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Boing Boing is proud to publish two original documents disclosed"));
         assertTrue(res.getText(), res.getText().endsWith("contributed research to this story."));
         compareDates("2016-02-02 17:36:53", res.getDate());
@@ -1694,7 +1694,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://www.coolhunting.com/link/otherworldly-images-of-a-glass-recyling-factory");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("coolhunting.html")));
-        assertEquals("Otherworldy Images of a Glass Recycling Factory - Cool Hunting", res.getTitle());
+        assertEquals("Otherworldy Images of a Glass Recycling Factory", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("At the Phoenicia Glass Works"));
         assertTrue(res.getText(), res.getText().endsWith("Take a look at Mashable."));
         compareDates("2016-02-08 12:30:00", res.getDate());

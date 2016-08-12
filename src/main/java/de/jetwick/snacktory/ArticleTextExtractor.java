@@ -551,27 +551,28 @@ public class ArticleTextExtractor {
                             title = SHelper.innerTrim(doc.select("h1:first-of-type").text());
                         }
                     }
-                } else {
-                    // Apply heuristic to try to determine whether the title is a substring of the
-                    // document title.
-                    boolean usingPossibleTitle = false;
-                    if (title.contains(" | ") || title.contains(" : ") || title.contains(" - ")) {
-                        String possibleTitle = SHelper.innerTrim(doc.select("h1:first-of-type").text());
-                        if (!possibleTitle.isEmpty()) {
-                            String doc_title = doc.title();
-                            if (doc_title.toLowerCase().contains(possibleTitle.toLowerCase())) {
-                                if (possibleTitle.length() > 20) { // short title is not likely a title.
-                                    title = possibleTitle;
-                                    usingPossibleTitle = true;
-                                    }
-                                }
-                        }
-                    }
-
-                    if (!usingPossibleTitle) {
-                        title = cleanTitle(title);
-                    }
                 }
+            }
+        }
+
+        // Apply heuristic to try to determine whether the title is a substring of the
+        // document title.
+        if (StringUtils.isNotEmpty(title) &&
+              (title.contains(" | ") || title.contains(" : ") || title.contains(" - "))) {
+            boolean usingPossibleTitle = false;
+            final String possibleTitle = SHelper.innerTrim(doc.select("h1:first-of-type").text());
+
+            if (!possibleTitle.isEmpty() && possibleTitle.length() > 20) {
+                // short title is not likely a title.
+                final String doc_title = doc.title();
+                if (doc_title.toLowerCase().contains(possibleTitle.toLowerCase())) {
+                    title = possibleTitle;
+                    usingPossibleTitle = true;
+                }
+            }
+
+            if (!usingPossibleTitle) {
+                title = cleanTitle(title);
             }
         }
         return StringEscapeUtils.unescapeHtml4(title);
