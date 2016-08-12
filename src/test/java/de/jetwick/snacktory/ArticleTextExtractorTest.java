@@ -1934,7 +1934,7 @@ public class ArticleTextExtractorTest {
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("modernhealthcare.html")));
         assertEquals("http://www.modernhealthcare.com/article/20160409/MAGAZINE/304099982", res.getUrl());
         assertEquals("http://www.modernhealthcare.com/article/20160409/MAGAZINE/304099982", res.getCanonicalUrl());
-        assertEquals("Hospitals dive into venture capital to nurture startups - Modern Healthcare Modern Healthcare business news, research, data and events", res.getTitle());
+        assertEquals("Hospitals discover their inner venture capitalist", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("When Cedars-Sinai Health System launched a program last year"));
         //assertTrue(res.getText(), res.getText().endsWith("he said."));
         compareDates("2016-04-09 00:00:00", res.getDate());
@@ -1960,7 +1960,7 @@ public class ArticleTextExtractorTest {
         res.setUrl("http://www.marketingprofs.com/opinions/2016/29685/the-inbound-marketing-channel-that-most-executives-are-missing");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("marketingprofs.html")));
         assertEquals("http://www.marketingprofs.com/opinions/2016/29685/the-inbound-marketing-channel-that-most-executives-are-missing", res.getCanonicalUrl());
-        assertEquals("Marketing Strategy - The Inbound Marketing Channel That Most Executives Are Missing : MarketingProfs Article", res.getTitle());
+        assertEquals("The Inbound Marketing Channel That Most Executives Are Missing", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("When marketing executives consider inbound marketing"));
         compareDates("2016-04-07 00:00:00", res.getDate());
         assertTrue(res.getText(), res.getText().startsWith("When marketing executives consider inbound marketing"));
@@ -2027,7 +2027,7 @@ public class ArticleTextExtractorTest {
         res.setUrl("http://www.ajmc.com/newsroom/fda-approves-cabozantinib-for-advanced-renal-cell-carcinoma");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("ajmc.html")));
         assertEquals("http://www.ajmc.com/newsroom/fda-approves-cabozantinib-for-advanced-renal-cell-carcinoma", res.getCanonicalUrl());
-        assertEquals("FDA Approves Cabozantinib for Advanced Renal Cell Carcinoma", res.getTitle());
+        assertEquals("#cabozantinib provides options for #rcc patients who progress on other anti-angiogenic therapy", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("FDA Approves Cabozantinib for Advanced Renal Cell Carcinoma"));
         compareDates("2016-04-25", res.getDate());
     }
