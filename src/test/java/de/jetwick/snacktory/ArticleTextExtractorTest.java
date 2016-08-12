@@ -1793,7 +1793,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Rackspace plans 500 new jobs at Highland Mall, seeks incentives", res.getTitle());
         assertEquals("http://www.bizjournals.com/austin/blog/techflash/2014/10/rackspace-plans-500-new-jobs-at-highland-mall.html", res.getCanonicalUrl());
         assertTrue(res.getText(), res.getText().startsWith("Rackspace Inc., the San Antonio-based Web"));
-        assertTrue(res.getText(), res.getText().endsWith("and other fixtures."));
+        assertTrue(res.getText(), res.getText().endsWith("economic development for the Austin Business Journal."));
         compareDates("2014-10-21 12:48:00", res.getDate());
     }
 
