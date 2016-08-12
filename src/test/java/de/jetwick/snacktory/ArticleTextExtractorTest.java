@@ -121,7 +121,7 @@ public class ArticleTextExtractorTest {
         // http://www.bbc.co.uk/news/magazine-21206964
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("bbc_nocss.html")));
         assertEquals("Digital artists inspired by the gif's resurgence", res.getTitle());
-        assertEquals("http://ichef-1.bbci.co.uk/news/1024/media/images/65563000/jpg/_65563610_gifpromo.jpg", res.getImageUrl());
+        assertEquals("http://ichef.bbci.co.uk/news/1024/media/images/65563000/jpg/_65563610_gifpromo.jpg", res.getImageUrl());
         assertTrue("bbc no css:" + res.getText(), res.getText().startsWith("They were created in the late-1980s, but recent years have seen a resurgence in popularity of gif animated files."));
     }
 
