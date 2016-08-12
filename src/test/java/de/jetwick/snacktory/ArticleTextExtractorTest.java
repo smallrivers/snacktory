@@ -2433,7 +2433,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("https://resources.netskope.com/h/i/128883476-movie-line-monday-introspection-best-practices");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("netskope2.html")));
-        assertEquals("Gary Yoshimura: @Netskope @jamiecbarnett @bobegilbert Looking ...", res.getTitle());
+        assertEquals("Gary Yoshimura", res.getTitle());
         // TODO: Fix body
         //assertTrue(res.getText(), res.getText().startsWith("“Man who catch the fly with chopstick accomplish anything."));
         //assertTrue(res.getText(), res.getText().endsWith("MovieLineMonday@netskope.com."));
