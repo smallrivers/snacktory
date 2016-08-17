@@ -2451,6 +2451,19 @@ public class ArticleTextExtractorTest {
         assertEquals("", res.getAuthorDescription());
     }
 
+    @Test
+    public void testTulsacw() throws Exception {
+        // http://www.tulsacw.com/story/32687972/the-best-thing-to-do-with-a-summer-tomato
+        JResult res = new JResult();
+        res.setUrl("http://www.tulsacw.com/story/32687972/the-best-thing-to-do-with-a-summer-tomato");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("tulsacw.html")));
+        assertEquals("The best thing to do with a summer tomato - TulsaCW.com: TV To Talk About | The Tulsa CW", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("August is here, and it’s my favorite month"));
+        assertTrue(res.getText(), res.getText().endsWith("Get the recipe for SAVEUR's Tomato Sandwich »"));
+        compareDates("2016-08-04", res.getDate());
+        assertEquals("Katherine Whittaker", res.getAuthorName());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
