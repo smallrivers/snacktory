@@ -2464,6 +2464,18 @@ public class ArticleTextExtractorTest {
         assertEquals("Katherine Whittaker", res.getAuthorName());
     }
 
+    @Test
+    public void testProfinder() throws Exception {
+        // https://blog.linkedin.com/profinder/marketing/content-strategist--how-to-find-an-experienced-content-marketer-
+        JResult res = new JResult();
+        res.setUrl("https://blog.linkedin.com/profinder/marketing/content-strategist--how-to-find-an-experienced-content-marketer-");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("profinder.html")));
+        assertEquals("How to Rise Above the Crowd and Reach Your Audience with a Content Strategist", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("There is a lot of buzz about how content marketing"));
+        assertTrue(res.getText(), res.getText().endsWith("you customized proposals to review."));
+        compareDates("2016-05-09", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

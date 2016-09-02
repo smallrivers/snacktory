@@ -207,7 +207,9 @@ public class ArticleTextExtractor {
         aMap.put("iheart.com", Arrays.asList(
                 "article"
             ));
-
+        aMap.put("blog.linkedin.com", Arrays.asList(
+                "[class=full-content]"
+            ));
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -1497,6 +1499,21 @@ public class ArticleTextExtractor {
                 }
             }
         }
+
+        // https://blog.linkedin.com
+        elems = doc.select("[class=publish-info] [class=date]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-[class=publish-info] [class=date]"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
 
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
