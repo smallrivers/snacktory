@@ -310,7 +310,7 @@ public class ArticleTextExtractor {
     /**
      * @param html extracts article text from given html string. wasn't tested
      * with improper HTML, although jSoup should be able to handle minor stuff.
-     * @returns extracted article, all HTML tags stripped
+     * @return extracted article, all HTML tags stripped
      */
     public JResult extractContent(String html, int maxContentSize) throws Exception {
         return extractContent(new JResult(), html, maxContentSize);
