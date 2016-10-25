@@ -23,6 +23,8 @@ public class OutputFormatter {
     private static final boolean DEBUG_OUTPUT = false;
     public static final int MIN_FIRST_PARAGRAPH_TEXT = 50; // Min size of first paragraph
     public static final int MIN_PARAGRAPH_TEXT = 30;       // Min size of any other paragraphs
+    protected boolean clearWhitespace = true;
+
     private static final List<String> NODES_TO_REPLACE = Arrays.asList("strong", "b", "i");
     private Pattern unlikelyPattern = Pattern.compile("display\\:none|visibility\\:hidden");
     protected final int minFirstParagraphText;
@@ -57,7 +59,16 @@ public class OutputFormatter {
     }
 
     /**
+     * Disables removal of line-breaks
+     **/
+    public void setClearWhitespace(boolean flag) {
+	this.clearWhitespace = flag;
+    }
+
+    /**
      * takes an element and turns the P tags into \n\n
+     * may then remove \n\n content if clearWhitespace
+     * setting is in use
      */
     public String getFormattedText(Element topNode, boolean removeNegative) {
         setParagraphIndex(topNode, nodesToKeepCssSelector);
@@ -66,8 +77,9 @@ public class OutputFormatter {
         }
         StringBuilder sb = new StringBuilder();
         int countOfP = append(topNode, sb, nodesToKeepCssSelector);
-        String str = SHelper.innerTrim(sb.toString());
+        String str = this.clearWhitespace ? SHelper.innerTrim(sb.toString()) : sb.toString();
 
+	
         int topNodeLength = topNode.text().length();
         if (topNodeLength == 0) {
             topNodeLength = 1;
@@ -89,6 +101,7 @@ public class OutputFormatter {
         return Jsoup.parse(str).text();
     }
 
+
     /**
      * If there are elements inside our top node that have a negative gravity
      * score remove them
@@ -104,7 +117,7 @@ public class OutputFormatter {
             }
         }
     }
-
+    
     protected int append(Element node, StringBuilder sb, String tagName) {
         int countOfP = 0; // Number of P elements in the article
         int paragraphWithTextIndex = 0;
@@ -165,7 +178,7 @@ public class OutputFormatter {
 
         return countOfP;
     }
-
+    
     protected void setParagraphIndex(Element node, String tagName) {
         int paragraphIndex = 0;
         for (Element e : node.select(tagName)) {
