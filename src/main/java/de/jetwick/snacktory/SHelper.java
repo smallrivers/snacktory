@@ -249,7 +249,7 @@ public class SHelper {
 
     /**
      * @see
-     * http://blogs.sun.com/CoreJavaTechTips/entry/cookie_handling_in_java_se
+     * "http://blogs.sun.com/CoreJavaTechTips/entry/cookie_handling_in_java_se"
      */
     public static void enableCookieMgmt() {
         CookieManager manager = new CookieManager();
@@ -259,7 +259,7 @@ public class SHelper {
 
     /**
      * @see
-     * http://stackoverflow.com/questions/2529682/setting-user-agent-of-a-java-urlconnection
+     * "http://stackoverflow.com/questions/2529682/setting-user-agent-of-a-java-urlconnection"
      */
     public static void enableUserAgentOverwrite() {
         System.setProperty("http.agent", "");
