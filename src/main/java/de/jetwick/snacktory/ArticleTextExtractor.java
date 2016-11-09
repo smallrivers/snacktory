@@ -874,10 +874,6 @@ public class ArticleTextExtractor {
                 try {
                     if (dateStr.endsWith("Z")) {
                         dateStr = dateStr.substring(0, dateStr.length() - 1) + "GMT-00:00";
-                    } else {
-                        dateStr = "%sGMT%s".format(dateStr.substring(0, dateStr.length() - 6), 
-                                                   dateStr.substring(dateStr.length() - 6, 
-                                                                     dateStr.length()));
                     }
                 } catch(StringIndexOutOfBoundsException ex) {
                     // do nothing
