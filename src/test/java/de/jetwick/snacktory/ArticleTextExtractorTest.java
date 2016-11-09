@@ -975,7 +975,7 @@ public class ArticleTextExtractorTest {
         assertEquals("https://www.qualcomm.com/news/onq/2016/02/29/2015-qualcomm-sustainability-report-connecting-world-through-innovation-and", res.getUrl());
         assertEquals("Connecting the world through innovation and collaboration", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Today I am excited to announce the launch"));
-        compareDates("2016-02-29 08:00:00", res.getDate());
+        compareDates("2016-02-29 08:00:00 -0800", res.getDate());
     }
 
     @Test
@@ -1208,7 +1208,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getTitle(), res.getTitle().startsWith("Amazon, Google move into on-demand home services"));
         assertTrue(res.getText(), res.getText().startsWith("Amazon and Google are vying to become the Uber for handymen"));
         assertTrue(res.getText(), res.getText().endsWith("This story has been updated to reflect that Thumbtack's CEO is Marco Zappacosta."));
-        compareDates("2015-10-01 16:12:05", res.getDate());
+        compareDates("2015-10-01 16:12:55 -0400", res.getDate());
     }
 
     @Test
@@ -1218,7 +1218,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getTitle(), res.getTitle().startsWith("China's Q3 GDP up 6.9% y-o-y compared to forecast of 6.8%"));
         assertTrue(res.getText(), res.getText().startsWith("China's economy grew at its slowest pace since the global financial"));
         assertTrue(res.getText(), res.getText().endsWith("This report has been updated to show that China's economy grew 6.9 percent in the third-quarter."));
-        compareDates("2015-10-18 22:00:02", res.getDate());
+        compareDates("2015-10-18 22:00:27 -0400", res.getDate());
     }
 
     @Test
@@ -1228,7 +1228,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getTitle(), res.getTitle().startsWith("India, US, Japan hold naval drills in Bay of Bengal, China concerned"));
         assertTrue(res.getText(), res.getText().startsWith("India, Japan and the United States will hold joint naval exercises each year"));
         assertTrue(res.getText(), res.getText().endsWith("Indo-Pacific idea,\" he said."));
-        compareDates("2015-10-12 21:49:04", res.getDate());
+        compareDates("2015-10-12 21:49:42 -0400", res.getDate());
     }
 
     @Test
@@ -1697,7 +1697,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Otherworldy Images of a Glass Recycling Factory - Cool Hunting", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("At the Phoenicia Glass Works"));
         assertTrue(res.getText(), res.getText().endsWith("Take a look at Mashable."));
-        compareDates("2016-02-08 12:30:00", res.getDate());
+        compareDates("2016-02-08 12:30:00 -0500", res.getDate());
     }
 
     @Test
@@ -1841,7 +1841,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Mindfulness tips to skip workplace stress this silly season", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("December is again upon us, a time when many workplaces engage"));
         //assertTrue(res.getText(), res.getText().endsWith("to other smartphones and operating systems."));
-        compareDates("2015-12-03 02:32:05", res.getDate());
+        compareDates("2015-12-03 02:32:54 +0000", res.getDate());
     }
 
     @Test
@@ -2038,7 +2038,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Russian Man Takes Out Flying Drone with a Spear at History Festival", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("You can add “Russian guy with a spear”"));
         assertTrue(res.getText(), res.getText().endsWith(" takedown followed by the video below:"));
-        compareDates("2016-05-11 10:47:55", res.getDate());
+        compareDates("2016-05-11 10:47:55 -0700", res.getDate());
     }
 
     @Test
@@ -2156,7 +2156,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().contains("Acxiom"));
         assertTrue(res.getText(), res.getText().contains("Experian"));
         assertEquals(res.getAuthorName(), "Rich Phillips");
-        compareDates("2015-11-10 03:55:01", res.getDate());
+        compareDates("2015-11-10 03:55:01 -0600", res.getDate());
     }
 
     @Test
@@ -2209,7 +2209,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Help for Heroes shifting to Azure with support from Rackspace", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Help for Heroes is shifting its current hybrid cloud"));
         assertTrue(res.getText(), res.getText().endsWith("he said."));
-        compareDates("2016-05-23 12:48:00", res.getDate());
+        compareDates("2016-05-23 12:48:00 +0100", res.getDate());
     }
 
     @Test
@@ -2281,7 +2281,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Using customer passions to lift retention rates", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("On one level, the key to improving customer retention rates"));
         assertTrue(res.getText(), res.getText().endsWith("represent a useful alternative."));
-        compareDates("2016-05-13 10:46:27", res.getDate());
+        compareDates("2016-05-13 10:46:27 +0100", res.getDate());
         assertEquals("Neil Capel", res.getAuthorName());
         assertEquals("Neil’s successful track record of working on large-scale, high-demand web systems led him to develop Sailthru's unique Smart Data™ capabilities. Prior to...", res.getAuthorDescription());
     }
@@ -2410,7 +2410,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Inspired by Boeing 767, Anacortes firm makes devices to help control small planes", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Micro AeroDynamics says it was the first company"));
         //assertTrue(res.getText(), res.getText().endsWith("Brogan said."));
-        compareDates("2016-07-05 07:02:14", res.getDate());
+        compareDates("2016-07-04 20:00:00+0000", res.getDate());
         assertFalse(res.getText(), res.getText().contains("Most Read Stories"));
     }
 
@@ -2475,6 +2475,18 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().endsWith("you customized proposals to review."));
         compareDates("2016-05-09", res.getDate());
     }
+
+    @Test
+    public void testDateWithTz() throws Exception {
+        // http://women2.com/2014/06/18/woman-entrepreneur-misnomer/
+        JResult res = new JResult();
+        res.setUrl("http://women2.com/2014/06/18/woman-entrepreneur-misnomer/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("women2.html")));
+        assertEquals("Why 'Woman Entrepreneur' Is a Misnomer", res.getTitle());
+        // Wed Jun 18 12:00:54 PDT 2014
+        compareDates("2014-06-18 12:00:54-0700", res.getDate());
+    }
+
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
