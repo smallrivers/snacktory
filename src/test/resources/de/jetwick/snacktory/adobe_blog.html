@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Improving Startup Performance by Pre-Fetching Videos Faster with TVSDK 2.0 - Adobe Primetime Blog</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" type="text/css" media="all" href="http://blogs.adobe.com/primetime/wp-content/themes/AdobePrimetime/style.css" />
+<link rel="pingback" href="http://blogs.adobe.com/primetime/xmlrpc.php" />
+
+<!-- This site is optimized with the Yoast SEO plugin v2.3.5 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="http://blogs.adobe.com/primetime/2015/09/improving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Improving Startup Performance by Pre-Fetching Videos Faster with TVSDK 2.0 - Adobe Primetime Blog" />
+<meta property="og:description" content="Adobe Primetime customers get a major improvement in startup performance from the Instant On feature in our new TVSDK 2.0. What is Instant On? Instant On is a feature in TVSDK 2.0 that allows app developers to pre-fetch video segments &hellip; Continue reading &rarr;" />
+<meta property="og:url" content="http://blogs.adobe.com/primetime/2015/09/improving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0/" />
+<meta property="og:site_name" content="Adobe Primetime Blog" />
+<meta property="article:tag" content="promotional" />
+<meta property="article:section" content="Video &amp; Ad Solutions" />
+<meta property="article:published_time" content="2015-09-16T03:42:23+00:00" />
+<meta property="article:modified_time" content="2015-09-15T17:55:31+00:00" />
+<meta property="og:updated_time" content="2015-09-15T17:55:31+00:00" />
+<meta property="og:image" content="http://blogs.adobe.com/primetime/files/2015/09/Slide1.jpg" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:description" content="Adobe Primetime customers get a major improvement in startup performance from the Instant On feature in our new TVSDK 2.0. What is Instant On? Instant On is a feature in TVSDK 2.0 that allows app developers to pre-fetch video segments &hellip; Continue reading &rarr;"/>
+<meta name="twitter:title" content="Improving Startup Performance by Pre-Fetching Videos Faster with TVSDK 2.0 - Adobe Primetime Blog"/>
+<meta name="twitter:domain" content="Adobe Primetime Blog"/>
+<meta name="twitter:image" content="http://blogs.adobe.com/primetime/files/2015/09/Slide1.jpg"/>
+<!-- / Yoast SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="Adobe Primetime Blog &raquo; Feed" href="http://blogs.adobe.com/primetime/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Adobe Primetime Blog &raquo; Comments Feed" href="http://blogs.adobe.com/primetime/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Adobe Primetime Blog &raquo; Improving Startup Performance by Pre-Fetching Videos Faster with TVSDK 2.0 Comments Feed" href="http://blogs.adobe.com/primetime/2015/09/improving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0/feed/" />
+        <script type="text/javascript">
+            window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/blogs.adobe.com\/primetime\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.1"}};
+            !function(a,b,c){function d(a){var c,d=b.createElement("canvas"),e=d.getContext&&d.getContext("2d");return e&&e.fillText?(e.textBaseline="top",e.font="600 32px Arial","flag"===a?(e.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),d.toDataURL().length>3e3):"diversity"===a?(e.fillText(String.fromCharCode(55356,57221),0,0),c=e.getImageData(16,16,1,1).data.toString(),e.fillText(String.fromCharCode(55356,57221,55356,57343),0,0),c!==e.getImageData(16,16,1,1).data.toString()):("simple"===a?e.fillText(String.fromCharCode(55357,56835),0,0):e.fillText(String.fromCharCode(55356,57135),0,0),0!==e.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+        </script>
+        <style type="text/css">
+img.wp-smiley,
+img.emoji {
+    display: inline !important;
+    border: none !important;
+    box-shadow: none !important;
+    height: 1em !important;
+    width: 1em !important;
+    margin: 0 .07em !important;
+    vertical-align: -0.1em !important;
+    background: none !important;
+    padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='yarppWidgetCss-css'  href='http://blogs.adobe.com/primetime/wp-content/plugins/yet-another-related-posts-plugin/style/widget.css?ver=4.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='yarppRelatedCss-css'  href='http://blogs.adobe.com/primetime/wp-content/plugins/yet-another-related-posts-plugin/style/related.css?ver=4.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='A2A_SHARE_SAVE-css'  href='http://blogs.adobe.com/primetime/wp-content/plugins/add-to-any/addtoany.min.css?ver=1.12' type='text/css' media='all' />
+<link rel='https://api.w.org/' href='http://blogs.adobe.com/primetime/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.adobe.com/primetime/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://blogs.adobe.com/primetime/wp-includes/wlwmanifest.xml" /> 
+<link rel='shortlink' href='http://blogs.adobe.com/primetime/?p=7139' />
+<link rel="alternate" type="application/json+oembed" href="http://blogs.adobe.com/primetime/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fblogs.adobe.com%2Fprimetime%2F2015%2F09%2Fimproving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://blogs.adobe.com/primetime/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fblogs.adobe.com%2Fprimetime%2F2015%2F09%2Fimproving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0%2F&#038;format=xml" />
+
+<script type="text/javascript"><!--
+var a2a_config=a2a_config||{},wpa2a={done:false,html_done:false,script_ready:false,script_load:function(){var a=document.createElement('script'),s=document.getElementsByTagName('script')[0];a.type='text/javascript';a.async=true;a.src='http://static.addtoany.com/menu/page.js';s.parentNode.insertBefore(a,s);wpa2a.script_load=function(){};},script_onready:function(){wpa2a.script_ready=true;if(wpa2a.html_done)wpa2a.init();},init:function(){for(var i=0,el,target,targets=wpa2a.targets,length=targets.length;i<length;i++){el=document.getElementById('wpa2a_'+(i+1));target=targets[i];a2a_config.linkname=target.title;a2a_config.linkurl=target.url;if(el){a2a.init('page',{target:el});el.id='';}wpa2a.done=true;}wpa2a.targets=[];}};a2a_config.callbacks=a2a_config.callbacks||[];a2a_config.callbacks.push({ready:wpa2a.script_onready});a2a_config.templates=a2a_config.templates||{};
+a2a_config.exclude_services = ["facebook", "twitter", "google+", "pinterest", "email", "linkedin", "reddit", "tumblr"];
+a2a_config.prioritize = ["digg", "evernote", "fark", "flipboard", "kakao", "line", "myspace", "plurk"];
+//--></script>
+    
+
+<script type="text/javascript" src="http://blogs.adobe.com/primetime/wp-content/themes/AdobePrimetime/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="http://blogs.adobe.com/primetime/wp-content/themes/AdobePrimetime/js/dps.js"></script>
+    <script type="text/javascript" src="//use.typekit.net/oia0yqm.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<script src="//assets.adobedtm.com/659ec8ada5450db95675e43beaaae92399591a11/satelliteLib-46e65db5bb0c375f8f64619be31cc9b29acf4867.js"></script>
+</head>
+
+<body class="single single-post postid-7139 single-format-standard">
+<div id="wrapper" class="hfeed">
+    <div id="header">
+        <div id="header-top">
+            <div id="adobe-icon"><a href="http://www.adobe.com/"><img src="http://blogs.adobe.com/primetime/wp-content/themes/AdobePrimetime/images/adobe_logo.png" alt="Adobe" class="logo"></a></div> 
+            <div id="search-section">
+                <a href="http://blogs.adobe.com/">blogs.adobe.com</a>
+                <form method="get" id="searchform" action="http://blogs.adobe.com/primetime/">
+                    <label for="s" class="screen-reader-text">Search</label>
+                    <input type="text" class="field" name="s" id="s" value="Search Blogs" onblur="if (this.value == '')  {this.value = 'Search Blogs';}" onfocus="if (this.value == 'Search Blogs') {this.value = '';}" widdit="off" autocomplete="off" />
+                    <input type="submit" class="submit" name="submit" id="searchsubmit" value="" />
+                    <div class="clear"></div>
+                </form>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+        
+        <h1 id="site-title">                    
+            <a href="http://blogs.adobe.com/primetime/" title="Adobe Primetime Blog" rel="home">Adobe Primetime Blog</a>                    
+        </h1>       
+        
+        <h3 id="site-description">News, insights and updates from the Adobe Primetime team on TV delivery and monetization across IP‐connected screens</h3>
+
+        <div id="socialmedia">
+                <ul>
+    
+                    <li class="twitter"><a href="http://www.twitter.com/adobeprimetime" target="_blank"></a></li>
+                    <li class="youtube"><a href="http://www.youtube.com/adobeprimetime" target="_blank"></a></li>
+                    <li class="rss"><a href="http://blogs.adobe.com/primetime/feed" target="_blank"></a></li>
+                </ul>
+        </div>  
+            
+    </div><!-- #header -->
+        <div id="breadcrumb">
+        <a href="http://blogs.adobe.com/primetime">HOME</a> <span>&gt;</span> Improving Startup Performance by Pre-Fetching Videos Faster with TVSDK 2.0 
+        <div class="clear"></div>
+    </div>
+        <div id="main">
+<div id="container">
+  <div id="content" role="main">
+    <h2 class="entry-title">Improving Startup Performance by Pre-Fetching Videos Faster with TVSDK 2.0</h2>
+        <div class="entry-meta">
+                <span class="meta-prep meta-prep-author">Posted on</span> <a href="http://blogs.adobe.com/primetime/2015/09/improving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0/" title="3:42 am" rel="bookmark"><span class="entry-date  updated">September 16, 2015</span></a> <span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="http://blogs.adobe.com/primetime/author/tracystampfli/" title="View all posts by Tracy Stampfli" rel="author">Tracy Stampfli</a></span> | <span><a href="http://blogs.adobe.com/primetime/2015/09/improving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0/#comments">Comments</a> (0)</span>
+        </div><!-- .entry-meta -->
+    <div id="post-7139" class="post-7139 post type-post status-publish format-standard hentry category-video-ad-solutions tag-promotional"> 
+        <div class="entry-content">
+            <p><span style="font-weight: 400;">Adobe Primetime customers get a major improvement in startup performance from the Instant On feature in our </span><a href="https://blogs.adobe.com/primetime/2015/09/tvsdk-2-0-improves-engagement-and-monetization-across-devices/"><span style="font-weight: 400;">new TVSDK 2.0</span></a><span style="font-weight: 400;">.</span></p>
+<p><b>What is Instant On?</b></p>
+<p><span style="font-weight: 400;">Instant On is a feature in TVSDK 2.0 that allows app developers to pre-fetch video segments and queue them up for playback even before a viewer has selected them.</span></p>
+<p><b>The Instant On difference</b></p>
+<p><span style="font-weight: 400;">Without Instant On, when a viewer starts a video, the video player needs to wait until it has received enough data to start playing. Depending on factors like the video bitrate and network conditions, startup can take up to 10 seconds or even longer. With Instant On, the data needed to start playback is pre-fetched in the background so that startup only takes half a second or less. The chart below shows that in our tests, startup time can be over 3000% faster with Instant On.</span></p>
+<p><em>The Instant On feature of TVSDK 2.0 improved startup time for premium programming playback by over 3000% in tests</em></p>
+<p><a href="http://blogs.adobe.com/primetime/files/2015/09/Slide1.jpg"><img class="size-full wp-image-7140 aligncenter" src="http://blogs.adobe.com/primetime/files/2015/09/Slide1.jpg" alt="Slide1" width="720" height="405" srcset="https://blogs.adobe.com/primetime/files/2015/09/Slide1-300x169.jpg 300w, https://blogs.adobe.com/primetime/files/2015/09/Slide1.jpg 720w" sizes="(max-width: 720px) 100vw, 720px" /></a></p>
+<p><b>Four use cases for Instant On</b></p>
+<p><span style="font-weight: 400;">There are four key ways that TV and video app developers can use Instant On.</span></p>
+<ol>
+<li><b><b>Keep two streams ready for instant playback<br />
+</b></b><span style="font-weight: 400;">Developers can make it painless for viewers to switch between two streams. </span><span style="font-weight: 400;">For example, if a viewer is watching two sporting events at the same time, he or she would not want to experience buffering at each transition from one sporting event to the other.</span><span style="font-weight: 400;"> Instant On can be used to keep both streams ready for instant playback.</span></li>
+<li><b><b>Pre-fetch videos while viewers browse<br />
+</b></b><span style="font-weight: 400;">As viewers browse the options for what they could watch, developers can pre-fetch 3-6 of the most likely selections. </span><span style="font-weight: 400;">Any viewer that picks one of the pre-fetched options will have a fast startup experience.</span></li>
+<li><b><b>Pre-fetch the next video coming up<br />
+</b></b>For viewers watching a programmed channel or playlist, Instant On can be used to pre-fetch the next video coming up. This provides a much more TV-like experience than one where every new show goes through a period of buffering.</li>
+<li><b><b>Pre-fetch paused videos<br />
+</b></b>Instant On also makes the viewing experience smoother for viewers that pause a stream. When they come back to the stream, Instant On can be used to start it right back up without any waiting.</li>
+</ol>
+<p><b>Instant On powers a better viewer experience</b></p>
+<p>Overall, Instant On makes the experience of watching premium programming over the internet more similar to watching TV. It does this by making startup times faster for instant playback including switching from one stream to another, making the first choice to play a video, transitioning from one show to the next episode, and returning to a show after pausing it. We&#8217;re excited to see developers take advantage of Adobe Primetime TVSDK 2.0’s new Instant On feature.</p>
+<div class="addtoany_share_save_container addtoany_content_bottom"><div class="a2a_kit addtoany_list a2a_target" id="wpa2a_1"><a class="a2a_button_facebook" href="http://www.addtoany.com/add_to/facebook?linkurl=http%3A%2F%2Fblogs.adobe.com%2Fprimetime%2F2015%2F09%2Fimproving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0%2F&amp;linkname=Improving%20Startup%20Performance%20by%20Pre-Fetching%20Videos%20Faster%20with%20TVSDK%202.0" title="Facebook" rel="nofollow" target="_blank"><img src="http://blogs.adobe.com/primetime/wp-content/plugins/add-to-any/icons/facebook.png" width="16" height="16" alt="Facebook"/></a><a class="a2a_button_twitter" href="http://www.addtoany.com/add_to/twitter?linkurl=http%3A%2F%2Fblogs.adobe.com%2Fprimetime%2F2015%2F09%2Fimproving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0%2F&amp;linkname=Improving%20Startup%20Performance%20by%20Pre-Fetching%20Videos%20Faster%20with%20TVSDK%202.0" title="Twitter" rel="nofollow" target="_blank"><img src="http://blogs.adobe.com/primetime/wp-content/plugins/add-to-any/icons/twitter.png" width="16" height="16" alt="Twitter"/></a><a class="a2a_button_google_plus" href="http://www.addtoany.com/add_to/google_plus?linkurl=http%3A%2F%2Fblogs.adobe.com%2Fprimetime%2F2015%2F09%2Fimproving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0%2F&amp;linkname=Improving%20Startup%20Performance%20by%20Pre-Fetching%20Videos%20Faster%20with%20TVSDK%202.0" title="Google+" rel="nofollow" target="_blank"><img src="http://blogs.adobe.com/primetime/wp-content/plugins/add-to-any/icons/google_plus.png" width="16" height="16" alt="Google+"/></a><a class="a2a_button_pinterest" href="http://www.addtoany.com/add_to/pinterest?linkurl=http%3A%2F%2Fblogs.adobe.com%2Fprimetime%2F2015%2F09%2Fimproving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0%2F&amp;linkname=Improving%20Startup%20Performance%20by%20Pre-Fetching%20Videos%20Faster%20with%20TVSDK%202.0" title="Pinterest" rel="nofollow" target="_blank"><img src="http://blogs.adobe.com/primetime/wp-content/plugins/add-to-any/icons/pinterest.png" width="16" height="16" alt="Pinterest"/></a><a class="a2a_button_email" href="http://www.addtoany.com/add_to/email?linkurl=http%3A%2F%2Fblogs.adobe.com%2Fprimetime%2F2015%2F09%2Fimproving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0%2F&amp;linkname=Improving%20Startup%20Performance%20by%20Pre-Fetching%20Videos%20Faster%20with%20TVSDK%202.0" title="Email" rel="nofollow" target="_blank"><img src="http://blogs.adobe.com/primetime/wp-content/plugins/add-to-any/icons/email.png" width="16" height="16" alt="Email"/></a><a class="a2a_button_linkedin" href="http://www.addtoany.com/add_to/linkedin?linkurl=http%3A%2F%2Fblogs.adobe.com%2Fprimetime%2F2015%2F09%2Fimproving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0%2F&amp;linkname=Improving%20Startup%20Performance%20by%20Pre-Fetching%20Videos%20Faster%20with%20TVSDK%202.0" title="LinkedIn" rel="nofollow" target="_blank"><img src="http://blogs.adobe.com/primetime/wp-content/plugins/add-to-any/icons/linkedin.png" width="16" height="16" alt="LinkedIn"/></a><a class="a2a_button_reddit" href="http://www.addtoany.com/add_to/reddit?linkurl=http%3A%2F%2Fblogs.adobe.com%2Fprimetime%2F2015%2F09%2Fimproving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0%2F&amp;linkname=Improving%20Startup%20Performance%20by%20Pre-Fetching%20Videos%20Faster%20with%20TVSDK%202.0" title="Reddit" rel="nofollow" target="_blank"><img src="http://blogs.adobe.com/primetime/wp-content/plugins/add-to-any/icons/reddit.png" width="16" height="16" alt="Reddit"/></a><a class="a2a_button_tumblr" href="http://www.addtoany.com/add_to/tumblr?linkurl=http%3A%2F%2Fblogs.adobe.com%2Fprimetime%2F2015%2F09%2Fimproving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0%2F&amp;linkname=Improving%20Startup%20Performance%20by%20Pre-Fetching%20Videos%20Faster%20with%20TVSDK%202.0" title="Tumblr" rel="nofollow" target="_blank"><img src="http://blogs.adobe.com/primetime/wp-content/plugins/add-to-any/icons/tumblr.png" width="16" height="16" alt="Tumblr"/></a><a class="a2a_dd addtoany_share_save" href="https://www.addtoany.com/share" style="background:url(http://blogs.adobe.com/primetime/wp-content/plugins/add-to-any/favicon.png) no-repeat scroll 4px 0px;padding:0 0 0 25px;display:inline-block;height:16px;vertical-align:middle"><span>Share</span></a>
+<script type="text/javascript"><!--
+if(wpa2a)wpa2a.script_load();
+//--></script>
+</div></div><div class='yarpp-related'>
+<h3>Related posts:</h3><ol>
+<li><a href="http://blogs.adobe.com/primetime/2015/04/new-technical-paper-optimizing-start-to-playback-performance/" rel="bookmark" title="New Technical Paper: &#8220;Optimizing &#8216;Start to Playback&#8217; Performance&#8221;">New Technical Paper: &#8220;Optimizing &#8216;Start to Playback&#8217; Performance&#8221; </a></li>
+<li><a href="http://blogs.adobe.com/primetime/2015/09/tvsdk-2-0-improves-engagement-and-monetization-across-devices/" rel="bookmark" title="TVSDK 2.0 Improves Engagement and Monetization Across Devices">TVSDK 2.0 Improves Engagement and Monetization Across Devices </a></li>
+<li><a href="http://blogs.adobe.com/primetime/2015/09/adobe-primetime-is-at-ibc-2015/" rel="bookmark" title="Adobe Primetime is at IBC 2015 &#8211; Now faster in playing back premium experiences across OTT and TV-E">Adobe Primetime is at IBC 2015 &#8211; Now faster in playing back premium experiences across OTT and TV-E </a></li>
+<li><a href="http://blogs.adobe.com/primetime/2014/12/adobe-primetime-1-4-tvsdk-ready-for-ios-8-and-android-l/" rel="bookmark" title="Adobe Primetime 1.4 TVSDK Ready for iOS 8 and Android L">Adobe Primetime 1.4 TVSDK Ready for iOS 8 and Android L </a></li>
+</ol>
+</div>
+        </div><!-- .entry-content -->
+      
+            <div id="author-info">
+            <div id="author-avatar">
+                            </div><!-- #author-avatar -->
+            <div id="author-description">
+                <h2>About Tracy Stampfli</h2>
+                <p>Tracy Stampfli is a Senior Computer Scientist at Adobe, focusing on cross-platform video playback. Tracy joined Adobe through the Macromedia acquisition and has been a developer on a number of products including Adobe Connect, Adobe AIR, the Flash Player, and most recently Adobe Primetime. Tracy has a Masters in mathematics from University of California, Berkeley. Tracy lives in San Francisco with her husband and two children, and if she ever had any spare time she would spend it reading and biking.</p>
+                <div id="author-link">
+                    <a href="http://blogs.adobe.com/primetime/author/tracystampfli/" rel="author">
+                        View all posts by Tracy Stampfli <span class="meta-nav">&rarr;</span>                   </a>
+                </div><!-- #author-link -->
+            </div><!-- #author-description -->
+        </div><!-- #entry-author-info -->
+               
+        <p class="show">Show Comments</p>
+        <p class="hide">Hide Comments</p>
+        
+            <div id="comments">
+
+
+
+
+                <div id="respond" class="comment-respond">
+            <h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/primetime/2015/09/improving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0/#respond" style="display:none;">Cancel reply</a></small></h3>                <form action="http://blogs.adobe.com/primetime/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+                    <p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8"  aria-required="true" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" aria-required='true' required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" aria-describedby="email-notes" aria-required='true' required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" /></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='7139' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="44a8a8ccac" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="246"/></p>                </form>
+                    </div><!-- #respond -->
+        
+<style>
+#commentform  p.cptch_block {
+    color: #999999;
+    font-size: 12px;
+}
+</style>
+
+</div><!-- #comments -->
+    </div><!-- #post-## --> 
+    
+  </div>
+  <!-- #content -->
+  <script type='text/javascript'><!--   
+                    $(document).ready(function() {
+                        $('.hide, #comments').css('display','none');
+                        $(".show").click(function () {
+                            $("#comments").slideDown("slow");
+                            $('.show').css('display','none');
+                            $('.hide').css('display','block');
+                        });
+
+                        $(".hide").click(function () {
+                            $("#comments").slideUp("slow");
+                            $('.hide').css('display','none');
+                            $('.show').css('display','block');
+                        });                                 
+                    });
+                </script> 
+    <div class='yarpp-related'>
+<h3>Related posts:</h3><ol>
+<li><a href="http://blogs.adobe.com/primetime/2015/04/new-technical-paper-optimizing-start-to-playback-performance/" rel="bookmark" title="New Technical Paper: &#8220;Optimizing &#8216;Start to Playback&#8217; Performance&#8221;">New Technical Paper: &#8220;Optimizing &#8216;Start to Playback&#8217; Performance&#8221; </a></li>
+<li><a href="http://blogs.adobe.com/primetime/2015/09/tvsdk-2-0-improves-engagement-and-monetization-across-devices/" rel="bookmark" title="TVSDK 2.0 Improves Engagement and Monetization Across Devices">TVSDK 2.0 Improves Engagement and Monetization Across Devices </a></li>
+<li><a href="http://blogs.adobe.com/primetime/2015/09/adobe-primetime-is-at-ibc-2015/" rel="bookmark" title="Adobe Primetime is at IBC 2015 &#8211; Now faster in playing back premium experiences across OTT and TV-E">Adobe Primetime is at IBC 2015 &#8211; Now faster in playing back premium experiences across OTT and TV-E </a></li>
+<li><a href="http://blogs.adobe.com/primetime/2015/05/going-best-of-breed-with-adobe-primetime-and-theplatform-mpx/" rel="bookmark" title="Going Best-of-Breed with Adobe Primetime and thePlatform™ mpx">Going Best-of-Breed with Adobe Primetime and thePlatform™ mpx </a></li>
+</ol>
+</div>
+</div>
+<!-- #container -->
+<div id="primary" class="widget-area" role="complementary">
+    <ul class="xoxo">
+
+                                <li class="widget widget-container s2_form_widget"><h3>Get email updates of new blog posts</h3><div class="search"><form method="post" action="http://blogs.adobe.com/primetime/subscribe/"><input type="hidden" name="ip" value="50.141.33.97" /><span style="display:none !important"><label for="name">Leave Blank:</label><input type="text" id="name" name="name" /><label for="uri">Do Not Change:</label><input type="text" id="uri" name="uri" value="http://" /></span><p><label for="s2email">Your email:</label><br /><input type="text" name="email" id="s2email" value="Enter email address..." size="20" onfocus="if (this.value == 'Enter email address...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Enter email address...';}" /></p><p><input type="submit" name="subscribe" value="Subscribe" />&nbsp;<input type="submit" name="unsubscribe" value="Unsubscribe" /></p></form>
+</div></li><li class="widget widget-container widget_text"><h3>Search</h3>          <div class="textwidget"><form method="get" action="/primetime">
+            <input type="text" id="search" class="ti" name="s" value="" />
+            <input type="submit" accesskey="4" class="formbutton" value="Search" />
+</form>
+</div>
+        </li>       <li class="widget widget-container widget_recent_entries">      <h3>Recent Posts</h3>       <ul>
+                    <li>
+                <a href="http://blogs.adobe.com/primetime/2016/01/now-previewing-deloittes-ott-engagement-platform-integrated-with-adobe-marketing-cloud-at-ces/">Now Previewing Deloitte’s OTT Engagement Platform Integrated with Adobe Marketing Cloud at CES</a>
+                        </li>
+                    <li>
+                <a href="http://blogs.adobe.com/primetime/2015/12/netflix-html5-on-firefox/">Update on HTML5 Premium Video Playback with Adobe Encrypted Media Extensions Support in Firefox</a>
+                        </li>
+                    <li>
+                <a href="http://blogs.adobe.com/primetime/2015/12/tv-everywhere-consumption-demonstrates-mainstream-adoption/">All-Time High TV Everywhere Consumption Demonstrates User Satisfaction; Opportunity Remains to Broaden Footprint</a>
+                        </li>
+                    <li>
+                <a href="http://blogs.adobe.com/primetime/2015/12/quickening-pace-of-direct-to-consumer-d2c-launches/">Quickening Pace of Direct-to-Consumer (D2C) Launches</a>
+                        </li>
+                    <li>
+                <a href="http://blogs.adobe.com/primetime/2015/12/solving-the-ott-monetization-challenge-with-adobe-primetime-tv-media-management-tvmm/">Solving the OTT Monetization Challenge with Adobe Primetime TV Media Management (TVMM)</a>
+                        </li>
+                </ul>
+        </li>                           
+                    
+                    <li class="widget widget_text widget-container">
+                        <h3>Archives</h3>
+                        <ul>
+                                <li><a href='http://blogs.adobe.com/primetime/2016/01/'>January 2016</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/12/'>December 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/11/'>November 2015</a></li>
+                            <li class="codify_cp_trigger">See more</li>
+                        </ul>
+                        <div class="codify_cp">
+                            <div class="codify_cp_content">
+                                <ul>
+                                        <li><a href='http://blogs.adobe.com/primetime/2016/01/'>January 2016</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/12/'>December 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/11/'>November 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/10/'>October 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/09/'>September 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/08/'>August 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/07/'>July 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/06/'>June 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/05/'>May 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/04/'>April 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/03/'>March 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/02/'>February 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2015/01/'>January 2015</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2014/12/'>December 2014</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2014/11/'>November 2014</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2014/10/'>October 2014</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2014/09/'>September 2014</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2014/08/'>August 2014</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2014/07/'>July 2014</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2014/06/'>June 2014</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2014/05/'>May 2014</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2014/04/'>April 2014</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2014/03/'>March 2014</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2014/02/'>February 2014</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2014/01/'>January 2014</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2013/12/'>December 2013</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2013/11/'>November 2013</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2013/10/'>October 2013</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2013/09/'>September 2013</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2013/08/'>August 2013</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2013/04/'>April 2013</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2013/01/'>January 2013</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2012/12/'>December 2012</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2012/11/'>November 2012</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2012/10/'>October 2012</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2012/09/'>September 2012</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2012/08/'>August 2012</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2012/07/'>July 2012</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2012/06/'>June 2012</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2012/05/'>May 2012</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2012/04/'>April 2012</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2012/03/'>March 2012</a></li>
+    <li><a href='http://blogs.adobe.com/primetime/2012/02/'>February 2012</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="widget widget_text widget-container">
+                        <h3>Related Blogs & Links</h3>
+                        <ul>
+                            <li><a href="http://www.adobe.com/primetime/" target="_blank">Adobe Primetime Homepage</a></li>
+                            <li><a href="http://blogs.adobe.com/ams/" target="_blank">Adobe Media Server Blog</a></li>
+                            <li><a href="http://blogs.adobe.com/ktowes/" target="_blank">Kevin Towes on Online Video at Adobe</a></li>
+                            <li><a href="http://www.overdigital.com/" target="_blank">Overdigital.com</a></li>
+                        </ul>
+                    </li>
+
+
+                                                                <li class="widget widget_text widget-container">
+                        <h3>Tags</h3>
+                        <ul>
+                            <li><a href='http://blogs.adobe.com/primetime/tag/adobe/' class='tag-link-9' title='60 topics' style='font-size: 22pt;'>Adobe</a>
+<a href='http://blogs.adobe.com/primetime/tag/advertising/' class='tag-link-59' title='8 topics' style='font-size: 9.4893617021277pt;'>advertising</a>
+<a href='http://blogs.adobe.com/primetime/tag/analytics/' class='tag-link-69' title='6 topics' style='font-size: 8pt;'>analytics</a>
+<a href='http://blogs.adobe.com/primetime/tag/android/' class='tag-link-18' title='6 topics' style='font-size: 8pt;'>Android</a>
+<a href='http://blogs.adobe.com/primetime/tag/auditude/' class='tag-link-4' title='8 topics' style='font-size: 9.4893617021277pt;'>Auditude</a>
+<a href='http://blogs.adobe.com/primetime/tag/award/' class='tag-link-49' title='9 topics' style='font-size: 10.234042553191pt;'>award</a>
+<a href='http://blogs.adobe.com/primetime/tag/digital-index/' class='tag-link-115' title='7 topics' style='font-size: 8.7446808510638pt;'>Digital Index</a>
+<a href='http://blogs.adobe.com/primetime/tag/drm/' class='tag-link-88' title='12 topics' style='font-size: 11.872340425532pt;'>drm</a>
+<a href='http://blogs.adobe.com/primetime/tag/ios/' class='tag-link-108' title='6 topics' style='font-size: 8pt;'>iOS</a>
+<a href='http://blogs.adobe.com/primetime/tag/iptv/' class='tag-link-116' title='11 topics' style='font-size: 11.425531914894pt;'>IPTV</a>
+<a href='http://blogs.adobe.com/primetime/tag/mobile/' class='tag-link-11' title='11 topics' style='font-size: 11.425531914894pt;'>mobile</a>
+<a href='http://blogs.adobe.com/primetime/tag/nab/' class='tag-link-15' title='6 topics' style='font-size: 8pt;'>nab</a>
+<a href='http://blogs.adobe.com/primetime/tag/olympics/' class='tag-link-26' title='9 topics' style='font-size: 10.234042553191pt;'>olympics</a>
+<a href='http://blogs.adobe.com/primetime/tag/ott/' class='tag-link-130' title='7 topics' style='font-size: 8.7446808510638pt;'>OTT</a>
+<a href='http://blogs.adobe.com/primetime/tag/primetime/' class='tag-link-10' title='47 topics' style='font-size: 20.36170212766pt;'>Primetime</a>
+<a href='http://blogs.adobe.com/primetime/tag/project-primetime/' class='tag-link-13' title='10 topics' style='font-size: 10.829787234043pt;'>Project Primetime</a>
+<a href='http://blogs.adobe.com/primetime/tag/streaming-media/' class='tag-link-57' title='6 topics' style='font-size: 8pt;'>Streaming Media</a>
+<a href='http://blogs.adobe.com/primetime/tag/tv/' class='tag-link-66' title='15 topics' style='font-size: 13.212765957447pt;'>tv</a>
+<a href='http://blogs.adobe.com/primetime/tag/tv-everywhere/' class='tag-link-39' title='23 topics' style='font-size: 15.893617021277pt;'>TV Everywhere</a>
+<a href='http://blogs.adobe.com/primetime/tag/video/' class='tag-link-6' title='38 topics' style='font-size: 19.021276595745pt;'>video</a></li>
+                        </ul>
+                        </li>
+                                        
+
+            <div class="clear"></div>
+    </ul>
+    
+    
+</div><!-- #primary .widget-area -->        <div class="clear"></div>
+    </div><!-- #main -->
+    <div class="clearfooter"></div> 
+</div><!-- #wrapper -->
+<div id="footer-wrapper">
+            <div id="footer" role="contentinfo">
+        <div id="footer-inner">
+            <div id="footer-nav">
+                <div class="menu-footer">
+                    <ul id="menu-footer-nav" class="menu">
+                        <li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/careers.html">Careers</a></li>
+                        <li  class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/misc/agreement.html">Permissions &amp; Trademarks</a></li>
+                        <li  class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/products/eulas/">EULAs</a></li>
+                        <li  class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/antipiracy.html">Report Piracy</a></li>
+                        <li  class="menu-item menu-item-type-custom menu-item-object-custom"><a href="http://www.adobe.com/aboutadobe/contact.html">Contact Adobe</a></li>
+                        <li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="#">Security</a></li>
+                    </ul>
+                </div>              
+                <div class="clear"></div>
+            </div>          
+            <div id="copy-right">
+                <p class="copy-right">Copyright &copy; 2016 Adobe Systems Incorporated.  All rights reserved.</p>
+                <p class="terms"><a href="http://www.adobe.com/misc/copyright.html">Terms of Use</a> | <a href="http://adobe.com/privacy">Privacy Policy and Cookies</a> <span style="color:red;">(Updated)</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="http://blogs.adobe.com/primetime/wp-content/themes/AdobePrimetime/js/jquery.fitvids.js"></script>
+<script>
+    // Basic FitVids Test
+    $("#content .post").fitVids();       
+</script>
+
+<script type="text/javascript"><!--
+wpa2a.targets=[
+{title:"Improving Startup Performance by Pre-Fetching Videos Faster with TVSDK 2.0",url:"http://blogs.adobe.com/primetime/2015/09/improving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0/"},
+{title:"Improving Startup Performance by Pre-Fetching Videos Faster with TVSDK 2.0",url:"http://blogs.adobe.com/primetime/2015/09/improving-startup-performance-by-pre-fetching-videos-faster-with-tvsdk-2-0/"}];
+wpa2a.html_done=true;if(wpa2a.script_ready&&!wpa2a.done)wpa2a.init();wpa2a.script_load();
+//--></script>
+<script type='text/javascript' src='http://blogs.adobe.com/primetime/wp-content/plugins/akismet/_inc/form.js?ver=3.1.7'></script>
+<script type='text/javascript' src='http://blogs.adobe.com/primetime/wp-includes/js/comment-reply.min.js?ver=4.4.1'></script>
+<script type='text/javascript' src='http://blogs.adobe.com/primetime/wp-includes/js/wp-embed.min.js?ver=4.4.1'></script>
+<script type="text/javascript">_satellite.pageBottom();</script>
+</body>
+</html>

@@ -21,6 +21,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.FileNotFoundException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.Proxy;
@@ -34,6 +35,10 @@ import java.util.zip.InflaterInputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.net.ssl.*;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 /**
  * Class to fetch articles. This class is thread safe.
@@ -73,6 +78,7 @@ public class HtmlFetcher {
         }
         reader.close();
     }
+    private static final boolean DISABLE_SSL_VERIFICATION = true;
     private String referrer = "https://github.com/karussell/snacktory";
     private String userAgent = "Mozilla/5.0 (compatible; Snacktory; +" + referrer + ")";
     private String cacheControl = "max-age=0";
@@ -215,12 +221,13 @@ public class HtmlFetcher {
     }
 
     public JResult fetchAndExtract(String url, int timeout, boolean resolve) throws Exception {
-        return fetchAndExtract(url, timeout, resolve, 0, false);
+        return fetchAndExtract(url, timeout, resolve, 0, false, false);
     }
 
     // main workhorse to call externally
     public JResult fetchAndExtract(String url, int timeout, boolean resolve, 
-                                   int maxContentSize, boolean forceReload) throws Exception {
+                                   int maxContentSize, boolean forceReload,
+                                   boolean onlyExtractCanonical) throws Exception {
         String originalUrl = url;
         url = SHelper.removeHashbang(url);
         String gUrl = SHelper.getUrlFromUglyGoogleRedirect(url);
@@ -291,28 +298,41 @@ public class HtmlFetcher {
                 if(forceReload){
                     urlToDownload = getURLtoBreakCache(url);
                 } 
-                extractor.extractContent(result, fetchAsString(urlToDownload, timeout), maxContentSize);
+
+                if (!onlyExtractCanonical){
+                    extractor.extractContent(result, fetchAsString(urlToDownload, timeout), maxContentSize);
+                } else {
+                    extractor.extractCanonical(result, fetchAsString(urlToDownload, timeout), false);
+                }
+            } catch (FileNotFoundException fe){
+                throw new SnacktoryNotFoundException();
             } catch (IOException io){
                 // do nothing
                 logger.error("Exception for URL: " + url + ":" + io);
             }
-            if (result.getFaviconUrl().isEmpty())
-                result.setFaviconUrl(SHelper.getDefaultFavicon(url));
 
-            // some links are relative to root and do not include the domain of the url :(
-            if(!result.getFaviconUrl().isEmpty())
-                result.setFaviconUrl(fixUrl(url, result.getFaviconUrl()));
+            if (!onlyExtractCanonical){
+                if (result.getFaviconUrl().isEmpty())
+                    result.setFaviconUrl(SHelper.getDefaultFavicon(url));
 
-            if(!result.getImageUrl().isEmpty())
-                result.setImageUrl(fixUrl(url, result.getImageUrl()));
+                // some links are relative to root and do not include the domain of the url :(
+                if(!result.getFaviconUrl().isEmpty())
+                    result.setFaviconUrl(fixUrl(url, result.getFaviconUrl()));
 
-            if(!result.getVideoUrl().isEmpty())
-                result.setVideoUrl(fixUrl(url, result.getVideoUrl()));
+                if(!result.getImageUrl().isEmpty())
+                    result.setImageUrl(fixUrl(url, result.getImageUrl()));
 
-            if(!result.getRssUrl().isEmpty())
-                result.setRssUrl(fixUrl(url, result.getRssUrl()));
+                if(!result.getVideoUrl().isEmpty())
+                    result.setVideoUrl(fixUrl(url, result.getVideoUrl()));
+
+                if(!result.getRssUrl().isEmpty())
+                    result.setRssUrl(fixUrl(url, result.getRssUrl()));
+            }
         }
-        result.setText(lessText(result.getText()));
+
+        if (!onlyExtractCanonical){
+            result.setText(lessText(result.getText()));
+        }
         synchronized (result) {
             result.notifyAll();
         }
@@ -460,6 +480,7 @@ public class HtmlFetcher {
 
     protected HttpURLConnection createUrlConnection(String urlAsStr, int timeout,
             boolean includeSomeGooseOptions) throws MalformedURLException, IOException {
+
         URL url = new URL(urlAsStr);
         //using proxy may increase latency
         Proxy proxy = getProxy();
@@ -480,6 +501,21 @@ public class HtmlFetcher {
         hConn.setRequestProperty("Accept-Encoding", "gzip, deflate");
         hConn.setConnectTimeout(timeout);
         hConn.setReadTimeout(timeout);
+
+        if(DISABLE_SSL_VERIFICATION){
+            if (urlAsStr.toLowerCase().startsWith("https://")){
+                try {
+                    SSLContext sslc = SSLContext.getInstance("TLS");
+                    TrustManager[] trustManagerArray = { new NullX509TrustManager() };
+                    sslc.init(null, trustManagerArray, null);
+                    HttpsURLConnection hConnSecure = (HttpsURLConnection) hConn;
+                    hConnSecure.setDefaultSSLSocketFactory(sslc.getSocketFactory());
+                    hConnSecure.setDefaultHostnameVerifier(new NullHostnameVerifier());
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return hConn;
     }
 
@@ -497,5 +533,23 @@ public class HtmlFetcher {
             }
         }
         return null;
+    }
+
+    private static class NullX509TrustManager implements X509TrustManager {
+        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            //System.out.println();
+        }
+        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            //System.out.println();
+        }
+        public X509Certificate[] getAcceptedIssuers() {
+            return new X509Certificate[0];
+        }
+    }
+ 
+    private static class NullHostnameVerifier implements HostnameVerifier {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
     }
 }

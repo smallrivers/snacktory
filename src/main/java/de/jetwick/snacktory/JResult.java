@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +52,8 @@ public class JResult implements Serializable {
     private String type;
     private String sitename;
     private String language;
+    private String domain;
+    private String topPrivateDomain;
 
     public JResult() {
     }
@@ -243,11 +244,13 @@ public class JResult implements Serializable {
     }
 
     public void addLink(String url, String text, Integer pos) {
-        Map<String, String> link = new HashMap<String, String>();
-        link.put("url", url);
-        link.put("text", text);
-        link.put("offset", String.valueOf(pos));
-        links.add(link);
+        if (url.length() > 0){
+            Map<String, String> link = new HashMap<String, String>();
+            link.put("url", url);
+            link.put("text", text);
+            link.put("offset", String.valueOf(pos));
+            links.add(link);
+        }
     }
 
     public List<Map<String,String>> getLinks() {
@@ -256,29 +259,45 @@ public class JResult implements Serializable {
         return links;
     }
     
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public String getSitename() {
-		return sitename;
-	}
+    public String getSitename() {
+        return sitename;
+    }
 
-	public void setSitename(String sitename) {
-		this.sitename = sitename;
-	}
-	
-	public String getLanguage() {
-		return language;
-	}
+    public void setSitename(String sitename) {
+        this.sitename = sitename;
+    }
 
-	public void setLanguage(String language) {
-		this.language = language;
-	}
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+    public String getTopPrivateDomain() {
+        return topPrivateDomain;
+    }
+
+    public void setTopPrivateDomain(String topPrivateDomain) {
+        this.topPrivateDomain = topPrivateDomain;
+    }
 
     @Override
     public String toString() {

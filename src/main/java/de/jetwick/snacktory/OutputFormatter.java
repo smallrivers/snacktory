@@ -20,6 +20,7 @@ import org.jsoup.nodes.TextNode;
  */
 public class OutputFormatter {
 
+    private static final boolean DEBUG_OUTPUT = false;
     public static final int MIN_FIRST_PARAGRAPH_TEXT = 50; // Min size of first paragraph
     public static final int MIN_PARAGRAPH_TEXT = 30;       // Min size of any other paragraphs
     private static final List<String> NODES_TO_REPLACE = Arrays.asList("strong", "b", "i");
@@ -27,7 +28,7 @@ public class OutputFormatter {
     protected final int minFirstParagraphText;
     protected final int minParagraphText;
     protected final List<String> nodesToReplace;
-    protected String nodesToKeepCssSelector = "p, ol";
+    protected String nodesToKeepCssSelector = "p, ol, em, ul, li";
 
     public OutputFormatter() {
         this(MIN_FIRST_PARAGRAPH_TEXT, MIN_PARAGRAPH_TEXT, NODES_TO_REPLACE);
@@ -58,9 +59,11 @@ public class OutputFormatter {
     /**
      * takes an element and turns the P tags into \n\n
      */
-    public String getFormattedText(Element topNode) {
+    public String getFormattedText(Element topNode, boolean removeNegative) {
         setParagraphIndex(topNode, nodesToKeepCssSelector);
-        removeNodesWithNegativeScores(topNode);
+        if(removeNegative){
+            removeNodesWithNegativeScores(topNode);
+        }
         StringBuilder sb = new StringBuilder();
         int countOfP = append(topNode, sb, nodesToKeepCssSelector);
         String str = SHelper.innerTrim(sb.toString());
@@ -69,7 +72,6 @@ public class OutputFormatter {
         if (topNodeLength == 0) {
             topNodeLength = 1;
         }
-
 
         boolean lowTextRatio = ((str.length() / (topNodeLength * 1.0)) < 0.25);
         if (str.length() > 100 && countOfP > 0 && !lowTextRatio)
@@ -110,7 +112,8 @@ public class OutputFormatter {
             int score = getScore(item);
             int paragraphIndex = getParagraphIndex(item);
             if (score < 0 || item.text().length() < getMinParagraph(paragraphIndex)){
-                item.remove();
+                if (item.parent()!=null)
+                    item.remove();
             }
         }
     }
@@ -118,9 +121,25 @@ public class OutputFormatter {
     protected int append(Element node, StringBuilder sb, String tagName) {
         int countOfP = 0; // Number of P elements in the article
         int paragraphWithTextIndex = 0;
+        boolean hasParagraph = false;
+
         // is select more costly then getElementsByTag?
         MAIN:
         for (Element e : node.select(tagName)) {
+
+            if(DEBUG_OUTPUT)
+                System.out.println("1) Tag:" + e.tagName() + "| text:" + e.text() + "|");
+
+            // If the list is at the beginning of the content we assume it is not part of it.
+            if (!hasParagraph){
+                if (e.tagName().equals("ul") ||
+                    e.tagName().equals("li")){
+                    continue;
+                } else {
+                    hasParagraph = true;
+                }
+            }
+
             Element tmpEl = e;
             // check all elements until 'node'
             while (tmpEl != null && !tmpEl.equals(node)) {
@@ -206,6 +225,8 @@ public class OutputFormatter {
                 else if (element.tagName().equals("br"))
                     accum.append(" ");
                 appendTextSkipHidden(element, accum, indent + 1);
+                if (element.tagName().equals("cite")) // Used in cnn.com
+                    accum.append(" ");
             }
         }
     }

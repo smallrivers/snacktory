@@ -1,0 +1,1533 @@
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!-- BEGIN::HTML_HEAD -->
+<head>
+    <meta charset="utf-8" /><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"UQEHVlRRGwYDXFJVBQI="};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o||e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(t,e,n){function r(t){try{s.console&&console.log(t)}catch(e){}}var o,i=t("ee"),a=t(14),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,-1!==o.indexOf("dev")&&(s.dev=!0),-1!==o.indexOf("nr_dev")&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,e,n){r(n.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,e){return t}).join(", ")))},{}],2:[function(t,e,n){function r(t,e,n,r,o){try{d?d-=1:i("err",[o||new UncaughtException(t,e,n)])}catch(s){try{i("ierr",[s,(new Date).getTime(),!0])}catch(c){}}return"function"==typeof f?f.apply(this,a(arguments)):!1}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function o(t){i("err",[t,(new Date).getTime()])}var i=t("handle"),a=t(15),s=t("ee"),c=t("loader"),f=window.onerror,u=!1,d=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(l){"stack"in l&&(t(8),t(7),"addEventListener"in window&&t(5),c.xhrWrappable&&t(9),u=!0)}s.on("fn-start",function(t,e,n){u&&(d+=1)}),s.on("fn-err",function(t,e,n){u&&(this.thrown=!0,o(n))}),s.on("fn-end",function(){u&&!this.thrown&&d>0&&(d-=1)}),s.on("internal-error",function(t){i("ierr",[t,(new Date).getTime(),!0])})},{}],3:[function(t,e,n){t("loader").features.ins=!0},{}],4:[function(t,e,n){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(8),s=t(7);t("loader").features.stn=!0,t(6);var c=NREUM.o.EV;o.on("fn-start",function(t,e){var n=t[0];n instanceof c&&(this.bstStart=Date.now())}),o.on("fn-end",function(t,e){var n=t[0];n instanceof c&&i("bst",[n,e,this.bstStart,Date.now()])}),a.on("fn-start",function(t,e,n){this.bstStart=Date.now(),this.bstType=n}),a.on("fn-end",function(t,e){i("bstTimer",[e,this.bstStart,Date.now(),this.bstType])}),s.on("fn-start",function(){this.bstStart=Date.now()}),s.on("fn-end",function(t,e){i("bstTimer",[e,this.bstStart,Date.now(),"requestAnimationFrame"])}),o.on("pushState-start",function(t){this.time=Date.now(),this.startPath=location.pathname+location.hash}),o.on("pushState-end",function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),"addEventListener"in window.performance&&(window.performance.clearResourceTimings?window.performance.addEventListener("resourcetimingbufferfull",function(t){i("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.clearResourceTimings()},!1):window.performance.addEventListener("webkitresourcetimingbufferfull",function(t){i("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.webkitClearResourceTimings()},!1)),document.addEventListener("scroll",r,!1),document.addEventListener("keypress",r,!1),document.addEventListener("click",r,!1)}},{}],5:[function(t,e,n){function r(t){for(var e=t;e&&!e.hasOwnProperty(u);)e=Object.getPrototypeOf(e);e&&o(e)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,e){return t[1]}var a=t("ee").get("events"),s=t(16)(a),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";e.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,e){if(t[1]){var n=t[1];if("function"==typeof n){var r=c(n,"nr@wrapped",function(){return s(n,"fn-",null,n.name||"anonymous")});this.wrapped=t[1]=r}else"function"==typeof n.handleEvent&&s.inPlace(n,["handleEvent"],"fn-")}}),a.on(d+"-start",function(t){var e=this.wrapped;e&&(t[1]=e)})},{}],6:[function(t,e,n){var r=t("ee").get("history"),o=t(16)(r);e.exports=r,o.inPlace(window.history,["pushState","replaceState"],"-")},{}],7:[function(t,e,n){var r=t("ee").get("raf"),o=t(16)(r);e.exports=r,o.inPlace(window,["requestAnimationFrame","mozRequestAnimationFrame","webkitRequestAnimationFrame","msRequestAnimationFrame"],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],8:[function(t,e,n){function r(t,e,n){t[0]=a(t[0],"fn-",null,n)}function o(t,e,n){this.method=n,this.timerDuration="number"==typeof t[1]?t[1]:0,t[0]=a(t[0],"fn-",this,n)}var i=t("ee").get("timer"),a=t(16)(i);e.exports=i,a.inPlace(window,["setTimeout","setImmediate"],"setTimer-"),a.inPlace(window,["setInterval"],"setInterval-"),a.inPlace(window,["clearTimeout","clearImmediate"],"clearTimeout-"),i.on("setInterval-start",r),i.on("setTimer-start",o)},{}],9:[function(t,e,n){function r(t,e){d.inPlace(e,["onreadystatechange"],"fn-",s)}function o(){var t=this,e=u.context(t);t.readyState>3&&!e.resolved&&(e.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,v,"fn-",s)}function i(t){w.push(t),h&&(g=-g,b.data=g)}function a(){for(var t=0;t<w.length;t++)r([],w[t]);w.length&&(w=[])}function s(t,e){return e}function c(t,e){for(var n in t)e[n]=t[n];return e}t(5);var f=t("ee"),u=f.get("xhr"),d=t(16)(u),l=NREUM.o,p=l.XHR,h=l.MO,m="readystatechange",v=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],w=[];e.exports=u;var y=window.XMLHttpRequest=function(t){var e=new p(t);try{u.emit("new-xhr",[e],e),e.addEventListener(m,o,!1)}catch(n){try{u.emit("internal-error",[n])}catch(r){}}return e};if(c(p,y),y.prototype=p.prototype,d.inPlace(y.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,e){r(t,e),i(e)}),u.on("open-xhr-start",r),h){var g=1,b=document.createTextNode(g);new h(a).observe(b,{characterData:!0})}else f.on("fn-end",function(t){t[0]&&t[0].type===m||a()})},{}],10:[function(t,e,n){function r(t){var e=this.params,n=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;l>r;r++)t.removeEventListener(d[r],this.listener,!1);if(!e.aborted){if(n.duration=(new Date).getTime()-this.startTime,4===t.readyState){e.status=t.status;var i=o(t,this.lastSize);if(i&&(n.rxSize=i),this.sameOrigin){var a=t.getResponseHeader("X-NewRelic-App-Data");a&&(e.cat=a.split(", ").pop())}}else e.status=0;n.cbTime=this.cbTime,u.emit("xhr-done",[t],t),c("xhr",[e,n,this.startTime])}}}function o(t,e){var n=t.responseType;if("json"===n&&null!==e)return e;var r="arraybuffer"===n||"blob"===n||"json"===n?t.response:t.responseText;return i(r)}function i(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(e){return}}}function a(t,e){var n=f(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.sameOrigin=n.sameOrigin}var s=t("loader");if(s.xhrWrappable){var c=t("handle"),f=t(11),u=t("ee"),d=["load","error","abort","timeout"],l=d.length,p=t("id"),h=t(13),m=window.XMLHttpRequest;s.features.xhr=!0,t(9),u.on("new-xhr",function(t){var e=this;e.totalCbs=0,e.called=0,e.cbTime=0,e.end=r,e.ended=!1,e.xhrGuids={},e.lastSize=null,h&&(h>34||10>h)||window.opera||t.addEventListener("progress",function(t){e.lastSize=t.loaded},!1)}),u.on("open-xhr-start",function(t){this.params={method:t[0]},a(this,t[1]),this.metrics={}}),u.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),u.on("send-xhr-start",function(t,e){var n=this.metrics,r=t[0],o=this;if(n&&r){var a=i(r);a&&(n.txSize=a)}this.startTime=(new Date).getTime(),this.listener=function(t){try{"abort"===t.type&&(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof e.onload))&&o.end(e)}catch(n){try{u.emit("internal-error",[n])}catch(r){}}};for(var s=0;l>s;s++)e.addEventListener(d[s],this.listener,!1)}),u.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),u.on("xhr-load-added",function(t,e){var n=""+p(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),u.on("xhr-load-removed",function(t,e){var n=""+p(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),u.on("addEventListener-end",function(t,e){e instanceof m&&"load"===t[0]&&u.emit("xhr-load-added",[t[1],t[2]],e)}),u.on("removeEventListener-end",function(t,e){e instanceof m&&"load"===t[0]&&u.emit("xhr-load-removed",[t[1],t[2]],e)}),u.on("fn-start",function(t,e,n){e instanceof m&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=(new Date).getTime()))}),u.on("fn-end",function(t,e){this.xhrCbStart&&u.emit("xhr-cb-time",[(new Date).getTime()-this.xhrCbStart,this.onload,e],e)})}},{}],11:[function(t,e,n){e.exports=function(t){var e=document.createElement("a"),n=window.location,r={};e.href=t,r.port=e.port;var o=e.href.split("://");!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=e.hostname||n.hostname,r.pathname=e.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname);var i=!e.protocol||":"===e.protocol||e.protocol===n.protocol,a=e.hostname===document.domain&&e.port===n.port;return r.sameOrigin=i&&(!e.hostname||a),r}},{}],12:[function(t,e,n){function r(t,e){return function(){o(t,[(new Date).getTime()].concat(a(arguments)),null,e)}}var o=t("handle"),i=t(14),a=t(15);"undefined"==typeof window.newrelic&&(newrelic=NREUM);var s=["setPageViewName","setCustomAttribute","finished","addToTrace","inlineHit"],c=["addPageAction"],f="api-";i(s,function(t,e){newrelic[e]=r(f+e,"api")}),i(c,function(t,e){newrelic[e]=r(f+e)}),e.exports=newrelic,newrelic.noticeError=function(t){"string"==typeof t&&(t=new Error(t)),o("err",[t,(new Date).getTime()])}},{}],13:[function(t,e,n){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),e.exports=r},{}],14:[function(t,e,n){function r(t,e){var n=[],r="",i=0;for(r in t)o.call(t,r)&&(n[i]=e(r,t[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],15:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(0>o?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=r},{}],16:[function(t,e,n){function r(t){return!(t&&"function"==typeof t&&t.apply&&!t[a])}var o=t("ee"),i=t(15),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;e.exports=function(t){function e(t,e,n,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof n?n(r,a):n||{}}catch(u){d([u,"",[r,a,o],s])}f(e+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(l){throw f(e+"err",[r,a,l],s),l}finally{f(e+"end",[r,a,c],s)}}return r(t)?t:(e||(e=""),nrWrapper[a]=t,u(t,nrWrapper),nrWrapper)}function n(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function f(e,n,r){if(!c){c=!0;try{t.emit(e,n,r)}catch(o){d([o,e,n,r])}c=!1}}function u(t,e){if(Object.defineProperty&&Object.keys)try{var n=Object.keys(t);return n.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(r){d([r])}for(var o in t)s.call(t,o)&&(e[o]=t[o]);return e}function d(e){try{t.emit("internal-error",e)}catch(n){}}return t||(t=o),e.inPlace=n,e.flag=a,e}},{}],ee:[function(t,e,n){function r(){}function o(t){function e(t){return t&&t instanceof r?t:t?s(t,a,i):i()}function n(n,r,o){t&&t(n,r,o);for(var i=e(o),a=l(n),s=a.length,c=0;s>c;c++)a[c].apply(i,r);var u=f[v[n]];return u&&u.push([w,n,r,i]),i}function d(t,e){m[t]=l(t).concat(e)}function l(t){return m[t]||[]}function p(t){return u[t]=u[t]||o(n)}function h(t,e){c(t,function(t,n){e=e||"feature",v[n]=e,e in f||(f[e]=[])})}var m={},v={},w={on:d,emit:n,get:p,listeners:l,context:e,buffer:h};return w}function i(){return new r}var a="nr@context",s=t("gos"),c=t(14),f={},u={},d=e.exports=o();d.backlog=f},{}],gos:[function(t,e,n){function r(t,e,n){if(o.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[e]=r,r}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){o.buffer([t],r),o.emit(t,e,n)}var o=t("ee").get("handle");e.exports=r,r.ee=o},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!m++){var t=h.info=NREUM.info,e=u.getElementsByTagName("script")[0];if(t&&t.licenseKey&&t.applicationID&&e){c(l,function(e,n){t[e]||(t[e]=n)});var n="https"===d.split(":")[0]||t.sslForHttp;h.proto=n?"https://":"http://",s("mark",["onload",a()],null,"api");var r=u.createElement("script");r.src=h.proto+t.agent,e.parentNode.insertBefore(r,e)}}}function o(){"complete"===u.readyState&&i()}function i(){s("mark",["domContent",a()],null,"api")}function a(){return(new Date).getTime()}var s=t("handle"),c=t(14),f=window,u=f.document;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:f.XMLHttpRequest,REQ:f.Request,EV:f.Event,PR:f.Promise,MO:f.MutationObserver},t(12);var d=""+location,l={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-943.min.js"},p=window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent),h=e.exports={offset:a(),origin:d,features:{},xhrWrappable:p};u.addEventListener?(u.addEventListener("DOMContentLoaded",i,!1),f.addEventListener("load",r,!1)):(u.attachEvent("onreadystatechange",o),f.attachEvent("onload",r)),s("mark",["firstbyte",a()],null,"api");var m=0},{}]},{},["loader",2,10,4,3]);</script>
+    <meta name="viewport" content="width=device-width" />
+    <!-- BEGIN::METATAGS -->
+        <title >Can you find the cell phone 'hidden' on this rug? | The Dave Ryan Show | 101.3 KDWB</title>
+<meta name="description" content="It's harder than you think" />
+<meta name="keywords" content="can, you, find, cell, phone, kdwb, 101.3, dave ryan, kdwb morning show, morning show, twin cities radio, minneapolis, mn, st. paul, twin cities, dave ryan in the morning show, falen, falenkdwb, steve-o, steveokdwb, raven, ravenonair, war of the roses, kdwb, 101.3, fm, st. louis park, mn, radio, listen, live, iheart, iheartradio, chrpop, twin, cities, 1, hit, music, station, can, you, find, cell, phone, kdwb, 101.3, dave ryan, kdwb morning show, morning show, twin cities radio, minneapolis, mn, st. paul, twin cities, dave ryan in the morning show, falen, falenkdwb, steve-o, steveokdwb, raven, ravenonair, war of the roses, kdwb, 101.3, fm, st. louis park, mn, radio, listen, live, iheart, iheartradio, chrpop, twin, cities, 1, hit, music, station" />
+<meta name="thumbnail" content="http://i.iheart.com/v3/url/aHR0cDovL2ltZy5jY3JkLmNsZWFyY2hhbm5lbC5jb20vbWVkaWEvbWxpYi8yMTM1LzIwMTYvMDcvZGVmYXVsdC9naXJsX3dpdGhfbWFnbmlmeWluZ19nbGFzc18wXzE0Njc5NzEyMTIuanBn?ops=" />
+<link rel="canonical" href="http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/can-you-find-the-cell-phone-14897836/" />
+<link rel="image_src" href="http://i.iheart.com/v3/url/aHR0cDovL2ltZy5jY3JkLmNsZWFyY2hhbm5lbC5jb20vbWVkaWEvbWxpYi8yMTM1LzIwMTYvMDcvZGVmYXVsdC9naXJsX3dpdGhfbWFnbmlmeWluZ19nbGFzc18wXzE0Njc5NzEyMTIuanBn?ops=" />
+<link rel="alternate" media="only screen and (max-width: 640px)" href="http://m.kdwb.iheart.com/onair/the-dave-ryan-show-53769/can-you-find-the-cell-phone-14897836/" />
+<meta name="application-name" content="101.3 KDWB" />
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMjAxNS8wMy9kZWZhdWx0L2tkd2JfbWFzdGhlYWRfMTgweDExNV8wXzE0MjU4ODg1NzIucG5n?ops=" />
+<meta name="msvalidate.01" content="E98E323249F89ACF6294F958692E230B" />
+<meta property="fb:app_id" content="362549017100440" />
+<meta property="og:site_name" content="101.3 KDWB" />
+<meta property="og:title" content="Can you find the cell phone 'hidden' on this rug? | The Dave Ryan Show | 101.3 KDWB" />
+<meta property="og:description" content="It's harder than you think" />
+<meta property="og:type" content="article" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:image" content="http://i.iheart.com/v3/url/aHR0cDovL2ltZy5jY3JkLmNsZWFyY2hhbm5lbC5jb20vbWVkaWEvbWxpYi8yMTM1LzIwMTYvMDcvZGVmYXVsdC9naXJsX3dpdGhfbWFnbmlmeWluZ19nbGFzc18wXzE0Njc5NzEyMTIuanBn?ops=" />
+<meta property="og:url" content="http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/can-you-find-the-cell-phone-14897836/" />
+<meta property="twitter:site" content="@1013KDWB" />
+<meta property="twitter:title" content="Can you find the cell phone 'hidden' on this rug? | The Dave Ryan Show | 101.3 KDWB" />
+<meta property="twitter:description" content="It's harder than you think" />
+<meta property="twitter:image" content="http://i.iheart.com/v3/url/aHR0cDovL2ltZy5jY3JkLmNsZWFyY2hhbm5lbC5jb20vbWVkaWEvbWxpYi8yMTM1LzIwMTYvMDcvZGVmYXVsdC9naXJsX3dpdGhfbWFnbmlmeWluZ19nbGFzc18wXzE0Njc5NzEyMTIuanBn?ops=" />
+<meta property="twitter:url" content="http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/can-you-find-the-cell-phone-14897836/" />
+<meta property="twitter:domain" content="kdwb.iheart.com" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:creator" content="@DaveRyanKDWB" />
+<link rel="author" href="https://plus.google.com/117568428677230128712" />
+<meta itemprop="name" content="Can you find the cell phone 'hidden' on this rug? | The Dave Ryan Show | 101.3 KDWB" />
+<meta itemprop="description" content="It's harder than you think" />
+<meta itemprop="image" content="http://i.iheart.com/v3/url/aHR0cDovL2ltZy5jY3JkLmNsZWFyY2hhbm5lbC5jb20vbWVkaWEvbWxpYi8yMTM1LzIwMTYvMDcvZGVmYXVsdC9naXJsX3dpdGhfbWFnbmlmeWluZ19nbGFzc18wXzE0Njc5NzEyMTIuanBn?ops=" />
+<meta itemprop="url" content="http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/can-you-find-the-cell-phone-14897836/" />
+<meta itemprop="google-site-verification" content="p2FWrUKxtwBmQgHV4CjD80oKdZZBjmMNByoWvZMsYso" />
+<!--
+<PageMap>
+    <DataObject type="thumbnail">
+        <Attribute name="src" value="http://i.iheart.com/v3/url/aHR0cDovL2ltZy5jY3JkLmNsZWFyY2hhbm5lbC5jb20vbWVkaWEvbWxpYi8yMTM1LzIwMTYvMDcvZGVmYXVsdC9naXJsX3dpdGhfbWFnbmlmeWluZ19nbGFzc18wXzE0Njc5NzEyMTIuanBn?ops=" />
+        <Attribute name="width" value="200" />
+        <Attribute name="height" value="200" />
+    </DataObject>
+    <DataObject type="cse_thumbnail">
+        <Attribute name="src" value="http://i.iheart.com/v3/url/aHR0cDovL2ltZy5jY3JkLmNsZWFyY2hhbm5lbC5jb20vbWVkaWEvbWxpYi8yMTM1LzIwMTYvMDcvZGVmYXVsdC9naXJsX3dpdGhfbWFnbmlmeWluZ19nbGFzc18wXzE0Njc5NzEyMTIuanBn?ops=" />
+        <Attribute name="width" value="200" />
+        <Attribute name="height" value="200" />
+    </DataObject>
+</PageMap>
+-->
+
+    <!-- END::METATAGS -->
+    <link rel="shortcut icon" href="/pages/favicon.ico">
+    <link rel="stylesheet" href="//flint-img.iheart.com/mobile/css/core.css" />
+    <link rel="stylesheet" href="//flint-img.iheart.com/desktop/css/app.css" />
+    <link rel="stylesheet" href="//flint-img.iheart.com/common/css/ihearticons.css" />
+    <link rel="stylesheet" href="/clientstyles/station_styles.css" />
+    <script src="//flint-img.iheart.com/mobile/js/vendor/custom.modernizr.js"></script>
+<script src="//flint-img.iheart.com/mobile/js/vendor/jquery.js"></script>
+<script src="//flint-img.iheart.com/mobile/js/vendor/jquery.cookie.js"></script>
+<script src="//pylon.iheart.com/sdk/latest/sdk.min.js"></script>
+
+<script type="text/javascript">
+    window.insertPoll2 = function(){};
+</script>
+
+        <script src="//flint-img.iheart.com/common/js/ads.min.js"></script>
+
+<script type='text/javascript'>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+        (function() {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+    })();
+</script>
+
+
+<script type='text/javascript'>
+    window.gptAdSlots = [];
+    googletag.cmd.push(function() {        
+        var adSlot1 = googletag.defineSlot('/6663/ccr.minneapolis.mn.n/kdwb-fm',[[300, 250] ,[300, 600] ,[300, 1050] ], 'dfp-ad-3307').addService(googletag.pubads());
+        adSlot1.setTargeting('ccrlocalcontent', ['50']);
+        adSlot1.setTargeting('ccrpos', ['3307']);
+        adSlot1.setTargeting('pos', ['3307']);
+        adSlot1.setTargeting('ccrmarket', ['MINNEAPOLIS-MN']);
+        adSlot1.setTargeting('market', ['MINNEAPOLIS-MN']);
+        adSlot1.setTargeting('ccrformat', ['CHRPOP']);
+        adSlot1.setTargeting('format', ['CHRPOP']);
+
+                        adSlot1.setTargeting('contenttype', ['onair']);
+                adSlot1.setTargeting('contentcategory', ['53769']);
+                adSlot1.setTargeting('contentdetail', ['14897836']);
+                adSlot1.setTargeting('artistid', ['']);
+                adSlot1.setTargeting('campaign', ['']);
+                window.gptAdSlots['3307'] = adSlot1;
+                
+        var adSlot2 = googletag.defineSlot('/6663/ccr.minneapolis.mn/kdwb-fm',[[300, 250] ,[300, 600] ,[300, 1050] ], 'dfp-ad-3308').addService(googletag.pubads());
+        adSlot2.setTargeting('ccrlocalcontent', ['']);
+        adSlot2.setTargeting('ccrpos', ['3308']);
+        adSlot2.setTargeting('pos', ['3308']);
+        adSlot2.setTargeting('ccrmarket', ['MINNEAPOLIS-MN']);
+        adSlot2.setTargeting('market', ['MINNEAPOLIS-MN']);
+        adSlot2.setTargeting('ccrformat', ['CHRPOP']);
+        adSlot2.setTargeting('format', ['CHRPOP']);
+
+                        adSlot2.setTargeting('contenttype', ['onair']);
+                adSlot2.setTargeting('contentcategory', ['53769']);
+                adSlot2.setTargeting('contentdetail', ['14897836']);
+                adSlot2.setTargeting('artistid', ['']);
+                adSlot2.setTargeting('campaign', ['']);
+                window.gptAdSlots['3308'] = adSlot2;
+                
+        var adSlot3 = googletag.defineSlot('/6663/ccr.minneapolis.mn/kdwb-fm',[[300, 250] ,[300, 600] ,[300, 1050] ], 'dfp-ad-3309').addService(googletag.pubads());
+        adSlot3.setTargeting('ccrlocalcontent', ['']);
+        adSlot3.setTargeting('ccrpos', ['3309']);
+        adSlot3.setTargeting('pos', ['3309']);
+        adSlot3.setTargeting('ccrmarket', ['MINNEAPOLIS-MN']);
+        adSlot3.setTargeting('market', ['MINNEAPOLIS-MN']);
+        adSlot3.setTargeting('ccrformat', ['CHRPOP']);
+        adSlot3.setTargeting('format', ['CHRPOP']);
+
+                        adSlot3.setTargeting('contenttype', ['onair']);
+                adSlot3.setTargeting('contentcategory', ['53769']);
+                adSlot3.setTargeting('contentdetail', ['14897836']);
+                adSlot3.setTargeting('artistid', ['']);
+                adSlot3.setTargeting('campaign', ['']);
+                window.gptAdSlots['3309'] = adSlot3;
+                
+        var adSlot4 = googletag.defineSlot('/6663/ccr.minneapolis.mn/kdwb-fm',[[728, 90] ], 'dfp-ad-3330').addService(googletag.pubads());
+        adSlot4.setTargeting('ccrlocalcontent', ['15']);
+        adSlot4.setTargeting('ccrpos', ['3330']);
+        adSlot4.setTargeting('pos', ['3330']);
+        adSlot4.setTargeting('ccrmarket', ['MINNEAPOLIS-MN']);
+        adSlot4.setTargeting('market', ['MINNEAPOLIS-MN']);
+        adSlot4.setTargeting('ccrformat', ['CHRPOP']);
+        adSlot4.setTargeting('format', ['CHRPOP']);
+
+                        adSlot4.setTargeting('contenttype', ['onair']);
+                adSlot4.setTargeting('contentcategory', ['53769']);
+                adSlot4.setTargeting('contentdetail', ['14897836']);
+                adSlot4.setTargeting('artistid', ['']);
+                adSlot4.setTargeting('campaign', ['']);
+                window.gptAdSlots['3330'] = adSlot4;
+                
+        var adSlot5 = googletag.defineSlot('/6663/ccr.minneapolis.mn/kdwb-fm',[[728, 90] ], 'dfp-ad-3306').addService(googletag.pubads());
+        adSlot5.setTargeting('ccrlocalcontent', ['']);
+        adSlot5.setTargeting('ccrpos', ['3306']);
+        adSlot5.setTargeting('pos', ['3306']);
+        adSlot5.setTargeting('ccrmarket', ['MINNEAPOLIS-MN']);
+        adSlot5.setTargeting('market', ['MINNEAPOLIS-MN']);
+        adSlot5.setTargeting('ccrformat', ['CHRPOP']);
+        adSlot5.setTargeting('format', ['CHRPOP']);
+
+                        adSlot5.setTargeting('contenttype', ['onair']);
+                adSlot5.setTargeting('contentcategory', ['53769']);
+                adSlot5.setTargeting('contentdetail', ['14897836']);
+                adSlot5.setTargeting('artistid', ['']);
+                adSlot5.setTargeting('campaign', ['']);
+                window.gptAdSlots['3306'] = adSlot5;
+                
+        var adSlot6 = googletag.defineSlot('/6663/ccr.minneapolis.mn/kdwb-fm',[[970, 415] ,[970, 90] ], 'dfp-ad-7004').addService(googletag.pubads());
+        adSlot6.setTargeting('ccrlocalcontent', ['']);
+        adSlot6.setTargeting('ccrpos', ['7004']);
+        adSlot6.setTargeting('pos', ['7004']);
+        adSlot6.setTargeting('ccrmarket', ['MINNEAPOLIS-MN']);
+        adSlot6.setTargeting('market', ['MINNEAPOLIS-MN']);
+        adSlot6.setTargeting('ccrformat', ['CHRPOP']);
+        adSlot6.setTargeting('format', ['CHRPOP']);
+
+                        adSlot6.setTargeting('contenttype', ['onair']);
+                adSlot6.setTargeting('contentcategory', ['53769']);
+                adSlot6.setTargeting('contentdetail', ['14897836']);
+                adSlot6.setTargeting('artistid', ['']);
+                adSlot6.setTargeting('campaign', ['']);
+                window.gptAdSlots['7004'] = adSlot6;
+                
+        var adSlot7 = googletag.defineSlot('/6663/ccr.minneapolis.mn/kdwb-fm',[[10, 10] ], 'dfp-ad-5050').addService(googletag.pubads());
+        adSlot7.setTargeting('ccrlocalcontent', ['']);
+        adSlot7.setTargeting('ccrpos', ['5050']);
+        adSlot7.setTargeting('pos', ['5050']);
+        adSlot7.setTargeting('ccrmarket', ['MINNEAPOLIS-MN']);
+        adSlot7.setTargeting('market', ['MINNEAPOLIS-MN']);
+        adSlot7.setTargeting('ccrformat', ['CHRPOP']);
+        adSlot7.setTargeting('format', ['CHRPOP']);
+
+                        adSlot7.setTargeting('contenttype', ['onair']);
+                adSlot7.setTargeting('contentcategory', ['53769']);
+                adSlot7.setTargeting('contentdetail', ['14897836']);
+                adSlot7.setTargeting('artistid', ['']);
+                adSlot7.setTargeting('campaign', ['']);
+                window.gptAdSlots['5050'] = adSlot7;
+                
+        var adSlot8 = googletag.defineSlot('/6663/ccr.minneapolis.mn/kdwb-fm',[[300, 250] ], 'dfp-ad-7010').addService(googletag.pubads());
+        adSlot8.setTargeting('ccrlocalcontent', ['']);
+        adSlot8.setTargeting('ccrpos', ['7010']);
+        adSlot8.setTargeting('pos', ['7010']);
+        adSlot8.setTargeting('ccrmarket', ['MINNEAPOLIS-MN']);
+        adSlot8.setTargeting('market', ['MINNEAPOLIS-MN']);
+        adSlot8.setTargeting('ccrformat', ['CHRPOP']);
+        adSlot8.setTargeting('format', ['CHRPOP']);
+
+                        adSlot8.setTargeting('contenttype', ['onair']);
+                adSlot8.setTargeting('contentcategory', ['53769']);
+                adSlot8.setTargeting('contentdetail', ['14897836']);
+                adSlot8.setTargeting('artistid', ['']);
+                adSlot8.setTargeting('campaign', ['']);
+                window.gptAdSlots['7010'] = adSlot8;
+                
+        var adSlot9 = googletag.defineSlot('/6663/ccr.minneapolis.mn/kdwb-fm',[[1, 1] ], 'dfp-ad-5014').addService(googletag.pubads());
+        adSlot9.setTargeting('ccrlocalcontent', ['']);
+        adSlot9.setTargeting('ccrpos', ['5014']);
+        adSlot9.setTargeting('pos', ['5014']);
+        adSlot9.setTargeting('ccrmarket', ['MINNEAPOLIS-MN']);
+        adSlot9.setTargeting('market', ['MINNEAPOLIS-MN']);
+        adSlot9.setTargeting('ccrformat', ['CHRPOP']);
+        adSlot9.setTargeting('format', ['CHRPOP']);
+
+                        adSlot9.setTargeting('contenttype', ['onair']);
+                adSlot9.setTargeting('contentcategory', ['53769']);
+                adSlot9.setTargeting('contentdetail', ['14897836']);
+                adSlot9.setTargeting('artistid', ['']);
+                adSlot9.setTargeting('campaign', ['']);
+                window.gptAdSlots['5014'] = adSlot9;
+                
+        var adSlot10 = googletag.defineSlot('/6663/ccr.minneapolis.mn/kdwb-fm',[[185, 60] ], 'dfp-ad-3340').addService(googletag.pubads());
+        adSlot10.setTargeting('ccrlocalcontent', ['']);
+        adSlot10.setTargeting('ccrpos', ['3340']);
+        adSlot10.setTargeting('pos', ['3340']);
+        adSlot10.setTargeting('ccrmarket', ['MINNEAPOLIS-MN']);
+        adSlot10.setTargeting('market', ['MINNEAPOLIS-MN']);
+        adSlot10.setTargeting('ccrformat', ['CHRPOP']);
+        adSlot10.setTargeting('format', ['CHRPOP']);
+
+                        adSlot10.setTargeting('contenttype', ['onair']);
+                adSlot10.setTargeting('contentcategory', ['53769']);
+                adSlot10.setTargeting('contentdetail', ['14897836']);
+                adSlot10.setTargeting('artistid', ['']);
+                adSlot10.setTargeting('campaign', ['']);
+                window.gptAdSlots['3340'] = adSlot10;
+        
+
+        googletag.pubads().setTargeting('ccrcontent1', 'onair:blog');
+        googletag.pubads().setTargeting('ccrcontent2', 'onair:blog:the-dave-ryan-show-53769:can-you-find-the-cell-phone-14897836');
+        googletag.pubads().setTargeting('hn', window.location.hostname);
+        googletag.pubads().setTargeting('env', 'prod');
+        googletag.pubads().setTargeting('vers', 'FLINT-DESKTOP');
+        googletag.pubads().collapseEmptyDivs(true);
+
+        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+            $Ads.slotRendered(event.slot);
+        });
+
+        googletag.enableServices();
+    });
+</script>    
+
+        
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+
+    ga('create', 'UA-45084235-8', 'iheart.com', {name: 'ihrTracker'});
+    ga('ihrTracker.send', 'pageview');
+
+
+</script>
+
+    
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+        {"parsetags": "explicit"}
+    </script>
+    
+</head>
+<!-- END::HTML_HEAD -->
+<body>
+
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '362549017100440',
+                xfbml      : true,
+                version    : 'v2.5'
+            });
+        };
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+<!-- BEGIN::PAGE_WRAPPER -->
+<div class="page-wrapper">
+    <!-- BEGIN::LAYOUT_HEADER -->
+    <div class="header-wrapper">
+        <div class="header-wash">
+            <header class="local-header row">
+                <section class="station-identification left">
+                    <a href="/"
+                       title="101.3 KDWB - Twin Cities' #1 Hit Music Station!"
+                       data-linktrack="true"
+                       data-linktrack-location="header"
+                       data-linktrack-position="station_logo">
+                        <img src="http://content.clearchannel.com/cc-common/mlib/787/2015/03/default/kdwb_masthead_180x115_0_1425888572.png"
+                             class="station-logo"
+                             alt="101.3 KDWB - Twin Cities' #1 Hit Music Station!">
+                    </a>
+                </section>
+                 <nav class="primary-nav left">
+                                    <ul>
+                                                                                                                                    
+                                                                                                                             <li >
+                                                                                                                                                                                                            <a href="http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/"
+                               target="_self"
+                               class="children"
+                               data-linktrack="true"
+                               data-linktrack-location="navigation"
+                               data-linktrack-position="1">#DaveRyanShow</a>
+                                                            <ul>
+                                                                        <li><a href="http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="1"
+                                           data-linktrack-index="1">Dave Ryan Show</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/onair/dave-ryan-42602/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="1"
+                                           data-linktrack-index="2">Dave Ryan</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/onair/falen-46948/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="1"
+                                           data-linktrack-index="3">Falen</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/onair/steveo-42610/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="1"
+                                           data-linktrack-index="4">Steve-O</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/onair/jenny-57835/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="1"
+                                           data-linktrack-index="5">Jenny</a></li>
+                                                                        <li><a href="http://www.iheart.com/show/139-The-Dave-Ryan-Show/"
+                                           target="_blank"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="1"
+                                           data-linktrack-index="6">Dave Ryan Show on iHeartRadio</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/media"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="1"
+                                           data-linktrack-index="7">-- Podcasts --</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/media/podcast-dave-ryan-show-podcast_drshow/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="1"
+                                           data-linktrack-index="8">Dave Ryan Show</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/media/podcast-dave-ryan-war-of-the-roses-podcast_wotr/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="1"
+                                           data-linktrack-index="9">War Of The Roses</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/media/podcast-dave-ryan-show-interviews-podcast_interviews/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="1"
+                                           data-linktrack-index="10">Interviews</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/media/podcast-dave-ryan-show-parodies-podcast_parodies/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="1"
+                                           data-linktrack-index="11">Parodies</a></li>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                    
+                                                                                                                             <li >
+                                                                                                                                                                                                            <a href="http://kdwb.iheart.com/onair"
+                               target="_self"
+                               class="children"
+                               data-linktrack="true"
+                               data-linktrack-location="navigation"
+                               data-linktrack-position="2">On-Air</a>
+                                                            <ul>
+                                                                        <li><a href="http://kdwb.iheart.com/listen"
+                                           target="_blank"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="2"
+                                           data-linktrack-index="1">Listen Live NOW</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="2"
+                                           data-linktrack-index="2">Dave Ryan in the Morning Show</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/onair/ryan-seacrest-52241/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="2"
+                                           data-linktrack-index="3">On Air with Ryan Seacrest</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/onair/zach-dillon-57794/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="2"
+                                           data-linktrack-index="4">Zach Dillon</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/onair/raven-56442/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="2"
+                                           data-linktrack-index="5">Raven</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/onair/mike-56086/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="2"
+                                           data-linktrack-index="6">Mike</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/onair/dan-riggs-53930/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="2"
+                                           data-linktrack-index="7">Dan Riggs</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/cc-common/evolutionwithpetetong/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="2"
+                                           data-linktrack-index="8">Evolution with Pete Tong</a></li>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                    
+                                                                                                                             <li >
+                                                                                                                                                                                                            <a href="http://kdwb.iheart.com/listen"
+                               target="_self"
+                               class="children"
+                               data-linktrack="true"
+                               data-linktrack-location="navigation"
+                               data-linktrack-position="3">Music</a>
+                                                            <ul>
+                                                                        <li><a href="http://kdwb.iheart.com/listen"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="3"
+                                           data-linktrack-index="1">Listen Live on iHeartRadio</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/calendar/concerts-9"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="3"
+                                           data-linktrack-index="2">Concerts</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/features/kdwb-exclusives-1011/articles/15/493691/101-in-a-row-on-1013-14137389/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="3"
+                                           data-linktrack-index="3">101 In A Row</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/skyroom"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="3"
+                                           data-linktrack-index="4">KDWB Skyroom</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/playlist/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="3"
+                                           data-linktrack-index="5">Playlist</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/photos"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="3"
+                                           data-linktrack-index="6">Photos</a></li>
+                                                                        <li><a href="http://testallmedia.com/kdwb/login.aspx"
+                                           target="_blank"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="3"
+                                           data-linktrack-index="7">Rate KDWB Music</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/articles/trending-104650/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="3"
+                                           data-linktrack-index="8">Trending Now</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/articles/weird-news-104673/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="3"
+                                           data-linktrack-index="9">Weird News</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/traffic"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="3"
+                                           data-linktrack-index="10">Traffic</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/weather"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="3"
+                                           data-linktrack-index="11">Weather</a></li>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                    
+                                                                                                                             <li >
+                                                                                                                                                                                                            <a href="http://kdwb.iheart.com/calendar"
+                               target="_self"
+                               class="children"
+                               data-linktrack="true"
+                               data-linktrack-location="navigation"
+                               data-linktrack-position="4">Connect</a>
+                                                            <ul>
+                                                                        <li><a href="http://kdwb.iheart.com/features/contact-1013-kdwb-342/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="1">Contact KDWB</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/features/contact-1013-kdwb-342/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="2">Directions to our studios</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/calendar/concerts-9"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="3">Concerts</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/calendar/station-events-1"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="4">Station Events</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/features/the-kdwb-warehouse-1682/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="5">Shop the KDWB Warehouse</a></li>
+                                                                        <li><a href="http://www.facebook.com/1013KDWB"
+                                           target="_blank"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="6">Like us on Facebook</a></li>
+                                                                        <li><a href="http://www.twitter.com/1013KDWB"
+                                           target="_blank"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="7">Follow us on Twitter</a></li>
+                                                                        <li><a href="http://www.instagram.com/1013KDWB"
+                                           target="_blank"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="8">Follow us on Instagram</a></li>
+                                                                        <li><a href="http://www.youtube.com/kdwb1013"
+                                           target="_blank"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="9">Subscribe to us on YouTube</a></li>
+                                                                        <li><a href="http://twincitiesadvertising.com/"
+                                           target="_blank"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="10">Advertise with us</a></li>
+                                                                        <li><a href="https://iheartmedia.wd5.myworkdayjobs.com/External_iHM/jobs"
+                                           target="_blank"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="11">Careers</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/articles/trending-471311/recruitment-alert-9786047/"
+                                           target="_blank"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="12">Recruitment Alert</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/features/iheartmedia-communities-285"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="4"
+                                           data-linktrack-index="13">iHeartMedia Communities</a></li>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                    
+                                                                                                                             <li >
+                                                                                                                                                                                                            <a href="http://kdwb.iheart.com/contests/"
+                               target="_self"
+                               class="children"
+                               data-linktrack="true"
+                               data-linktrack-location="navigation"
+                               data-linktrack-position="5">Contests</a>
+                                                            <ul>
+                                                                        <li><a href="http://kdwb.iheart.com/contests/enter-online/win-passes-to-an-advance-23858"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="5"
+                                           data-linktrack-index="1">Win passes to an advance screening of Lights Out!</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/contests/enter-online/win-a-laser-hair-removal-24774"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="5"
+                                           data-linktrack-index="2">Win a laser hair removal session from Envy Skin Clinic!</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/contests/enter-online/watch-for-the-iheartradio-music-24850"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="5"
+                                           data-linktrack-index="3">Watch for the iHeartRadio Music Festival word of the day</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/contests/enter-online/win-advance-screening-passes-to-25066"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="5"
+                                           data-linktrack-index="4">Win advance screening passes to Jason Bourne!</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/contests/enter-online/win-tickets-to-5-seconds-25106"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="5"
+                                           data-linktrack-index="5">Win tickets to 5 Seconds of Summer!</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/contests/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="5"
+                                           data-linktrack-index="6">All Contests</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/features/contest-rules-2063/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="5"
+                                           data-linktrack-index="7">Contest Rules</a></li>
+                                                                        <li><a href="http://kdwb.iheart.com/my-subscriptions/"
+                                           target="_self"
+                                           data-linktrack="true"
+                                           data-linktrack-location="navigation"
+                                           data-linktrack-position="5"
+                                           data-linktrack-index="8">My Subscriptions</a></li>
+                                                                    </ul>
+                                                    </li>
+                                                                </ul>
+                                </nav>
+                <section class="station-share right">
+                    <div class="social-buttons">
+    <div class="buttons-wrapper">
+            <div class="fb-like">
+                    <fb:like href="http://www.facebook.com/1013KDWB" layout="button" show_faces="false" width="45"></fb:like>
+                </div>
+                <div class="tw-follow">
+            <a href="http://twitter.com/1013KDWB" class="twitter-follow-button" data-button="grey" data-text-color="#FFFFFF" data-link-color="#00AEFF" data-show-screen-name="false" data-show-count="false" data-width="65px" data-dnt="true">Follow @1013KDWB</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>
+            <div class="gplus">
+                                                <g:plusone size="medium" expandTo="left" annotation="none" href="117568428677230128712"></g:plusone>
+            <!-- Place this render call where appropriate. -->
+            <script type="text/javascript">gapi.plusone.go();</script>
+        </div>
+    </div>
+</div>                                                            <section class="site-search">
+    <form class="search-form"
+          name="search"
+          action="/search/"
+          method="get"
+          data-linktrack="true"
+          data-linktrack-location="header"
+          data-linktrack-position="search"
+        >
+        <input name="keyword" type="text" value="Search/Keyword" maxlength="250" />
+        <button name="submit" type="submit"></button>
+    </form>
+</section>
+                                </section>
+            </header>
+        </div>
+    </div>
+    <!-- END::LAYOUT_HEADER -->
+    <!-- BEGIN::NOW_PLAYING -->
+    <div class="nowplaying-wrapper full">
+        <section class="nowplaying row clearfix">
+                        <section class="listen-live left">
+                <a href="//www.iheart.com/live/1201/?autoplay=true&pname=787&campid=play_bar&cid=%2Fonair%2Fthe-dave-ryan-show-53769%2Fcan-you-find-the-cell-phone-14897836%2F"
+                   target="_blank"
+                   title="Listen Live"
+                   data-linktrack="true"
+                   data-linktrack-location="play_bar"
+                   data-linktrack-position="listen_live">
+                    <div class="small-3 play"><span>&nbsp;</span></div>
+                    <div class="small-8 cta">
+                        <span>Listen Live</span>
+                                                <span class="normal-weight small-text">on</span>&nbsp;<span class="iheartradio" title="iHeartRadio">&nbsp;</span>
+                                            </div>
+                    <div class="clear">&nbsp;</div>
+                </a>
+            </section>
+                        <section class="station-positioner left">
+                <a href="//www.iheart.com/live/1201/?autoplay=true&pname=787&campid=play_bar&cid=%2Fonair%2Fthe-dave-ryan-show-53769%2Fcan-you-find-the-cell-phone-14897836%2F" >
+                    <h3>101.3 KDWB</h3>
+                    <span>Twin Cities' #1 Hit Music Station!</span>
+                </a>
+            </section>
+                        <section class="playlist left" data-show_playlist="1">
+                <div class="header current">
+                    <a href="#" class="link-track"
+                       target="_blank"
+                       data-linktrack="true"
+                       data-linktrack-location="play_bar"
+                       data-linktrack-position="now_playing">
+                        <figure>
+                            <img src="http://iscale.iheart.com/img/default?ops=fit%28240%2C240%29" alt="" class="track-image" />
+                            <figcaption>
+                                <h3>Now Playing on 101.3 KDWB</h3>
+                                <h4>
+                                                                    </h4>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <div class="dropdown">
+                    <h3>Recently Played</h3>
+                    <div class="songs">
+                    </div>
+                    <a href="/playlist/" class="view-schedule"
+                       data-linktrack="true"
+                       data-linktrack-location="play_bar"
+                       data-linktrack-position="now_playing"
+                       data-linktrack-item="full_playlist">See Full Playlist &raquo;</a>
+                </div>
+            </section>
+                                    <section class="onair right">
+                <div class="header jock">
+                    <a href="/onair/mike-56086/" class="clearfix"
+                       data-linktrack="true"
+                       data-linktrack-location="play_bar"
+                       data-linktrack-position="on_air">
+                        <figure>
+                                                        <img src=" http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMjAxNS8wMy9kZWZhdWx0L21pa2VfY29ud2F5X2tkd2JfdGh1bWJuYWlsXzBfMTQyNTk3MzA2OS5qcGc=?ops=max(45,45),quality(90)" alt="Mike" />
+                                                        <figcaption>
+                                <h3>On Air</h3>
+                                <span>Mike</span>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </div>
+                <div class="dropdown">
+                    <div class="airtime">
+                                                                        <div>11:00PM&nbsp;-&nbsp;12:00AM</div>
+                                                    <span class="normal-weight">Phone: </span>651-989-KDWB (5392)&nbsp;&nbsp;
+                                                                            <span class="normal-weight">SMS: </span>KDWB1 (53921)
+                                            </div>
+                                        <div class="shoutout">
+                                                <h3>Send a shoutout or ask a question.</h3>
+                                                <div class="message-wrapper">
+                            <textarea name="shoutMessage" class="message" maxlength="1000"></textarea>
+                            <a href="#" class="send"
+                               title="Send"
+                               data-modal="/clientscripts/shoutout.html"
+                               data-linktrack="true"
+                               data-linktrack-location="play_bar"
+                               data-linktrack-position="on_air"
+                               data-linktrack-item="shout-out">Send</a>
+                        </div>
+                    </div>
+                                         <a href="/onair/" class="view-schedule"
+                        data-linktrack="true"
+                        data-linktrack-location="play_bar"
+                        data-linktrack-position="on_air"
+                        data-linktrack-item="full_schedule">See Full Schedule &raquo;</a>
+                </div>
+            </section>
+                    </section>
+    </div>
+    <!-- END::NOW_PLAYING -->
+    <!-- BEGIN::PAGE_CONTENT -->
+    <div class="page-content row">
+            <div class="clear">&nbsp;</div>
+<div class="ad-container seven-twenty-eight" id="dfp-ad-3330"></div>
+
+<script type="text/javascript">
+    if(window.googletag){
+        googletag.cmd.push(function() { googletag.display('dfp-ad-3330'); });
+    }//if
+</script>
+
+        <div class="clear">&nbsp;</div>
+<div class="ad-container nine-seventy" id="dfp-ad-7004"></div>
+
+<script type="text/javascript">
+    if(window.googletag){
+        googletag.cmd.push(function() {
+            googletag.display('dfp-ad-7004');
+        });
+    }
+</script>
+
+    <div class="ad-container overlay" id="dfp-ad-5014"></div>
+
+<script type="text/javascript">
+    if(window.googletag){
+        googletag.cmd.push(function() { googletag.display('dfp-ad-5014'); });
+    }//if
+</script>
+
+<!-- BEGIN::LAYOUT_Onair_Detail -->
+<div id="OnairContent" class="component">
+    <main class="small-8 left-container">
+        <nav class="breadcrumbs">
+    <a href="/" name="Home"><span >Home</span>
+</a>
+
+    <a href="/onair/" name="onair"><span >Onair</span>
+</a>
+
+    <a href="/onair/the-dave-ryan-show-53769/" name="The Dave Ryan Show"><span >The Dave Ryan Show</span>
+</a>
+
+    <span class="currentpage">Can You Find The Cell Phone "hidden" On This Rug?</span>
+
+</nav>
+                
+
+            <header class="personality-header"  style="background-image: url('http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMjAxNi8wNC9kZWZhdWx0L2Ryc19zaG93X2Jsb2dfY292ZXJfNjcweDIwMF9yZV8wXzE0NjE1MjcwMTMuanBn?ops=resize(670,200)'); background-size: 100% 12.500em; background-repeat: no-repeat;">
+        <section class="component-title">
+        <h3>The Dave Ryan Show</h3>
+    </section>
+</header>        
+        <article>
+                        <header>                
+                <h1 class="headline">Can you find the cell phone "hidden" on this rug?</h1>
+            </header>
+                        
+                        <!-- BEGIN::LAYOUT_Share -->
+        <section class="shareLinks">
+                    <div class="socialButton">
+                                                        <div class="fb-share-button" data-href="http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/can-you-find-the-cell-phone-14897836/"
+                         data-layout="button_count"
+                         data-action="share
+                         data-show-faces="false"
+                         data-share="false"
+                            ></div>
+                            </div>
+        
+                                            <div class="socialButton">
+            <a href="http://twitter.com/share" class="twitter-share-button" data-dnt="true" data-url="http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/can-you-find-the-cell-phone-14897836/" data-text="Can you find the cell phone "hidden" on this rug?" data-count="none" data-via="1013KDWB">Tweet</a>
+            
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            
+        </div>
+
+
+        
+        <div class="socialButton">
+            <!-- AddThis Button BEGIN -->
+            <div class="addthis_toolbox addthis_button" addthis:url="http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/can-you-find-the-cell-phone-14897836/">
+                <a class="addthis_button_compact">
+                    <img src="http://flint-img.iheart.com/desktop/img/addthis_share_plus20.png" width="20px" height="20px" alt="Bookmark and Share" style="border:0"/>
+                </a>
+            </div>
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=iheartradio"></script>
+            <!-- AddThis Button END -->
+        </div>
+
+        
+        
+    </section>
+<!-- END::LAYOUT_Share -->          <div class="clear">&nbsp;</div>
+            
+                        
+            
+                                        <div class="date">Posted July 12th, 2016 @ 6:31am </div>
+            
+            
+            <p><img src="http://img.ccrd.clearchannel.com/media/mlib/2135/2016/07/default/girl_with_magnifying_glass_0_1467971212.jpg" alt="girl with magnifying glass" border="0" /></p>
+<p>How observant are you? Would you be able to see a phone if it fell on the floor? What if it blended in with a rug? Well now is your chance to find out. Check out this frustrating brainteaser:</p>
+<p><img src="http://img.ccrd.clearchannel.com/media/mlib/2135/2016/07/default/phone_1_1467971072.jpg" alt="phone" border="0" />&nbsp;</p>
+<p>Scroll down for the solution.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><img src="http://img.ccrd.clearchannel.com/media/mlib/2135/2016/07/default/phone_solution_0_1467971073.jpg" alt="phone solution" border="0" /></p>
+<p>&nbsp;</p>
+<p><em>Photo Credit: Getty</em></p>
+
+            
+            
+        </article>
+
+                    <section class="module outbrain">
+    <h3 class="title">Recommended Stories</h3>
+    <div class="OUTBRAIN" data-src="http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/can-you-find-the-cell-phone-14897836/" data-widget-id="AR_16" data-ob-template="clearchannel"></div>
+    <script type="text/javascript" async src="http://widgets.outbrain.com/outbrain.js"></script>
+</section>        
+                    <section class="module facebook-comments">
+    <h3 class="title">Comments</h3>
+    <fb:comments href="http://kdwb.iheart.com/onair/the-dave-ryan-show-53769/can-you-find-the-cell-phone-14897836/" numposts="5" width="100%" publish_feed="true"></fb:comments>
+</section>        
+
+    </main>
+    <aside class="small-4 columns right-container">        
+        <div class="clear">&nbsp;</div>
+<div class="ad-container three-hundred" id="dfp-ad-3307"></div>
+<div class="ad-text">advertisement |
+    <a href="/features/advertise-with-us-725/"
+       data-linktrack="true"
+       data-linktrack-location="right_rail"
+       data-linktrack-position="ad_unit"
+       data-linktrack-item="your_ad_here">your ad here</a></div>
+
+<script type="text/javascript">
+    if(window.googletag){
+        googletag.cmd.push(function() { googletag.display('dfp-ad-3307'); });
+    }//if
+</script>
+
+        <section class="module cume-widget" data-moduleid="3068751">
+    <h3 class="title">#TrendingTracks</h3>
+    <div class="content mediaContainer">
+                <iframe
+                src=""
+                data-source="https://www.iheart.com/video/week-of-july-11th-27145750/?embed=true&autoStart=false&useFullScreen=true&siteid=2135&preview=true&useAds=false"
+                                frameborder="0"
+                scrolling="no"></iframe>
+    </div>
+    <a class="more" href="/media/play/27145750/">Week of July 11th</a>
+</section>
+
+<script type="text/javascript" language="javascript">
+(function() {
+    var mediaID = '27145750';
+    if( $.cookie('lastMediaId') == null || $.cookie('lastMediaId') != mediaID ){
+        $.cookie('lastMediaId', mediaID, { expires: 365, path: '/' } );
+        var targetFrame = $('.module.cume-widget iframe');
+        if( targetFrame.length ){
+            targetFrame.attr('src', targetFrame.data('source'));
+            $('.module.cume-widget').show();
+        }
+    }//if 
+})();
+</script>
+
+        <section class="module">
+                        <h3 class="title">About The Dave Ryan Show</h3>
+<figure class="personality-bio">
+        <img src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMTAvNzg3XzE0MTIyNTcyOTQuanBn?ops=resize(100,100),quality(85)" alt="The Dave Ryan Show" />
+        <figcaption>
+            <div id="showbiointro">
+            The Dave Ryan in the Morning Show live on KDWB weekdays from 6-10am! Contact the show any time - send an email to the Xfinity inbox at RyanShow@kdwb.com
+        </div>
+            </figcaption>
+</figure>               <div class="content">
+                <div class="personalityContact">
+
+                            <span class="contactLabel">Call:</span> 651-989-KDWB (5392)<br />
+            
+                            <span class="contactLabel">Text:</span> KDWB1 (53921)<br />
+            
+                            <span class="contactLabel">Email:</span> <a href="mailto:RyanShow@KDWB.com">RyanShow@KDWB.com</a>
+                    </div><!--personalityContact-->
+                                    <div class="contactLabel">Join The Dave Ryan Show on</div>
+                                    <div class="connect personality">
+                        <a href="https://facebook.com/TheDaveRyanShow/" target="_blank" title="facebook">
+        <i class="social-icon facebook"></i>
+    </a>
+        <a href="https://twitter.com/DaveRyanKDWB/" target="_blank" title="twitter">
+        <i class="social-icon twitter"></i>
+    </a>
+        <a href="https://plus.google.com/100392507730482928979/" target="_blank" title="googleplus">
+        <i class="social-icon googleplus"></i>
+    </a>
+        <a href="https://youtube.com/DaveRyanShow/" target="_blank" title="youtube">
+        <i class="social-icon youtube"></i>
+    </a>
+                </div>
+            <div class="clear">&nbsp;</div>
+        <!--social_networks-->
+    </div> <!--content-->
+</section>
+
+                            <!--START: Right Column LS Content Items-->
+                <!-- templateName = image.tpl -->
+            <section class="module module-image-full" name="image"
+         data-moduleid="3220261"
+         data-linktrack-module="image">
+        <h3 class="title">Make My Monday</h3>
+        <div class="content">
+                             <a href="/onair/the-dave-ryan-show-53769/make-my-monday-with-the-dave-13910389/" target="_self">
+            <figure>
+                <img src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMjAxNS8wOS9kZWZhdWx0L21ha2VfbXlfbW9uZGF5X3NwYXJrXzBfMTQ0MTE4ODA0OS5qcGc=?ops=resize(300,0),quality(90)" class="small-12" alt="Make My Monday" />
+                                <figcaption><h3>We're here every day to help make your morning better... especially Mondays because we all know they suck! And now we're going one step further. We're giving you the chance to say, "Hey Dave Ryan Show...Make My Monday!" Click here!</h3></figcaption>
+                            </figure>
+        </a>
+       
+    
+    </div>
+</section>                    <!-- templateName = ihr_show.tpl -->
+            
+<section class="module" data-moduleid="3422022"
+         data-linktrack-module="iHR Show">
+        <h3 class="title">LISTEN: The Dave Ryan Show on iHeartRadio</h3>
+        <div class="content">
+                                                                                                    <a href="http://www.iheart.com/show/139-The-Dave-Ryan-Show/?episode_id=27566165&campid=ls_ihrshow&pname=787&cid=%2Fonair%2Fthe-dave-ryan-show-53769%2Fcan-you-find-the-cell-phone-14897836%2F" target="_blank">
+                <figure>
+                                                                                <img src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuaWhlYXJ0LmNvbS90YWxrL2pwZy9zaG93L2NlLzI2NTg0MDY4LjEzOTkwMjg0NjMuanBn?ops=max(65,65),quality(90)" class="thumbnail" alt="7-13-16 Did Meatsauce Become a 10.5 with His New Hair?" />
+                                        <figcaption class="caption">
+                        <h3>7-13-16 Did Meatsauce Become a 10.5 with His...</h3>
+                    </figcaption>
+                </figure>
+            </a>
+                                                                                                                <a href="http://www.iheart.com/show/139-The-Dave-Ryan-Show/?episode_id=27563212&campid=ls_ihrshow&pname=787&cid=%2Fonair%2Fthe-dave-ryan-show-53769%2Fcan-you-find-the-cell-phone-14897836%2F" target="_blank">
+                <figure>
+                                                                                <img src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuaWhlYXJ0LmNvbS90YWxrL2pwZy9zaG93L2NlLzI2NTg0MDY4LjEzOTkwMjg0NjMuanBn?ops=max(65,65),quality(90)" class="thumbnail" alt="7-12-16 Hip Hop Hymns is Back!" />
+                                        <figcaption class="caption">
+                        <h3>7-12-16 Hip Hop Hymns is Back!</h3>
+                    </figcaption>
+                </figure>
+            </a>
+                                                                                                                <a href="http://www.iheart.com/show/139-The-Dave-Ryan-Show/?episode_id=27562207&campid=ls_ihrshow&pname=787&cid=%2Fonair%2Fthe-dave-ryan-show-53769%2Fcan-you-find-the-cell-phone-14897836%2F" target="_blank">
+                <figure>
+                                                                                <img src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuaWhlYXJ0LmNvbS90YWxrL2pwZy9zaG93L2NlLzI2NTg0MDY4LjEzOTkwMjg0NjMuanBn?ops=max(65,65),quality(90)" class="thumbnail" alt="7-11-16 The Facebook Fight that Angered A LOT of People" />
+                                        <figcaption class="caption">
+                        <h3>7-11-16 The Facebook Fight that Angered A LOT...</h3>
+                    </figcaption>
+                </figure>
+            </a>
+                        </div>
+    <footer class="more">
+        <a href="http://www.iheart.com/show/139-The-Dave-Ryan-Show/?campid=ls_ihrshow&pname=787&cid=%2Fonair%2Fthe-dave-ryan-show-53769%2Fcan-you-find-the-cell-phone-14897836%2F" target="_blank">More &raquo;</a>
+        <div class="clear">&nbsp;</div>               
+    </footer>
+</section>
+                    <!-- templateName = custom_html.tpl -->
+            <section class="module" data-moduleid="1787653"
+         data-linktrack-module="Custom HTML">
+        <h3 class="title">The Dave Ryan Show On-Demand</h3>
+        <div class="content"><p style="text-align: center;"><a href="http://www.iheart.com/show/139-The-Dave-Ryan-Show/" target="_blank" class="button">FULL SHOW PODCASTS</a><br /><a href="/media/podcast-dave-ryan-war-of-the-roses-podcast_wotr/" class="button">WAR OF THE ROSES</a><br /><a href="/media/podcast-dave-ryan-show-daily-clips-podcast_dailyclips/" class="button">DAILY CLIPS</a><br /><a href="/media/podcast-kdwb-dave-ryan-show-podcast_parodies" class="button">PARODIES</a><br /> <a href="/media/podcast-dave-ryan-show-interviews-podcast_interviews/" class="button">INTERVIEWS</a></p></div>
+</section>
+
+
+    <!--END: Right Column LS Content Items-->        
+                                        <!--START: Related Items-->
+<section class="module related-items"> 
+    <h3 class="title">Recent Posts</h3>
+    <ul class="item-list">
+        <li>
+        <a href="/onair/the-dave-ryan-show-53769/watch-paula-from-brazil-was-our-14905281/" title="WATCH: Paula from Brazil was our Almost Cohost today!">
+            <figure>
+                                <img class="small-4 left" src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMjAxNi8wNy8yMTB4MjEwL2FsbW9zdF9jb2hvc3RfMDcxM19wYXVsYV8wXzE0Njg0MzAxMDEuanBn?ops=max(65,65),quality(80)"  alt="WATCH: Paula from Brazil was our Almost Cohost today!" />
+                                <figcaption class="small-8 left" ><h5>WATCH: Paula from Brazil was our Almost Cohost...</h5></figcaption>
+            </figure>
+        </a>
+    </li>
+        <li>
+        <a href="/onair/the-dave-ryan-show-53769/watch-meatsauce-gets-a-hairpiece-14904612/" title="WATCH: Meatsauce Gets A Hairpiece">
+            <figure>
+                                <img class="small-4 left" src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMjAxNi8wNy8yMTB4MjEwL21lYXRzYXVjZV9nZXRzX2FfaGFpcnBpZWNlXzBfMTQ2ODQxOTUxOS5qcGc=?ops=max(65,65),quality(80)"  alt="WATCH: Meatsauce Gets A Hairpiece" />
+                                <figcaption class="small-8 left" ><h5>WATCH: Meatsauce Gets A Hairpiece</h5></figcaption>
+            </figure>
+        </a>
+    </li>
+        <li>
+        <a href="/onair/the-dave-ryan-show-53769/listen-falens-pokemon-go-parody-14903902/" title="LISTEN: Falen's Pokemon Go parody">
+            <figure>
+                                <img class="small-4 left" src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMjAxNi8wNy8yMTB4MjEwL2ZhbGVuX3Bva2Vtb25fMF8xNDY4NDAzOTY5LmpwZw==?ops=max(65,65),quality(80)"  alt="LISTEN: Falen's Pokemon Go parody" />
+                                <figcaption class="small-8 left" ><h5>LISTEN: Falen's Pokemon Go parody</h5></figcaption>
+            </figure>
+        </a>
+    </li>
+        </ul>
+</section>
+<!--END: Related Items-->            </aside>
+
+</div>
+
+    <script src="//flint-img.iheart.com/app/js/eyesToEars.min.js"></script>
+<script>
+    $EyesToEars.init({
+        stylesheet : "//flint-img.iheart.com/app/css/eyesToEars.css"
+        });
+</script><!-- END::LAYOUT_Onair_Detail -->                    <section class="more-items">
+                <h3>More from 101.3 KDWB</h3>
+                <ul class="clearfix">
+                                        <li class="small-2 columns">
+                        <a href="/features/99-days-of-summer-at-mall-of-america-powered-by-pepsi-2258/" target="_self">
+                            <figure>
+                                <img src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMjAxNi8wNy9kZWZhdWx0L21vYV9jb25jZXJ0XzEwMDB4MTAwMF9sYXVyYV9tYV8wXzE0Njc4MDgyMzMucG5n?ops=max(150,150),quality(85)" alt="KDWB presents Laura Marano at Mall of America" />
+                                <figcaption>
+                                    <h4>KDWB presents Laura Marano at Mall of America</h4>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                                        <li class="small-2 columns">
+                        <a href="/articles/kdwb-exclusives-497044/kdwb-holds-the-worlds-largest-cake-14860056/" target="_self">
+                            <figure>
+                                <img src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMjAxNi8wNi9kZWZhdWx0L2RuY2VfY2FrZV9ieV90aGVfbGFrZV90aHVtYl8wXzE0NjcxNDIwNDMuanBn?ops=max(150,150),quality(85)" alt="Watch the world's largest cake fight with DNCE" />
+                                <figcaption>
+                                    <h4>Watch the world's largest cake fight with DNCE</h4>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                                        <li class="small-2 columns">
+                        <a href="/lakepatrol" target="_self">
+                            <figure>
+                                <img src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMjAxNi8wNS9kZWZhdWx0L2xha2VfcGF0cm9sX2xvZ29fdGh1bWJfMTAwMF8wXzE0NjQwMTkxNTEuanBn?ops=max(150,150),quality(85)" alt="Party on Lake Minnetonka with KDWB Lake Patrol" />
+                                <figcaption>
+                                    <h4>Party on Lake Minnetonka with KDWB Lake Patrol</h4>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                                        <li class="small-2 columns">
+                        <a href="http://www.iheart.com/show/139-The-Dave-Ryan-Show/" target="_blank">
+                            <figure>
+                                <img src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMjAxNS8wNC9kZWZhdWx0L2RhdmVfcnlhbl9zaG93X2xpc3Rlbl9ub3dfdGh1bV8wXzE0Mjk3OTE3NzYuanBn?ops=max(150,150),quality(85)" alt="Listen to Dave Ryan Show NOW!" />
+                                <figcaption>
+                                    <h4>Listen to Dave Ryan Show NOW!</h4>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                                        <li class="small-2 columns">
+                        <a href="/skyroom" target="_self">
+                            <figure>
+                                <img src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMDIvNzg3XzEzOTE3MDc3MDcuanBn?ops=max(150,150),quality(85)" alt="KDWB Skyroom Performances" />
+                                <figcaption>
+                                    <h4>KDWB Skyroom Performances</h4>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                                        <li class="small-2 columns">
+                        <a href="http://www.instagram.com/1013kdwb" target="_blank">
+                            <figure>
+                                <img src="http://i.iheart.com/v3/url/aHR0cDovL2NvbnRlbnQuY2xlYXJjaGFubmVsLmNvbS9jYy1jb21tb24vbWxpYi83ODcvMjAxNi8wNy9kZWZhdWx0L2luc3RhZ3JhbV92MDUxOTE2XzBfMTQ2NzM5NjE5NS5wbmc=?ops=max(150,150),quality(85)" alt="Follow @1013KDWB on Instagram" />
+                                <figcaption>
+                                    <h4>Follow @1013KDWB on Instagram</h4>
+                                </figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                                    </ul>
+            </section>
+            </div>
+    <!-- END::PAGE_CONTENT -->
+    <!-- BEGIN::LAYOUT_FOOTER -->
+    <div class="footer-wrapper row">
+                <div class="clear">&nbsp;</div>
+<div class="ad-container seven-twenty-eight" id="dfp-ad-3306"></div>
+
+<script type="text/javascript">
+    if(window.googletag){
+        googletag.cmd.push(function() { googletag.display('dfp-ad-3306'); });
+    }//if
+</script>
+
+                <footer>
+                            <ul class="footer-links margin-bottom">
+                                                        <li><a href="https://www.facebook.com/1013KDWB"
+                           target="_blank"
+                           class="children"
+                           data-linktrack="true"
+                           data-linktrack-location="footer_local"
+                           data-linktrack-position="link"
+                           data-linktrack-index="1">Facebook</a></li>
+                                                                            <li><a href="http://www.twitter.com/1013kdwb"
+                           target="_blank"
+                           class="children"
+                           data-linktrack="true"
+                           data-linktrack-location="footer_local"
+                           data-linktrack-position="link"
+                           data-linktrack-index="2">Twitter</a></li>
+                                                                            <li><a href="http://instagram.com/1013kdwb"
+                           target="_blank"
+                           class="children"
+                           data-linktrack="true"
+                           data-linktrack-location="footer_local"
+                           data-linktrack-position="link"
+                           data-linktrack-index="3">Instagram</a></li>
+                                                    </ul>
+                        
+            <ul class="footer-links">
+                            <li><a href="/articles/legal-477363/terms-of-use-11584658/"
+                       data-linktrack="true"
+                       data-linktrack-location="footer_national"
+                       data-linktrack-position="link"
+                       data-linktrack-index="1">Terms&nbsp;of&nbsp;Use</a></li>
+                <li><a href="/articles/legal-477363/privacy-and-cookie-notice-11584630/"
+                       data-linktrack="true"
+                       data-linktrack-location="footer_national"
+                       data-linktrack-position="link"
+                       data-linktrack-index="2">Privacy&nbsp;Statement</a></li>
+                <li><a href="/articles/legal-477363/terms-of-use-11584658/"
+                       data-linktrack="true"
+                       data-linktrack-location="footer_national"
+                       data-linktrack-position="link"
+                       data-linktrack-index="3">Copyright&nbsp;and&nbsp;Trademark&nbsp;Notice</a></li>
+                <li><a href="//kdwb.iheart.com/go/mlib/612/2015/12/default/eeo_report_0_1448918104.pdf"
+                       target="_blank"
+                       data-linktrack="true"
+                       data-linktrack-location="footer_national"
+                       data-linktrack-position="link"
+                       data-linktrack-index="4">EEO&nbsp;Public&nbsp;File</a></li>
+                            </ul>
+            <ul class="footer-links">
+                <li><a href="http://www.iheart.com/apps/"
+                       target="_blank"
+                       data-linktrack="true"
+                       data-linktrack-location="footer_national"
+                       data-linktrack-position="link"
+                       data-linktrack-index="5"><span class="normal-case">iHeartRadio</span>&nbsp;-&nbsp;Get&nbsp;the&nbsp;Free&nbsp;Radio&nbsp;App</a></li>
+                                <li><a href="/articles/legal-477363/general-contesting-guidelines-12455463/"
+                       data-linktrack="true"
+                       data-linktrack-location="footer_national"
+                       data-linktrack-position="link"
+                       data-linktrack-index="6">General&nbsp;Contest&nbsp;Guidelines</a></li>
+                <li><a href="/features/advertise-with-us-725/"
+                       data-linktrack="true"
+                       data-linktrack-location="footer_national"
+                       data-linktrack-position="link"
+                       data-linktrack-index="7">Advertise&nbsp;with&nbsp;Us</a></li>
+            
+                                <li><a href="/features/iheartmedia-communities-285/"
+                       data-linktrack="true"
+                       data-linktrack-location="footer_national"
+                       data-linktrack-position="link"
+                       data-linktrack-index="8">Philanthropy</a></li>
+                            </ul>
+
+                            <h3 class="site-ownership">&copy; 2016 iHeartMedia, Inc.</h3>
+                    </footer>
+    </div>
+    <!-- END::LAYOUT_FOOTER -->
+        <div class="ad-container wallpaper" id="dfp-ad-5050"></div>
+
+<script type="text/javascript">
+    if(window.googletag){
+        googletag.cmd.push(function() { googletag.display('dfp-ad-5050'); });
+    }//if
+</script>
+
+    </div>
+<!-- END::PAGE_WRAPPER -->
+
+<script src="//flint-img.iheart.com/mobile/js/vendor/LAB.min.js"></script>
+
+<script type="text/javascript">
+$LAB
+    .script("//flint-img.iheart.com/app/js/e2eDetect.js")
+    .script("/clientscripts/s_code.js")
+    .wait(function(){
+        if ($User && $User.isLoggedIn()) {
+            var userType = $User.getAccountType(),
+                userId = $User.getProfile("profileId");
+
+            if (userId && userId !== "") {
+                s.prop33 = userId;
+            }
+
+            if (userType && userType !== "") {
+                s.prop49 = userType;
+            }
+        }
+        s.pageName = "onair:blog:the-dave-ryan-show-53769:can-you-find-the-cell-phone-14897836";
+        s.pageType = "onair:blog";
+        if (window.e2eTrackingValue) {
+            s.prop41 = window.e2eTrackingValue;
+            s.eVar41 = window.e2eTrackingValue;
+        }
+                s.prop2 = "kdwb.iheart.com";
+                s.prop3 = "onair:blog";
+                s.prop4 = "onair:blog:14897836";
+                s.prop5 = "page";
+                s.prop6 = "KDWB-FM";
+                s.prop7 = "MINNEAPOLIS-MN";
+                s.prop8 = "CHRPOP";
+                s.prop9 = "Can you find the cell phone hidden on this rug";
+                s.prop10 = "onair:blog";
+                s.prop11 = "11:59 pm";
+                s.prop12 = "Wednesday";
+                s.prop13 = "Weekday";
+                s.prop18 = "The Dave Ryan Show - 53769";
+                s.prop20 = "Onair:blog:Can you find the cell phone hidden on this rug:14897836";
+                s.prop25 = "MINNEAPOLIS-MN:KDWB-FM:CHRPOP";
+                s.prop26 = "MINNEAPOLIS-MN:KDWB-FM:Can you find the cell phone hidden on this rug";
+                s.prop27 = "MINNEAPOLIS-MN:KDWB-FM:CHRPOP:onair:blog";
+                s.prop28 = "onair:blog:53769:14897836";
+                s.prop34 = "onair:blog:The Dave Ryan Show:53769";
+                s.prop36 = "FLINT-DESKTOP";
+                s.prop39 = "1203227";
+                s.prop40 = "";
+                s.prop42 = "KDWB-FM";
+                s.prop43 = "Local";
+                        s.hier1 = "KDWB-FM,MINNEAPOLIS-MN";
+                s.hier2 = "KDWB-FM,CHRPOP";
+        
+        
+        window.doTrackingCall = function( ) {
+            if( typeof(window.s) != "undefined" && typeof(window.s.t) == "function" ){
+                var s_code=s.t();if(s_code)document.write(s_code);
+            }
+        };
+
+        $(window).bind('sc-update-image', function(){
+            window.doTrackingCall( );
+        });
+       
+        window.doTrackingCall( );
+    });
+
+</script>
+
+    
+<script type="text/javascript">
+$(function(){
+    //station values;
+    var pubID = '4088';
+    var stationID = 'KDWB-FM';
+    var marketID = 'MINNEAPOLIS-MN';
+    var format = 'CHRPOP';
+
+    var lo = document.createElement('script'); 
+    lo.type = 'text/javascript'; 
+    lo.async = true;
+    lo.id = 'LOTCC_' + pubID;
+    lo.src = 'http://tags.crwdcntrl.net/c/' + pubID  + '/cc.js?ns=_cc' + pubID;
+
+    lo.onload = function(){
+        _cc4088.add('int','Page View : ID - ' + stationID );    
+        _cc4088.add('int','Page View : Format - ' + format );    
+        _cc4088.add('int','Page View : Market - ' + marketID );    
+        _cc4088.bcp();
+
+        if ($User && $User.isLoggedIn()) {
+            var pid = $User.getProfile("profileId"),
+                    pixelUrl = "https://bcp.crwdcntrl.net/map/c=4085/tp=CLCH/tpid=%%profileid%%";
+            if (pid && pid !== "") {
+                pixelUrl = pixelUrl.replace("%%profileid%%", pid);
+                $("body").append("<img src=\""+pixelUrl+"\" />");
+            }
+        }
+    };
+    
+    var ls = document.getElementsByTagName('script')[0]; 
+    ls.parentNode.insertBefore(lo, ls);
+});
+</script>
+<!-- Tynt -->
+
+<script type="text/javascript">
+if(document.location.protocol=='http:'){
+    var Tynt=Tynt||[];Tynt.push('bOa0NM1Her35hWadbi-bnq');Tynt.i={"c":false};
+    (function(){var s=document.createElement('script');s.async="async";s.type="text/javascript";s.src='http://tcr.tynt.com/ti.js';var h=document.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);})();
+}
+</script>
+<!-- END Tynt -->
+
+<div style="height:1px;line-height:0px">
+    <img src=" http://b.scorecardresearch.com/p?c1=2&amp;c2=6036262&amp;c4=http%3A%2F%2Fkdwb.iheart.com%2Fonair%2Fthe-dave-ryan-show-53769%2Fcan-you-find-the-cell-phone-14897836%2F" alt="*" style="width:1px;height:1px;border:none;" />
+</div>
+<script type="text/javascript">
+  (function() {
+
+    var htmlPoll = document.createElement('script'); htmlPoll.type = 'text/javascript'; htmlPoll.async = true;
+    htmlPoll.src = 'http://content.clearchannel.com/cc-common/polling_tool/HTMLPoll.js';
+    
+    htmlPoll.onload  = function(){
+
+        var pollController = document.createElement('script'); pollController.type = 'text/javascript'; pollController.async = true;
+        pollController.src = 'http://content.clearchannel.com/cc-common/polling_tool/PollsController.js';
+        
+        pollController.onload  = function(){
+            
+            //PollsController initialization
+            var polls = new PollsController();
+
+            if(polls){
+                //initialize polls controller
+                polls.init();
+            }
+
+        }
+        
+        var ps = document.getElementsByTagName('script')[0]; ps.parentNode.insertBefore(pollController, ps);
+
+    }
+    
+    var hs = document.getElementsByTagName('script')[0]; hs.parentNode.insertBefore(htmlPoll, hs);
+
+  })();
+
+</script>
+
+<script src="//flint-img.iheart.com/desktop/js/app/main.min.js"></script>
+
+
+<!-- LOCAL ALERTS -->
+
+
+
+<script src="//flint-img.iheart.com/mobile/js/foundation/foundation.js"></script>
+<script src="//flint-img.iheart.com/mobile/js/foundation/foundation.orbit.js"></script>
+<script src="//flint-img.iheart.com/mobile/js/foundation/foundation.forms.js"></script>
+<script src="//flint-img.iheart.com/mobile/js/foundation/foundation.section.js"></script>
+<script src="//flint-img.iheart.com/mobile/js/foundation/foundation.reveal.js"></script>
+
+
+<script src="//flint-img.iheart.com/desktop/js/app/init.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            if( typeof( window.$Main ) !== 'undefined' ){
+                //load the qio now playing widget
+                $Main.require.load( '//flint-img.iheart.com/common/js/widget.now-playing.min.js',  function(){
+                    if( typeof( $NowPlayingWidget ) !== 'undefined'){
+                        $NowPlayingWidget.init({insertAfter: '.ad-text' });
+                    }//if
+                });
+
+                //load the shoutout widget
+                $Main.require.load( '//flint-img.iheart.com/common/js/widget.shoutout.min.js',  function(){
+                    if( typeof( $Shoutout ) !== 'undefined'){
+                        $Shoutout.init();
+                    }//if
+                });
+               
+            }//if
+        });
+        
+        $(function(){
+            $(document)
+                    .foundation(
+                    'orbit'
+            )
+                    .foundation(
+                    'section'
+            )
+                    .foundation(
+                    'forms'
+            )
+                    .foundation(
+                    'reveal'
+            );
+        });
+    </script>
+
+    <div class="shout-modal" style="display:none;">
+    <div class="shout-form">
+        <script type="text/javascript">
+            var RecaptchaOptions = {
+                    theme : 'clean'        
+                };
+        </script>
+        <h2>Send a Shoutout </h2>
+        <form name="shoutForm" id="shoutForm" action="/clientscripts/shoutout_send.html" novalidate>
+            <span class="shout-error required" style="display:none;"></span>
+            <label for="shoutFirstName">First Name <span class="required">Required</span></label>
+            <input type="text" name="shoutFirstName" id="shoutFirstName" maxlength="250" />
+            
+            <label for="shoutEmail">Email Address <span class="required">Required</span></label>
+            <input type="email" name="shoutEmail" id="shoutEmail" maxlength="250" />
+            
+            <div class="captcha-wrapper">
+                <script type="text/javascript" id="recaptcha-lib" src="http://www.google.com/recaptcha/api/challenge?k=6LdsP70SAAAAAARhJvHa-14ka5vcOgXihPdb2DxB"></script>
+            </div>
+            
+            <input type="button" id="shoutModalSend" value="Send" class="shout-send" />
+            <input type="hidden" name="shoutModalMessage" id="shoutModalMessage" />
+        </form>
+    </div>
+</div>
+<div class="shout-modal-background" style="display:none;"></div>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"25b61230c4","applicationID":"5383723","transactionName":"Y1AANhZWCkBUVRAKXVoaIRcXQwteGlkKAltGGkg=","queueTime":0,"applicationTime":485,"atts":"TxcXQF5MRldaWwUKXBYPQAkAQAYdXF4BAkBAGwENCRVIEUNXFg1bR11PCgtEEBEPFAIPW1pBTxQFRQpaRl5UURAYFwMSBVQMVhheCxBGFg9AU1QZXR0EA1dNAQMXH05GVkYJTksZ","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>

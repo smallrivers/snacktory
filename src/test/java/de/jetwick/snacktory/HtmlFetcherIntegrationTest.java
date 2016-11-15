@@ -45,9 +45,22 @@ public class HtmlFetcherIntegrationTest {
         res = new HtmlFetcher().fetchAndExtract("http://on.fb.me/IKFRtL", 10000, true);
         assertEquals("https://www.facebook.com/", res.getUrl());
 
-        // Redirection.
-        res = new HtmlFetcher().fetchAndExtract("http://www.azcentral.com/videos/news/12-news/arizona-midday/2014/11/26/19550567/", 10000, true);
-        assertEquals("http://www.azcentral.com/videos/news/12-news/arizona-midday/2014/11/26/19550567/", res.getUrl());
+        // 404 - Not found.
+        try {
+            res = new HtmlFetcher().fetchAndExtract("http://www.cnn.com/some/article", 10000, false);
+            fail( "Must throw SnacktoryNotFoundException" );
+        } catch (SnacktoryNotFoundException ex){
+            // do nothing
+        }
+
+        /*
+        // 500 - Server error (seems an UA issue).
+        try {
+            res = new HtmlFetcher().fetchAndExtract("http://www.azcentral.com/videos/news/12-news/arizona-midday/2014/11/26/19550567/", 10000, true);
+            fail( "Must throw SnacktoryNotFoundException" );
+        } catch (SnacktoryNotFoundException ex){
+            // do nothing
+        }*/
     }
 
     @Test
@@ -77,6 +90,7 @@ public class HtmlFetcherIntegrationTest {
         assertEquals("科学・ＩＴニュース：読売新聞(YOMIURI ONLINE)", res.getTitle());
     }
 
+    /* Fails with: Security Check Required
     @Test
     public void testHashbang() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://www.facebook.com/democracynow", 10000, true);
@@ -85,7 +99,7 @@ public class HtmlFetcherIntegrationTest {
         // not available anymore
         //       res = new HtmlFetcher().fetchAndExtract("http://twitter.com/#!/th61/status/57141697720745984", 10000, true);
         //       assertTrue(res.getTitle(), res.getTitle().startsWith("Twitter / TH61: “@AntiAtomPiraten:"));
-    }
+    }*/
 
     public void testImage() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://grfx.cstv.com/schools/okla/graphics/auto/20110505_schedule.jpg", 10000, true);
@@ -113,10 +127,19 @@ public class HtmlFetcherIntegrationTest {
         assertTrue(str, str.startsWith("<?xml version="));
     }
 
+    /* FIXME: this test fail with a 500 error code
     @Test
     public void testYahooMobile() throws Exception {
         JResult res  = new HtmlFetcher().fetchAndExtract("https://m.yahoo.com/w/legobpengine/finance/news/stevia-first-corp-stvf-looks-123500390.html?.intl=us&.lang=en-us", 10000, true);
         assertTrue(res.getTitle(), res.getTitle().startsWith("Stevia First Corp. (STVF) Looks to Disrupt Flavor Industry"));
+    }*/
+
+    @Test
+    public void testWamu() throws Exception {
+        JResult res  = new HtmlFetcher().fetchAndExtract("https://wamu.org/news/15/10/23/why_calling_slaves_workers_is_more_than_an_editing_error", 10000, true);
+        assertTrue(res.getTitle(), res.getTitle().startsWith("Why Calling Slaves 'Workers' Is More Than An Editing Error"));
+        assertTrue(res.getText(), res.getText().startsWith("Coby Burren was reading his textbook"));
+        assertTrue(res.getText(), res.getText().endsWith("\"and that he'll be heard.\""));
     }
 
     /* FIXME: This test fails with a java.io.IOException: Invalid Http response 
