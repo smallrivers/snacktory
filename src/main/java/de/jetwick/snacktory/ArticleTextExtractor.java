@@ -786,6 +786,8 @@ public class ArticleTextExtractor {
                         }
                     }
                 }
+            } catch(IllegalArgumentException ex){
+                logger.error("Bad URL: " + url + ":" + ex);
             } catch (URISyntaxException ex) {
                 // bad url?
                 logger.error("Bad URL: " + url + ":" + ex);
