@@ -786,6 +786,8 @@ public class ArticleTextExtractor {
                         }
                     }
                 }
+            } catch(IllegalArgumentException ex){
+                logger.error("Bad URL: " + url + ":" + ex);
             } catch (URISyntaxException ex) {
                 // bad url?
                 logger.error("Bad URL: " + url + ":" + ex);
@@ -2653,6 +2655,9 @@ public class ArticleTextExtractor {
     public static InternetDomainName getDomain(String url) {
         try {
             String host = new URI(url).getHost();
+            if (host==null){
+                return null;
+            }
             return InternetDomainName.from(host);
         } catch(URISyntaxException ex){
             return null;
