@@ -2661,6 +2661,9 @@ public class ArticleTextExtractor {
             return InternetDomainName.from(host);
         } catch(URISyntaxException ex){
             return null;
+        } catch(IllegalArgumentException ex){
+            // Handles case: java.lang.IllegalArgumentException: Not a valid domain name: '221.214.182.123'
+            return null;
         } catch(java.lang.IllegalStateException ex){
             // Handles case: java.lang.IllegalStateException: Not under a public suffix: developer.team
             return null;
