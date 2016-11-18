@@ -2655,6 +2655,9 @@ public class ArticleTextExtractor {
     public static InternetDomainName getDomain(String url) {
         try {
             String host = new URI(url).getHost();
+            if (host==null){
+                return null;
+            }
             return InternetDomainName.from(host);
         } catch(URISyntaxException ex){
             return null;
