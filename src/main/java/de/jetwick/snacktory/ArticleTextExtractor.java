@@ -1889,6 +1889,7 @@ public class ArticleTextExtractor {
         try {
             // If not author desc found, try to found a section where the author name
             // is defined. 
+            authorName = authorName.trim();
             if(authorName.length()>8){
                 Elements nodes = doc.select(":containsOwn(" + authorName + ")");
                 Element bestMatch = getBestMatchElement(nodes);
