@@ -1903,6 +1903,8 @@ public class ArticleTextExtractor {
             }
         } catch(SelectorParseException se){
             // Avoid error when selector is invalid
+        } catch(IllegalArgumentException ex){
+            // Ignore error: java.lang.IllegalArgumentException: String must not be empty
         }
 
         if(DEBUG_AUTHOR_DESC_EXTRACTION)
