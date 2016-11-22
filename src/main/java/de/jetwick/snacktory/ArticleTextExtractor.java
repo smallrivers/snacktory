@@ -786,6 +786,8 @@ public class ArticleTextExtractor {
                         }
                     }
                 }
+            } catch(IllegalArgumentException ex){
+                logger.error("Bad URL: " + url + ":" + ex);
             } catch (URISyntaxException ex) {
                 // bad url?
                 logger.error("Bad URL: " + url + ":" + ex);
@@ -1887,6 +1889,7 @@ public class ArticleTextExtractor {
         try {
             // If not author desc found, try to found a section where the author name
             // is defined. 
+            authorName = authorName.trim();
             if(authorName.length()>8){
                 Elements nodes = doc.select(":containsOwn(" + authorName + ")");
                 Element bestMatch = getBestMatchElement(nodes);
@@ -1900,6 +1903,8 @@ public class ArticleTextExtractor {
             }
         } catch(SelectorParseException se){
             // Avoid error when selector is invalid
+        } catch(IllegalArgumentException ex){
+            // Ignore error: java.lang.IllegalArgumentException: String must not be empty
         }
 
         if(DEBUG_AUTHOR_DESC_EXTRACTION)
@@ -2662,6 +2667,9 @@ public class ArticleTextExtractor {
 	    }
         } catch(URISyntaxException ex){
 	    logger.info(ex.toString());
+            return null;
+        } catch(IllegalArgumentException ex){
+            // Handles case: java.lang.IllegalArgumentException: Not a valid domain name: '221.214.182.123'
             return null;
         } catch(java.lang.IllegalStateException ex){
             // Handles case: java.lang.IllegalStateException: Not under a public suffix: developer.team
