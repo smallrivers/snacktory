@@ -334,14 +334,14 @@ public class ArticleTextExtractor {
             throw new IllegalArgumentException("html string is empty!?");
 
         // http://jsoup.org/cookbook/extracting-data/selector-syntax
-        JResult result =  extractContent(res, Jsoup.parse(html), formatter, extractimages, maxContentSize);
+        JResult result =  extractContent(res, Jsoup.parse(html, res.getUrl()), formatter, extractimages, maxContentSize);
 
         // Do a sanity check, if the result content contains HTML tags most likely it is a bad 
         // extraction, this may happen due to malformed HTML; try again using HTML cleaned with a 
         // different library.
         if(hasHTMLTags(result.getText())){
             TagNode node = cleaner.clean(html);
-            return extractContent(res, Jsoup.parse(cleaner.getInnerHtml(node)), formatter, extractimages, maxContentSize);
+            return extractContent(res, Jsoup.parse(cleaner.getInnerHtml(node), res.getUrl()), formatter, extractimages, maxContentSize);
         }
         return result;
     }
