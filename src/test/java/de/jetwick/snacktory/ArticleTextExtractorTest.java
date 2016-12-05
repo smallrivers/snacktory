@@ -1119,6 +1119,15 @@ public class ArticleTextExtractorTest {
         assertEquals("http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html", res.getCanonicalUrl());
     }
 
+    public void testCanonical7() throws Exception {
+        // https://games.yahoo.com/blogs/unplugged/sad-fate-cereal-box-toys-200039785.html (GONE redirect to yahoo.com)
+        String url = "https://games.yahoo.com/blogs/unplugged/sad-fate-cereal-box-toys-200039785.html";
+        JResult res = new JResult();
+        res.setUrl(url);
+        res = extractor.extractCanonical(res, c.streamToString(getClass().getResourceAsStream("games.yahoo.com.html")), false);
+        assertEquals("https://games.yahoo.com/blogs/unplugged/sad-fate-cereal-box-toys-200039785.html", res.getCanonicalUrl());
+    }
+
     @Test
     public void testYahooMobile() throws Exception {
         // https://m.yahoo.com/w/legobpengine/finance/news/stevia-first-corp-stvf-looks-123500390.html?.intl=us&.lang=en-us

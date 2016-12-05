@@ -786,6 +786,14 @@ public class ArticleTextExtractor {
                         }
                     }
                 }
+
+                // never returns URLs pointing to a base domain
+                URI possibleCanonicalURI = new URI(url);
+                if ((possibleCanonicalURI.getPath().length() == 0 || possibleCanonicalURI.getPath().equals("/"))
+                    && (possibleCanonicalURI.getQuery() == null || possibleCanonicalURI.getQuery().length() == 0)){
+                    return baseURL;
+                }
+
             } catch(IllegalArgumentException ex){
                 logger.error("Bad URL: " + url + ":" + ex);
             } catch (URISyntaxException ex) {
