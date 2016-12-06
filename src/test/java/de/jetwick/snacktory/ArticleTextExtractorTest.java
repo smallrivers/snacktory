@@ -1797,7 +1797,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("New Samsung enterprise drive has incredible data density, unknown price The 15.36TB of data storage"));
         assertTrue(res.getText(), res.getText().endsWith("the new model on request."));
         compareDates("2016-03-03 13:51:00", res.getDate());
-        assertEquals(12, res.getLinks().size());
+        assertEquals(17, res.getLinks().size());
     }
 
     @Test
