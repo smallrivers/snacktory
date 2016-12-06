@@ -1119,6 +1119,7 @@ public class ArticleTextExtractorTest {
         assertEquals("http://www.cio.com/article/2941417/internet/internet-of-things-is-overhyped-should-be-called-internet-with-things.html", res.getCanonicalUrl());
     }
 
+    @Test
     public void testCanonical7() throws Exception {
         // https://games.yahoo.com/blogs/unplugged/sad-fate-cereal-box-toys-200039785.html (GONE redirect to yahoo.com)
         String url = "https://games.yahoo.com/blogs/unplugged/sad-fate-cereal-box-toys-200039785.html";
@@ -1126,6 +1127,27 @@ public class ArticleTextExtractorTest {
         res.setUrl(url);
         res = extractor.extractCanonical(res, c.streamToString(getClass().getResourceAsStream("games.yahoo.com.html")), false);
         assertEquals("https://games.yahoo.com/blogs/unplugged/sad-fate-cereal-box-toys-200039785.html", res.getCanonicalUrl());
+    }
+
+    @Test
+    public void testCanonical8() throws Exception {
+        // http://abcnews.go.com/Business/wireStory/home-depot-hire-80000-workers-busy-spring-36683130 (GONE redirect to http://abcnews.go.com/Business)
+        String url = "http://abcnews.go.com/Business/wireStory/home-depot-hire-80000-workers-busy-spring-36683130";
+        JResult res = new JResult();
+        res.setUrl(url);
+        res = extractor.extractCanonical(res, c.streamToString(getClass().getResourceAsStream("abcnews_business.html")), false);
+        assertEquals("http://abcnews.go.com/Business/wireStory/home-depot-hire-80000-workers-busy-spring-36683130", res.getCanonicalUrl());
+    }
+
+
+    @Test
+    public void testCanonical9() throws Exception {
+        // http://abcnews.go.com/Business/wireStory/fed-official-edward-mike-kelley-jr-dies-84-43992314 (NO REDIRECTED)
+        String url = "http://abcnews.go.com/Business/wireStory/fed-official-edward-mike-kelley-jr-dies-84-43992314";
+        JResult res = new JResult();
+        res.setUrl(url);
+        res = extractor.extractCanonical(res, c.streamToString(getClass().getResourceAsStream("abcnews_business2.html")), false);
+        assertEquals("http://abcnews.go.com/Business/wireStory/fed-official-edward-mike-kelley-jr-dies-84-43992314", res.getCanonicalUrl());
     }
 
     @Test

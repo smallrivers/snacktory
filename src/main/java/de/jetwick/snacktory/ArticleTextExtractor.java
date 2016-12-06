@@ -102,6 +102,10 @@ public class ArticleTextExtractor {
         Pattern.compile("Door:\\S*(.*)")
     );
 
+    private static final List<Pattern> BAD_CANONICAL_PATTERNS = Arrays.asList(
+        Pattern.compile("https{0,1}://abcnews.go.com/[^/]*/{0,1}$")
+    );
+
     // TODO: Replace this ugly list with a function that remove all the 
     // non numeric characters (except puntuaction, AM/PM and TZ)
     private static final List<Pattern> CLEAN_DATE_PATTERNS = Arrays.asList(
@@ -792,6 +796,14 @@ public class ArticleTextExtractor {
                 if ((possibleCanonicalURI.getPath().length() == 0 || possibleCanonicalURI.getPath().equals("/"))
                     && (possibleCanonicalURI.getQuery() == null || possibleCanonicalURI.getQuery().length() == 0)){
                     return baseURL;
+                }
+
+                // if the URl matches one of the bad known canonicals don't use it
+                for (Pattern pattern : BAD_CANONICAL_PATTERNS) {
+                    Matcher matcher = pattern.matcher(url);
+                    if(matcher.matches()){
+                        return baseURL;
+                    }
                 }
 
             } catch(IllegalArgumentException ex){
