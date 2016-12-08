@@ -103,7 +103,9 @@ public class ArticleTextExtractor {
     );
 
     private static final List<Pattern> BAD_CANONICAL_PATTERNS = Arrays.asList(
-        Pattern.compile("https{0,1}://abcnews.go.com/[^/]*/{0,1}$")
+        Pattern.compile("https{0,1}://abcnews.go.com/[^/]*/{0,1}$"),
+        Pattern.compile("https{0,1}://[^/]*/news/{0,1}$"),
+        Pattern.compile("https{0,1}://[^/]*/wires/{0,1}$")
     );
 
     // TODO: Replace this ugly list with a function that remove all the 
