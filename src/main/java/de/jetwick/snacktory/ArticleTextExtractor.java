@@ -252,7 +252,7 @@ public class ArticleTextExtractor {
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
                 + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext|story-primary|^newsContent$|dcontainer");
-        setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article");
+        setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article|^article_text$");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate|slider|^sectioncolumns$|ad-container");
@@ -1534,6 +1534,33 @@ public class ArticleTextExtractor {
             }
         }
 
+        // http://www.sacramentonews.net/index.php/sid/250029089
+        elems = doc.select(".article_box span");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-.article_box span"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
+
+        // http://www.shanghaisun.com/index.php/sid/250010251
+        elems = doc.select("article span em");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null){
+                if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-article span em"); }
+                Date d = parseDate(dateStr);
+                if(d!=null){
+                    return d;
+                }
+            }
+        }
 
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
@@ -1575,6 +1602,7 @@ public class ArticleTextExtractor {
             "dd/MM/yyyy HH:mm",
             "dd/MM/yyyy HH:mm:ss",
             "EEE MMM dd, yyyy hh:mma", //Thursday November 12, 2015 10:17AM
+            "EEE dd MMM, yyyy",        // Friday 9 December, 2016
             "EEE, dd MMM yyyy HH:mm:ss z",
             "EEE, dd MMM yyyy HH:mm:ss",
             "EEE, dd MMM yyyy",

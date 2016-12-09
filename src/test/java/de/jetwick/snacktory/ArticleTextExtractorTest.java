@@ -2508,6 +2508,30 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testSacramentonews() throws Exception {
+        // http://www.sacramentonews.net/index.php/sid/250029089
+        JResult res = new JResult();
+        res.setUrl("http://www.sacramentonews.net/index.php/sid/250029089");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("sacramentonews.html")));
+        assertEquals("Sacramento News - Ex-French budget minister sentenced to three years in jail for tax fraud", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Ex-French budget minister sentenced"));
+        assertTrue(res.getText(), res.getText().endsWith("Read the full story at Belfast Telegraph"));
+        compareDates("2016-12-09", res.getDate());
+    }
+
+    @Test
+    public void testShanghaisun() throws Exception {
+        // http://www.shanghaisun.com/index.php/sid/250010251
+        JResult res = new JResult();
+        res.setUrl("http://www.shanghaisun.com/index.php/sid/250010251");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("shanghaisun.html")));
+        assertEquals("One of your monthly housing bills may get bigger - Shanghai Sun", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("HELOCs were all the rage during the loose lending day"));
+        assertTrue(res.getText(), res.getText().endsWith("$173 billion this year."));
+        compareDates("2016-12-08", res.getDate());
+    }
+
+    @Test
     public void testDateWithTz() throws Exception {
         // http://women2.com/2014/06/18/woman-entrepreneur-misnomer/
         JResult res = new JResult();
