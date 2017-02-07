@@ -106,7 +106,8 @@ public class ArticleTextExtractor {
         Pattern.compile("https{0,1}://abcnews.go.com/[^/]*/{0,1}$"),
         Pattern.compile("https{0,1}://[^/]*/news/{0,1}$"),
         Pattern.compile("https{0,1}://[^/]*/wires/{0,1}$"),
-        Pattern.compile(".*/page-not-found.shtml$")
+        Pattern.compile(".*/page-not-found.shtml$"),
+        Pattern.compile("https{0,1}://www.cnbc.com/press-releases/$")
     );
 
     // TODO: Replace this ugly list with a function that remove all the 
