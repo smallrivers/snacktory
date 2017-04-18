@@ -2709,20 +2709,29 @@ public class ArticleTextExtractor {
 
     public static InternetDomainName getDomain(String url) {
         try {
-            String host = new URI(url).getHost();
-            if (host==null){
-                return null;
-            }
-            return InternetDomainName.from(host);
+            String host = new URI(url).getHost(); // Returns null if url is just an IP
+	    if (host != null) { 
+		return InternetDomainName.from(host);
+	    }
+	    else {
+		logger.info("bad url: " + url);
+		return null;
+	    }
         } catch(URISyntaxException ex){
+	    logger.info(ex.toString());
             return null;
         } catch(IllegalArgumentException ex){
             // Handles case: java.lang.IllegalArgumentException: Not a valid domain name: '221.214.182.123'
             return null;
         } catch(java.lang.IllegalStateException ex){
             // Handles case: java.lang.IllegalStateException: Not under a public suffix: developer.team
+	    logger.info(ex.toString());
             return null;
-        }
+        } catch(java.lang.IllegalArgumentException ex){ //happens when url is: http://<IP address>
+	    logger.info(ex.toString());
+	    return null;
+	}
+	
     }
 
     // Returns the portion of this domain name that is one level beneath the public suffix. 

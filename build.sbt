@@ -10,7 +10,7 @@ val HtmlCleaner = "net.sourceforge.htmlcleaner" % "htmlcleaner" % "2.16"
 lazy val commonSettings = Seq(
   name := "snacktory-fork",
   version := "1.2.1-SNAPSHOT",
-  scalaVersion := "2.11.8"
+  scalaVersion in ThisBuild := "2.11.8"
 )
 
 lazy val snacktory = (project in file(".")).
