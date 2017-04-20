@@ -69,7 +69,7 @@ public class ArticleTextExtractor {
         Pattern.compile("By\\S*(.*)[\\.,].*")
     );
     private static final int MAX_AUTHOR_DESC_LENGTH = 1000;
-    private static final int MAX_IMAGE_LENGTH = 290;
+    private static final int MAX_IMAGE_LENGTH = 512;
 
     // For debugging
     private static final boolean DEBUG_WEIGHTS = false;
