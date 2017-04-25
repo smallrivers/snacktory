@@ -80,7 +80,7 @@ public class ArticleTextExtractor {
     private static final Pattern NEGATIVE_STYLE =
             Pattern.compile("hidden|display: ?none|font-size: ?small");
     private static final Pattern IGNORE_AUTHOR_PARTS =
-        Pattern.compile("by|name|author|posted|twitter|handle|news", Pattern.CASE_INSENSITIVE);
+        Pattern.compile("(?<![a-zA-Z])(by|name|author|posted|twitter|handle|news)", Pattern.CASE_INSENSITIVE);
     private static final Set<String> IGNORED_TITLE_PARTS = new LinkedHashSet<String>() {
         {
             add("hacker news");
@@ -96,7 +96,7 @@ public class ArticleTextExtractor {
     private static final int MIN_AUTHOR_NAME_LENGTH = 4;
 
     private static final int MAX_LINK_SIZE = 512;
-    
+
     private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
         Pattern.compile("By\\S*(.*)[\\.,].*"),
         Pattern.compile("Door:\\S*(.*)")
@@ -1796,6 +1796,24 @@ public class ArticleTextExtractor {
                     // .X searches for class X
                     Elements matches = doc.select("a[rel=author],.byline-name,.byLineTag,.byline,.author,.by,.writer,.address");
 
+                    // hack for networkcomputing.com
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("body a[href^=/author/]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body a[href^=/author/]");
+                    }
+
+                    // hack for enterpriseinnovation.net
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("body [class=submitted]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body [class=submitted]");
+                    }
+
+                    // hack for ge.com
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("body [class=author-name]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body [class=author-name]");
+                    }
+
                     // hack for mycustomer.com/
                     if(matches == null || matches.size() == 0){
                         matches = doc.select("*[class*=field-name-field-computed-username]");
@@ -1889,7 +1907,7 @@ public class ArticleTextExtractor {
             }
             return SHelper.innerTrim(authorDesc);
         }
-        
+
         // Special case for huffingtonpost.com
         matches = doc.select(".byline span[class*=teaser]");
         if (matches!= null && matches.size() > 0){
@@ -1899,6 +1917,18 @@ public class ArticleTextExtractor {
                 System.out.println("AUTHOR_DESC: .byline span[class*=teaser]");
                 System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
             } 
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // Special case for ge.com
+        matches = doc.select("body [class=author-function]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: body [class=author-function]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
             return SHelper.innerTrim(authorDesc);
         }
 
@@ -2855,5 +2885,4 @@ public class ArticleTextExtractor {
         int weight;
         boolean hasHighlyPositive;
     }
-
 }

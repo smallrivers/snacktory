@@ -1,17 +1,18 @@
 package de.jetwick.snacktory;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.TimeZone;
-import java.util.List;
-import java.util.Map;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Alex P, (ifesdjeen from jreadability)
@@ -2542,6 +2543,58 @@ public class ArticleTextExtractorTest {
         compareDates("2014-06-18 12:00:54-0700", res.getDate());
     }
 
+    @Test
+    public void testAuthorNameIgnorePattern() throws Exception {
+        // http://www.marketingprofs.com/articles/2015/28657/unlock-mobile-advertising-by-measuring-the-real-world
+        JResult res = new JResult();
+        res.setUrl("http://www.marketingprofs.com/articles/2015/28657/unlock-mobile-advertising-by-measuring-the-real-world");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("author_name_ignore_pattern.html")));
+        assertEquals("John Busby is SVP of customer insights at Marchex", res.getAuthorName());
+        assertEquals("John Busby is SVP of customer insights at Marchex, a mobile advertising technology company. LinkedIn: John Busby Twitter: @JohnMBusby", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testNetworkComputing() throws Exception {
+        // http://www.networkcomputing.com/data-centers/why-dbas-need-networking-skills/1883902615
+        JResult res = new JResult();
+        res.setUrl("http://www.networkcomputing.com/data-centers/why-dbas-need-networking-skills/1883902615");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("networkcomputing.html")));
+        assertEquals("http://www.networkcomputing.com/data-centers/why-dbas-need-networking-skills/1883902615", res.getCanonicalUrl());
+        assertEquals("Why DBAs Need Networking Skills", res.getTitle());
+        assertTrue(res.getText().startsWith("The cloud threatens everyone."));
+        assertTrue(res.getText().endsWith("Remember, kids, the cloud isn’t a threat, it’s an opportunity."));
+        compareDates("2016-09-09 00:00:00", res.getDate());
+        assertEquals("Thomas LaRock", res.getAuthorName());
+        assertEquals("Thomas LaRock", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testGe() throws Exception {
+        // https://www.ge.com/digital/blog/devops-no-royal-use-we
+        JResult res = new JResult();
+        res.setUrl("https://www.ge.com/digital/blog/devops-no-royal-use-we");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("ge.com.html")));
+        assertEquals("https://www.ge.com/digital/blog/devops-no-royal-use-we", res.getCanonicalUrl());
+        assertEquals( "DevOps: No Royal in This Use of “We”", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("This is the first in a series of posts from the technical staff that GE Software had on the ground at Cloud Foundry Summit."));
+        compareDates("2015-07-13 00:00:00", res.getDate());
+        assertEquals("Denny Bulcao", res.getAuthorName());
+        assertEquals("Senior Technical Writer at GE", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testEnterpriseInnovation() throws Exception {
+        // http://www.enterpriseinnovation.net/article/big-data-survive-intensifying-squeeze-regulatory-compliance-1955902423
+        JResult res = new JResult();
+        res.setUrl("http://www.enterpriseinnovation.net/article/big-data-survive-intensifying-squeeze-regulatory-compliance-1955902423");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("enterpriseinnovation.net.html")));
+        assertEquals("http://www.enterpriseinnovation.net/article/big-data-survive-intensifying-squeeze-regulatory-compliance-1955902423?nopaging=1", res.getCanonicalUrl());
+        assertEquals( "Big Data to survive the intensifying squeeze of regulatory compliance", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Today’s financial industry is experiencing immense amounts of pressure on all sides."));
+        compareDates("2016-05-10 00:00:00", res.getDate());
+        assertEquals("Jason Demby", res.getAuthorName());
+        assertEquals("By Jason Demby, \u200Edirector of Business Development of Financial Services, Datameer | 2016-05-10", res.getAuthorDescription());
+    }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
