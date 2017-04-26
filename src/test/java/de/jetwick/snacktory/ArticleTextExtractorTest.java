@@ -2596,6 +2596,20 @@ public class ArticleTextExtractorTest {
         assertEquals("By Jason Demby, \u200Edirector of Business Development of Financial Services, Datameer | 2016-05-10", res.getAuthorDescription());
     }
 
+    @Test
+    public void testITBusiness() throws Exception {
+        // http://www.it-business.de/cloud-stellt-kleine-mit-grossen-haendlern-gleich-a-551169/
+        JResult res = new JResult();
+        res.setUrl("http://www.it-business.de/cloud-stellt-kleine-mit-grossen-haendlern-gleich-a-551169");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("it-business.de.html")));
+        assertEquals("http://www.it-business.de/cloud-stellt-kleine-mit-grossen-haendlern-gleich-a-551169", res.getCanonicalUrl());
+        assertEquals("Cloud stellt kleine mit großen Händlern gleich", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Bislang hatten Handelskonzerne durch ihre zahlreichen Filialen einen großen Vorsprung in der Kundenansprache."));
+        compareDates("2016-09-22 00:00:00", res.getDate());
+        assertEquals("Enrique Nuñez", res.getAuthorName());
+        assertTrue(res.getAuthorDescription(), res.getAuthorDescription().startsWith("Enrique Nuñez ist seit mehr als 20 Jahren im Internet tätig und hat in dieser Zeit drei Startup-Unternehmen gegründet."));
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

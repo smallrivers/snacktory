@@ -4,3 +4,4 @@ nbactions.xml
 *~
 deploy-*.sh
 .idea
+*.iml
