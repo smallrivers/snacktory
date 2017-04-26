@@ -1,0 +1,1097 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:article="http://ogp.me/ns/article#"
+      xmlns:book="http://ogp.me/ns/book#"
+      xmlns:profile="http://ogp.me/ns/profile#"
+      xmlns:video="http://ogp.me/ns/video#"
+      xmlns:product="http://ogp.me/ns/product#"
+      xmlns:content="http://purl.org/rss/1.0/modules/content/"
+      xmlns:dc="http://purl.org/dc/terms/"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/"
+      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+      xmlns:sioc="http://rdfs.org/sioc/ns#"
+      xmlns:sioct="http://rdfs.org/sioc/types#"
+      xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="x-dns-prefetch-control" content="on" />
+    <link rel="dns-prefetch" href="//cdn1.geready.com" />
+    <link rel="dns-prefetch" href="//cdn2.geready.com" />
+    <link rel="dns-prefetch" href="//cdn3.geready.com" />
+    <!--[if IE 9]>
+    <link rel="prefetch" href="//cdn1.geready.com" />
+    <link rel="prefetch" href="//cdn2.geready.com" />
+    <link rel="prefetch" href="//cdn3.geready.com" />
+    <![endif]-->
+    <link rel="shortcut icon" href="https://www.ge.com/digital/sites/default/files/favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta name="description" content="It’s typical at conference to hear companies “show off and tell” their stories, but the presentations at the Cloud Foundry Summit stressed the importance of teamwork, collaboration, adaptation, and the word “we.” Refreshingly, I heard leaders calling for progress through sharing knowledge rather than hording it. Here are some of the highlights from the presentation I attended." />
+    <meta name="robots" content="follow, index" />
+    <meta name="generator" content="Drupal 7 (http://drupal.org)" />
+    <meta property="og:site_name" content="GE Digital" />
+    <meta property="og:url" content="https://www.ge.com/digital/blog/devops-no-royal-use-we" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="DevOps: No Royal in This Use of “We”" />
+    <meta property="og:description" content="It’s typical at conference to hear companies “show off and tell” their stories, but the presentations at the Cloud Foundry Summit stressed the importance of teamwork, collaboration, adaptation, and the word “we.” Refreshingly, I heard leaders calling for progress through sharing knowledge rather than hording it. Here are some of the highlights from the presentation I attended." />
+    <meta property="og:updated_time" content="2016-06-16T11:47:55-04:00" />
+    <meta property="og:image" content="https://cdn2.geready.com/digital/sites/default/files/styles/header_large/public/GE-Digital-1280x600.jpg" />
+    <meta property="og:image" content="https://cdn3.geready.com/digital/sites/default/files/APM%20digital%20power%20plant.png" />
+    <meta property="og:image" content="https://cdn2.geready.com/digital/sites/default/files/styles/header_large/public/A_APM-header_1-image.jpg" />
+    <meta property="og:image" content="https://cdn2.geready.com/digital/sites/default/files/iot.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@GE_Digital" />
+    <meta name="twitter:creator" content="@GE_Digital" />
+    <meta name="twitter:site:id" content="292515375" />
+    <meta name="twitter:creator:id" content="292515375" />
+    <meta name="twitter:url" content="https://www.ge.com/digital/blog/devops-no-royal-use-we" />
+    <meta name="twitter:title" content="DevOps: No Royal in This Use of “We”" />
+    <meta name="twitter:description" content="It’s typical at conference to hear companies “show off and tell” their stories, but the presentations at the Cloud Foundry Summit stressed the importance of teamwork, collaboration, adaptation, and the word “we.” Refreshingly, I heard leaders calling for progress through sharing knowledge rather than hording it. Here are some of the highlights from the presentation I attended." />
+    <meta name="twitter:image" content="https://cdn2.geready.com/digital/sites/default/files/styles/header_large/public/GE-Digital-1280x600.jpg" />
+    <meta property="article:published_time" content="2015-07-13T00:00:00-04:00" />
+    <meta property="article:modified_time" content="2016-06-16T11:47:55-04:00" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <!-- YouTube -->
+    <meta name="google-site-verification" content="g44GjpiFbTCPnAZn7QWWYf14T25M1BrPtwKqVxJBOuM" />
+    <!-- Analytics -->
+    <meta name="google-site-verification" content="k7htDHSFxRHAZkydDVcop9INxRRfkhPr7oJphuFFGaA" />
+
+    <title>DevOps: No Royal in This Use of “We” | GE Digital</title>
+
+    <link type="text/css" rel="stylesheet" href="https://cdn1.geready.com/digital/sites/default/files/cdn/css/https/css_3UAtHbITj4JJ-OlSjjDnM36vZZFnu7HFZ4De4PwZyA8.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="https://cdn1.geready.com/digital/sites/default/files/cdn/css/https/css_lmMHDAb9K5uWdCxWGK_dJTttcW5KVsXetdH194Lsy2A.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="https://cdn1.geready.com/digital/sites/default/files/cdn/css/https/css_WiwULcRLH779StG0-6xkPRS_MlYDK2MOA5xngYlwePw.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="https://cdn1.geready.com/digital/sites/default/files/cdn/css/https/css_Ypnk77fEhpcPQfl_0Xbm5b87Ivgbt_fkOc8eGKm3Dfo.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="https://cdn1.geready.com/digital/sites/default/files/cdn/css/https/css_IMXflEyQeecHhEVJ7B6P9pQXFNJ4t8lEiy1tV8IWdKM.css" media="all" />
+    <script type="text/javascript" src="https://cdn1.geready.com/digital/sites/default/files/js/js_gPM6NXOQjN2XM2JWQGfy07nKmcdDFrL289YA7h80ySs.js"></script>
+    <script type="text/javascript" src="https://cdn1.geready.com/digital/sites/default/files/js/js_tnuezyDJZNldxYncBJMcwGVhrphjmINDVXJG5Cx8wus.js"></script>
+    <script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function ($) {
+      Drupal.behaviors.heroPane = {
+      attach: function (context, settings) {
+
+        $('#page-hero-panel-thumbs img', context).click(function () {
+          $('#edit-bean-id').val( $(this).data('bid') );
+        });
+      }
+    };
+    })(jQuery);
+//--><!]]>
+</script>
+    <script type="text/javascript" src="https://cdn1.geready.com/digital/sites/default/files/js/js_WKQpYGjvqV8_fIbYs9VB_9KjfxtrrE7yd0_XVY-yN_U.js"></script>
+    <script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/digital\/","pathPrefix":"","ajaxPageState":{"theme":"gedigital_2016","theme_token":"RaleZJu4gvCdVlU-1HzyeZEcETirs2e6IoyvHJkFTbQ","js":{"0":1,"sites\/all\/modules\/custom\/ge_digital_smartpixel\/js\/smartpixel.js":1,"sites\/all\/themes\/gedigital_2016\/scripts\/bundle.js":1,"sites\/all\/modules\/jquery_update\/replace\/jquery\/1.10\/jquery.min.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.core.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.widget.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.position.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.button.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.mouse.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.draggable.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.resizable.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.dialog.min.js":1,"1":1,"sites\/all\/modules\/custom\/ge_marketo\/js\/ge_marketo.js":1,"sites\/all\/modules\/custom\/ge_software_industry\/js\/datalayer.js":1,"sites\/all\/modules\/contrib\/share_selection\/js\/share-selection.js":1,"sites\/all\/modules\/contrib\/share_selection\/js\/ss-twitter.js":1,"sites\/all\/modules\/contrib\/share_selection\/js\/ss-linkedin.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"misc\/ui\/jquery.ui.core.css":1,"misc\/ui\/jquery.ui.theme.css":1,"misc\/ui\/jquery.ui.button.css":1,"misc\/ui\/jquery.ui.resizable.css":1,"misc\/ui\/jquery.ui.dialog.css":1,"sites\/all\/modules\/ldap\/ldap_user\/ldap_user.css":1,"modules\/comment\/comment.css":1,"sites\/all\/modules\/date\/date_api\/date.css":1,"sites\/all\/modules\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ckeditor\/css\/ckeditor.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/ldap\/ldap_servers\/ldap_servers.admin.css":1,"sites\/all\/modules\/panels\/css\/panels.css":1,"sites\/all\/modules\/contrib\/share_selection\/css\/share-selection.css":1,"sites\/all\/themes\/gedigital_2016\/style\/screen.css":1,"sites\/all\/themes\/gedigital_2016\/dev\/devstyle.css":1}},"ge_digital_smartpixel":{"adroll_adv_id":"MX46Y275UZAB7EHBCJIDJB","adroll_pix_id":"2OUNGEQG6RECVMT5MD72PX"},"shareSelection":{"linkedinApikey":"77406390irgucz"},"short_url":"http%3A%2F%2Finvent.ge%2F1ZKUsXZ"});
+//--><!]]>
+</script>
+    <!-- Organization & Social Schema Markup -->
+
+    <script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Organization",
+  "name" : "GE Digital",
+  "description": "GE Digital is bringing the Industrial Internet to life by connecting minds and machines. We combine decades of experience building innovative industrial machines with cutting-edge data science and analytics expertise.",
+  "url" : "https://www.ge.com/digital/",
+  "logo": "https://commons.wikimedia.org/wiki/File:General_Electric_logo.svg",
+  "sameAs" : [
+    "https://twitter.com/ge_digital",
+    "https://www.linkedin.com/company/ge-digital",
+    "https://www.youtube.com/user/industrialinternet",
+    "https://www.facebook.com/GE-Digital-888112767949156/"  ]
+}
+	</script>
+
+    <!-- Marketo mandatory script -->
+    <script src="//app-sjp.marketo.com/js/forms2/js/forms2.min.js"></script>
+
+    <!-- Marketo munchkin script -->
+    <script type="text/javascript">
+		document.write(unescape("%3Cscript src='//munchkin.marketo.net/munchkin.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+    <script>Munchkin.init('330-FCH-291');</script>
+
+
+
+
+</head>
+
+<body class="html not-front not-logged-in no-sidebars page-node page-node- page-node-251 node-type-blog-post ge-project5gl gesoftware anonymous" >
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PC263B" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script type="text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0];var j=d.createElement(s);var dl=l!='dataLayer'?'&l='+l:'';j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;j.type='text/javascript';j.async=true;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PC263B');</script>
+<!-- End Google Tag Manager -->
+
+<span class="state-indicator"></span>
+
+
+
+<header class="nav-social-bar">
+    <div class="navigation-frame">
+        <ul class="nav-info-list">
+            <li class="stock-info js-stock-info">
+                <span class="stock-ticker">NYSE</span>
+                <span class="icon-ge-arrow-down"></span>
+                <span class="stock-status"></span>
+            </li>
+
+            <li class="ge-reports"><a class="unstyled-link" href="http://www.gereports.com/">GE Reports</a></li>
+            <li class="icon-item">
+                <a href="https://twitter.com/GE_Digital" target="_blank" class="nav-icon" title="Visit on Twitter" data-embed-icon="twitter-circle"></a>
+            </li>
+            <li class="icon-item">
+                <a href="https://www.linkedin.com/company/2681277" target="_blank" class="nav-icon" title="Visit on Linkedin" data-embed-icon="linkedin-circle"></a>
+                <span>Visit on Linkedin</span>
+            </li>
+            <!--
+            Removed in ticket: #235. Should be added for the GE.com navigation again
+            -->
+            <li class="icon-item">
+                <a href="https://www.youtube.com/user/industrialinternet" target="_blank" class="nav-icon" title="Visit on Youtube" data-embed-icon="youtube-circle"></a>
+                <span>Visit on Youtube</span>
+            </li>
+            <li class="ge-blog"><a class="unstyled-link" href="/digital/industrial-internet">Blog</a></li>
+        </ul>
+    </div>
+</header>
+<header class="main-navigation">
+    <div class="navigation-frame">
+        <div class="navigation-logo">
+            <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital" href="/digital/" title="Home">GE Imagination at Work</a></div>
+        <ul class="nav-bar-list">
+            <li class="nav-bar-list-item">
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital" class="nav-bar-button" href="/digital/" title="Digital">Digital<span class="nav-item-circle"></span></a>
+
+                <div class="nav-dropdown-wrap">
+                    <div class="nav-dropdown">
+                        <div class="nav-dropdown-inner">
+                            <span class="nav-dropdown-indicator"></span>
+                            <ul class="nav-dropdown-list">
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Customer stories" class="list-item-button" href="/digital/stories" title="Customer stories">Customer stories</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Foundries" class="list-item-button" href="/digital/ge-digital-foundries" title="Foundries">Foundries</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Partners" class="list-item-button" href="/digital/partners" title="Partners">Partners</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Digital Careers" class="list-item-button" href="http://digital.gecareers.com/" title="Digital Careers">Digital Careers</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Events" class="list-item-button" href="/digital/events" title="Events">Events</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Minds + Machines" class="list-item-button" href="/digital/minds-machines" title="Minds + Machines">Minds + Machines</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Resource Center" class="list-item-button" href="/digital/resource-center" title="Resource Center">Resource Center</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Analyst Insights" class="list-item-button" href="/digital/industry-analyst-reports-insights" title="Analyst Insights">Analyst Insights</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Contact Us" class="list-item-button" href="/digital/contact" title="Contact Us">Contact Us</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Newsroom" class="list-item-button" href="http://www.genewsroom.com" title="Newsroom">Newsroom</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Investor" class="list-item-button" href="https://www.ge.com/investor-relations" title="Investor">Investor</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Support" class="list-item-button" href="/digital/support" title="Support">Support</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Who We Are" class="list-item-button" href="/digital/about-ge-digital" title="Who We Are">Who We Are</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-bar-list-item">
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Predix" class="nav-bar-button" href="/digital/predix" title="Predix">Predix<span class="nav-item-circle"></span></a>
+
+                <div class="nav-dropdown-wrap">
+                    <div class="nav-dropdown">
+                        <div class="nav-dropdown-inner">
+                            <span class="nav-dropdown-indicator"></span>
+                            <ul class="nav-dropdown-list">
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Predix-Our Platform" class="list-item-button" href="/digital/predix" title="Our Platform">Our Platform</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Predix-For Developers" class="list-item-button" href="https://www.predix.io/" title="For Developers">For Developers</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-bar-list-item">
+
+                <span  class="nav-bar-button" title="Products">Products<span class="nav-item-circle"></span></span>
+
+                <div class="nav-dropdown-wrap">
+                    <div class="nav-dropdown">
+                        <div class="nav-dropdown-inner">
+                            <span class="nav-dropdown-indicator"></span>
+                            <ul class="nav-dropdown-list">
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products-Predix" class="list-item-button" href="/digital/predix" title="Predix">Predix</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products-Asset Performance Management" class="list-item-button" href="/digital/asset-performance-management" title="Asset Performance Management">Asset Performance Management</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products-Brilliant Manufacturing" class="list-item-button" href="/digital/brilliant-manufacturing" title="Brilliant Manufacturing">Brilliant Manufacturing</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products-Cyber Security" class="list-item-button" href="/digital/cyber-security" title="Cyber Security">Cyber Security</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products-HMI and SCADA" class="list-item-button" href="/digital/hmi-scada" title="HMI and SCADA">HMI and SCADA</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products-Software A-Z Listing" class="list-item-button" href="/digital/products" title="Software A-Z Listing">Software A-Z Listing</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-bar-list-item">
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services" class="nav-bar-button" href="/digital/services" title="Services">Services<span class="nav-item-circle"></span></a>
+
+                <div class="nav-dropdown-wrap">
+                    <div class="nav-dropdown">
+                        <div class="nav-dropdown-inner">
+                            <span class="nav-dropdown-indicator"></span>
+                            <ul class="nav-dropdown-list">
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services-Services Overview" class="list-item-button" href="/digital/services" title="Services Overview">Services Overview</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services-Advisory Services" class="list-item-button" href="/digital/services/advisory-services" title="Advisory Services">Advisory Services</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services-Education Services" class="list-item-button" href="/digital/services/education-services" title="Education Services">Education Services</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services-Implementation Services" class="list-item-button" href="/digital/services/implementation-services-iiot" title="Implementation Services">Implementation Services</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services-Managed Services" class="list-item-button" href="/digital/services/managed-services" title="Managed Services">Managed Services</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services-Rapid Start Services" class="list-item-button" href="/digital/services/rapid-start-services" title="Rapid Start Services">Rapid Start Services</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-bar-list-item">
+
+                <span  class="nav-bar-button" title="Industries">Industries<span class="nav-item-circle"></span></span>
+
+                <div class="nav-dropdown-wrap">
+                    <div class="nav-dropdown">
+                        <div class="nav-dropdown-inner">
+                            <span class="nav-dropdown-indicator"></span>
+                            <ul class="nav-dropdown-list">
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Industries Overview" class="list-item-button" href="/digital/industries" title="Industries Overview">Industries Overview</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Automotive" class="list-item-button" href="/digital/industries/automotive" title="Automotive">Automotive</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Aviation" class="list-item-button" href="/digital/industries/aviation" title="Aviation">Aviation</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Chemical" class="list-item-button" href="/digital/industries/chemical" title="Chemical">Chemical</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Food &amp; Beverage" class="list-item-button" href="/digital/industries/food-beverage" title="Food &amp; Beverage">Food &amp; Beverage</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Healthcare" class="list-item-button" href="/digital/industries/healthcare" title="Healthcare">Healthcare</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Industrial Manufacturing" class="list-item-button" href="/digital/industries/industrial-manufacturing" title="Industrial Manufacturing">Industrial Manufacturing</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Intelligent Environments" class="list-item-button" href="/digital/industries/intelligent-environments" title="Intelligent Environments">Intelligent Environments</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Oil &amp; Gas" class="list-item-button" href="/digital/industries/oil-gas" title="Oil &amp; Gas">Oil &amp; Gas</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Power &amp; Utilities" class="list-item-button" href="/digital/industries/power-utility" title="Power &amp; Utilities">Power &amp; Utilities</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Renewable Energy" class="list-item-button" href="/digital/industries/renewable-energy" title="Renewable Energy">Renewable Energy</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Transportation" class="list-item-button" href="/digital/industries/transportation" title="Transportation">Transportation</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-bar-list-item">
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-IIOT Insights" class="nav-bar-button" href="/digital/industrial-internet" title="IIOT Insights">IIOT Insights<span class="nav-item-circle"></span></a>
+
+                <div class="nav-dropdown-wrap">
+                    <div class="nav-dropdown">
+                        <div class="nav-dropdown-inner">
+                            <span class="nav-dropdown-indicator"></span>
+                            <ul class="nav-dropdown-list">
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-IIOT Insights-Industrial Internet Insights" class="list-item-button" href="/digital/industrial-internet" title="Industrial Internet Insights">Industrial Internet Insights</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-IIOT Insights-Digital Transformation" class="list-item-button" href="/digital/iiot/what-digital-industrial-transformation" title="Digital Transformation">Digital Transformation</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-bar-list-item">
+
+                <span  class="nav-bar-button" title="GE Businesses">GE Businesses<span class="nav-item-circle"></span></span>
+
+                <div class="nav-dropdown-wrap">
+                    <div class="nav-dropdown">
+                        <div class="nav-dropdown-inner">
+                            <span class="nav-dropdown-indicator"></span>
+                            <ul class="nav-dropdown-list">
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-Current powered by GE" class="list-item-button" href="http://www.currentbyge.com/" title="Current powered by GE">Current powered by GE</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Aviation" class="list-item-button" href="http://www.geaviation.com/" title="GE Aviation">GE Aviation</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Capital" class="list-item-button" href="http://www.gecapital.com/en/" title="GE Capital">GE Capital</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Digital" class="list-item-button" href="https://www.ge.com/digital/" title="GE Digital">GE Digital</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Energy Connections" class="list-item-button" href="http://www.geenergyconnections.com/" title="GE Energy Connections">GE Energy Connections</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Healthcare" class="list-item-button" href="http://gehealthcare.com/" title="GE Healthcare">GE Healthcare</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Lighting" class="list-item-button" href="http://www.gelighting.com/LightingWeb/na/" title="GE Lighting">GE Lighting</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Oil &amp; Gas" class="list-item-button" href="https://www.geoilandgas.com/" title="GE Oil &amp; Gas">GE Oil &amp; Gas</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Power" class="list-item-button" href="https://www.gepower.com/" title="GE Power">GE Power</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Renewable Energy" class="list-item-button" href="https://renewables.gepower.com/" title="GE Renewable Energy">GE Renewable Energy</a>
+                                </li>
+                                <li class="nav-dropdown-list-item">
+                                    <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Transportation" class="list-item-button" href="http://www.getransportation.com/" title="GE Transportation">GE Transportation</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="icon-item nav-bar-list-item">
+                <a href="/directory" class="nav-bar-button nav-icon no-style" title="Global" data-embed-icon="global"><span class="ir">Global</span></a>
+            </li>
+            <li class="icon-item nav-bar-list-item">
+                <button aria-label="Search" class="nav-bar-button icon-ge-search nav-icon no-style" title="Search" data-embed-icon="search"></button>
+            </li>
+            <li class="button-menu icon-item nav-bar-list-item">
+                <button aria-label="menu" class="nav-bar-button nav-icon icon-ge-nav-hamburger no-style" title="menu" data-embed-icon="nav-hamburger">
+                    <span>Main menu</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <form class="nav-search-dropdown" action="https://www.ge.com/search" method="get" autocomplete="off">
+        <div class="navigation-frame">
+            <label class="nav-icon icon-ge-search" for="search_block_form" data-embed-icon="search">Search</label>
+            <input type="text" name="search_block_form" id="search_block_form" value="" placeholder="Search..." />
+            <button type="submit" class="hidden-submit"></button>
+            <button class="nav-icon icon-ge-close no-style"></button>
+        </div>
+    </form>
+</header>
+
+<nav class="nav-sidebar">
+
+    <div class="nav-sidebar-head">
+        <span class="text">Explore</span>
+        <button class="nav-icon icon-ge-close no-style" title="close" aria-label="close"></button>
+    </div>
+
+    <div class="nav-sidebar-scroll">
+        <ul class="nav-sidebar-list">
+            <li class="nav-sidebar-list-item has-list">
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital" class="list-item-button" title="Digital" href="#">
+                    Digital              <span class="nav-icon icon-ge-arrow"></span>
+                </a>
+
+                <ul class="nav-sidebar-list">
+                    <li class="nav-sidebar-list-item"><button class="back-item list-item-button no-style" title="Back" aria-label="back" href="#">Back</button></li>
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Customer stories" class="list-item-button" title="Customer stories" href="/digital/stories">Customer stories</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Foundries" class="list-item-button" title="Foundries" href="/digital/ge-digital-foundries">Foundries</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Partners" class="list-item-button" title="Partners" href="/digital/partners">Partners</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Digital Careers" class="list-item-button" title="Digital Careers" href="http://digital.gecareers.com/">Digital Careers</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Events" class="list-item-button" title="Events" href="/digital/events">Events</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Minds + Machines" class="list-item-button" title="Minds + Machines" href="/digital/minds-machines">Minds + Machines</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Resource Center" class="list-item-button" title="Resource Center" href="/digital/resource-center">Resource Center</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Analyst Insights" class="list-item-button" title="Analyst Insights" href="/digital/industry-analyst-reports-insights">Analyst Insights</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Contact Us" class="list-item-button" title="Contact Us" href="/digital/contact">Contact Us</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Newsroom" class="list-item-button" title="Newsroom" href="http://www.genewsroom.com">Newsroom</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Investor" class="list-item-button" title="Investor" href="https://www.ge.com/investor-relations">Investor</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Support" class="list-item-button" title="Support" href="/digital/support">Support</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Digital-Who We Are" class="list-item-button" title="Who We Are" href="/digital/about-ge-digital">Who We Are</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="nav-sidebar-list-item has-list">
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Predix" class="list-item-button" title="Predix" href="#">
+                    Predix              <span class="nav-icon icon-ge-arrow"></span>
+                </a>
+
+                <ul class="nav-sidebar-list">
+                    <li class="nav-sidebar-list-item"><button class="back-item list-item-button no-style" title="Back" aria-label="back" href="#">Back</button></li>
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Predix-Our Platform" class="list-item-button" title="Our Platform" href="/digital/predix">Our Platform</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Predix-For Developers" class="list-item-button" title="For Developers" href="https://www.predix.io/">For Developers</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="nav-sidebar-list-item has-list">
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products" class="list-item-button" title="Products" href="#">
+                    Products              <span class="nav-icon icon-ge-arrow"></span>
+                </a>
+
+                <ul class="nav-sidebar-list">
+                    <li class="nav-sidebar-list-item"><button class="back-item list-item-button no-style" title="Back" aria-label="back" href="#">Back</button></li>
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products-Predix" class="list-item-button" title="Predix" href="/digital/predix">Predix</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products-Asset Performance Management" class="list-item-button" title="Asset Performance Management" href="/digital/asset-performance-management">Asset Performance Management</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products-Brilliant Manufacturing" class="list-item-button" title="Brilliant Manufacturing" href="/digital/brilliant-manufacturing">Brilliant Manufacturing</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products-Cyber Security" class="list-item-button" title="Cyber Security" href="/digital/cyber-security">Cyber Security</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products-HMI and SCADA" class="list-item-button" title="HMI and SCADA" href="/digital/hmi-scada">HMI and SCADA</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Products-Software A-Z Listing" class="list-item-button" title="Software A-Z Listing" href="/digital/products">Software A-Z Listing</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="nav-sidebar-list-item has-list">
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services" class="list-item-button" title="Services" href="#">
+                    Services              <span class="nav-icon icon-ge-arrow"></span>
+                </a>
+
+                <ul class="nav-sidebar-list">
+                    <li class="nav-sidebar-list-item"><button class="back-item list-item-button no-style" title="Back" aria-label="back" href="#">Back</button></li>
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services-Services Overview" class="list-item-button" title="Services Overview" href="/digital/services">Services Overview</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services-Advisory Services" class="list-item-button" title="Advisory Services" href="/digital/services/advisory-services">Advisory Services</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services-Education Services" class="list-item-button" title="Education Services" href="/digital/services/education-services">Education Services</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services-Implementation Services" class="list-item-button" title="Implementation Services" href="/digital/services/implementation-services-iiot">Implementation Services</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services-Managed Services" class="list-item-button" title="Managed Services" href="/digital/services/managed-services">Managed Services</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Services-Rapid Start Services" class="list-item-button" title="Rapid Start Services" href="/digital/services/rapid-start-services">Rapid Start Services</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="nav-sidebar-list-item has-list">
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries" class="list-item-button" title="Industries" href="#">
+                    Industries              <span class="nav-icon icon-ge-arrow"></span>
+                </a>
+
+                <ul class="nav-sidebar-list">
+                    <li class="nav-sidebar-list-item"><button class="back-item list-item-button no-style" title="Back" aria-label="back" href="#">Back</button></li>
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Industries Overview" class="list-item-button" title="Industries Overview" href="/digital/industries">Industries Overview</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Automotive" class="list-item-button" title="Automotive" href="/digital/industries/automotive">Automotive</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Aviation" class="list-item-button" title="Aviation" href="/digital/industries/aviation">Aviation</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Chemical" class="list-item-button" title="Chemical" href="/digital/industries/chemical">Chemical</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Food &amp; Beverage" class="list-item-button" title="Food &amp; Beverage" href="/digital/industries/food-beverage">Food &amp; Beverage</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Healthcare" class="list-item-button" title="Healthcare" href="/digital/industries/healthcare">Healthcare</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Industrial Manufacturing" class="list-item-button" title="Industrial Manufacturing" href="/digital/industries/industrial-manufacturing">Industrial Manufacturing</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Intelligent Environments" class="list-item-button" title="Intelligent Environments" href="/digital/industries/intelligent-environments">Intelligent Environments</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Oil &amp; Gas" class="list-item-button" title="Oil &amp; Gas" href="/digital/industries/oil-gas">Oil &amp; Gas</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Power &amp; Utilities" class="list-item-button" title="Power &amp; Utilities" href="/digital/industries/power-utility">Power &amp; Utilities</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Renewable Energy" class="list-item-button" title="Renewable Energy" href="/digital/industries/renewable-energy">Renewable Energy</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Industries-Transportation" class="list-item-button" title="Transportation" href="/digital/industries/transportation">Transportation</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="nav-sidebar-list-item has-list">
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-IIOT Insights" class="list-item-button" title="IIOT Insights" href="#">
+                    IIOT Insights              <span class="nav-icon icon-ge-arrow"></span>
+                </a>
+
+                <ul class="nav-sidebar-list">
+                    <li class="nav-sidebar-list-item"><button class="back-item list-item-button no-style" title="Back" aria-label="back" href="#">Back</button></li>
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-IIOT Insights-Industrial Internet Insights" class="list-item-button" title="Industrial Internet Insights" href="/digital/industrial-internet">Industrial Internet Insights</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-IIOT Insights-Digital Transformation" class="list-item-button" title="Digital Transformation" href="/digital/iiot/what-digital-industrial-transformation">Digital Transformation</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="nav-sidebar-list-item has-list">
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses" class="list-item-button" title="GE Businesses" href="#">
+                    GE Businesses              <span class="nav-icon icon-ge-arrow"></span>
+                </a>
+
+                <ul class="nav-sidebar-list">
+                    <li class="nav-sidebar-list-item"><button class="back-item list-item-button no-style" title="Back" aria-label="back" href="#">Back</button></li>
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-Current powered by GE" class="list-item-button" title="Current powered by GE" href="http://www.currentbyge.com/">Current powered by GE</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Aviation" class="list-item-button" title="GE Aviation" href="http://www.geaviation.com/">GE Aviation</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Capital" class="list-item-button" title="GE Capital" href="http://www.gecapital.com/en/">GE Capital</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Digital" class="list-item-button" title="GE Digital" href="https://www.ge.com/digital/">GE Digital</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Energy Connections" class="list-item-button" title="GE Energy Connections" href="http://www.geenergyconnections.com/">GE Energy Connections</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Healthcare" class="list-item-button" title="GE Healthcare" href="http://gehealthcare.com/">GE Healthcare</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Lighting" class="list-item-button" title="GE Lighting" href="http://www.gelighting.com/LightingWeb/na/">GE Lighting</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Oil &amp; Gas" class="list-item-button" title="GE Oil &amp; Gas" href="https://www.geoilandgas.com/">GE Oil &amp; Gas</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Power" class="list-item-button" title="GE Power" href="https://www.gepower.com/">GE Power</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Renewable Energy" class="list-item-button" title="GE Renewable Energy" href="https://renewables.gepower.com/">GE Renewable Energy</a>
+                    </li>
+
+
+                    <li class="nav-sidebar-list-item">
+                        <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-GE Businesses-GE Transportation" class="list-item-button" title="GE Transportation" href="http://www.getransportation.com/">GE Transportation</a>
+                    </li>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+<div class="component breadcrumb">
+    <div class="site-wrapper">
+        <ul class="breadcrumb breadcrumb-list" itemscope itemtype="http://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a href="/digital/" class="button button-cta outline-light" data-trackevent="" itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                    <span title="GE Digital" itemprop="name">GE Digital</span>
+                </a>
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a href="/digital/blog/devops-no-royal-use-we" class="button button-cta outline-light" data-trackevent="" itemscope itemtype="http://schema.org/Thing" itemprop="item">
+                    <span title="DevOps: No Royal in This Use of “We”" itemprop="name">DevOps: No Royal in This Use of “We”</span>
+                </a>
+            </li>
+        </ul>
+
+        <a href="/digital/products" class="button button-cta secondary" data-trackevent=""><span title="Find a product">Find a product</span></a>
+    </div>
+</div>
+<main class="site-wrapper">
+
+    <div class="grid-lines-single"></div>
+    <!--<div class="grid-lines">
+        <span class="line"></span><span class="line"></span><span class="line"></span><span class="line"></span>
+        <span class="line"></span><span class="line"></span><span class="line"></span><span class="line"></span>
+        <span class="line"></span><span class="line"></span><span class="line"></span>
+    </div>-->
+    <div class="site-wrapper-content">
+
+        <div class="tabs">
+        </div>
+
+
+        <div id="block-system-main" class="block block-system">
+
+
+            <div class="content">
+
+                <article id="node-251" class="node node-blog-post clearfix" about="/digital/blog/devops-no-royal-use-we" typeof="sioc:Item foaf:Document" role="article">
+
+                    <!-- header-video -->
+
+
+                    <!-- header-image -->
+                    <header class="component component-element page-header page-header-accent page-large-header page-header-searchbar">
+                        <span class="background" data-background-large="https://cdn2.geready.com/digital/sites/default/files/styles/header_large/public/16-DevOps-no-royal_0.jpg?itok=qMfSKlfQ" data-background-small="https://cdn2.geready.com/digital/sites/default/files/styles/header_small/public/16-DevOps-no-royal_0.jpg?itok=8nr5wPuW" style="background-image: url(&quot;https://cdn2.geready.com/digital/sites/default/files/styles/header_large/public/16-DevOps-no-royal_0.jpg?itok=qMfSKlfQ&quot;);"></span>
+
+                        <div class="page-header-content medium-content">
+
+                            <!--<h5 class="heading h-line-left grid-l-inside-indent-9-13"></h5>-->
+                            <hgroup class="page-header-copy grid-l-inside-indent-9-13">
+                                <h1 class="heading h1">DevOps: No Royal in This Use of “We”</h1>
+
+                                <h4 class="heading h5 subtitle by-author-link">By <a href="/digital/blog/blogger/denny-bulcao-jr" data-trackevent="Blog post * Author * 1">Denny Bulcao, Jr.</a></h4>
+                                <!--  <h5 class="heading h5 subtitle date"></h5>-->
+                            </hgroup>
+                            <div class="grid-l-inside-indent-9-13 grid-s-inside-indent-9-1 content-label-group content-light">
+                            </div>
+
+                            <div class="component share is-right js-component-share">
+                                <div class="share-widget" data-share-url="https://www.ge.com/digital/blog/devops-no-royal-use-we" data-share-short-url="http%3A%2F%2Finvent.ge%2F1ZKUsXZ" data-share-title="DevOps: No Royal in This Use of “We”" data-share-description="">
+                                    <span class="share share-background js-share-background"></span>
+                                    <div class="share share-label icon-ge-share js-share-label"></div>
+                                    <ul class="share share-options js-share-options is-hidden">
+                                        <li><a href="#" class="ir share-button-linkedin icon-ge-linkedin" data-share="linkedin" data-trackevent="DevOps: No Royal in This Use of “We” * click * Social share - LinkedIn">Linkedin</a></li>
+                                        <li><a href="#" class="ir share-button-facebook icon-ge-facebook" data-share="facebook" data-trackevent="DevOps: No Royal in This Use of “We” * click * Social share - Facebook">Facebook</a></li>
+                                        <li><a href="#" class="ir share-button-twitter icon-ge-twitter" data-share="twitter" data-trackevent="DevOps: No Royal in This Use of “We” * click * Social share - Twitter">Twitter</a></li>
+                                        <li><a href="#" class="ir share-button-url icon-ge-copy js-show-url-button" data-trackevent="DevOps: No Royal in This Use of “We” * click * Social share - Copy URL">Copy url</a></li>
+                                    </ul>
+                                    <div class="share share-url-form js-share-url is-hidden">
+                                        <label for="copy-share-url" class="ir share-url-label icon-ge-copy">URL</label>
+                                        <input type="text" value="https://www.ge.com/digital/blog/devops-no-royal-use-we" id="copy-share-url" />
+                                        <div class="button-copy-share-url">Copy</div>
+                                    </div>
+                                </div>        </div>
+
+                        </div>
+                    </header>
+
+
+                    <div class="article">
+                        <div class="article-content article-content-wide">
+                            <p><em>This is the first in a series of posts from the technical staff that GE Software had on the ground at <a class="elf-external elf-icon" href="https://www.youtube.com/watch?v=mymSjUlFjzU" rel="nofollow">Cloud Foundry Summit</a>. Read on to find out what Denny learned from three different presentations.</em></p>
+                            <p>It’s typical at conference to hear companies “show off and tell” their stories, but the presentations at the Cloud Foundry Summit stressed the importance of teamwork, collaboration, adaptation, and the word “we.” Refreshingly, I heard leaders calling for progress through sharing knowledge rather than hording it. Here are some of the highlights from the presentation I attended.</p>
+                            <p>“Not All Clouds Are Created Equal”</p>
+                            <p>Brian Gallagher, president of the Cloud Management Division at EMC Corporation, described the disconnect between the perception that all clouds are created equal and the experiences of many of his customers, especially early adopters. He painted a vision of a multi-cloud future with Cloud Foundry at the center enabling cloud native applications.</p>
+                            <p>“I’m 140% confident that in five years time we’ll look back at this community and say these folks here have changed the world.” </p>
+                            <p> </p>
+                            <p>“Managing Cultural Transformation”</p>
+                            <p>A company familiar with changing the world was next on the docket, ushered in (appropriately) by “Danger Zone” from Top Gun. Kevin Carlson, Christine Chesnick, and Cecil Miller spoke on behalf of Lockheed Martin, with Carlson delivering a succinct synopsis of Lockheed’s challenges and triumphs with cloud technology. Carlson emphasized the responsibility they have to protect some very secret and sensitive data. They have had to develop an ecosystem of people, processes, and technology that deliver that security in a flawless manner. It has also required a large shift in culture. They had to embrace automation and change, think outside the box, and figure out what DevOps means for Lockheed Martin. In a company that enjoys the engineering process, they also had to work against their inclination to over-engineer by actively reducing complexity and driving innovation in a cost-effective manner to deliver business value and stay competitive.</p>
+                            <p>“We have to think smarter, faster and try not to over-engineer.”</p>
+                            <p> </p>
+                            <p>“Cloud Foundry for the Internet of (Really Important) Things”</p>
+                            <p>A little self-deprecating humor never hurts when a crowd starts getting glassy-eyed from speeches and slides. And that’s just what Harel Kodesh, vice president and chief technology officer of GE Software, delivered as he dove into his <a class="elf-external elf-icon" href="https://www.youtube.com/watch?v=cvIjvbjB7qo&amp;list=PLAdzTan_eSPQddps0wSNIMaYNYjMLV73X&amp;index=3" rel="nofollow">keynote</a>.</p>
+                            <p>“Some of you are wondering what a GE executive is doing at a conference like this,” Kodesh said with a smile. “It’s almost like a crop duster going to an organic grower conference, but let me explain over the next 15 minutes and maybe I’ll be able to convince you that what we’re working on is the same thing you’re working on.”</p>
+                            <p>More than polite laughter filled the room as Kodesh worked his way through a series of interesting slides and statistics, specifically:</p>
+                            <ul><li>The Internet of things includes 19% of the S&amp;P 500 Market Cap today.</li>
+                                <li>GE is firmly connected to the Internet of Things, combining brilliant machines, advanced sensors, and tons of data that businesses need to run more efficiently and be more profitable. This is tomorrow’s growth opportunity.</li>
+                                <li>The lifespan of industrial products is fundamentally different from consumer Internet products. For example, the average wearables life is six months, but an airplane turbine needs to work daily for 25 years or more, a responsibility GE takes seriously.</li>
+                                <li>The stakes for reliability are also much higher. A dropped call is usually not the end of the world, though it is the biggest cell phone complaint, but industrial connectivity is mission critical to operations. A huge oil spill is damaging to the environment and costs millions, possibly billions to clean up. Huge difference.</li>
+                                <li>The amount of data generated by industry is another ball game. Real time feeds on Twitter generate 80GB of data a day; GE jet engines generate 500GB of data in one flight.</li>
+                                <li>GE analyzes wind turbine usage with Predix to create more efficient blades.</li>
+                                <li>Deep economical decisions are made from the big data GE collects every day.</li>
+                                <li>The data ingested comes in every microsecond so there’s a lot of data to ingest. GE has to put it somewhere, analyze it and that’s what Cloud Foundry enables GE to do as we solve problems through Predix.</li>
+                            </ul><p>“The Industrial Internet is too big for GE, even as a 305,000 employee company, to take on itself,” Kodesh said. “We would like to see the whole community come to work with us and really push the envelope on what we’re calling the Industrial Internet.”</p>
+                            <p>“At the end of the day, this is just the beginning. I’m looking forward to being here again next year, working with you folks, and anybody else that wants to join us, on really pushing forward this Industrial Internet. I think it’s going to be great.”</p>
+                            <p> </p>
+                            <p><a href="https://www.ge.com/digital/blog/ge-cloud-foundry-summit">&gt; Read about Harel Kodesh's thoughts on the Summit</a></p>
+                            <blockquote>“I’m 140% confident that in five years time we’ll look back at this community and say these folks here have changed the world.”
+
+
+
+                            </blockquote><blockquote>“We have to think smarter, faster and try not to over-engineer.”</blockquote><blockquote>“At the end of the day, this is just the beginning. I’m looking forward to being here again next year, working with you folks, and anybody else that wants to join us, on really pushing forward this Industrial Internet. I think it’s going to be great.”</blockquote>		<!-- slider start -->
+                        </div>
+                    </div>
+
+
+                    <!-- About the author -->
+                    <div class="field-item odd">
+                        <header class="component component-element section-header">
+                            <h2 class="heading h2 h-line-left-primary-small grid-l-inside-indent-9-13">
+                                <span class="content-grid-mask">About the author</span>
+                            </h2>
+                        </header>
+
+                        <div class="author-about">
+                            <div class="author-img">
+                                <!-- dimension: 368 x 380 -->
+                                <div class="background-image" data-background-large="https://cdn2.geready.com/digital/sites/default/files/styles/author_368x380/public/10fa897-2.jpg?itok=3nbxCJo1" data-background-small="https://cdn2.geready.com/digital/sites/default/files/styles/author_368x380/public/10fa897-2.jpg?itok=3nbxCJo1" style="background-image: url(&quot;https://cdn2.geready.com/digital/sites/default/files/styles/author_368x380/public/10fa897-2.jpg?itok=3nbxCJo1&quot;);"></div>
+                            </div>
+                            <div class="author-info">
+                                <div class="author-info-wrapper">
+                                    <div class="author-details">
+                                        <div class="author-name">
+                                            <h2>Denny Bulcao, Jr.</h2>
+                                        </div>
+                                        <div class="author-function">Senior Technical Writer at GE</div>
+                                    </div>
+                                    <div class="author-description">
+                                        <p></p>
+                                    </div>
+                                    <div class="author-links">
+                                        <a href="/digital/blog/blogger/denny-bulcao-jr" class="button button-cta" data-trackevent=""><span title="Denny Bulcao, Jr. insights">Denny Bulcao, Jr. insights</span></a>
+                                        <!--<a href="#" class="button button-cta outline-primary"><span title="Subscribe to Paul Rogers Insights">Subscribe to Paul Rogers Insights</span></a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <span property="dc:title" content="DevOps: No Royal in This Use of “We”" class="rdf-meta element-hidden"></span><span property="sioc:num_replies" content="0" datatype="xsd:integer" class="rdf-meta element-hidden"></span>
+                    <div class="content clearfix">
+                    </div>
+
+
+
+                </article>
+            </div>
+        </div>
+        <div id="ss-dialog-wrapper"></div><div class="share-selection-wrapper share-selection-style-image"><div class="share-selection-button" id="share-selection-twitter"><img typeof="foaf:Image" src="https://cdn3.geready.com/digital/sites/all/modules/contrib/share_selection/images/twitter.png" alt="" /></div>
+        <div class="share-selection-button" id="share-selection-linkedin"><img typeof="foaf:Image" src="https://cdn3.geready.com/digital/sites/all/modules/contrib/share_selection/images/linkedin.png" alt="" /></div>
+    </div>	</div>
+</main>
+<nav class="ge-site-footer-nav">
+    <ul class="site-wrapper">
+        <li><a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Partners" href="/digital/partners" title="Partners">Partners</a></li>
+        <li><a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Foundries" href="/digital/ge-digital-foundries" title="Foundries">Foundries</a></li>
+        <li><a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Events" href="/digital/events" title="Events">Events</a></li>
+        <li><a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Customer stories" href="/digital/stories" title="Customer stories">Customer stories</a></li>
+        <li><a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Support" href="/digital/support" title="Support">Support</a></li>
+        <li><a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Newsroom" href="http://www.genewsroom.com/" title="Newsroom">Newsroom</a></li>
+    </ul>
+</nav>
+<!-- ge footer-->
+<footer class="ge-site-footer">
+    <div class="site-wrapper">
+        <ul class="footer footer-grid-item footer-nav-list">
+            <li>
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Information-Contact Information" href="https://www.ge.com/digital/contact" title="Contact Information">Contact Information</a>
+            <li>
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Information-Investor Contacts" href="http://www.ge.com/contact/investors" title="Investor Contacts">Investor Contacts</a>
+            <li>
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Information-Site Map" href="http://www.ge.com/sitemap" title="Site Map">Site Map</a>
+            <li>
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Information-Directory" href="http://www.ge.com/directory" title="Directory">Directory</a>
+            <li>
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Information-Accessibility" href="http://www.ge.com/accessibility" title="Accessibility">Accessibility</a>
+            <li>
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Information-California Transparency in Supply Chain" href="http://www.gesustainability.com/building-things-that-matter/supply-chain/california-transparency-in-supply-chains-act" title="California Transparency in Supply Chain">California Transparency in Supply Chain</a>
+            <li>
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Information-Integrity at GE" href="http://www.gesustainability.com/how-ge-works/integrity-compliance/#letter" title="Integrity at GE">Integrity at GE</a>
+        </ul>
+        <ul class="footer footer-grid-item footer-nav-list">
+            <li>
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Privacy-Privacy" href="http://www.ge.com/privacy" title="Privacy">Privacy</a>
+            <li>
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Privacy-Terms" href="http://www.ge.com/terms" title="Terms">Terms</a>
+            <li>
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Privacy-Cookies" href="http://info.evidon.com/pub_info/3428" title="Cookies">Cookies</a>
+            <li>
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Privacy-Pay Transparency" href="http://www.ge.com/pay-transparency" title="Pay Transparency">Pay Transparency</a>
+            <li>
+
+                <a data-trackevent="DevOps: No Royal in This Use of “We” - menu * click * Navigation_Click-Privacy-Candidate Privacy Notice" href="http://www.ge.com/careers/privacy" title="Candidate Privacy Notice">Candidate Privacy Notice</a>
+            <li>
+
+                &nbsp;
+            <li>
+
+                ©2017 General Electric                            </ul>
+
+        <div class="footer footer-grid-item footer-share-logo">
+
+            <ul class="nav-info-list footer footer-social-list">
+                <li class="icon-item">
+                    <a href="https://twitter.com/GE_Digital" target="_blank" class="nav-icon icon" data-embed-icon="twitter-circle" title="Visit on Twitter"></a>
+                    <span>Visit on Twitter</span>
+                </li>
+                <li class="icon-item">
+                    <a href="https://www.linkedin.com/company/2681277" target="_blank" class="nav-icon icon" data-embed-icon="linkedin-circle" title="Visit on Linkedin"></a>
+                    <span>Visit on Linkedin</span>
+                </li>
+                <li class="icon-item">
+                    <a href="http://instagram.com/generalelectric" target="_blank" class="nav-icon icon" data-embed-icon="instagram-circle" title="Visit on Instagram"></a>
+                    <span>Visit on Instagram</span>
+                </li>
+                <li class="icon-item">
+                    <a href="http://www.facebook.com/ge" target="_blank" class="nav-icon icon" data-embed-icon="facebook-circle" title="Visit on Facebook"></a>
+                    <span>Visit on Facebook</span>
+                </li>
+                <li class="icon-item">
+                    <a href="https://plus.google.com/+GE/posts" target="_blank" class="nav-icon icon" data-embed-icon="google-circle" title="Visit on Google+"></a>
+                    <span>Visit on Google+</span>
+                </li>
+                <li class="icon-item">
+                    <a href="https://www.youtube.com/user/industrialinternet" target="_blank" class="nav-icon icon" data-embed-icon="youtube-circle" title="Visit on Youtube"></a>
+                    <span>Visit on Youtube</span>
+                </li>
+                <li class="icon-item">
+                    <a href="http://pinterest.com/generalelectric/" target="_blank" class="nav-icon icon" data-embed-icon="pinterest-circle" title="Visit on Pinterest"></a>
+                    <span>Visit on Pinterest</span>
+                </li>
+            </ul>
+            <img src="/digital/sites/all/themes/gedigital_2016/image/footer-ge-ioc-worldwide.png" alt="GE IOC Worldwide Partner" />
+
+        </div>
+    </div>
+</footer><section class="modal modal-video js-video-modal"><!-- 'is-visible' -->
+
+    <div class="modal-video-content js-video-content">
+
+        <header class="grid-wrapper js-video-modal-header">
+            <div class="modal-video modal-video-title grid-item grid-l-6">
+                <p class="copy c2 js-video-title"></p>
+            </div>
+            <div class="grid-item grid-l-3 grid-l-indent-1">
+                <div class="component share is-right js-component-share">
+                    <div class="share-widget" data-share-url="https://www.ge.com/digital/blog/devops-no-royal-use-we" data-share-short-url="http%3A%2F%2Finvent.ge%2F1ZKUsXZ" data-share-title="" data-share-description="">
+                        <span class="share share-background js-share-background"></span>
+                        <div class="share share-label icon-ge-share js-share-label"></div>
+                        <ul class="share share-options js-share-options is-hidden">
+                            <li><a href="#" class="ir share-button-linkedin icon-ge-linkedin" data-share="linkedin" data-trackevent=" * click * Social share - LinkedIn">Linkedin</a></li>
+                            <li><a href="#" class="ir share-button-facebook icon-ge-facebook" data-share="facebook" data-trackevent=" * click * Social share - Facebook">Facebook</a></li>
+                            <li><a href="#" class="ir share-button-twitter icon-ge-twitter" data-share="twitter" data-trackevent=" * click * Social share - Twitter">Twitter</a></li>
+                            <li><a href="#" class="ir share-button-url icon-ge-copy js-show-url-button" data-trackevent=" * click * Social share - Copy URL">Copy url</a></li>
+                        </ul>
+                        <div class="share share-url-form js-share-url is-hidden">
+                            <label for="copy-share-url--2" class="ir share-url-label icon-ge-copy">URL</label>
+                            <input type="text" value="https://www.ge.com/digital/blog/devops-no-royal-use-we" id="copy-share-url--2" />
+                            <div class="button-copy-share-url">Copy</div>
+                        </div>
+                    </div>        </div>
+            </div>
+        </header>
+        <div class="modal-video modal-video-wrapper">
+            <div id="modal-video-player"></div>
+        </div>
+
+        <button class="button button-close icon-ge-cross js-close-modal"></button>
+
+    </div>
+
+</section>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.post(Drupal.settings.basePath + 'jstats.php', {"path":"node\/251","nid":"251"});
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://cdn1.geready.com/digital/sites/default/files/js/js_n0Ek9nY9zN5E2Be4yubup-aAWCrdy9B3iguV6Bq1aKY.js"></script>
+<script type="text/javascript" src="https://cdn1.geready.com/digital/sites/default/files/js/js_DUKEtH76Y6rcZF5Eo-vaPkuIN__de7uCC-fwNzFOCPI.js"></script>
+
+<!-- 	<script type="text/javascript" src="https://www.ge.com/digital/sites/all/themes/gedigital_2016/dist/scripts/bundle.js?c=2042"></script> -->
+
+<script>
+	(function(d,b,a,s,e){ var t = b.createElement(a),
+		fs = b.getElementsByTagName(a)[0]; t.async=1; t.id=e;
+		t.src=('https:'==document.location.protocol ? 'https://' : 'http://') + s;
+		fs.parentNode.insertBefore(t, fs); })
+	(window,document,'script','scripts.demandbase.com/TFZISHcL.min.js','demandbase_js_lib');
+</script>
+
+</body>
+</html>

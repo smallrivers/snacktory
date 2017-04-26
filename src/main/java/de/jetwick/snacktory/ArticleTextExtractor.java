@@ -1,22 +1,11 @@
 package de.jetwick.snacktory;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Iterator;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.util.Date;
-import java.util.TreeMap;
+import com.google.common.net.InternetDomainName;
+import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.htmlcleaner.CleanerProperties;
+import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.TagNode;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,12 +13,12 @@ import org.jsoup.select.Elements;
 import org.jsoup.select.Selector.SelectorParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.commons.lang.time.*;
-import org.apache.commons.lang3.*;
-import com.google.common.net.InternetDomainName;
-import org.htmlcleaner.HtmlCleaner;
-import org.htmlcleaner.CleanerProperties;
-import org.htmlcleaner.TagNode;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class is thread safe.
@@ -80,7 +69,7 @@ public class ArticleTextExtractor {
     private static final Pattern NEGATIVE_STYLE =
             Pattern.compile("hidden|display: ?none|font-size: ?small");
     private static final Pattern IGNORE_AUTHOR_PARTS =
-        Pattern.compile("by|name|author|posted|twitter|handle|news", Pattern.CASE_INSENSITIVE);
+        Pattern.compile("(?<![a-zA-Z])(by|name|author|posted|twitter|handle|news)(?![a-zA-Z])", Pattern.CASE_INSENSITIVE);
     private static final Set<String> IGNORED_TITLE_PARTS = new LinkedHashSet<String>() {
         {
             add("hacker news");
@@ -96,10 +85,11 @@ public class ArticleTextExtractor {
     private static final int MIN_AUTHOR_NAME_LENGTH = 4;
 
     private static final int MAX_LINK_SIZE = 512;
-    
+
     private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
         Pattern.compile("By\\S*(.*)[\\.,].*"),
-        Pattern.compile("Door:\\S*(.*)")
+        Pattern.compile("Door:\\S*(.*)"),
+        Pattern.compile("Über\\S*(.*)[\\.,:].*")
     );
 
     private static final List<Pattern> BAD_CANONICAL_PATTERNS = Arrays.asList(
@@ -903,16 +893,16 @@ public class ArticleTextExtractor {
                     }
                 } catch(StringIndexOutOfBoundsException ex) {
                     // do nothing
-                } 
+                }
                 if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-published_time"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
                 }
             }
-        } 
+        }
 
-        // rnews 
+        // rnews
         elems = doc.select("meta[property=dateCreated], span[property=dateCreated]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
@@ -932,7 +922,7 @@ public class ArticleTextExtractor {
             }
         }
 
-        // http://www.pcadvisor.co.uk/ 
+        // http://www.pcadvisor.co.uk/
         elems = doc.select("time[class=dateCreated]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
@@ -965,7 +955,7 @@ public class ArticleTextExtractor {
                 }
             }
         }
-        
+
         /*
         // schema.org creativework
         //
@@ -1007,7 +997,7 @@ public class ArticleTextExtractor {
 
                         return DateUtils.parseDateStrictly((json \ "pub_date").extract[String], Array("yyyy-MM-dd'T'HH:mm:ssZ", "yyyy-MM-dd'T'HH:mm:ss'Z'", "yyyy-MM-dd'T'HH:mm:ssZZ", "yyyy-MM-dd'T'HH:mm:ssz"))
                         }
-            } 
+            }
         */
 
         // BBC
@@ -1038,7 +1028,7 @@ public class ArticleTextExtractor {
             }
         }
 
-        // wildcard 
+        // wildcard
         elems = doc.select("meta[name*=date]");
         if (elems.size() > 0) {
             Element el = elems.get(0);
@@ -1478,7 +1468,7 @@ public class ArticleTextExtractor {
             }
         }
 
-        
+
 
         // netskope.com
         elems = doc.select(".meta .date");
@@ -1559,6 +1549,22 @@ public class ArticleTextExtractor {
                 if(DEBUG_DATE_EXTRACTION){ System.out.println("RULE-article span em"); }
                 Date d = parseDate(dateStr);
                 if(d!=null){
+                    return d;
+                }
+            }
+        }
+
+        // http://www.it-business.de/cloud-stellt-kleine-mit-grossen-haendlern-gleich-a-551169/
+        elems = doc.select("time[pubdate]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.text();
+            if (dateStr != null) {
+                if (DEBUG_DATE_EXTRACTION) {
+                    System.out.println("RULE-time[pubdate]");
+                }
+                Date d = parseDate(dateStr);
+                if (d != null) {
                     return d;
                 }
             }
@@ -1652,7 +1658,7 @@ public class ArticleTextExtractor {
             "yyyy-MM-dd hh:mm:ss a z",
             "yyyy-MM-dd hh:mm:ss a",
             "yyyy-MM-dd HH:mm:ss",
-            "yyyy-MM-dd", 
+            "yyyy-MM-dd",
             "yyyy-MM-dd'T'HH:mm",
             "yyyy-MM-dd'T'HH:mm:ss",
             "yyyy-MM-dd'T'HH:mm:ss",
@@ -1683,6 +1689,7 @@ public class ArticleTextExtractor {
             "MMM dd',' yyyy hh:mm a", //June 16, 2010 8:47 a.m.
             "hh:mm a '-' d MMM yy", //11:45 AM - 7 Aug 15
             "MMM dd',' yyyy hh:mma", // July 12, 2016  6:31am
+            "dd.MM.yy", // 22.09.16
         };
 
         try {
@@ -1763,11 +1770,20 @@ public class ArticleTextExtractor {
         // if that doesn't work, try some other methods
         if (authorName.isEmpty()) {
 
-            // meta tag approaches, get content
-            result = doc.select("head meta[name=author]").first();
+            result = doc.select("[class=kasten_titel]").first();
             if (result != null) {
-                authorName = SHelper.innerTrim(result.attr("content"));
-                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: head meta[name=author]");
+                authorName = SHelper.innerTrim(result.ownText());
+                if (DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty())
+                    System.out.println("AUTHOR: [class=kasten_titel]");
+            }
+
+            // meta tag approaches, get content
+            if (authorName.isEmpty()) {
+                result = doc.select("head meta[name=author]").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.attr("content"));
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: head meta[name=author]");
+                }
             }
 
             if (authorName.isEmpty()) {  // for "opengraph"
@@ -1795,6 +1811,30 @@ public class ArticleTextExtractor {
                     // build up a set of elements which have likely author-related terms
                     // .X searches for class X
                     Elements matches = doc.select("a[rel=author],.byline-name,.byLineTag,.byline,.author,.by,.writer,.address");
+
+                    // hack for networkcomputing.com
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("body a[href^=/author/]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body a[href^=/author/]");
+                    }
+
+                    // hack for enterpriseinnovation.net
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("body [class=submitted]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body [class=submitted]");
+                    }
+
+                    // hack for ge.com
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("body [class=author-name]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body [class=author-name]");
+                    }
+
+                    // hack for bulldogreporter.com
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("body [class=post-single-content box mark-links entry-content] em");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body [class=post-single-content box mark-links entry-content] em");
+                    }
 
                     // hack for mycustomer.com/
                     if(matches == null || matches.size() == 0){
@@ -1844,7 +1884,7 @@ public class ArticleTextExtractor {
                             if(authorName.length() < MIN_AUTHOR_NAME_LENGTH){
                                 authorName = bestMatch.text();
                             }
-                            
+
                             authorName = SHelper.innerTrim(IGNORE_AUTHOR_PARTS.matcher(authorName).replaceAll(""));
                             if(authorName.indexOf(",") != -1){
                                 authorName = authorName.split(",")[0];
@@ -1889,7 +1929,7 @@ public class ArticleTextExtractor {
             }
             return SHelper.innerTrim(authorDesc);
         }
-        
+
         // Special case for huffingtonpost.com
         matches = doc.select(".byline span[class*=teaser]");
         if (matches!= null && matches.size() > 0){
@@ -1899,6 +1939,18 @@ public class ArticleTextExtractor {
                 System.out.println("AUTHOR_DESC: .byline span[class*=teaser]");
                 System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
             } 
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // Special case for ge.com
+        matches = doc.select("body [class=author-function]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: body [class=author-function]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
             return SHelper.innerTrim(authorDesc);
         }
 
@@ -2864,5 +2916,4 @@ public class ArticleTextExtractor {
         int weight;
         boolean hasHighlyPositive;
     }
-
 }

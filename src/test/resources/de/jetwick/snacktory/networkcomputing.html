@@ -1,0 +1,1190 @@
+
+<!DOCTYPE html>
+<!-- Sorry no IE7 support! -->
+<!-- @see http://foundation.zurb.com/docs/index.html#basicHTMLMarkup -->
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="ImageToolbar" content="false" />
+    <link rel="shortcut icon" href="http://www.networkcomputing.com/sites/all/themes/networkcomputing/favicon.ico" />
+    <meta name="viewport" content="width=device-width, maximum-scale = 1.0" />
+    <meta name="description" content="With the rise of cloud, database administrators need to understand basic networking in order to be truly effective." />
+    <meta name="generator" content="Drupal 7 (http://drupal.org)" />
+    <link rel="canonical" href="http://www.networkcomputing.com/data-centers/why-dbas-need-networking-skills/1883902615" />
+    <meta property="og:site_name" content="Network Computing" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://www.networkcomputing.com/data-centers/why-dbas-need-networking-skills/1883902615" />
+    <meta property="og:title" content="Why DBAs Need Networking Skills" />
+    <meta property="og:description" content="With the rise of cloud, database administrators need to understand basic networking in order to be truly effective." />
+    <meta property="og:updated_time" content="2016-09-09T08:00:01-04:00" />
+    <meta property="article:published_time" content="2016-09-09T07:30:00-04:00" />
+    <meta property="article:modified_time" content="2016-09-09T08:00:01-04:00" />
+    <title>Why DBAs Need Networking Skills</title>
+    <style>
+@import url("http://www.networkcomputing.com/modules/system/system.base.css?oom221");
+@import url("http://www.networkcomputing.com/modules/system/system.messages.css?oom221");
+@import url("http://www.networkcomputing.com/modules/system/system.theme.css?oom221");
+</style>
+    <style>
+@import url("http://www.networkcomputing.com/sites/all/modules/jquery_update/replace/ui/themes/base/minified/jquery.ui.core.min.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/modules/jquery_update/replace/ui/themes/base/minified/jquery.ui.theme.min.css?oom221");
+</style>
+    <style>
+@import url("http://www.networkcomputing.com/modules/comment/comment.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/modules/date/date_api/date.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/modules/date/date_popup/themes/datepicker.1.7.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/modules/ubm/editors_picks/editors_picks.css?oom221");
+@import url("http://www.networkcomputing.com/modules/field/theme/field.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/modules/field_hidden/field_hidden.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/modules/mollom/mollom.css?oom221");
+@import url("http://www.networkcomputing.com/modules/node/node.css?oom221");
+@import url("http://www.networkcomputing.com/modules/poll/poll.css?oom221");
+@import url("http://www.networkcomputing.com/modules/search/search.css?oom221");
+@import url("http://www.networkcomputing.com/modules/user/user.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/modules/views/css/views.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/modules/ckeditor/css/ckeditor.css?oom221");
+</style>
+    <style>
+@import url("http://www.networkcomputing.com/sites/all/modules/ctools/css/ctools.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/modules/ctools/css/modal.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/modules/modal_forms/css/modal_forms_popup.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/modules/vote_up_down/widgets/updown/updown.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/modules/quicktabs/css/quicktabs.css?oom221");
+</style>
+    <link rel="stylesheet" href="//i.ubm-us.net/oas/nativead/css/nwc_nativead.css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto+Slab:700" />
+    <style>
+@import url("http://www.networkcomputing.com/sites/all/themes/networkcomputing/css/app.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/themes/ubm_tech/css/superfooter.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/themes/ubm_tech/css/foundation-icons.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/themes/networkcomputing/css/networkcomputing.css?oom221");
+@import url("http://www.networkcomputing.com/sites/all/themes/networkcomputing/css/flexslider.css?oom221");
+</style>
+    <script src="http://www.networkcomputing.com/sites/all/modules/jquery_update/replace/jquery/1.8/jquery.min.js?v=1.8.3"></script>
+    <script src="http://www.networkcomputing.com/misc/jquery.once.js?v=1.2"></script>
+    <script>var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+googletag.slots = googletag.slots || {};</script>
+    <script src="https://www.googletagservices.com/tag/js/gpt.js"></script>
+    <script src="http://www.networkcomputing.com/misc/drupal.js?oom221"></script>
+    <script src="//i.ubm-us.net/oas/nativead/js/nativead.js"></script>
+    <script src="//i.ubm-us.net/oas/nativead/js/nwc_nativead.js"></script>
+    <script src="http://www.networkcomputing.com/sites/all/modules/jquery_update/replace/ui/ui/minified/jquery.ui.core.min.js?v=1.10.2"></script>
+    <script src="http://www.networkcomputing.com/sites/all/modules/jquery_update/replace/ui/external/jquery.cookie.js?v=67fb34f6a866c40d0570"></script>
+    <script src="http://www.networkcomputing.com/sites/all/modules/jquery_update/replace/misc/jquery.form.min.js?v=2.69"></script>
+    <script>var mapping = googletag.sizeMapping()
+  .addSize([0, 0], [7, 7])
+  .addSize([767, 0], [2, 2])
+  .build();
+googletag.slots["welcome"] = googletag.defineSlot("/2441/NWC/data-centers", [2, 2], "dfp-ad-welcome")
+  .addService(googletag.pubads())
+  .setTargeting("pos", "welcome")
+  .defineSizeMapping(mapping);googletag.slots["TAPunit"] = googletag.defineSlot("/2441/NWC/data-centers", [[300, 250], [300, 600], [300, 850]], "dfp-ad-TAPunit")
+  .addService(googletag.pubads())
+  .setTargeting("pos", "TAPunit");googletag.slots["rec1"] = googletag.defineSlot("/2441/NWC/data-centers", [[300, 250], [300, 600], [300, 850]], "dfp-ad-rec1")
+  .addService(googletag.pubads())
+  .setTargeting("pos", "rec1");var mapping = googletag.sizeMapping()
+  .addSize([1027, 0], [1, 2])
+  .addSize([0, 0], [1000, 1])
+  .build();
+googletag.slots["wallpaper"] = googletag.defineSlot("/2441/NWC/data-centers", [1, 2], "dfp-ad-wallpaper")
+  .addService(googletag.pubads())
+  .setTargeting("pos", "wallpaper")
+  .defineSizeMapping(mapping);var mapping = googletag.sizeMapping()
+  .addSize([970, 0], [[728, 90], [970, 90], [970, 250]])
+  .addSize([767, 0], [728, 90])
+  .addSize([0, 0], [300, 50])
+  .build();
+googletag.slots["top"] = googletag.defineSlot("/2441/NWC/data-centers", [728, 90], "dfp-ad-top")
+  .addService(googletag.pubads())
+  .setTargeting("pos", "top")
+  .defineSizeMapping(mapping);googletag.slots["logo"] = googletag.defineSlot("/2441/NWC/data-centers", [336, 27], "dfp-ad-logo")
+  .addService(googletag.pubads())
+  .setTargeting("pos", "logo");googletag.slots["rec2"] = googletag.defineSlot("/2441/NWC/data-centers", [[300, 250], [300, 600], [300, 850]], "dfp-ad-rec2")
+  .addService(googletag.pubads())
+  .setTargeting("pos", "rec2");googletag.slots["ribbon"] = googletag.defineSlot("/2441/NWC/data-centers", [3, 3], "dfp-ad-ribbon")
+  .addService(googletag.pubads())
+  .setTargeting("pos", "ribbon");googletag.slots["eventpromo"] = googletag.defineSlot("/2441/NWC/data-centers", [300, 60], "dfp-ad-eventpromo")
+  .addService(googletag.pubads())
+  .setTargeting("pos", "eventpromo");googletag.slots["video"] = googletag.defineSlot("/2441/NWC/data-centers", [4, 4], "dfp-ad-video")
+  .addService(googletag.pubads())
+  .setTargeting("pos", "video");googletag.slots["native"] = googletag.defineSlot("/2441/NWC/data-centers", [8, 2], "dfp-ad-native")
+  .addService(googletag.pubads())
+  .setTargeting("pos", "native");</script>
+    <script src="http://www.networkcomputing.com/misc/ajax.js?v=7.55-dev"></script>
+    <script src="http://www.networkcomputing.com/sites/all/modules/jquery_update/js/jquery_update.js?v=0.0.1"></script>
+    <script src="http://www.networkcomputing.com/sites/all/modules/apachesolr_sort/apachesolr_sort.js?oom221"></script>
+    <script src="http://www.networkcomputing.com/sites/all/modules/ubm/nextgen/nextgen_userauth/js/ng_sso.js?oom221"></script>
+    <script>googletag.cmd.push(function() {
+  googletag.pubads().enableAsyncRendering();
+  googletag.pubads().enableSingleRequest();
+  googletag.pubads().collapseEmptyDivs();
+  googletag.pubads().setTargeting("aid", "1324323");
+  googletag.pubads().setTargeting("kw", ["Data centers","Cloud Infrastructure"]);
+});
+
+googletag.enableServices();</script>
+    <script src="http://www.networkcomputing.com/misc/progress.js?oom221"></script>
+    <script src="https://sadmin.brightcove.com/js/BrightcoveExperiences.js"></script>
+    <script src="http://www.networkcomputing.com/sites/all/modules/ctools/js/modal.js?oom221"></script>
+    <script src="http://www.networkcomputing.com/sites/all/modules/modal_forms/js/modal_forms_popup.js?oom221"></script>
+    <script>(function(){(new nextgen_userauth({ng_endpoint:'https://ng.techweb.com'})).checkGateway();})();</script>
+    <script src="https://twimgs.com/informationweek/elqNow/elqCfg.js"></script>
+    <script src="https://twimgs.com/informationweek/elqNow/elqImg.js"></script>
+    <script src="https://ins.techweb.com/beacon/js/beacon-min.js"></script>
+    <script>var beacon = new UBM.Beacon({environment: 'p', apiKey: '4d1d2938f3436a3d0d2a450a2fad1ea87171ae10fa4687f758d02c29e5a12b50'});</script>
+    <script src="http://www.networkcomputing.com/sites/all/modules/ctools/js/ajax-responder.js?oom221"></script>
+    <script src="http://www.networkcomputing.com/sites/all/modules/quicktabs/js/quicktabs.js?oom221"></script>
+    <script src="http://www.networkcomputing.com/sites/all/themes/networkcomputing/js/vendor/custom.modernizr.js?oom221"></script>
+    <script src="http://www.networkcomputing.com/sites/all/themes/networkcomputing/js/foundation.min.js?oom221"></script>
+    <script src="http://www.networkcomputing.com/sites/all/themes/networkcomputing/js/networkcomputing.js?oom221"></script>
+    <script src="http://www.networkcomputing.com/sites/all/themes/networkcomputing/js/jquery.flexslider.js?oom221"></script>
+    <script>jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"networkcomputing","theme_token":"5opSQfHM-xkTfsqT1Jl4f_XPkBMTmKchY2MbjeDO3fU","jquery_version":"1.8","js":{"0":1,"1":1,"sites\/all\/modules\/jquery_update\/replace\/jquery\/1.8\/jquery.min.js":1,"misc\/jquery.once.js":1,"2":1,"http:\/\/www.googletagservices.com\/tag\/js\/gpt.js":1,"misc\/drupal.js":1,"\/\/i.ubm-us.net\/oas\/nativead\/js\/nativead.js":1,"\/\/i.ubm-us.net\/oas\/nativead\/js\/nwc_nativead.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.core.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/external\/jquery.cookie.js":1,"sites\/all\/modules\/jquery_update\/replace\/misc\/jquery.form.min.js":1,"3":1,"misc\/ajax.js":1,"sites\/all\/modules\/jquery_update\/js\/jquery_update.js":1,"sites\/all\/modules\/apachesolr_sort\/apachesolr_sort.js":1,"sites\/all\/modules\/ubm\/nextgen\/nextgen_userauth\/js\/ng_sso.js":1,"4":1,"misc\/progress.js":1,"http:\/\/admin.brightcove.com\/js\/BrightcoveExperiences.js":1,"sites\/all\/modules\/ctools\/js\/modal.js":1,"sites\/all\/modules\/modal_forms\/js\/modal_forms_popup.js":1,"5":1,"https:\/\/twimgs.com\/informationweek\/elqNow\/elqCfg.js":1,"https:\/\/twimgs.com\/informationweek\/elqNow\/elqImg.js":1,"https:\/\/ins.techweb.com\/beacon\/js\/beacon-min.js":1,"6":1,"sites\/all\/modules\/ctools\/js\/ajax-responder.js":1,"sites\/all\/modules\/quicktabs\/js\/quicktabs.js":1,"sites\/all\/themes\/networkcomputing\/js\/vendor\/custom.modernizr.js":1,"sites\/all\/themes\/networkcomputing\/js\/foundation.min.js":1,"sites\/all\/themes\/networkcomputing\/js\/networkcomputing.js":1,"sites\/all\/themes\/networkcomputing\/js\/jquery.flexslider.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"misc\/ui\/jquery.ui.core.css":1,"misc\/ui\/jquery.ui.theme.css":1,"sites\/all\/modules\/ubm\/nextgen\/nextgen_siteauth\/nextgen_siteauth.css":1,"modules\/comment\/comment.css":1,"sites\/all\/modules\/date\/date_api\/date.css":1,"sites\/all\/modules\/date\/date_popup\/themes\/datepicker.1.7.css":1,"sites\/all\/modules\/ubm\/editors_picks\/editors_picks.css":1,"modules\/field\/theme\/field.css":1,"sites\/all\/modules\/field_hidden\/field_hidden.css":1,"sites\/all\/modules\/mollom\/mollom.css":1,"modules\/node\/node.css":1,"modules\/poll\/poll.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ckeditor\/css\/ckeditor.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/ctools\/css\/modal.css":1,"sites\/all\/modules\/modal_forms\/css\/modal_forms_popup.css":1,"sites\/all\/modules\/vote_up_down\/widgets\/updown\/updown.css":1,"sites\/all\/modules\/quicktabs\/css\/quicktabs.css":1,"\/\/i.ubm-us.net\/oas\/nativead\/css\/nwc_nativead.css":1,"\/\/fonts.googleapis.com\/css?family=Roboto+Slab:700":1,"sites\/all\/themes\/zurb_foundation\/css\/normalize.css":1,"sites\/all\/themes\/networkcomputing\/css\/foundation.min.css":1,"sites\/all\/themes\/networkcomputing\/css\/app.css":1,"sites\/all\/themes\/ubm_tech\/css\/superfooter.css":1,"sites\/all\/themes\/ubm_tech\/css\/foundation-icons.css":1,"sites\/all\/themes\/networkcomputing\/css\/networkcomputing.css":1,"sites\/all\/themes\/networkcomputing\/css\/flexslider.css":1}},"CToolsModal":{"loadingText":"Loading...","closeText":"Close Window","closeImage":"\u003Cimg typeof=\u0022foaf:Image\u0022 src=\u0022http:\/\/www.networkcomputing.com\/sites\/all\/modules\/ctools\/images\/icon-close-window.png\u0022 alt=\u0022Close window\u0022 title=\u0022Close window\u0022 \/\u003E","throbber":"\u003Cimg typeof=\u0022foaf:Image\u0022 src=\u0022http:\/\/www.networkcomputing.com\/sites\/all\/modules\/ctools\/images\/throbber.gif\u0022 alt=\u0022Loading\u0022 title=\u0022Loading...\u0022 \/\u003E"},"modal-popup-small":{"modalSize":{"type":"fixed","width":550,"height":450},"modalOptions":{"opacity":0.85,"background":"#000"},"animation":"fadeIn","modalTheme":"ModalFormsPopup","throbber":"\u003Cimg typeof=\u0022foaf:Image\u0022 src=\u0022http:\/\/www.networkcomputing.com\/sites\/all\/modules\/modal_forms\/images\/loading_animation.gif\u0022 alt=\u0022Loading...\u0022 title=\u0022Loading\u0022 \/\u003E","closeText":"Close"},"modal-popup-medium":{"modalSize":{"type":"fixed","width":550,"height":590},"modalOptions":{"opacity":0.85,"background":"#000"},"animation":"fadeIn","modalTheme":"ModalFormsPopup","throbber":"\u003Cimg typeof=\u0022foaf:Image\u0022 src=\u0022http:\/\/www.networkcomputing.com\/sites\/all\/modules\/modal_forms\/images\/loading_animation.gif\u0022 alt=\u0022Loading...\u0022 title=\u0022Loading\u0022 \/\u003E","closeText":"Close"},"modal-popup-large":{"modalSize":{"type":"scale","width":0.8,"height":0.8},"modalOptions":{"opacity":0.85,"background":"#000"},"animation":"fadeIn","modalTheme":"ModalFormsPopup","throbber":"\u003Cimg typeof=\u0022foaf:Image\u0022 src=\u0022http:\/\/www.networkcomputing.com\/sites\/all\/modules\/modal_forms\/images\/loading_animation.gif\u0022 alt=\u0022Loading...\u0022 title=\u0022Loading\u0022 \/\u003E","closeText":"Close"},"urlIsAjaxTrusted":{"\/data-centers\/why-dbas-need-networking-skills\/1883902615":true},"quicktabs":{"qt_article_page_blocks":{"name":"article_page_blocks","tabs":[{"bid":"smartbox_delta_article-webcasts-smartbox","hide_title":1},{"bid":"smartbox_delta_article-whitepaper-smartbox","hide_title":1},{"bid":"smartbox_delta_article-reports-smartbox","hide_title":1}],"urlIsAjaxTrusted":{"\/data-centers\/why-dbas-need-networking-skills\/1883902615":true}},"qt_tabs_live_events_and_webinars":{"name":"tabs_live_events_and_webinars","tabs":[{"bid":"smartbox_delta_liveevents-smartbox","hide_title":1},{"bid":"smartbox_delta_webinars-smartbox","hide_title":1}],"modal-popup-small":{"modalSize":{"type":"fixed","width":550,"height":450},"modalOptions":{"opacity":0.85,"background":"#000"},"animation":"fadeIn","modalTheme":"ModalFormsPopup","throbber":"\u003Cimg typeof=\u0022foaf:Image\u0022 src=\u0022http:\/\/www.networkcomputing.com\/sites\/all\/modules\/modal_forms\/images\/loading_animation.gif\u0022 alt=\u0022Loading...\u0022 title=\u0022Loading\u0022 \/\u003E","closeText":"Close"},"modal-popup-medium":{"modalSize":{"type":"fixed","width":550,"height":590},"modalOptions":{"opacity":0.85,"background":"#000"},"animation":"fadeIn","modalTheme":"ModalFormsPopup","throbber":"\u003Cimg typeof=\u0022foaf:Image\u0022 src=\u0022http:\/\/www.networkcomputing.com\/sites\/all\/modules\/modal_forms\/images\/loading_animation.gif\u0022 alt=\u0022Loading...\u0022 title=\u0022Loading\u0022 \/\u003E","closeText":"Close"},"modal-popup-large":{"modalSize":{"type":"scale","width":0.8,"height":0.8},"modalOptions":{"opacity":0.85,"background":"#000"},"animation":"fadeIn","modalTheme":"ModalFormsPopup","throbber":"\u003Cimg typeof=\u0022foaf:Image\u0022 src=\u0022http:\/\/www.networkcomputing.com\/sites\/all\/modules\/modal_forms\/images\/loading_animation.gif\u0022 alt=\u0022Loading...\u0022 title=\u0022Loading\u0022 \/\u003E","closeText":"Close"}}},"clientsideValidation":{"general":{"months":{"January":1,"Jan":1,"February":2,"Feb":2,"March":3,"Mar":3,"April":4,"Apr":4,"May":5,"June":6,"Jun":6,"July":7,"Jul":7,"August":8,"Aug":8,"September":9,"Sep":9,"October":10,"Oct":10,"November":11,"Nov":11,"December":12,"Dec":12}}}});</script>
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Facebook Pixel Code -->
+    <script>
+	!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+	n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+	n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+	t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+	document,'script','https://connect.facebook.net/en_US/fbevents.js');
+	fbq('init', '832000476880185');
+	fbq('track', 'PageView');
+	</script>
+    <noscript><img height="1" width="1" style="display:none"
+                   src="https://www.facebook.com/tr?id=832000476880185&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- DO NOT MODIFY -->
+    <!-- End Facebook Pixel Code -->
+</head>
+<body class="html not-front not-logged-in two-sidebars page-node page-node- page-node-1324323 node-type-article domain-networkcomputing-com section-data-centers" >
+<div class="skip-link">
+    <a href="#main-content" class="element-invisible element-focusable">Skip to main content</a>
+</div>
+<div class=" text-center clear">
+
+
+    <div id="dfp-ad-welcome-wrapper" class="dfp-tag-wrapper">	<div  id="dfp-ad-welcome" class="dfp-tag-wrapper">
+        <script type="text/javascript">
+				googletag.cmd.push(function() {
+		  googletag.display("dfp-ad-welcome");
+		});
+			  </script>
+    </div>
+    </div>
+</div>  <div class=" text-center clear">
+
+
+    <div id="dfp-ad-wallpaper-wrapper" class="dfp-tag-wrapper">	<div  id="dfp-ad-wallpaper" class="dfp-tag-wrapper">
+        <script type="text/javascript">
+				googletag.cmd.push(function() {
+		  googletag.display("dfp-ad-wallpaper");
+		});
+			  </script>
+    </div>
+    </div>
+</div><!--.page -->
+<div role="document" class="page">
+
+    <!--.l-header region -->
+    <header role="banner" class="l-header row">
+
+        <!--.top-bar -->
+        <nav class="top-bar show-for-small" data-options="">
+            <ul class="title-area">
+                <li class="name">
+                    <a title="NetowrkComputing" rel="home" href="/">
+                        <img src="http://img.deusm.com/networkcomputing/network-computing-logo-mobile.png">
+                    </a>
+                </li>
+                <li class="toggle-topbar menu-icon"><a href="#"><span>&nbsp;</span></a></li>
+                <li class="toggle-topbar-secondary menu-icon-secondary"><a href="#"><span>&nbsp;</span></a></li>
+                <li class="menu-icon-search"><a href="/Search"><span>&nbsp;</span></a></li>
+            </ul>
+            <section class="top-bar-section">
+                <ul id="menu_menu-main-sup-menu" class="main-nav left"><li class="first leaf" title="Authors"><a href="/authors" title="Authors">Authors</a></li><li class="leaf" title="Slideshows"><a href="/slideshows" title="Slideshows">Slideshows</a></li><li class="leaf" title="Video"><a href="/videos" title="Video">Video</a></li><li class="leaf" title="White Papers"><a href="http://www.informationweek.com/whitepaper/Infrastructure" title="White Papers">Tech Library</a></li><li class="leaf" title="Events"><a href="http://www.informationweek.com/lecture-calendar.asp" title="Events">University</a></li><li class="last leaf" title="Reports"><a href="http://reports.informationweek.com/search?search=infrastructure" title="Reports">Reports</a></li></ul>
+                <ul id="main-menu" class="main-nav left"><li class="first leaf" title="NETWORKING"><a href="/networking" title="NETWORKING">NETWORKING</a></li><li class="leaf" title="STORAGE"><a href="/storage" title="STORAGE">STORAGE</a></li><li class="leaf" title="WIRELESS"><a href="/wireless-infrastructure" title="WIRELESS">WIRELESS</a></li><li class="leaf" title="DATA CENTER" alias="Data centers"><a href="/data-centers" title="DATA CENTER" alias="Data centers">DATA CENTER</a></li><li class="leaf" title="NET SECURITY"><a href="/network-security" title="NET SECURITY">NET SECURITY</a></li><li class="leaf" title="DATA SECURITY"><a href="http://www.darkreading.com" title="DATA SECURITY">DATA SECURITY</a></li><li class="leaf" title="CLOUD" alias="Cloud Infrastructure"><a href="/cloud-infrastructure" title="CLOUD" alias="Cloud Infrastructure">CLOUD</a></li><li class="leaf" title="IOT" alias="Internet of Things"><a href="/iot-infrastructure" title="IOT" alias="Internet of Things">IOT</a></li><li class="last leaf" title="CAREERS &amp; CERTIFICATIONS"><a href="/careers-certifications" title="CAREERS &amp; CERTIFICATIONS">CAREERS</a></li></ul>                      </section>
+        </nav>
+        <!--/.top-bar -->
+        <!-- Title, slogan and menu -->
+        <!-- End title, slogan and menu -->
+
+        <!--.l-header-region -->
+        <section class="l-header-region row">
+            <div class="large-12 columns">
+                <section class="block block-menu block-menu-external-websites header">
+
+                    <h2 class="block-title element-invisible">External Websites Menu</h2>
+
+                    <ul class="menu large-6 columns hide-for-small"><li class="first leaf"><a href="http://www.informationweek.com/">InformationWeek</a></li>
+                        <li class="leaf"><a href="http://www.networkcomputing.com/">Network Computing</a></li>
+                        <li class="last leaf"><a href="http://www.darkreading.com/">Dark Reading</a></li>
+                    </ul>
+                </section>  <section class="block block-menu block-menu-ubm-user-menu header">
+
+                <h2 class="block-title element-invisible">UBM User Menu</h2>
+
+                <ul class="menu large-6 columns hide-for-small"><li class="first leaf"><a href="/modal_forms/nojs/login" class="ctools-use-modal ctools-modal-modal-popup-small">Login to your account</a></li>
+                    <li class="leaf"><a href="/modal_forms/nojs/register?destination=data-centers/why-dbas-need-networking-skills/1883902615" class="ctools-use-modal ctools-modal-modal-popup-medium">Register</a></li>
+                    <li class="leaf"><a href="//www.networkcomputing.com/about-us">About Us</a></li>
+                    <li class="last leaf"><a href="http://createyournextcustomer.techweb.com/contact-us/">Advertise</a></li>
+                </ul>
+            </section>  <section class="block block-dfp block-dfp-top header text-center clear">
+
+
+                <div id="dfp-ad-top-wrapper" class="dfp-tag-wrapper">	<div  id="dfp-ad-top" class="dfp-tag-wrapper">
+                    <script type="text/javascript">
+				googletag.cmd.push(function() {
+		  googletag.display("dfp-ad-top");
+		});
+			  </script>
+                </div>
+                </div>
+            </section>  <section class="block block-block block-block-10 header">
+
+
+                <!--smart_paging_filter--><ul class="main-nav left hide-for-large hide-mobile" id="main-menu-secondary"><li class="first leaf">
+                <a href="">Register</a>
+            </li>
+                <li class="leaf">
+                    <a href="">Login in your account</a>
+                </li>
+                <li class="leaf">
+                    <a href="">Digital Subscription</a>
+                </li>
+                <li class="leaf">
+                    <a href="">Contact Us</a>
+                </li>
+                <li class="leaf">
+                    <a href="">About Us</a>
+                </li>
+                <li class="leaf">
+                    <a href="">Advertise With Us</a>
+                </li>
+                <li class="leaf">
+                    <a href="">Expert Analysis</a>
+                </li>
+                <li class="leaf">
+                    <a href="">Authors</a>
+                </li>
+                <li class="leaf">
+                    <a href="">Slideshows</a>
+                </li>
+                <li class="leaf">
+                    <a href="">Video</a>
+                </li>
+                <li class="leaf">
+                    <a href="">Reports</a>
+                </li>
+                <li class="leaf">
+                    <a href="">White Papers</a>
+                </li>
+                <li class="leaf">
+                    <a href="">Events</a>
+                </li>
+                <li class="last leaf">
+                    <a href="">Interop</a>
+                </li>
+            </ul>
+            </section>  <section class="block block-block block-block-5 header clear">
+                <div style="height:10px"></div>
+                <div class="large-8 columns hide-for-small">
+                    <a title="Network Computing: Connecting the Infrastructure Community" href="/"><img alt="Network Computing: Connecting the Infrastructure Community" src="http://img.deusm.com/networkcomputing/networkcomputing-logo.gif" id="img-logo"></a><a href="http://www.interop.com/" target="_blank" title="Interop"><img id="img-logo" src="http://img.deusm.com/networkcomputing/join-us-live-at-interopitx.gif" alt="Interop"></a>
+                </div>
+                <div class="large-4 columns hide-for-small">
+                    <div class="row collapse">
+                        <form id="search-block-form" accept-charset="UTF-8" method="post" action="/search/site">
+                            <div class="large-10 columns">
+                                <input type="text" placeholder="Search Network Computing" name="keys">
+                            </div>
+                            <div class="large-2 columns">
+                                <button type="submit" value="Search" name="op" id="edit-submit" class="button prefix header-search form-submit">Search</button>
+                            </div>
+                            <form action="/data-centers/why-dbas-need-networking-skills/1883902615" method="post" id="apachesolr-search-custom-page-search-form" accept-charset="UTF-8"><div><input type="hidden" name="form_build_id" value="form-AvQX778SrZOj9YoXdDNg390701AMUgpThD3fVZ3dXqs" />
+                                <input type="hidden" name="form_id" value="apachesolr_search_custom_page_search_form" />
+                            </div></form>        </form>
+                    </div>
+                </div>
+            </section>  <section class="block block-menu block-menu-menu-main-sup-menu header">
+
+                <h2 class="block-title element-invisible">Main Sup Menu</h2>
+
+                <ul class="menu large-9 columns hide-for-small"><li class="first leaf"><a href="/authors" title="Authors">Authors</a></li>
+                    <li class="leaf"><a href="/slideshows" title="Slideshows">Slideshows</a></li>
+                    <li class="leaf"><a href="/videos" title="Video">Video</a></li>
+                    <li class="leaf"><a href="http://www.informationweek.com/whitepaper/Infrastructure" title="White Papers">Tech Library</a></li>
+                    <li class="leaf"><a href="http://www.informationweek.com/lecture-calendar.asp" title="Events">University</a></li>
+                    <li class="last leaf"><a href="http://reports.informationweek.com/search?search=infrastructure" title="Reports">Reports</a></li>
+                </ul>
+            </section>  <section class="block block-block block-block-6 header">
+
+
+                <!--smart_paging_filter--><div class="large-3 columns header-social-icons hide-for-small">
+                <ul class="inline-list"><li>Follow NWC:</li>
+                    <li class="header-facebook-link"><a href="http://www.facebook.com/networkcomputingcom" target="_blank" title="Facebook">Facebook</a></li>
+                    <li class="header-twitter-link"><a href="http://twitter.com/networkcomputin" target="_blank" title="Twitter">Twitter</a></li>
+                    <li class="header-linkedin-link"><a href="https://www.linkedin.com/groups/4403419" target="_blank" title="LinkedIn">Linkedin</a></li>
+                    <li class="header-google-link"><a href="http://www.google.com/+networkcomputingcom" target="_blank" title="Google+">Google+</a></li>
+                    <li class="header-rss-link"><a href="/feeds" title="RSS">RSS</a></li>
+                </ul></div>
+            </section>  <section class="block block-block block-block-26 header">
+
+
+                <!--smart_paging_filter--><style type="text/css">
+<!--/*--><![CDATA[/* ><!--*/
+.block-menu-menu-main-sup-menu li:last-child  a {
+   color: transparent !important;;
+}
+.docthumbinner .red {
+	display:none;
+}
+/* native ads display issue fix */
+.adsnative-sponsor.blue.large.allcaps {
+    font-size: 12px !important;
+}
+.view-id-author_detail article {
+    font-size: .8rem;
+    line-height: 1.3;
+}
+.node-article ul.inline-list {
+    clear: both;
+    padding: 10px 0;
+	}
+.article-summary{
+padding: 0 0 10px 0;
+display: block;
+}
+
+.node .field-name-body{
+	font-size: 12.8px;
+    font-weight: normal;
+    line-height: 16.6px;
+    margin-top: 10px;
+}
+.node-article .field-name-body ol{
+	color: #413f41 !important;
+    border: 0 !important;
+    font-size: 1.08333em !important;
+    line-height: 1.38462em !important;
+	list-style-type: decimal !important;
+padding-left: 42px
+}
+.node-article .field-name-body p{
+  font-size: 1.08em;
+}
+.view-id-author_detail article .docthumbinner{
+    display:none;
+}
+.node-article strong{
+line-height: 19px;
+    color: black;
+    font-family: "Helvetica", Arial, sans-serif;
+}
+.node-article .field-name-body  a{
+	    font-size: 1.08em;
+		font-weight:bold;
+}
+.content .field-name-field-file-image-caption-text .field-label{
+display:none;
+}
+article ul li {
+    font-size: 1.08em;
+    margin-left: 20px;
+}
+form#google-editorpick select{
+	min-height: 250px;
+}
+div#rightlinks ul {
+	padding:0px 16px !important;
+}
+
+/*--><!]]>*/
+</style>
+            </section>        </div>
+        </section>
+        <!--/.l-header-region -->
+        <!--  main menu  -->
+        <div id="second-level" class="column sixteen" style="/* border-bottom: 3px solid #dd1a22; */background: url(http://img.deusm.com/networkcomputing/NetworkComputing-iwk-interop-v3_13.jpg) repeat-x;padding: 5px 0 1px 0;/* width: 1000px; */">
+
+        </div>
+
+        <nav id="main-menu" class="navigation hide-for-small" role="navigation">
+            <h2 class="element-invisible">Main menu</h2><ul id="main-menu-links" class="links inline-list clearfix"><li class="menu-795 first"><a href="/networking" title="NETWORKING">NETWORKING</a></li>
+            <li class="menu-796"><a href="/storage" title="STORAGE">STORAGE</a></li>
+            <li class="menu-797"><a href="/wireless-infrastructure" title="WIRELESS">WIRELESS</a></li>
+            <li class="menu-798"><a href="/data-centers" title="DATA CENTER" alias="Data centers">DATA CENTER</a></li>
+            <li class="menu-800"><a href="/network-security" title="NET SECURITY">NET SECURITY</a></li>
+            <li class="menu-801"><a href="http://www.darkreading.com" title="DATA SECURITY">DATA SECURITY</a></li>
+            <li class="menu-802"><a href="/cloud-infrastructure" title="CLOUD" alias="Cloud Infrastructure">CLOUD</a></li>
+            <li class="menu-803"><a href="/iot-infrastructure" title="IOT" alias="Internet of Things">IOT</a></li>
+            <li class="menu-805 last"><a href="/careers-certifications" title="CAREERS &amp; CERTIFICATIONS">CAREERS</a></li>
+        </ul>      </nav> <!-- /#main-menu -->
+        <!--  end main menu -->
+
+    </header>
+    <!--/.l-header -->
+
+
+
+
+    <main role="main" class="row l-main detail-page landing-page">
+        <div class="large-8 main columns">
+
+            <a id="main-content"></a>
+
+            <h2 class="title">DATA CENTERS</h2>
+
+
+            <section class="block block-dfp block-dfp-logo text-center clear">
+
+
+                <div id="dfp-ad-logo-wrapper" class="dfp-tag-wrapper">	<div  id="dfp-ad-logo" class="dfp-tag-wrapper">
+                    <script type="text/javascript">
+				googletag.cmd.push(function() {
+		  googletag.display("dfp-ad-logo");
+		});
+			  </script>
+                </div>
+                </div>
+            </section>
+
+
+
+            <div class="large-2 columns article-page no-pad">
+
+                <div class="posted">
+                    <ul>
+                        <li><span property="dc:date dc:created" content="2016-09-09T07:30:00-04:00" datatype="xsd:dateTime" rel="sioc:has_creator">09/09/2016<br/>7:30 AM</span></li>
+                    </ul>
+                    <ul>
+                        <img alt="Thomas LaRock" class="img-main" src="https://dsimg.ubm-us.net/user/27938663/291543/lightreading_cropped_635623662250523619.jpg">
+                        <li><a href="/author/27938663">Thomas LaRock</a></li>
+                        <li>Commentary</li>
+                        <li>Connect Directly
+                            <ul class="inline-list">
+                                <li><a href="mailto:Thomas.LaRock@solarwinds.com" title="E-Mail"><i class="fi-mail medium"></i></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="blue"><a href="/data-centers/why-dbas-need-networking-skills/1883902615#comments"><i class="fi-comment small"></i>0 Comments</a><br/>
+                            <a href="/data-centers/why-dbas-need-networking-skills/1883902615#comments">Comment Now</a></li>
+                    </ul>
+                    <ul>
+                        <li class="rate_widget clearfix"><div class="field field-name-field-rating field-type-vud-field field-label-above field-wrapper"><div  class="field-label">Rating:&nbsp;</div><div class="vud-widget vud-widget-updown" id="widget-node-1324323">
+                            <div class="updown-score">
+                                <span class="updown-current-score">0</span>
+                                votes  </div>
+                            <div class="up-active updown-up" title="Vote up!">+</div>
+                            <div class="element-invisible">Vote up!</div>
+                            <div class="down-active updown-down" title="Vote down!">-</div>
+                            <div class="element-invisible">Vote down!</div>
+                        </div>
+                        </div></li>
+                        <li class="social_widget clearfix">
+                            <div id="fb-root"></div>
+                            <div class="fb-like" data-href="/data-centers/why-dbas-need-networking-skills/1883902615" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                        </li>
+                        <li>
+                            <a class="twitter-share-button" href="/data-centers/why-dbas-need-networking-skills/1883902615" data-count="horizontal"></a>
+                        </li>
+                        <li>
+                            <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                            <script type="IN/Share" data-url="http://www.networkcomputing.com/data-centers/why-dbas-need-networking-skills/1883902615" data-counter="right"></script>
+                        </li>
+                        <li>
+                            <div class="g-plusone" data-size="medium"></div>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
+            <div class="large-10 columns">
+                <h1 id="page-title" class="title">Why DBAs Need Networking Skills</h1>
+                <span property="dc:title" content="Why DBAs Need Networking Skills" class="rdf-meta element-hidden"></span><span property="sioc:num_replies" content="0" datatype="xsd:integer" class="rdf-meta element-hidden"></span>
+
+                <article id="node-1324323" class="node node-article view-mode-full" about="/data-centers/why-dbas-need-networking-skills/1883902615" typeof="sioc:Item foaf:Document"	  	  	  <span property="dc:title" content="Why DBAs Need Networking Skills" class="rdf-meta element-hidden"></span><span property="sioc:num_replies" content="0" datatype="xsd:integer" class="rdf-meta element-hidden"></span>	  		<strong class="article-summary"><p>With the rise of cloud, database administrators need to understand basic networking in order to be truly effective.</p>
+            </strong>
+                <div class="field field-name-body field-type-text-with-summary field-label-hidden field-wrapper Array field" id="article-main"><p>The cloud threatens everyone. Well, to be clear, the cloud threatens everyone who sees change as something to be feared. I tend to view change as an opportunity, not as a threat. </p>
+
+                    <p>For today’s database administrators (DBAs), the adoption rate of <a href="http://it-trends.solarwinds.com/reports/2016/the-hybrid-it-evolution/north-america.pdf">hybrid IT</a> is a concern. Hybrid IT represents change, and most DBAs don’t like change. They like things to stay the same, for as long as possible.</p>
+
+                    <p>When I see the fear in the eyes of a DBA upon hearing the word “cloud” I do my best to break it down into smaller bits for them to digest. Here are the two points I emphasize:</p>
+
+                    <ol><li><strong>The primary responsibilities for a modern DBA, or what might be called a cloud DBA—data recovery, data security, and database performance—remain the same as the traditional DBA.</strong> While the integration of cloud services and distributed applications has introduced a greater level of complexity and potential challenges, the core missions remain: DBAs must be able to recover and protect the company’s data, and at the same time provide reliable performance.</li>
+                        <li><strong>It's no longer sufficient for DBAs to be proficient in only one area of technology (i.e., the database).</strong> The rate of change in the data center is accelerating and database professionals must adapt. The interconnected nature of the modern data center, coupled with the thousands of services technology vendors can provide, requires cloud DBAs know basic networking skills like configuring VPNs, virtual networks, topologies, and network troubleshooting in order to be truly effective in their role.</li>
+                    </ol><p>The ease of use for public cloud services such as Amazon AWS and Microsoft Azure has created a “borderless” IT environment where traditional data management methods no longer provide the visibility and level of information needed to deliver on end users’ high expectations. In the not so distant future, cloud DBAs must be able to determine when a problem is related to the network, whether it's one they own or the network of a cloud services provider.</p>
+
+                    <p>Most traditional DBAs have little to no experience with network administration, so it can be difficult for them to understand why such skills are necessary. Remember, cloud DBAs still have the same responsibilities, with data recovery being first and foremost. If an organization moves databases to the cloud, DBAs must make sure they’ll be able to recover the company’s data and  access it when needed. The network, of course, is the primary conduit for doing just that. Thus, issues such as network bandwidth and latency become data recovery and accessibility issues.</p>
+
+                    <p>When a problem arises, cloud DBAs with an understanding of network management practices and the right tools can start with a traffic analysis, looking at how much is really data traffic and how much might just be bogged down by Pokémon Go enthusiasts, and then troubleshoot from there.</p>
+
+                    <p>Of course concerns about data security will always be present. Cloud DBAs need to also understand how users are accessing and consuming data. That will require them to have a broad knowledge of how data is handled in transmission, in addition to an idea of how all the systems are networked together and interconnected.</p>
+
+                    <p><strong>Bridging the gap</strong></p>
+
+                    <p>Of course, even the most basic of networking skills will take time to learn and cultivate. Here are some simple best practices that will help DBAs progress down the path to becoming cloud DBAs, capable of bridging the hybrid IT gap:</p>
+
+                    <ul><li><strong>Be mindful of change.</strong> Today, software updates are released at an unprecedented rate, with new bits often coming out every two or three months. A cloud DBA needs to think critically about these changes as well as other trends in the IT landscape, constantly asking, “Is this something we can take advantage of? If so, is it the right choice or are there other options out there?” The ultimate objective has to be the best overall experience for the business and customers.</li>
+                        <li><strong>The devil is in the (network’s) details.</strong> A query that might take seconds to run on-premises could take over a minute in the cloud due to a number of factors, not the least of which could be network performance issues. Therefore, it’s important for cloud DBAs to understand how data traverses networks and consider other possibilities, like network latency, as an initial culprit of cloud database performance issues, rather than the default “heavy data traffic.”</li>
+                        <li><strong>The more visibility, the better. </strong>In the hybrid IT age, management tools like visual network path monitoring can help the DBA regain much of the visibility lost in the move to the cloud. These technologies allow not just the simplified detection of issues in internal networks, but also extend troubleshooting through the internet and into service providers’ networks. .</li>
+                        <li><strong>A single viewpoint.</strong> Cloud DBAs need comprehensive management tools that provide a single dashboard of performance and the ability to drill down across database technologies and across deployment methods, including cloud. This will ensure organizations aren’t wasting valuable budget chasing down a database performance problem with the wrong solution.</li>
+                    </ul><p>Success as a cloud DBA rests on better understanding the complete set of data center technologies and operations, not just the database. This is especially true when it comes to the part networks play. Do cloud DBAs need to know every router and modem that the transmission of their data relies on? No, probably not. But a successful cloud DBA will have a solid understanding of the broader set of interconnected technologies that make up the complete data center, how data is getting from one point to another, and a baseline to help identify when performance is normal and when it’s not.</p>
+
+                    <p>Remember, kids, the cloud isn’t a threat, it’s an opportunity.</p>
+                </div><div class="field field-name-field-media-fields-collection field-type-field-collection field-label-hidden field-wrapper"></div>
+
+
+
+                <br/><ul class="inline-list">
+                <li><a href="/data-centers/why-dbas-need-networking-skills/1883902615#comments">COMMENT</a></li>
+                <li><a href="/printmail/1324323" target="_blank">EMAIL THIS</a></li>
+                <li><a href="/print/1324323" target="_blank">PRINT</a></li>
+                <li><a href="/rss/all" target="_blank">RSS</a></li>
+            </ul>
+                <div class="row more-insights">
+                    <div class="large-12">
+                        <div class="large-12 columns">
+                            <h3>MORE INSIGHTS</h3>
+                        </div>  <section class="block block-smartbox block-smartbox-article-webcasts-smartbox">
+
+
+                        <div class="large-4 columns">
+                            <h3>Webcasts</h3>
+                            <ul id="smartbox-list" class=" "><li id="id-8500000728" class="class-8500000728 first"><b><a href="https://webinar.darkreading.com/2868?keycode=sbx&amp;cid=smartbox_techweb_webcast_8.500000728" target="_blank">IT Leader&#039;s Guide to the Cybersecurity Landscape</a></b></li>
+                                <li id="id-8500000727" class="class-8500000727 last"><b><a href="http://www.allanalytics.com/radio.asp?doc_id=282441&amp;cid=smartbox_techweb_webcast_8.500000727" target="_blank">Sneak Peek:  State of Analytics - Research Results Revealed</a></b></li>
+                            </ul>	<p><a href="/webinar_upcoming">MORE WEBCASTS</a></p>
+                        </div>
+                    </section>  <section class="block block-smartbox block-smartbox-article-whitepaper-smartbox">
+
+
+                        <div class="large-4 columns">
+                            <h3>White Papers</h3>
+                            <ul id="smartbox-list" class=" "><li id="id-14500002810" class="class-14500002810 first"><b><a href="http://www.darkreading.com/drdigital/20170419td/?keycode=sbx&amp;cid=smartbox_techweb_whitepaper_14.500002810" target="_blank">Security Ops &amp; IT Ops: How to Get Them Collaborating</a></b></li>
+                                <li id="id-14500002794" class="class-14500002794 last"><b><a href="http://www.informationweek.com/whitepaper/applications/cloud-services/the-new-normal-cloud,-devops,-and-saas-analytics-tools-reign-in-the-modern-app-era/388263?cid=smartbox_techweb_whitepaper_14.500002794" target="_blank">State of IT operations &amp; Modern Application Tools in the Enterprise</a></b></li>
+                            </ul>	<p><a href="http://www.informationweek.com/whitepaper/Infrastructure">MORE WHITE PAPERS</a></p>
+                        </div>
+                    </section>  <section class="block block-smartbox block-smartbox-article-reports-smartbox">
+
+
+                        <div class="large-4 columns">
+                            <h3>Reports</h3>
+                            <ul id="smartbox-list" class=" "><li id="id-7300005725" class="class-7300005725 first"><b><a href="http://www.informationweek.com/whitepaper/data-centers/networking/research-report-low-latency-data-center-interconnect-using-infinera-and-arista/388503?cid=smartbox_techweb_report_7.300005725" target="_blank">Low Latency Data Center Interconnect Using Infinera &amp; Arista</a></b></li>
+                                <li id="id-7300005724" class="class-7300005724 last"><b><a href="http://www.allanalytics.com/lg_redirect.asp?piddl_lgid_docid=282333&amp;cid=smartbox_techweb_report_7.300005724" target="_blank">The Evolution of Analytics: Opportunities &amp; Challenges</a></b></li>
+                            </ul>	<p><a href="http://www.informationweek.com/whitepaper/search?querytext=&search-results-topics=infrastructure&search-results-subtopics=&search-results-company=53472&startdatetimepicker=&enddatetimepicker=&search-results-format-researchreport=on">MORE REPORTS</a></p>
+                        </div>
+                    </section></div></div>		  <section class="block block-dfp block-dfp-native text-center clear">
+
+
+                <div id="dfp-ad-native-wrapper" class="dfp-tag-wrapper">	<div  id="dfp-ad-native" class="dfp-tag-wrapper">
+                    <script type="text/javascript">
+				googletag.cmd.push(function() {
+		  googletag.display("dfp-ad-native");
+		});
+			  </script>
+                </div>
+                </div>
+            </section>
+                <div id="comments">
+                    <p><a class="ctools-use-modal ctools-modal-modal-popup-small" href="/modal_forms/nojs/login?destination=data-centers/why-dbas-need-networking-skills/1883902615"><strong>Log in</strong></a> or <a class="ctools-use-modal ctools-modal-modal-popup-medium" href="/modal_forms/nojs/register?destination=data-centers/why-dbas-need-networking-skills/1883902615"><strong>Register</strong></a> to post comments</p>
+                </div>
+                </article>
+
+            </div>
+
+        </div>
+
+        <!--/.main region -->
+
+
+        <aside role="complementary" class="large-4 sidebar-first columns sidebar">
+
+            <section class="block block-dfp block-dfp-tapunit clearfix text-center clear">
+
+
+                <div id="dfp-ad-TAPunit-wrapper" class="dfp-tag-wrapper">	<div  id="dfp-ad-TAPunit" class="dfp-tag-wrapper">
+                    <script type="text/javascript">
+		if (document.documentElement.clientWidth > 767){
+		googletag.cmd.push(function() {
+		  googletag.display("dfp-ad-TAPunit");
+		});
+		}
+	  </script>
+                </div>
+                </div>
+            </section>  <section class="block block-dfp block-dfp-rec1 clearfix text-center clear">
+
+
+            <div id="dfp-ad-rec1-wrapper" class="dfp-tag-wrapper">	<div  id="dfp-ad-rec1" class="dfp-tag-wrapper">
+                <script type="text/javascript">
+		if (document.documentElement.clientWidth > 767){
+		googletag.cmd.push(function() {
+		  googletag.display("dfp-ad-rec1");
+		});
+		}
+	  </script>
+            </div>
+            </div>
+        </section>  <section class="block block-block block-block-17 clearfix">
+
+
+            <div class="row collapse news-sub-blurb">
+                <div class="small-2 columns">
+                    <img alt="Register for Network Computing Newsletters" src="/sites/all/themes/networkcomputing/images/icons/NL-icon.png"/>
+                </div>
+                <div class="small-10 columns">
+                    <h2 class="boxed">
+                        <a href="/user">SUBSCRIBE TO NEWSLETTERS</a>
+                    </h2>
+                </div>
+            </div>
+        </section>  <section class="block block-views block-views-home-page-blocks-slideshows clearfix">
+
+
+
+            <div class="view view-home-page-blocks view-id-home_page_blocks view-display-id-slideshows view-dom-id-93f522ab47588d3ccf97eed94b05dc63">
+                <!-- <h3 class="subtitle uppercase">LATEST CONTENT</h3> -->
+
+
+
+
+                <div class="view-content">
+                    <div class="large-12 columns expert-analysis no-pad-left">
+
+                        <div class="right">
+                        </div>
+                        <div class="clear"><h2><i class="fi-camera medium"></i>SLIDESHOWS</h2>
+                            <div class="panel slideshows-panel">
+
+                                <p>
+                                    <img src="http://www.networkcomputing.com/sites/default/files/resources/nwc/1-Intro.jpeg" alt="">
+                                </p>
+                                <h3><a href="/cloud-infrastructure/6-core-devops-principles/1115358017">6 Core DevOps Principles</a></h3>
+                                <ul class="inline-list">
+                                    <li class="blue"><a href="/cloud-infrastructure/6-core-devops-principles/1115358017#comments"><i class="fi-comment small"></i>  2 Comments </a></li>
+                                    <li><a href="/cloud-infrastructure/6-core-devops-principles/1115358017">Read</a></li>
+                                    <li><a href="/cloud-infrastructure/6-core-devops-principles/1115358017#comment-form">Post a Comment</a></li>
+                                </ul>
+                                <ul class="listing">
+                                    <li>
+                                        <span class="right"><a href="/data-centers/enterprise-data-storage-shopping-tips/1672296124#comments"><i class="fi-comment small"></i> 0</a></span>
+                                        <a href="/data-centers/enterprise-data-storage-shopping-tips/1672296124">Enterprise Data Storage Shopping Tips</a>		</li>
+
+                                    <li>
+                                        <span class="right"><a href="/storage/interop-itx-9-bonus-events/1050567529#comments"><i class="fi-comment small"></i> 0</a></span>
+                                        <a href="/storage/interop-itx-9-bonus-events/1050567529">Interop ITX: 9 Bonus Events</a>		</li>
+                                </ul>		<a class="more-link" href="/slideshows">MORE SLIDESHOWS</a>
+                            </div></div>
+                        <div class="right">
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </section>  <section class="block block-views block-views-home-page-blocks-home-cartoon clearfix">
+
+
+            <div class="view view-home-page-blocks view-id-home_page_blocks view-display-id-home_cartoon view-dom-id-b3a799347a47624e01b1dc9360e81c87">
+
+
+
+                <div class="view-content">
+                    <h2>CARTOON</h2>
+                    <div class="panel current-issue-panel">
+
+                        <p>
+                            <a href="/data-centers/beware-network-latency/1916525771"><img src="http://www.networkcomputing.com/sites/default/files/resources/nwc/network-latency%20%28004%29.jpg" alt=""/></a>
+                        </p>
+                        <p class="cartoon-comment">
+                        </p>
+                        <ul class="inline-list">
+                            <li><a class="more-link" href="/cartoons">CARTOON ARCHIVE</a></li>
+                        </ul>
+                    </div>    </div>
+
+
+
+
+
+
+            </div>
+        </section>  <section class="block block-quicktabs block-quicktabs-tabs-live-events-and-webinars clearfix">
+            <div class="section-container auto" data-section><section class="active"><p class="title" data-section-title><a href="#panel1">Live Events</a></p><div class="content" data-section-content>  <section class="block block-smartbox block-smartbox-liveevents-smartbox">
+
+
+                <ul id="smartbox-list" class=" bottom-dotted"><li id="id-16500190" class="class-16500190 first last"><b><a href="http://interop.com?_mc=we_iwsb_le_intplv&amp;cid=smartbox_techweb_session_16.500190" target="_blank">Interop ITX - The Independent Conference for Tech Leaders</a></b></li>
+                </ul><a class="more-link" href="/events">MORE UBM TECH LIVE EVENTS</a>
+
+            </section></div></section><section class=""><p class="title" data-section-title><a href="#panel2">Webinars</a></p><div class="content" data-section-content>  <section class="block block-smartbox block-smartbox-webinars-smartbox">
+
+
+                <ul id="smartbox-list" class=" bottom-dotted"><li id="id-8500000728" class="class-8500000728 first"><b><a href="https://webinar.darkreading.com/2868?keycode=sbx&amp;cid=smartbox_techweb_webcast_8.500000728" target="_blank">IT Leader&#039;s Guide to the Cybersecurity Landscape</a></b></li>
+                    <li id="id-8500000727" class="class-8500000727"><b><a href="http://www.allanalytics.com/radio.asp?doc_id=282441&amp;cid=smartbox_techweb_webcast_8.500000727" target="_blank">Sneak Peek:  State of Analytics - Research Results Revealed</a></b></li>
+                    <li id="id-8500000729" class="class-8500000729 last"><b><a href="http://www.allanalytics.com/radio.asp?doc_id=282445&amp;cid=smartbox_techweb_webcast_8.500000729" target="_blank">Get Control Over Your Data Quality/Data Governance</a></b></li>
+                </ul><a class="more-link" href="/webinar_archives">WEBINARS ARCHIVES</a>
+
+            </section></div></section></div>  </section>  <section class="block block-smartbox block-smartbox-whitepaper-smartbox clearfix">
+
+
+            <h2>WHITE PAPERS</h2>
+            <div class="panel white-papers-panel">
+                <ul id="smartbox-list" class=" "><li id="id-14500002810" class="class-14500002810 first"><b><a href="http://www.darkreading.com/drdigital/20170419td/?keycode=sbx&amp;cid=smartbox_techweb_whitepaper_14.500002810" target="_blank">Security Ops &amp; IT Ops: How to Get Them Collaborating</a></b></li>
+                    <li id="id-14500002803" class="class-14500002803"><b><a href="http://www.informationweek.com/whitepaper/data-centers/networking/top-five-things-you-need-to-know-before-building-or-upgrading-your-cloud-infrastructure/380823?cid=smartbox_techweb_whitepaper_14.500002803" target="_blank">[Cloud Infrastructure] Top 5 Things You Need to Know Before You Build or Upgrade</a></b></li>
+                    <li id="id-14500002794" class="class-14500002794"><b><a href="http://www.informationweek.com/whitepaper/applications/cloud-services/the-new-normal-cloud,-devops,-and-saas-analytics-tools-reign-in-the-modern-app-era/388263?cid=smartbox_techweb_whitepaper_14.500002794" target="_blank">State of IT operations &amp; Modern Application Tools in the Enterprise</a></b></li>
+                    <li id="id-14500002779" class="class-14500002779"><b><a href="http://www.informationweek.com/whitepaper/security-management-and-analytics/cybersecurity/guide-to-av-replacement/387703?cid=smartbox_techweb_whitepaper_14.500002779" target="_blank">[Guide] AV Replacement</a></b></li>
+                    <li id="id-14500002734" class="class-14500002734 last"><b><a href="http://www.informationweek.com/whitepaper/storage/data-centers/what-is-object-storage/387033?cid=smartbox_techweb_whitepaper_14.500002734" target="_blank">[Video] What is Object Storage?</a></b></li>
+                </ul>	<a class="more-link" href="http://www.informationweek.com/whitepaper/Infrastructure">MORE WHITE PAPERS</a>
+            </div>
+        </section>  <section class="block block-smartbox block-smartbox-current-issue-smartbox clearfix">
+
+
+            <h2>CURRENT ISSUE</h2>
+            <div class="panel current-issue-panel">
+                <p>
+                    <a href="http://www.networkcomputing.com/nwcdigital/20170330?cid=smartbox_techweb_nwcdigital_20170330" target="_blank"><img class="img-rhc" src="http://thewallstreetwiki.com/_art/1702239_CoverImage.jpg"></a>
+                </p>
+                <h3>
+                    <a href="http://www.networkcomputing.com/nwcdigital/20170330?cid=smartbox_techweb_nwcdigital_20170330" target="_blank">IT Success = Storage & Data Center Performance</a>
+                </h3>
+                <ul class="inline-list current-issue-buttons">
+                    <li><a href="http://www.networkcomputing.com/nwcdigital/20170330?cid=smartbox_techweb_nwcdigital_20170330" class="tiny button" target="_blank">DOWNLOAD THIS ISSUE!</a></li>
+                    <li></li>
+                </ul>
+                <ul class="inline-list">
+                    <li><a class="more-link" href="/backissue-archives">BACK ISSUES</a></li>
+                    <li><a class="more-link" href="/mustreads">MUST READS</a></li>
+                </ul>
+            </div>
+
+        </section>  <section class="block block-dfp block-dfp-eventpromo clearfix text-center clear">
+
+
+            <div id="dfp-ad-eventpromo-wrapper" class="dfp-tag-wrapper">	<div  id="dfp-ad-eventpromo" class="dfp-tag-wrapper">
+                <script type="text/javascript">
+				googletag.cmd.push(function() {
+		  googletag.display("dfp-ad-eventpromo");
+		});
+			  </script>
+            </div>
+            </div>
+        </section>  <section class="block block-dfp block-dfp-rec2 clearfix text-center clear">
+
+
+            <div id="dfp-ad-rec2-wrapper" class="dfp-tag-wrapper">	<div  id="dfp-ad-rec2" class="dfp-tag-wrapper">
+                <script type="text/javascript">
+				googletag.cmd.push(function() {
+		  googletag.display("dfp-ad-rec2");
+		});
+			  </script>
+            </div>
+            </div>
+        </section>  <section class="block block-views block-views-home-page-blocks-home-video clearfix">
+
+
+            <div class="view view-home-page-blocks view-id-home_page_blocks view-display-id-home_video view-dom-id-d2c5ad59b3369438e6835f9b610de794">
+
+
+
+                <div class="view-content">
+                    <h2>VIDEO</h2>
+                    <div class="panel video-panel">
+                        <div class="flexslider">
+                            <ul class="slides">
+                                <li>
+                                    <a href="/cloud-infrastructure/devops-equals-happiness/67373034?itc=AD_NWC_VID_RHC_VIDBOX"><img typeof="foaf:Image" src="http://www.networkcomputing.com/sites/default/files/brightcove_thumbnail/1568176135_5278295244001_5277581260001-th.jpg" alt="" /></a>
+                                    <div class="flex-title">
+				<span class="black smaller strong">
+					<!-- Adding ITC ad keycode param for Omniture tracking
+						 AD_NWC_VID_RHC_VIDBOX is default for all videos
+						 TODO:: If the video is sponsored then keycode should be AD_NWC_VID_RHC_SPONSOREDVIDBOX
+					-->
+					<a href="/cloud-infrastructure/devops-equals-happiness/67373034?itc=AD_NWC_VID_RHC_VIDBOX">DevOps Equals Happiness</a>				</span>
+                                    </div>
+                                    <div class="flex-comments">
+				<span class="more-link strong">
+					<a href="http://www.networkcomputing.com/cloud-infrastructure/devops-equals-happiness/67373034#comments">
+						<img src="/sites/all/themes/networkcomputing/images/icons/NWC-comment.png">0 Comment					</a>
+				</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="/cloud-infrastructure/support-ops-speeds-devops-progress/5630435?itc=AD_NWC_VID_RHC_VIDBOX"><img typeof="foaf:Image" src="http://www.networkcomputing.com/sites/default/files/brightcove_thumbnail/1568176135_5278295199001_5277602001001-th.jpg" alt="" /></a>
+                                    <div class="flex-title">
+				<span class="black smaller strong">
+					<!-- Adding ITC ad keycode param for Omniture tracking
+						 AD_NWC_VID_RHC_VIDBOX is default for all videos
+						 TODO:: If the video is sponsored then keycode should be AD_NWC_VID_RHC_SPONSOREDVIDBOX
+					-->
+					<a href="/cloud-infrastructure/support-ops-speeds-devops-progress/5630435?itc=AD_NWC_VID_RHC_VIDBOX">Support For Ops Speeds DevOps Progress</a>				</span>
+                                    </div>
+                                    <div class="flex-comments">
+				<span class="more-link strong">
+					<a href="http://www.networkcomputing.com/cloud-infrastructure/support-ops-speeds-devops-progress/5630435#comments">
+						<img src="/sites/all/themes/networkcomputing/images/icons/NWC-comment.png">0 Comment					</a>
+				</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="/cloud-infrastructure/devops-maturity-ops-lags-behind/1163538790?itc=AD_NWC_VID_RHC_VIDBOX"><img typeof="foaf:Image" src="http://www.networkcomputing.com/sites/default/files/brightcove_thumbnail/1568176135_5278287864001_5277595499001-th.jpg" alt="" /></a>
+                                    <div class="flex-title">
+				<span class="black smaller strong">
+					<!-- Adding ITC ad keycode param for Omniture tracking
+						 AD_NWC_VID_RHC_VIDBOX is default for all videos
+						 TODO:: If the video is sponsored then keycode should be AD_NWC_VID_RHC_SPONSOREDVIDBOX
+					-->
+					<a href="/cloud-infrastructure/devops-maturity-ops-lags-behind/1163538790?itc=AD_NWC_VID_RHC_VIDBOX">In DevOps Maturity, Ops Lags Behind</a>				</span>
+                                    </div>
+                                    <div class="flex-comments">
+				<span class="more-link strong">
+					<a href="http://www.networkcomputing.com/cloud-infrastructure/devops-maturity-ops-lags-behind/1163538790#comments">
+						<img src="/sites/all/themes/networkcomputing/images/icons/NWC-comment.png">0 Comment					</a>
+				</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="/data-centers/devops-success-requires-equal-parts-dev-ops/545610082?itc=AD_NWC_VID_RHC_VIDBOX"><img typeof="foaf:Image" src="http://www.networkcomputing.com/sites/default/files/brightcove_thumbnail/1568176135_5278287803001_5277609240001-th.jpg" alt="" /></a>
+                                    <div class="flex-title">
+				<span class="black smaller strong">
+					<!-- Adding ITC ad keycode param for Omniture tracking
+						 AD_NWC_VID_RHC_VIDBOX is default for all videos
+						 TODO:: If the video is sponsored then keycode should be AD_NWC_VID_RHC_SPONSOREDVIDBOX
+					-->
+					<a href="/data-centers/devops-success-requires-equal-parts-dev-ops/545610082?itc=AD_NWC_VID_RHC_VIDBOX">DevOps Success Requires Equal Parts Dev &amp; Ops</a>				</span>
+                                    </div>
+                                    <div class="flex-comments">
+				<span class="more-link strong">
+					<a href="http://www.networkcomputing.com/data-centers/devops-success-requires-equal-parts-dev-ops/545610082#comments">
+						<img src="/sites/all/themes/networkcomputing/images/icons/NWC-comment.png">0 Comment					</a>
+				</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="/networking/why-you-finally-really-need-ipv6/518637356?itc=AD_NWC_VID_RHC_VIDBOX"><img typeof="foaf:Image" src="http://www.networkcomputing.com/sites/default/files/brightcove_thumbnail/1568176135_5034472467001_thumbnail-for-video-5034557888001.jpg" alt="" /></a>
+                                    <div class="flex-title">
+				<span class="black smaller strong">
+					<!-- Adding ITC ad keycode param for Omniture tracking
+						 AD_NWC_VID_RHC_VIDBOX is default for all videos
+						 TODO:: If the video is sponsored then keycode should be AD_NWC_VID_RHC_SPONSOREDVIDBOX
+					-->
+					<a href="/networking/why-you-finally-really-need-ipv6/518637356?itc=AD_NWC_VID_RHC_VIDBOX">Why You Finally Really Need IPv6</a>				</span>
+                                    </div>
+                                    <div class="flex-comments">
+				<span class="more-link strong">
+					<a href="http://www.networkcomputing.com/networking/why-you-finally-really-need-ipv6/518637356#comments">
+						<img src="/sites/all/themes/networkcomputing/images/icons/NWC-comment.png">0 Comment					</a>
+				</span>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <a class="more-link" href="/videos">ALL VIDEOS</a>
+                    </div>    </div>
+
+
+
+
+
+
+            </div>
+        </section>  <section class="block block-smartbox block-smartbox-reports-smartbox clearfix">
+
+
+            <div class="section-container auto" data-section>
+                <section class="active reports-panel">
+                    <p class="title" data-section-title><a href="#panel1">REPORTS</a></p>
+                    <div class="content" data-section-content>
+                        <h3><a href="http://www.allanalytics.com/lg_redirect.asp?piddl_lgid_docid=282333&cid=smartbox_techweb_analytics_7.300005724" target="_blank">The Evolution of Analytics: Opportunities & Challenges</a></h3>
+                        <p></p>
+                        <ul class="current-issue-buttons">
+                            <li><a href="http://www.allanalytics.com/lg_redirect.asp?piddl_lgid_docid=282333&cid=smartbox_techweb_analytics_7.300005724" class="tiny button" target="_blank">DOWNLOAD NOW!</a></li>
+                        </ul>
+                        <a href="http://www.informationweek.com/whitepaper/search?querytext=&search-results-topics=infrastructure&search-results-subtopics=&search-results-company=53472&startdatetimepicker=&enddatetimepicker=&search-results-format-researchreport=on" target="_blank">MORE REPORTS</a>
+                    </div>
+                </section>
+            </div>
+
+
+
+        </section>  <section class="block block-block block-block-21 clearfix">
+
+
+            <!--smart_paging_filter-->            <h2>TWITTER FEED</h2>
+            <div class="panel no-pad-all">
+                <a class="twitter-timeline" data-dnt="true" data-via="networkcomputin" href="https://twitter.com/search?q=from%3Anetworkcomputin+OR+%40networkcomputin+OR+%23networkcomputin" data-widget-id="449168825099878402" width="100%" height="400" data-chrome="noheader nofooter" style="margin: 0 auto;">Tweets about "from:networkcomputin OR @networkcomputin OR #networkcomputin"</a><script>
+<!--//--><![CDATA[// ><!--
+!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if( !d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");
+//--><!]]>
+</script></div>
+        </section>
+
+        </aside>
+        <aside role="complementary" class="large-12 sidebar-second columns sidebar">
+        </aside>
+
+
+        <div class="clearfix"></div>
+
+    </main>
+    <!--/.main-->
+
+    <!--.l-footer-->
+    <footer class="l-footer row" role="contentinfo">
+        <div class="footer large-12">
+            <section class="block block-block block-block-11">
+
+
+                <!--smart_paging_filter--><!-- took out  .columns in parent div in page.tpl.php -->
+                <div class="large-12 columns network-computing-footer"><img alt="Network Computing" src="http://img.deusm.com/networkcomputing/NWC_footer_logo_new.png" /><div class="row">
+                    <div class="large-3 columns">
+                        <ul><li><a href="/about-us">ABOUT US</a></li>
+                            <li><a href="/contact-us">CONTACT US</a></li>
+                            <li><a href="http://www.wrightsreprints.com/reprints/?magid=2200" target="_blank">REPRINTS</a></li>
+                            <!-- <li><a href="/customer-support">CUSTOMER SUPPORT</a></li> -->
+                        </ul></div>
+
+                    <div class="large-3 columns">
+                        <ul><li><a href="https://twitter.com/networkcomputin" target="_blank">TWITTER</a></li>
+                            <li><a href="https://www.facebook.com/networkcomputingcom" target="_blank">FACEBOOK</a></li>
+                        </ul></div>
+
+                    <div class="large-6 columns">
+                        <ul><li><a href="https://www.linkedin.com/groups/4403419" target="_blank">LINKEDIN</a></li>
+                            <li><a href="https://plus.google.com/+Networkcomputingcom/posts" target="_blank">GOOGLE+</a></li>
+                            <li><a href="/feeds">RSS</a></li>
+                        </ul></div>
+                </div>
+                </div>
+
+            </section>  <section class="block block-block block-block-18">
+
+
+            <!--smart_paging_filter--><div id="superfooter"><!-- BEGIN GREY FOOTER -->
+            <div align="center">
+                <div id="footergrey">
+                    <div id="top"><!--GREY FOOTER LEFT SIDE -->
+                        <div id="left"><a href="http://www.ubmtechweb.com/" target="_blank"><img alt="UBM Tech" border="0" height="111" src="http://img.deusm.com/images/UBM_Logo_PMS669.png" width="88" /></a></div>
+                        <!-- / GREY FOOTER LEFT SIDE --><!-- GREY FOOTER rightlinks SIDE -->
+
+                        <div id="rightlinks">
+                            <div class="list-div" id="tech-brands">
+                                <ul class="first-list"><li class="footer_title">TECHNOLOGY GROUP</li>
+                                    <li><a href="http://www.blackhat.com/us-14/" target="_blank">Black Hat</a></li>
+                                    <li><a href="http://contentmarketinginstitute.com/" target="_blank">Content Marketing Institute</a></li>
+                                    <li><a href="http://www.contentmarketingworld.com/" target="_blank">Content Marketing World</a></li>
+                                    <li><a href="http://www.darkreading.com/" target="_blank">Dark Reading</a></li>
+                                </ul><ul><li><a class="ui-link" href="http://www.enterpriseconnect.com/" rel="external" target="_blank">Enterprise Connect</a></li>
+                                <li><a href="http://www.servicemanagementfusion.com/" target="_blank">Fusion</a></li>
+                                <li><a href="http://www.gdconf.com/" target="_blank">GDC</a></li>
+                                <li><a href="http://www.gamasutra.com/" target="_blank">Gamasutra</a></li>
+                            </ul><ul><li><a href="http://www.thinkhdi.com/" target="_blank">HDI</a></li>
+                                <li><a href="http://www.icmi.com/" target="_blank">ICMI</a></li>
+                                <li><a href="http://www.informationweek.com/" target="_blank">InformationWeek</a></li>
+                                <li><a href="http://www.interop.com" target="_blank">Interop ITX</a></li>
+                            </ul><ul class="last-list"><li><a href="http://www.networkcomputing.com/" target="_blank">Network Computing</a></li>
+                                <li><a href="http://www.nojitter.com/" target="_blank">No Jitter</a></li>
+                                <li><a href="http://www.vrdconf.com/" target="_blank">VRDC</a></li>
+                            </ul></div>
+
+                            <div class="list-div" id="communities-served">
+                                <ul class="first-list"><li class="footer_title">COMMUNITIES SERVED</li>
+                                    <li><a href="http://tech.ubm.com/community-brands/content-marketing-2/" target="_blank">Content Marketing</a></li>
+                                    <li><a href="http://tech.ubm.com/community-brands/enterprise-it/" target="_blank">Enterprise IT</a></li>
+                                    <li><a href="http://tech.ubm.com/community-brands/enterprise-communications/" target="_blank">Enterprise Communications</a></li>
+                                    <li><a href="http://tech.ubm.com/community-brands/game-and-app-developers/" target="_blank">Game Developers</a></li>
+                                    <li><a href="http://tech.ubm.com/community-brands/information-security/" target="_blank">Information Security</a></li>
+                                    <li><a href="http://tech.ubm.com/community-brands/technical-service-and-support/" target="_blank">IT Services &amp; Support</a></li>
+                                </ul></div>
+
+                            <div class="list-div" id="working-with-us">
+                                <ul class="first-list"><li class="footer_title">WORKING WITH US</li>
+                                    <li><a href="http://createyournextcustomer.techweb.com/contact-us/" target="_blank">Advertising Contacts</a></li>
+                                    <li><a href="http://events.ubm.com/?company=10" target="_blank">Event Calendar</a></li>
+                                    <li><a href="http://createyournextcustomer.techweb.com/" target="_blank">Tech Marketing</a></li>
+                                    <li><a href="http://createyournextcustomer.techweb.com/" target="_blank">Solutions</a></li>
+                                    <li><a href="http://tech.ubm.com/contact-us/" target="_blank">Contact Us</a></li>
+                                    <li><a href="https://wrightsmedia.com/sites/ubm/index.cfm" target="_blank">Licensing</a></li>
+                                </ul></div>
+                        </div>
+                        <!-- / GREY FOOTER rightlinks --></div>
+                    <!--end top-->
+
+                    <div style="clear:both;"> </div>
+                    <!-- // to clear the right and left evenly // -->
+
+                    <div id="bottom">
+                        <ul><li><a class="blue" href="http://legal.us.ubm.com/terms-of-service/" target="_blank">Terms of Service</a></li>
+                            <li><a class="blue" href="http://legal.us.ubm.com/privacy-policy/" target="_blank">Privacy Statement</a></li>
+                            <li>Copyright © <script type="text/javascript">
+<!--//--><![CDATA[// ><!--
+document.write(new Date().getFullYear());
+//--><!]]>
+</script> UBM, All rights reserved</li>
+                        </ul></div>
+                </div>
+                <!-- / END footergrey --></div>
+            <!-- / END align="center" --><!-- / END GREY FOOTER --></div>
+            <!--container-->
+        </section>  <section class="block block-block block-block-20">
+
+
+            <!--smart_paging_filter--><!--Tracking Block--><script type="text/javascript" language="JavaScript" src="https://twimgs.com/nojitter/js/oasTrack_v1.js"></script>
+        </section>  <section class="block block-dfp block-dfp-ribbon text-center clear">
+
+
+            <div id="dfp-ad-ribbon-wrapper" class="dfp-tag-wrapper">	<div  id="dfp-ad-ribbon" class="dfp-tag-wrapper">
+                <script type="text/javascript">
+				googletag.cmd.push(function() {
+		  googletag.display("dfp-ad-ribbon");
+		});
+			  </script>
+            </div>
+            </div>
+        </section>  <section class="block block-dfp block-dfp-video text-center clear">
+
+
+            <div id="dfp-ad-video-wrapper" class="dfp-tag-wrapper">	<div  id="dfp-ad-video" class="dfp-tag-wrapper">
+                <script type="text/javascript">
+				googletag.cmd.push(function() {
+		  googletag.display("dfp-ad-video");
+		});
+			  </script>
+            </div>
+            </div>
+        </section>      </div>
+
+        <!--
+      <div class="copyright large-12 columns">
+        &copy; 2017 Network Computing All rights reserved.      </div>
+       -->
+
+    </footer>
+    <!--/.footer-->
+
+</div>
+<!--/.page -->
+<!-- SiteCatalyst code version: H.26
+Copyright 1996-2017 Adobe, Inc. -->
+<script type="text/javascript" src="https://twimgs.com/nojitter/js/techESBsites_s_code.js?oom221"></script>
+<script type="text/javascript"><!--
+
+s.pageURL="";
+s.pageName="networkcomputing.com Data centers Thomas LaRock Why DBAs Need Networking Skills";
+s.referrer="";
+s.server="";
+s.channel="data-centers";
+s.pageType="";
+s.prop1="";
+s.prop2="1324323";
+s.prop3="Network Computing | 1324323 | Why DBAs Need Networking Skills";
+s.prop4="Why DBAs Need Networking Skills";
+s.prop5="Data centers - Data centers";
+s.prop6="";
+s.prop7="Thomas LaRock";
+s.prop8="10.40.36.114 | Mozilla\/5.0 (X11; Linux x86_64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/57.0.2987.133 Safari\/537.36";
+s.prop9="";
+s.prop10="";
+s.prop11="Commentary";
+s.prop12="";
+s.prop13="";
+s.prop14="";
+s.prop15="";
+s.prop16="";
+s.prop17="";
+s.prop19="Un-Registered";
+s.prop20="20160909";
+s.prop21="";
+s.campaign="";
+s.state="";
+s.zip="";
+s.events="";
+s.products="";
+s.purchaseID="";
+s.eVar1="";
+s.eVar2="";
+s.eVar3="";
+s.eVar4="";
+s.eVar5="";
+s.eVar6="";
+s.eVar7="";
+s.eVar12="";
+s.eVar17="";
+s.eVar18="";
+s.eVar21="";
+s.eVar22="";
+s.eVar23="";
+s.eVar24="";
+s.eVar28="";
+s.hier1="Network Computing | Data centers";
+s.prop23="http:\/\/www.networkcomputing.com\/data-centers\/why-dbas-need-networking-skills\/1883902615";
+/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+var s_code=s.t();if(s_code)document.write(s_code)//--></script>
+<script type="text/javascript"><!--
+if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('%3C')+'\!-'+'-')
+//--></script>
+<noscript><img src="http://cmp.112.2o7.net/b/ss/cmpglobalvista/1/H.21--NS/0/2120827" height="1" width="1" alt=""></noscript>
+<!--/DO NOT REMOVE/-->
+<!-- End SiteCatalyst code version: H.26 -->
+<!-- AdsNative Code Start -->
+<script type="text/javascript"><!--
+var _AdsNativeOpts = {keywords: ['data-centers']};
+//--></script>
+<script type="text/javascript" src="https://static.adsnative.com/static/js/render.v1.js"></script>
+<!-- AdsNative Code End -->
+<script>beacon.pageview();</script>
+<script>feathr_account_id = "5772dda68e8027153edc8f4f";
+		(function() {
+			var loadBoomer = function() {
+				if (!/complete|loaded/.test(document.readyState)) {
+					setTimeout(loadBoomer, 10);
+					return
+				}
+				var scr = document.createElement("script");
+				scr.src = "//cdn.feathr.co/js/boomerang.min.js";
+				scr.async = true;
+				__feathr_loaded = true;
+				(document.getElementsByTagName("head")[0] || document.getElementsByTagName("script")[0].parentNode).appendChild(scr);
+			};
+			if (/complete|loaded/.test(document.readyState)) {
+				setTimeout(loadBoomer, 10);
+			} else if (window.addEventListener) {
+				window.addEventListener("load", loadBoomer, false);
+			} else {
+				window.attachEvent("onload", loadBoomer)
+			}
+		}());</script>
+<script>
+    (function ($, Drupal, window, document, undefined) {
+      $(document).foundation();
+    })(jQuery, Drupal, this, this.document);
+  </script>
+<!-- Google Code for Remarketing Tag -->
+<!--------------------------------------------------
+Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+<script type="text/javascript">
+	/* <![CDATA[ */
+	var google_conversion_id = 1007530244;
+	var google_custom_params = window.google_tag_params;
+	var google_remarketing_only = true;
+	/* ]]> */
+	</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1007530244/?value=0&amp;guid=ON&amp;script=0"/>
+    </div>
+</noscript>
+<script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"5476211"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script><noscript><img src="//bat.bing.com/action/0?ti=5476211&Ver=2" height="0" width="0" style="display:none; visibility: hidden;" /></noscript>
+</body>
+</html>
