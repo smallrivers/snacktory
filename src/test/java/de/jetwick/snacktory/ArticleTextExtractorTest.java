@@ -2610,6 +2610,20 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getAuthorDescription(), res.getAuthorDescription().startsWith("Enrique Nuñez ist seit mehr als 20 Jahren im Internet tätig und hat in dieser Zeit drei Startup-Unternehmen gegründet."));
     }
 
+    @Test
+    public void testBulldogReporter() throws Exception {
+        // https://www.bulldogreporter.com/are-you-guilty-of-pr-data-bias-what-why-and-how-to-check/
+        JResult res = new JResult();
+        res.setUrl("https://www.bulldogreporter.com/are-you-guilty-of-pr-data-bias-what-why-and-how-to-check/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("bulldogreporter.html")));
+        assertEquals("https://www.bulldogreporter.com/are-you-guilty-of-pr-data-bias-what-why-and-how-to-check/", res.getCanonicalUrl());
+        assertEquals("Are You Guilty of PR Data Bias? What, Why and How to Check", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("When it comes to marketing analysis, public relations has been known for output—media relationships developed, placements gained, awareness garnered, and perceptions changed."));
+        compareDates("2016-08-15 00:00:00", res.getDate());
+        assertEquals("Kelly Byrd", res.getAuthorName());
+        assertEquals("By Kelly Byrd, PR Engineer,", res.getAuthorDescription());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

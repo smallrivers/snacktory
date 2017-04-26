@@ -69,7 +69,7 @@ public class ArticleTextExtractor {
     private static final Pattern NEGATIVE_STYLE =
             Pattern.compile("hidden|display: ?none|font-size: ?small");
     private static final Pattern IGNORE_AUTHOR_PARTS =
-        Pattern.compile("(?<![a-zA-Z])(by|name|author|posted|twitter|handle|news)", Pattern.CASE_INSENSITIVE);
+        Pattern.compile("(?<![a-zA-Z])(by|name|author|posted|twitter|handle|news)(?![a-zA-Z])", Pattern.CASE_INSENSITIVE);
     private static final Set<String> IGNORED_TITLE_PARTS = new LinkedHashSet<String>() {
         {
             add("hacker news");
@@ -88,8 +88,8 @@ public class ArticleTextExtractor {
 
     private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
         Pattern.compile("By\\S*(.*)[\\.,].*"),
-            Pattern.compile("Door:\\S*(.*)"),
-            Pattern.compile("Über\\S*(.*)[\\.,:].*")
+        Pattern.compile("Door:\\S*(.*)"),
+        Pattern.compile("Über\\S*(.*)[\\.,:].*")
     );
 
     private static final List<Pattern> BAD_CANONICAL_PATTERNS = Arrays.asList(
@@ -1828,6 +1828,12 @@ public class ArticleTextExtractor {
                     if(matches == null || matches.size() == 0){
                         matches = doc.select("body [class=author-name]");
                         if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body [class=author-name]");
+                    }
+
+                    // hack for bulldogreporter.com
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("body [class=post-single-content box mark-links entry-content] em");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body [class=post-single-content box mark-links entry-content] em");
                     }
 
                     // hack for mycustomer.com/
