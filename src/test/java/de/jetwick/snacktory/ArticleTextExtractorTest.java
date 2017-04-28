@@ -7,10 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -893,10 +890,10 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("huffingtonpost2.html")));
         assertEquals("Millions of Consumers Abandon Hashtag for Backslash", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("In a special Silicon Valley \"Tech Report,\" sources confirmed Monday that millions of "));
-        assertEquals("Rebekah Iliff", res.getAuthorName());
+        assertEquals("By Rebekah Iliff", res.getAuthorName());
         assertEquals("Chief Strategy Officer, AirPR", res.getAuthorDescription());
         // Mon, 05 May 2014 16:04:09 -0400 (sailthru.date?)
-        compareDates("2014-05-05 20:04:09", res.getDate());
+        compareDates("2014-05-06 15:59:46 -0400", res.getDate());
     }
 
     @Test
@@ -1001,9 +998,11 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://fortune.com/2015/05/11/rackspaces-support-other-cloud/");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("fortune.html")));
-        assertEquals("Will Rackspace support Google's or Amazon's clouds? - Fortune", res.getTitle());
+        assertEquals("Will Rackspace support Google's or Amazon's clouds?", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Rackspace, a true cloud computing pioneer, is starting to sound like a company that will"));
-        compareDates("2015-05-11 23:01:19", res.getDate());
+        compareDates("2015-05-11 00:00:00", res.getDate());
+        assertEquals("Barb Darrow", res.getAuthorName());
+        assertEquals("http://fortune.com/author/barb-darrow/", res.getAuthorDescription());
     }
 
     @Test
@@ -2045,7 +2044,7 @@ public class ArticleTextExtractorTest {
         assertEquals("http://www.headlines-news.com/2016/05/14/1202189/congress-has-a-constitutional-duty-to-fix-puerto-rico-debt-crisis", res.getCanonicalUrl());
         assertTrue(res.getText(), res.getText().startsWith("By Brian Robertson, contributor"));
         assertTrue(res.getText(), res.getText().endsWith("the mainland with their own serious Next »"));
-        compareDates("2016-05-14 17:02:26", res.getDate());
+        compareDates("2016-05-14 00:00:00", res.getDate());
     }
 
     @Test
@@ -2563,7 +2562,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Why DBAs Need Networking Skills", res.getTitle());
         assertTrue(res.getText().startsWith("The cloud threatens everyone."));
         assertTrue(res.getText().endsWith("Remember, kids, the cloud isn’t a threat, it’s an opportunity."));
-        compareDates("2016-09-09 00:00:00", res.getDate());
+        compareDates("2016-09-09 11:30:00", res.getDate());
         assertEquals("Thomas LaRock", res.getAuthorName());
         assertEquals("Thomas LaRock", res.getAuthorDescription());
     }
@@ -2577,7 +2576,7 @@ public class ArticleTextExtractorTest {
         assertEquals("https://www.ge.com/digital/blog/devops-no-royal-use-we", res.getCanonicalUrl());
         assertEquals( "DevOps: No Royal in This Use of “We”", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("This is the first in a series of posts from the technical staff that GE Software had on the ground at Cloud Foundry Summit."));
-        compareDates("2015-07-13 00:00:00", res.getDate());
+        compareDates("2015-07-13 04:00:00", res.getDate());
         assertEquals("Denny Bulcao", res.getAuthorName());
         assertEquals("Senior Technical Writer at GE", res.getAuthorDescription());
     }
@@ -2591,7 +2590,6 @@ public class ArticleTextExtractorTest {
         assertEquals("http://www.enterpriseinnovation.net/article/big-data-survive-intensifying-squeeze-regulatory-compliance-1955902423?nopaging=1", res.getCanonicalUrl());
         assertEquals( "Big Data to survive the intensifying squeeze of regulatory compliance", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Today’s financial industry is experiencing immense amounts of pressure on all sides."));
-        compareDates("2016-05-10 00:00:00", res.getDate());
         assertEquals("Jason Demby", res.getAuthorName());
         assertEquals("By Jason Demby, \u200Edirector of Business Development of Financial Services, Datameer | 2016-05-10", res.getAuthorDescription());
     }
@@ -2622,6 +2620,19 @@ public class ArticleTextExtractorTest {
         compareDates("2016-08-15 00:00:00", res.getDate());
         assertEquals("Kelly Byrd", res.getAuthorName());
         assertEquals("By Kelly Byrd, PR Engineer,", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testPatch() throws Exception {
+        // https://patch.com/new-york/kingspark/s/futh4/how-much-does-it-really-cost-to-remodel-your-bathroom
+        JResult res = new JResult();
+        res.setUrl("https://patch.com/new-york/kingspark/s/futh4/how-much-does-it-really-cost-to-remodel-your-bathroom");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("patch.html")));
+        assertEquals("https://patch.com/us/across-america/how-much-does-it-really-cost-renovate-your-bathroom", res.getCanonicalUrl());
+        assertEquals("How Much Does It Really Cost to Remodel Your Bathroom?", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("In every home makeover show, there’s one room that gets the most “oohs” and “aahs.”"));
+        assertEquals("HomeAdvisor", res.getAuthorName());
+        assertEquals("https://patch.com/users/home-advisor", res.getAuthorDescription());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
