@@ -2688,6 +2688,34 @@ public class ArticleTextExtractorTest {
         assertEquals("By Scott Gordon, Senior Director, Digital Marketing at Experian", res.getAuthorDescription());
     }
 
+    @Test
+    public void testEINNews() throws Exception {
+        // http://www.einnews.com/pr_news/339534444/rackspace-reaches-openstack-leadership-milestone-six-years-and-one-billion-server-hours
+        JResult res = new JResult();
+        res.setUrl("http://www.einnews.com/pr_news/339534444/rackspace-reaches-openstack-leadership-milestone-six-years-and-one-billion-server-hours");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("einnews.html")));
+        assertEquals("http://www.einnews.com/pr_news/339534444/rackspace-reaches-openstack-leadership-milestone-six-years-and-one-billion-server-hours", res.getCanonicalUrl());
+        assertEquals("Rackspace Reaches OpenStack Leadership Milestone, Six Years and One Billion Server Hours", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("/EINPresswire.com/ -- SAN FRANCISCO, CA--(Marketwired - August 11, 2016) - Rackspace® (NYSE: RAX) today announced from"));
+        compareDates("2016-08-11 17:15:00", res.getDate());
+        assertEquals("Christina Weaver 210-312-4593", res.getAuthorName());
+        assertEquals("Media Contact: Christina Weaver 210-312-4593 christina.weaver@rackspace.com", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testEINNews1() throws Exception {
+        // http://www.einnews.com/pr_news/336348008/hybrid-cloud-computing-industry-global-market-to-grow-at-cagr-34-4-between-2016-2022
+        JResult res = new JResult();
+        res.setUrl("http://www.einnews.com/pr_news/336348008/hybrid-cloud-computing-industry-global-market-to-grow-at-cagr-34-4-between-2016-2022");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("einnews_1.html")));
+        assertEquals("http://www.einnews.com/pr_news/336348008/hybrid-cloud-computing-industry-global-market-to-grow-at-cagr-34-4-between-2016-2022", res.getCanonicalUrl());
+        assertEquals("Hybrid Cloud Computing Industry Global Market to grow at CAGR 34.4% between 2016 – 2022", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Hybrid Cloud Computing Industry Global Market to grow at CAGR 34.4% between 2016 – 2022"));
+        compareDates("2016-07-22 15:26:09", res.getDate());
+        assertEquals("Norah Trent wiseguyreports +1 646 845 9349 / +44 208 133 9349", res.getAuthorName());
+        assertEquals("Norah Trent wiseguyreports +1 646 845 9349 / +44 208 133 9349 email us here", res.getAuthorDescription());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

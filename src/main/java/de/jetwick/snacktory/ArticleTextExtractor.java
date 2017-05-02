@@ -1777,6 +1777,26 @@ public class ArticleTextExtractor {
                     System.out.println("AUTHOR: [class=kasten_titel]");
             }
 
+            // www.einnews.com
+            // http://www.einnews.com/pr_news/339534444/rackspace-reaches-openstack-leadership-milestone-six-years-and-one-billion-server-hours
+            if (authorName.isEmpty()) {
+                result = doc.select("p[class=contact]").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.ownText());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: p[class=contact]");
+                }
+            }
+
+            // www.einnews.com
+            // http://www.einnews.com/pr_news/336348008/hybrid-cloud-computing-industry-global-market-to-grow-at-cagr-34-4-between-2016-2022
+            if (authorName.isEmpty()) {
+                result = doc.select("p:contains(Media Contact) strong").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.parent().ownText());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: p strong");
+                }
+            }
+
             // meta tag approaches, get content
             if (authorName.isEmpty()) {
                 result = doc.select("head meta[name=author]").first();
