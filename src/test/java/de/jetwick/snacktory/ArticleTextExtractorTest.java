@@ -2662,6 +2662,19 @@ public class ArticleTextExtractorTest {
         assertEquals("DAVID HONIG, Vice President Strategy, Corporate Partnerships, Dynamic Signal", res.getAuthorDescription());
     }
 
+    @Test
+    public void testChiefMarketer() throws Exception {
+        // http://www.chiefmarketer.com/ways-data-and-martech-can-help-communications-leaders/
+        JResult res = new JResult();
+        res.setUrl("http://www.chiefmarketer.com/ways-data-and-martech-can-help-communications-leaders/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("chiefmarketer.html")));
+        assertEquals("http://www.chiefmarketer.com/ways-data-and-martech-can-help-communications-leaders/", res.getCanonicalUrl());
+        assertEquals("Ways Data and Martech Can Help Communications Leaders", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Today’s martech and data explosion holds the key for chief communications officers to gain the data-driven insights, projections and authority that their C-suite counterparts already enjoy."));
+        assertEquals("Dave Hawley", res.getAuthorName());
+        assertEquals("Dave Hawley is vice president of marketing at Dynamic Signal.", res.getAuthorDescription());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {

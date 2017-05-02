@@ -1,0 +1,2188 @@
+
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="c ie ie7" lang="en-US" prefix="og: http://ogp.me/ns#">
+<![endif]-->
+<!--[if IE 8]>
+<html class="c ie ie8" lang="en-US" prefix="og: http://ogp.me/ns#">
+<![endif]-->
+<!--[if IE 9]>
+<html class="c ie ie9" lang="en-US" prefix="og: http://ogp.me/ns#">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="en-US" prefix="og: http://ogp.me/ns#" class="c">
+<!--<![endif]-->
+<head>
+
+
+    <!--Custom Title -->
+    <title>Ways Data and Martech Can Help Communications Leaders - Chiefmarketer</title>
+    <!--Custom Title End -->
+
+    <!-- Meta -->
+    <meta charset="utf-8" /><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,t,n){function r(n){if(!t[n]){var o=t[n]={exports:{}};e[n][0].call(o.exports,function(t){var o=e[n][1][t];return r(o||t)},o,o.exports)}return t[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(e,t,n){function r(){}function o(e,t,n){return function(){return i(e,[(new Date).getTime()].concat(u(arguments)),t?null:this,n),t?void 0:this}}var i=e("handle"),a=e(2),u=e(3),c=e("ee").get("tracer"),f=NREUM;"undefined"==typeof window.newrelic&&(newrelic=f);var s=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",p=l+"ixn-";a(s,function(e,t){f[t]=o(l+t,!0,"api")}),f.addPageAction=o(l+"addPageAction",!0),f.setCurrentRouteName=o(l+"routeName",!0),t.exports=newrelic,f.interaction=function(){return(new r).get()};var d=r.prototype={createTracer:function(e,t){var n={},r=this,o="function"==typeof t;return i(p+"tracer",[Date.now(),e,n],r),function(){if(c.emit((o?"":"no-")+"fn-start",[Date.now(),r,o],n),o)try{return t.apply(this,arguments)}finally{c.emit("fn-end",[Date.now()],n)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,t){d[t]=o(p+t)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,(new Date).getTime()])}},{}],2:[function(e,t,n){function r(e,t){var n=[],r="",i=0;for(r in e)o.call(e,r)&&(n[i]=t(r,e[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;t.exports=r},{}],3:[function(e,t,n){function r(e,t,n){t||(t=0),"undefined"==typeof n&&(n=e?e.length:0);for(var r=-1,o=n-t||0,i=Array(o<0?0:o);++r<o;)i[r]=e[t+r];return i}t.exports=r},{}],ee:[function(e,t,n){function r(){}function o(e){function t(e){return e&&e instanceof r?e:e?c(e,u,i):i()}function n(n,r,o){if(!p.aborted){e&&e(n,r,o);for(var i=t(o),a=v(n),u=a.length,c=0;c<u;c++)a[c].apply(i,r);var f=s[w[n]];return f&&f.push([y,n,r,i]),i}}function d(e,t){b[e]=v(e).concat(t)}function v(e){return b[e]||[]}function g(e){return l[e]=l[e]||o(n)}function m(e,t){f(e,function(e,n){t=t||"feature",w[n]=t,t in s||(s[t]=[])})}var b={},w={},y={on:d,emit:n,get:g,listeners:v,context:t,buffer:m,abort:a,aborted:!1};return y}function i(){return new r}function a(){(s.api||s.feature)&&(p.aborted=!0,s=p.backlog={})}var u="nr@context",c=e("gos"),f=e(2),s={},l={},p=t.exports=o();p.backlog=s},{}],gos:[function(e,t,n){function r(e,t,n){if(o.call(e,t))return e[t];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,t,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[t]=r,r}var o=Object.prototype.hasOwnProperty;t.exports=r},{}],handle:[function(e,t,n){function r(e,t,n,r){o.buffer([e],r),o.emit(e,t,n)}var o=e("ee").get("handle");t.exports=r,r.ee=o},{}],id:[function(e,t,n){function r(e){var t=typeof e;return!e||"object"!==t&&"function"!==t?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");t.exports=r},{}],loader:[function(e,t,n){function r(){if(!h++){var e=y.info=NREUM.info,t=l.getElementsByTagName("script")[0];if(setTimeout(f.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&t))return f.abort();c(b,function(t,n){e[t]||(e[t]=n)}),u("mark",["onload",a()],null,"api");var n=l.createElement("script");n.src="https://"+e.agent,t.parentNode.insertBefore(n,t)}}function o(){"complete"===l.readyState&&i()}function i(){u("mark",["domContent",a()],null,"api")}function a(){return(new Date).getTime()}var u=e("handle"),c=e(2),f=e("ee"),s=window,l=s.document,p="addEventListener",d="attachEvent",v=s.XMLHttpRequest,g=v&&v.prototype;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:v,REQ:s.Request,EV:s.Event,PR:s.Promise,MO:s.MutationObserver},e(1);var m=""+location,b={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1016.min.js"},w=v&&g&&g[p]&&!/CriOS/.test(navigator.userAgent),y=t.exports={offset:a(),origin:m,features:{},xhrWrappable:w};l[p]?(l[p]("DOMContentLoaded",i,!1),s[p]("load",r,!1)):(l[d]("onreadystatechange",o),s[d]("onload",r)),u("mark",["firstbyte",a()],null,"api");var h=0},{}]},{},["loader"]);</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Icons -->
+    <link rel="shortcut icon" href="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/favicon.ico">
+
+    <!-- FontAwesome -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+    <!-- C -->
+    <link href="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/build/css/client-app.css" rel="stylesheet">
+
+    <base href="http://www.chiefmarketer.com" />
+
+    <!-- WP HEAD -->
+    <link rel="dns-prefetch" href="//tags.tiqcdn.com">
+
+    <!-- This site is optimized with the Yoast SEO plugin v2.3.5 - https://yoast.com/wordpress/plugins/seo/ -->
+    <meta name="description" content="Today’s martech and data explosion holds the key for chief communications officers to gain the data-driven insights, projections and authority that their C-suite counterparts already enjoy."/>
+    <link rel="canonical" href="http://www.chiefmarketer.com/ways-data-and-martech-can-help-communications-leaders/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Ways Data and Martech Can Help Communications Leaders - Chiefmarketer" />
+    <meta property="og:description" content="Today’s martech and data explosion holds the key for chief communications officers to gain the data-driven insights, projections and authority that their C-suite counterparts already enjoy." />
+    <meta property="og:url" content="http://www.chiefmarketer.com/ways-data-and-martech-can-help-communications-leaders/" />
+    <meta property="og:site_name" content="Chiefmarketer" />
+    <meta property="article:publisher" content="https://www.facebook.com/chiefmarketer" />
+    <meta property="article:tag" content="MarTech" />
+    <meta property="article:section" content="Facts &amp; Figures" />
+    <meta property="article:published_time" content="2017-02-16T09:12:03+00:00" />
+    <meta property="og:image" content="http://cdn.chiefmarketer.com/wp-content/uploads/2015/12/idea-tech-technology-plan-strategy-3001.jpg" />
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:description" content="Today’s martech and data explosion holds the key for chief communications officers to gain the data-driven insights, projections and authority that their C-suite counterparts already enjoy."/>
+    <meta name="twitter:title" content="Ways Data and Martech Can Help Communications Leaders - Chiefmarketer"/>
+    <meta name="twitter:site" content="@chief_marketer"/>
+    <meta name="twitter:domain" content="Chiefmarketer"/>
+    <meta name="twitter:image" content="http://cdn.chiefmarketer.com/wp-content/uploads/2015/12/idea-tech-technology-plan-strategy-3001.jpg"/>
+    <meta name="twitter:creator" content="@chief_marketer"/>
+    <!-- / Yoast SEO plugin. -->
+
+    <link rel="alternate" type="application/rss+xml" title="Chiefmarketer &raquo; Feed" href="http://www.chiefmarketer.com/feed/" />
+    <link rel="alternate" type="application/rss+xml" title="Chiefmarketer &raquo; Comments Feed" href="http://www.chiefmarketer.com/comments/feed/" />
+    <script type="text/javascript">
+var utag_data = {
+    "site_name": "Chiefmarketer",
+    "site_description": "Chiefmarketer",
+    "post_category": [
+        "facts-figures",
+        "martech",
+        "technology"
+    ],
+    "post_tags": [
+        "martech"
+    ],
+    "page_type": "post",
+    "post_title": "Ways Data and Martech Can Help Communications Leaders",
+    "post_author": "aiwpadmin",
+    "post_date": "2017\/02\/16",
+    "aicore_id": [
+        "58a5b0644170e226428b45b8"
+    ],
+    "aicore_collection": [
+        "cmwp_post"
+    ],
+    "aicore_market": [
+        "marketing"
+    ],
+    "aicore_updated": [
+        "2017-02-16 14:12:05"
+    ],
+    "aicore_indexed": [
+        "2017-02-16 14:12:05"
+    ],
+    "tps_options": [
+        "a:1:{s:7:\"enabled\";s:6:\"global\";}"
+    ],
+    "custom_byline": [
+        "Dave Hawley"
+    ],
+    "edit_lock": [
+        "1487254198:125"
+    ],
+    "edit_last": [
+        "125"
+    ],
+    "thumbnail_id": [
+        "199342"
+    ],
+    "read_discuss": [
+        "0"
+    ],
+    "item": [
+        "Article"
+    ],
+    "carousel": [
+        "0"
+    ],
+    "yoast_wpseo_focuskw": [
+        "martech"
+    ],
+    "yoast_wpseo_metadesc": [
+        "Today\u2019s martech and data explosion holds the key for chief communications officers to gain the data-driven insights, projections and authority that their C-suite counterparts already enjoy."
+    ],
+    "yoast_wpseo_linkdex": [
+        "78"
+    ]
+};
+</script>
+    <link rel="alternate" type="application/rss+xml" title="Chiefmarketer &raquo; Ways Data and Martech Can Help Communications Leaders Comments Feed" href="http://www.chiefmarketer.com/ways-data-and-martech-can-help-communications-leaders/feed/" />
+    <link rel='stylesheet' id='custom_style-css'  href='http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/css/custom.css?ver=1.1' type='text/css' media='all' />
+    <link rel='stylesheet' id='form-manager-css-css'  href='http://cdn.chiefmarketer.com/wp-content/plugins/wordpress-form-manager/css/style.css?ver=4.1' type='text/css' media='all' />
+    <link rel='stylesheet' id='interncss-css'  href='http://cdn.chiefmarketer.com/wp-content/plugins/wp-intern-ads/internAds.css?ver=4.1' type='text/css' media='all' />
+    <link rel='stylesheet' id='AICMS_POPUP_CSS-css'  href='http://cdn.chiefmarketer.com/wp-content/plugins/aicms-popup/aicms-popup.css?ver=4.1' type='text/css' media='all' />
+    <link rel='stylesheet' id='theiaPostSlider-css'  href='http://cdn.chiefmarketer.com/wp-content/plugins/theia-post-slider/css/font-theme.css?ver=1.9.1' type='text/css' media='all' />
+    <link rel='stylesheet' id='theiaPostSlider-font-css'  href='http://cdn.chiefmarketer.com/wp-content/plugins/theia-post-slider/fonts/style.css?ver=1.9.1' type='text/css' media='all' />
+    <link rel='stylesheet' id='pcs-styles-css'  href='http://cdn.chiefmarketer.com/wp-content/plugins/post-content-shortcodes/default-styles.css?ver=0.3' type='text/css' media='screen' />
+    <script type='text/javascript' src='http://www.chiefmarketer.com/wp-includes/js/jquery/jquery.js?ver=1.11.1'></script>
+    <script type='text/javascript' src='http://www.chiefmarketer.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+    <script type='text/javascript'>
+/* <![CDATA[ */
+var fm_user_I18n = {"ajaxurl":"http:\/\/www.chiefmarketer.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+    <script type='text/javascript' src='http://cdn.chiefmarketer.com/wp-content/plugins/wordpress-form-manager/js/userscripts.js?ver=4.1'></script>
+    <script type='text/javascript' src='http://cdn.chiefmarketer.com/wp-content/plugins/wp-intern-ads/jquery.internads.js?ver=1.0'></script>
+    <script type='text/javascript' src='http://cdn.chiefmarketer.com/wp-content/plugins/aicms-videos/js/jquery.fitvids.js?ver=4.1'></script>
+    <script type='text/javascript' src='http://cdn.chiefmarketer.com/wp-content/plugins/theia-post-slider/js/balupton-history.js/jquery.history.js?ver=1.7.1'></script>
+    <script type='text/javascript' src='http://cdn.chiefmarketer.com/wp-content/plugins/theia-post-slider/js/async.min.js?ver=14.09.2014'></script>
+    <script type='text/javascript' src='http://cdn.chiefmarketer.com/wp-content/plugins/theia-post-slider/js/tps.js?ver=1.9.1'></script>
+    <script type='text/javascript' src='http://cdn.chiefmarketer.com/wp-content/plugins/theia-post-slider/js/tps-transition-slide.js?ver=1.9.1'></script>
+    <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.chiefmarketer.com/xmlrpc.php?rsd" />
+    <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://cdn.chiefmarketer.com/wp-includes/wlwmanifest.xml" />
+    <meta name="generator" content="WordPress 4.1" />
+    <link rel='shortlink' href='http://www.chiefmarketer.com/?p=221664' />
+    <script type="text/javascript" src="http://apps.decisionbriefs.com/js/custom/bigquery/tracking.js"></script><script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('article.article h3.title a').click(function(e){
+			e.preventDefault();
+			var action = 'click';
+
+			var href = jQuery(this).attr('href');
+
+			if(href == undefined){
+				return;
+			}
+
+			if(href.indexOf('http://') === 0){
+				href = href.replace(/^(?:\/\/|[^\/]+)*\//, "");
+			}
+
+			if(href.substring(0,1) == '/'){
+				var href = href.substring(1); //remove first '/'
+			}
+
+			var parts = href.split('/');
+			var entity_id;
+			var entity_collection;
+			var owner = parts[0];
+
+			//get the collection name
+			if(parts.length < 3){
+				window.location.href = jQuery(this).attr('href');
+				return true;
+			}
+
+			entity_id = parts[2];
+			entity_collection = parts[1];
+
+			owner = jQuery(this).attr('data-owner');
+			entity_collection = jQuery(this).attr('data-collection');
+			entity_id = jQuery(this).attr('data-entity-id');
+
+			t_log_action(
+				action,
+				entity_id,
+				entity_collection,
+				owner,
+				null,
+				'', //channel
+				'', //widget name
+				null,
+				null,
+				null
+			);
+
+			t_log_actions();
+			window.open(jQuery(this).attr('href'),'_blank');
+		});
+	});
+</script>
+    <script type="text/javascript">
+	t_set_identity_info(
+		'199.59.150.181', //ip
+		'', //identity id
+		'', //session id
+		 'd41d8cd98f00b204e9800998ecf8427e' //hash email
+	);
+
+
+	t_set_app_info(
+		'wp-chiefmarketer', //application
+		'chiefmarketer', //brand
+		'marketing', //market
+		null //profiles_collection
+	);
+
+	t_search_url = '/';
+	</script>
+    <style>
+			.theiaPostSlider_nav.fontTheme ._title,
+			.theiaPostSlider_nav.fontTheme ._text {
+				line-height: 30px;
+			}
+
+			.theiaPostSlider_nav.fontTheme ._button {
+				color: #213469;
+			}
+
+			.theiaPostSlider_nav.fontTheme ._button ._2 span {
+				font-size: 30px;
+				line-height: 30px;
+			}
+
+			.theiaPostSlider_nav.fontTheme ._button:hover,
+			.theiaPostSlider_nav.fontTheme ._button:focus {
+				color: #3553a9;
+			}
+
+			.theiaPostSlider_nav.fontTheme ._disabled {
+				color: #444444 !important;
+			}
+		</style>
+    <!-- lytics -->
+    <script type="text/javascript">
+        window.liosetup = window["liosetup"] || {};
+        window.liosetup.loadid = true;
+    </script>
+    <script src="https://c.lytics.io/api/tag/9b46789510679243c3fcdd2020c44b56/lio.js"></script>
+    <script>
+        jstag.send({"application":"ChiefMarketer","technology":"wordpress","brand":"ChiefMarketer","market":"marketing","content_type":"post","page_title":"Ways Data and Martech Can Help Communications Leaders","ip":"199.59.150.181","wp_category":["Facts &amp; Figures","MarTech","Technology"],"wp_tag":["MarTech"]});
+    </script>
+    <!-- end lytics -->
+
+    <script src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/js/jquery.cookie.js"></script>
+
+    <!-- Modernizr -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <!-- Conditionals -->
+    <!--[if lte IE 8]>
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+    <![endif]-->
+    <!--[if gte IE 9]>
+    <style type="text/css">
+        .gradient {
+            filter: none;
+        }
+    </style>
+    <![endif]-->
+    <!--[if IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lte IE 9]>
+    <script src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/src/bower_components/Placeholders.js/build/placeholders.min.js"></script>
+    <script src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/src/bower_components/Placeholders.js/build/placeholders.jquery.min.js"></script>
+    <script>
+        Placeholders.enable();
+    </script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.3/es5-shim.min.js"></script>
+    <script src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/src/bower_components/respond/dest/respond.min.js"></script>
+    <script src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/src/bower_components/respond/dest/respond.matchmedia.addListener.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/build/css/client-app-ie8.css">
+    <link rel="stylesheet" href="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/build/fonts/roboto_condensed_ie8/stylesheet.css">
+    <style>
+        .content-wrap > .sidebar, .content-wrap > .content-main {
+            overflow-y: scroll;
+        }
+    </style>
+    <script>
+        if (!Object.create) {
+            Object.create = (function(){
+                function F(){}
+
+                return function(o){
+                    if (arguments.length != 1) {
+                        throw new Error('Object.create implementation only accepts one parameter.');
+                    }
+                    F.prototype = o;
+                    return new F()
+                }
+            })()
+        }
+        if (typeof Object.getPrototypeOf !== "function")
+            Object.getPrototypeOf = "".__proto__ === String.prototype
+                ? function (object) {
+                return object.__proto__;
+            }
+                : function (object) {
+                // May break if the constructor has been tampered with
+                return object.constructor.prototype;
+            };
+    </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.2/ie8.js"></script>
+    <![endif]-->
+
+    <!-- start lytics audience integration -->
+    <script type="text/javascript">
+    //var ly_cid="1372";
+    // var ly_field="[SOME-FIELD-NAME]"; // uncomment if overriding default identifier
+    // var ly_value="[SOME-FIELD-VALUE]"; // uncomment if overriding default identifier
+
+    //(function(d,w){ var cookies, lychunk; function readCookie(name,c,C,i){ if(cookies){ return cookies[name]; } c = document.cookie.split('; '); cookies = {}; for(i=c.length-1; i>=0; i--){ C = c[i].split('='); cookies[C[0]] = C[1]; } return cookies[name]; } function setCookie(name, value, minutes) { var d = new Date(); d.setTime(d.getTime() + (minutes*60*1000)); var expires = "expires="+d.toUTCString(); document.cookie = name + "=" + value + "; " + expires; } w["lio"] = w["lio"] || { loaded:false, segmentsCookie : {}, segmentsHash : {}, _uid : readCookie("seerid"), getlioCookie:function(){ return readCookie("ly_segs"); }, segmentscb:function(json){ if ("data" in json) { if ("segments" in json.data) { var segList = json.data.segments; for (var i = segList.length - 1; i >= 0; i--) { this.segmentsHash[segList[i]] = segList[i]; }; this.segmentsCookie = this.segmentsHash; setCookie("ly_segs", JSON.stringify(this.segmentsHash), 15); } } lio.loaded=true; } }; if(readCookie("ly_segs") !== undefined){ lio.segmentsCookie = JSON.parse(readCookie("ly_segs")); } if(typeof ly_field !== 'undefined' && typeof ly_value !== 'undefined'){ lychunk = ly_cid+"/"+ly_field+"/"+ly_value; }else{ lychunk = ly_cid+"/"+readCookie("seerid"); } apiurl = "https://api.lytics.io/api/me/"+lychunk+"?segments=true&callback=lio.segmentscb"; document.write('\x3Cscript type="text/javascript" src="' + apiurl + '">\x3C/script>'); }(document,window));
+    </script>
+    <!-- end lytics audience integration -->
+
+    <script type="text/javascript">
+    //window["optimizely"] = window['optimizely'] || [];
+    //window["optimizely"].push(["customTag", lio.segmentsCookie]);
+    //window['optimizely'].push(["activate"]);
+    </script>
+
+    <script src="//cdn.optimizely.com/js/314966508.js"></script>
+
+    <!-- jQuery migrate -->
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script type="text/javascript">
+    (function() {
+        function async_load(script_url){
+            var protocol = ('https:' == document.location.protocol ? 'https://' : 'http://');
+            var s = document.createElement('script'); s.src = protocol + script_url;
+            var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+        }
+        bm_website_code = 'E2DE362A646D438E';
+        jQuery(document).ready(function(){async_load('asset.pagefair.com/measure.min.js')});
+        jQuery(document).ready(function(){async_load('asset.pagefair.net/ads.min.js')});
+    })();
+</script>
+
+</head>
+<body class="single single-post postid-221664 single-format-standard" ng-app="chemClient">
+
+<!-- Loading script asynchronously -->
+<script type="text/javascript">
+ (function(a,b,c,d){
+ a='//tags.tiqcdn.com/utag/accessintel/chiefmarketer/prod/utag.js';
+ b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
+ a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
+ })();
+</script>
+<!-- END: T-WP -->
+
+
+<!-- Navigation top -->
+<nav class="navbar navbar-white navbar-fixed-top" role="navigation"  >
+    <a class="visible-sm-inline-block visible-xs-inline-block visible-md-inline-block pull-left btn navbar-btn navbar-toggle-btn" id="toggle-sidebar" style=""><i class="fa fa-bars fa-2x"></i></a>    <div class="navbar-header">
+    <a class="navbar-brand" href="/"><img width="256" height="48" class="logo-nav" src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/build/img/CMLogo.svg" alt="ChiefMarketer" /></a>
+    <script>
+            jQuery(function() {
+                if ( !Modernizr.svg ) {
+                    jQuery('.logo-nav').eq(0).attr('src', 'http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/build/img/CMLogo.png' );
+                }
+            });
+        </script>
+</div>
+
+    <ul class="nav navbar-nav navbar-right">
+        <li class="visible-sm-inline-block dropdown nav-follow-toggle">
+            <a class="dropdown-toggle"><span class="follow-link">Follow Us</span> <i class="fa fa-share fa-2x"></i></a>
+            <div class="dropdown-menu">
+                <p>
+                    <a target="_blank" href="http://www.facebook.com/chiefmarketer" class="text-orange"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a target="_blank" href="http://www.twitter.com/chief_marketer" class="text-orange"><i class="fa fa-twitter-square fa-2x"></i></a>
+                    <a target="_blank" href="https://plus.google.com/+ChiefmarketerCM/posts" class="text-orange"><i class="fa fa-google-plus-square fa-2x"></i></a>
+                    <a target="_blank" href="/feed/?cat=54084" class="text-orange"><i class="fa fa-rss-square fa-2x"></i></a>
+                    <!-- <a href="#" class="text-orange"><i class="fa fa-envelope-square fa-2x"></i></a> -->
+                </p>
+            </div>
+        </li>
+        <li class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block nav-search-toggle dropdown">
+            <a class="dropdown-toggle" href="#"><i class="fa fa-search fa-2x"></i></a>
+            <form class="navbar-form" role="search" action="http://www.chiefmarketer.com">
+                <div class="form-group">
+                    <input type="text" class="input-lg" placeholder="search" ng-click="$event.stopPropagation(); $event.preventDefault()" name="s"/>
+                </div>
+            </form>
+        </li>
+        <li class="brand-primary dropdown">
+            <a class="dropdown-toggle" href="#"><i class="fa fa-bars fa-2x"></i><span class="sr-only">Info</span></a>
+            <ul class="dropdown-menu">
+                <li><a href="http://www.chiefmarketer.com/about-us/">About</a></li>
+                <li><a href="http://www.chiefmarketer.com/contact-us/">Contact</a></li>
+                <li><a href="/advertising-marketing-services/">Advertise</a></li>
+                <li><a href="http://www.chiefmarketer.com/subscribe/" target="_blank">Subscribe</a></li>
+            </ul>
+        </li>
+        <li class="brand-primary dropdown nav-dropdown-login-menu">
+            <!--id="login-popup" class="dropdown-toggle"-->
+            <a target="_blank" href="http://www.chiefmarketer.com/subscribe/" style="padding-top: 14px; padding-bottom: 14px;">Subscribe<span class="sr-only">Log In</span></a>
+            <!--
+                            <div class="dropdown-menu">
+
+                                <form action="http://apps.dev.chiefmarketer.com/auth/auth/login" method="post" name="loginbody">
+                                    <div class="form-group">
+                                        <label for="aicore_email">Email address</label>
+                                        <input id="aicore_email" class="form-control" type="text" name="email" placeholder="Email" value="" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="aicore_password">Password</label>
+                                        <input id="aicore_password" class="form-control" type="password" name="password" placeholder="Password" value="" />
+
+                                        <p class="help-block">
+                                            <a href="/password-reset/">Forgot Password?</a>
+                                            |
+                                            <a href="http://engage.dev.chiefmarketer.com/user/add">Register</a>
+                                        </p>
+                                        <p class="help-block">
+                                            Please contact <a href="mailto:clientservices@accessintel.com">clientservices@accessintel.com</a> if you are unable to login.
+                                        </p>
+                                    </div>
+                                    <input type="hidden" name="return_url" value="http://www.chiefmarketer.com/ways-data-and-martech-can-help-communications-leaders/" />
+                                    <input type="hidden" name="fail_url" value="http://beta.chiefmarketer.com/login/" />
+                                    <button class="btn btn-primary pull-right" name="submit" type="submit">Log In <i class="fa fa-chevron-circle-right"></i></button>
+                                </form>
+                            </div>
+            -->
+        </li>
+    </ul>
+
+    <p class="navbar-text navbar-right visible-md-block visible-lg-block">
+        <a target="_blank" href="http://www.facebook.com/chiefmarketer" class="text-orange"><i class="fa fa-facebook-square fa-2x"></i><span class="sr-only">Facebook</span></a>
+        <a target="_blank" href="http://www.twitter.com/chief_marketer" class="text-orange"><i class="fa fa-twitter-square fa-2x"></i><span class="sr-only">Twitter</span></a>
+        <a target="_blank" href="https://plus.google.com/+ChiefmarketerCM/posts" class="text-orange"><i class="fa fa-google-plus-square fa-2x"></i><span class="sr-only">Google+</span></a>
+        <a target="_blank" href="/feed/?cat=54084" class="text-orange"><i class="fa fa-rss-square fa-2x"></i><span class="sr-only">RSS</span></a>
+        <!-- <a target="_blank" href="#" class="text-orange"><i class="fa fa-envelope-square fa-2x"></i><span class="sr-only">Mail</span></a> -->
+    </p>
+
+
+    <p class="navbar-text navbar-left hidden-xs hidden-sm hidden-md bg-accessory-2-gradient navbar-text-take-space">
+        <b class="label label-danger label-thick label-arrow">Highlights<span class="hide">:</span></b>&nbsp;
+        <span c-scroll timeout="5000">
+            <!-- List your highlights here. -->
+                                                        <a href="http://partners.chiefmarketer.com/acxiom/content/delivering-a-great-customer-experience" c-scroll-item class="ng-hide fadeInRight">Delivering a Great Customer Experience</a>
+                                            <a href="http://www.chiefmarketer.com/webinars/video-marketing-myth-busting-starting-is-easier-than-you-think/?sid=cmhighlight" c-scroll-item class="ng-hide fadeInRight">Video Marketing Myth Busting: Starting Is Easier Than You Think: Free Live Webinar</a>
+                                            <a href="http://www.chiefmarketer.com/top-shops-2017" c-scroll-item class="ng-hide fadeInRight">The 2017 PROMO &#038; B2B Top Shops Are Here</a>
+                                            <a href="http://directory.chiefmarketer.com/?sid=cmehighlights" c-scroll-item class="ng-hide fadeInRight">Grow your company&#8217;s presence. Advertise in the Chief Marketer Vendor Directory</a>
+                    </span>
+    </p>
+
+</nav>
+
+<section class="content-wrap c-content-wrap" id="wrapper"> <!-- Start content -->
+    <!-- Navigation side -->
+    <!-- Note: don't remove the chem-sidebar directive -->
+    <aside class="sidebar c-sidebar" id="sidebar">
+        <div class="sidebar-inner">
+            <img class="tag-line-logo" src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/images/cm_tagline.png" />
+            <!-- Search -->
+            <form class="search section" method="get" action="/">
+                <span class="sr-only">Search: </span>
+                <div class="input-group striped dark large-letters">
+                    <input type="text" name="s" class="form-control" placeholder="Search">
+                    <span class="input-group-addon"><button type="submit" class="btn btn-link btn-xs text-white"><i class="fa fa-search"></i></button></span>
+                </div>
+            </form>
+
+            <hr/>
+            <!-- First Nav -->
+            <div class="navigation-one section">
+                <ul id="menu-sidebar-nav-top" class="nav nav-stacked nav-colored"><li class='chem-accordion'><a style='cursor:pointer' ng-click='isCollapsed = !isCollapsed'>Consumer Marketing <i class='fa text-muted fa-arrow-circle-down fa-transition' ng-class="{ 'fa-rotate-180': !isCollapsed }"></i></a><ul class='nav collapse' collapse='isCollapsed' style='height:0;'><li><a href='/consumer-marketing/'>Home</a></li>
+                    <li><a href='/consumer-marketing/acquisition'>Acquisition/Engagement</a></li>
+                    <li><a href='/consumer-marketing/retention'>Conversion/Retention</a></li>
+                    <li><a href='/consumer-marketing/data-analytics'>Data- Driven ROI</a></li>
+                    <li><a href='http://www.promonext2016.com/'>PROMONext & ProAwards</a></li>
+                    <li><a href='http://www.chiefmarketer.com/promo-top-shops-2017/'>Top Shop Agencies</a></li>
+                    <li><a href='http://directory.chiefmarketer.com/'>Directory of Resources</a></li>
+                </ul></li>
+                    <li class='chem-accordion'><a style='cursor:pointer' ng-click='isCollapsed = !isCollapsed'>B2B Marketing <i class='fa text-muted fa-arrow-circle-down fa-transition' ng-class="{ 'fa-rotate-180': !isCollapsed }"></i></a><ul class='nav collapse' collapse='isCollapsed' style='height:0;'><li><a href='/b2b-marketing/'>Home</a></li>
+                        <li><a href='/b2b-marketing/acquisition'>Acquisition/Engagement</a></li>
+                        <li><a href='/b2b-marketing/retention'>Conversion/Retention</a></li>
+                        <li><a href='/b2b-marketing/data-analytics'>Data- Driven ROI</a></li>
+                        <li><a href='http://b2bleadscon.com'>B2BLeadsCon</a></li>
+                        <li><a href='http://chiefmarketer.com/b2b-top-shops-2017/'>Top Shop Agencies</a></li>
+                        <li><a href='http://directory.chiefmarketer.com/'>Directory of Resources</a></li>
+                    </ul></li>
+                    <li class='chem-accordion'><a style='cursor:pointer' ng-click='isCollapsed = !isCollapsed'>MARTECH <i class='fa text-muted fa-arrow-circle-down fa-transition' ng-class="{ 'fa-rotate-180': !isCollapsed }"></i></a><ul class='nav collapse' collapse='isCollapsed' style='height:0;'><li><a href='/martech/'>Home</a></li>
+                        <li><a href='/martech/cmo-corner'>CMO Corner</a></li>
+                        <li><a href='/martech/need-to-know-news'>Need To Know News</a></li>
+                        <li><a href='/martech/technology'>Technology</a></li>
+                        <li><a href='/martech/roi-metrics'>ROI | Metrics</a></li>
+                        <li><a href='/martech/agencies'>Agencies</a></li>
+                        <li><a href='/martech/research'>Research</a></li>
+                        <li><a href='http://directory.chiefmarketer.com/'>Directory of Resources</a></li>
+                    </ul></li>
+                    <li class='chem-accordion'><a style='cursor:pointer' ng-click='isCollapsed = !isCollapsed'>Channels <i class='fa text-muted fa-arrow-circle-down fa-transition' ng-class="{ 'fa-rotate-180': !isCollapsed }"></i></a><ul class='nav collapse' collapse='isCollapsed' style='height:0;'><li><a href='/channels'>Home</a></li>
+                        <li><a href='/channel/email'>Email</a></li>
+                        <li><a href='/channel/digital'>Digital</a></li>
+                        <li><a href='/channel/social'>Social</a></li>
+                        <li><a href='/channel/direct-marketing-print'>Direct Marketing | Print</a></li>
+                        <li><a href='/channel/mobile'>Mobile</a></li>
+                        <li><a href='/channel/events'>Events</a></li>
+                    </ul></li>
+                    <li class='chem-accordion'><a style='cursor:pointer' ng-click='isCollapsed = !isCollapsed'>Events & Honors <i class='fa text-muted fa-arrow-circle-down fa-transition' ng-class="{ 'fa-rotate-180': !isCollapsed }"></i></a><ul class='nav collapse' collapse='isCollapsed' style='height:0;'><li><a href='/events-honors/'>Home</a></li>
+                        <li><a href='http://www.b2bleadscon.com/'>B2B LeadsCon</a></li>
+                        <li><a href='http://www.leadscon.com/leadsconny/'>LeadsCon NY</a></li>
+                        <li><a href='http://www.promonextevent.com'>Masters of Brand Activation</a></li>
+                        <li><a href='http://www.chiefmarketer.com/pro-awards-winners-2016/'>PRO Awards Winners</a></li>
+                        <li><a href='http://www.chiefmarketer.com/promo-top-shops-2017/'>PROMO Top Shops 2017</a></li>
+                        <li><a href='http://www.chiefmarketer.com/b2b-top-shops-2017/'>B2B Top Shops 2017</a></li>
+                    </ul></li>
+                    <li class='chem-accordion'><a style='cursor:pointer' ng-click='isCollapsed = !isCollapsed'>Directories <i class='fa text-muted fa-arrow-circle-down fa-transition' ng-class="{ 'fa-rotate-180': !isCollapsed }"></i></a><ul class='nav collapse' collapse='isCollapsed' style='height:0;'><li><a href='http://directory.chiefmarketer.com/'>Directory of Resources</a></li>
+                        <li><a href='http://www.chiefmarketer.com/top-shops-2017'>Agencies | TopShops</a></li>
+                        <li><a href='/pro-awards-winners/'>Award Winning Campaigns</a></li>
+                    </ul></li>
+                </ul>        </div>
+            <hr/>
+            <!-- Accordion nav -->
+            <div id="sidenav-accordion">
+                <!-- Start widget template -->
+                <div class="module basic">
+                    <div data-toggle='collapse' data-parent='#sidenav-accordion' data-target='#special_reports_widget-2' class='collapsed'>    <div class="module-title-bar">
+                        <h2 class="title">Special Reports</h2>
+                    </div>
+                        <i class='text-white fa control-icon fa-transition'></i></div><div id='special_reports_widget-2' class='module basic no-title no-margin collapse'>    <div class="content">
+                    <div class="post-list">
+                        <article class="article list-type">
+                            <header>
+                                <!-- title -->
+                                <h3 class="title"><a href="http://www.chiefmarketer.com/special-reports/exclusive-b2b-lead-gen-survey/">Exclusive B2B Lead Gen Survey</a></h3>
+
+                                <!-- Time -->
+                                <div class="date-author">
+                                    <time datetime="2017-02-08T15:43:27+00:00" pubdate="pubdate" >February 8, 2017</time>
+                                    <span class="topic">- <a href="http://www.chiefmarketer.com/topic/b2b-lead-gen/">B2B Lead Gen</a></span>
+                                </div>
+                            </header>
+                        </article>                                            <article class="article list-type">
+                        <header>
+                            <!-- title -->
+                            <h3 class="title"><a href="http://www.chiefmarketer.com/special-reports/better-b2b-data-insights-throughout-the-purchase-cycle/">Better B2B Data Insights Throughout the Purchase Cycle</a></h3>
+
+                            <!-- Time -->
+                            <div class="date-author">
+                                <time datetime="2017-01-17T15:29:12+00:00" pubdate="pubdate" >January 17, 2017</time>
+                                <span class="topic">- <a href="http://www.chiefmarketer.com/topic/b2b-data-insights/">B2B data insights</a></span>
+                            </div>
+                        </header>
+                    </article>                                            <article class="article list-type">
+                        <header>
+                            <!-- title -->
+                            <h3 class="title"><a href="http://www.chiefmarketer.com/special-reports/optimizing-marketing-data/">Optimizing Marketing Data</a></h3>
+
+                            <!-- Time -->
+                            <div class="date-author">
+                                <time datetime="2016-12-06T16:10:23+00:00" pubdate="pubdate" >December 6, 2016</time>
+                                <span class="topic">- <a href="http://www.chiefmarketer.com/topic/data-analytics/">Data &amp; Analytics</a></span>
+                            </div>
+                        </header>
+                    </article>                                            <article class="article list-type">
+                        <header>
+                            <!-- title -->
+                            <h3 class="title"><a href="http://www.chiefmarketer.com/special-reports/creating-abm-synergy/">Creating ABM Synergy</a></h3>
+
+                            <!-- Time -->
+                            <div class="date-author">
+                                <time datetime="2016-11-15T19:03:51+00:00" pubdate="pubdate" >November 15, 2016</time>
+                                <span class="topic">- <a href="http://www.chiefmarketer.com/topic/abm/">ABM</a></span>
+                            </div>
+                        </header>
+                    </article>                                            <article class="article list-type">
+                        <header>
+                            <!-- title -->
+                            <h3 class="title"><a href="http://www.chiefmarketer.com/special-reports/the-martech-you-need-for-a-winning-content-marketing-strategy/">Creating a Winning Content Marketing Strategy</a></h3>
+
+                            <!-- Time -->
+                            <div class="date-author">
+                                <time datetime="2016-10-18T11:17:17+00:00" pubdate="pubdate" >October 18, 2016</time>
+                                <span class="topic">- <a href="http://www.chiefmarketer.com/topic/content-marketing/">Content Marketing</a></span>
+                            </div>
+                        </header>
+                    </article>                    </div>
+                </div>
+                    <div class="actions">
+                        <!-- <a href="http://www.chiefmarketer.com/special-reports/" class="btn btn-primary">Read More <i class="fa fa-chevron-circle-right"></i></a> -->
+                        <a href="/special-reports-archive" class="btn btn-primary">Read More <i class="fa fa-chevron-circle-right"></i></a>
+                    </div>
+                </div>
+                </div><!-- Start widget template -->
+                <div class="module basic">
+                    <div data-toggle='collapse' data-parent='#sidenav-accordion' data-target='#webinar_widgets-2' class='collapsed'>    <div class="module-title-bar">
+                        <h2 class="title">Webinars</h2>
+                    </div>
+                        <i class='text-white fa control-icon fa-transition'></i></div><div id='webinar_widgets-2' class='module basic no-title no-margin collapse'>    <div class="content">
+                    <div class="post-list">
+                        <article class="article thumblist">
+                            <!-- webinar date -->
+
+                            <header>
+                                <!-- title -->
+                                <h3 class="title"><a href="http://www.chiefmarketer.com/webinars/marketing-in-the-engagement-economy/">Marketing in the Engagement Economy</a></h3>
+
+                                <!-- Time -->
+                                <div class="date-author">
+                                    <span class="topic">- <a href="http://www.chiefmarketer.com/topic/engagement/">Engagement</a></span>
+                                </div>
+                            </header>
+
+                            <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+
+                            <div class="excerpt"><p>Free On Demand Webinar - Join Marketo’s Matt Zilli and Forrester’s Shar VanBoskirk to learn how businesses can transform themselves into customer-obsessed enterprises in an engagement economy.</p></div>
+                        </article>                    </div>
+                </div>
+                    <div class="actions">
+                        <a href="http://www.chiefmarketer.com/webinars/" class="btn btn-primary">More Webinars <i class="fa fa-chevron-circle-right"></i></a>
+                    </div>
+                </div></div>			<div class="textwidget"><ul  class="nav nav-pills nav-stacked nav-striped brand-primary">
+                <li><a style="    line-height: 29px; height: 29px; padding-top: 0px;" href="http://www.chiefmarketer.com/subscribe/"><i class="fa fa-sign-in fa-fw"></i> Subscribe</a></li>
+            </ul></div>
+            </div>        </div>
+        <!-- Partner content -->
+        <div class="extra section">
+            <!-- Start widget template -->
+
+
+            <script>document.write('<scr'+'ipt src="http://apps.decisionbriefs.com/widgets/placement/display/marketing/529f8f31af538a0e38000000?l=20&tpl=cm-left-column&w=250&h=250&brand=chiefmarketer"></scr'+'ipt>');</script>
+
+
+        </div>
+        <div class="navigation-three section">
+            <ul id="menu-sidebar-nav-bottom" class="nav nav-pills nav-stacked nav-striped brand-primary"><li><a href='http://partners.chiefmarketer.com'> Partner Content</a></li>
+                <li><a href='http://store.chiefmarketer.com/'><i class='fa fa-shopping-cart fa-fw'></i> Store</a></li>
+                <li><a href='http://jobs.chiefmarketer.com'><i class='fa fa-briefcase fa-fw'></i> Jobs</a></li>
+            </ul>        </div>
+        </div>
+    </aside>    <div class="content-main">
+        <div class="ad topbillboard">
+            <!-- Chiefmarketer.com/topbillboard -->
+            <div id='div-gpt-ad-1412707091094-0'>
+            </div>
+        </div>
+        <div class="container-fluid sc-view" ng-view>
+            <div class="col-md-8 col-sm-12">
+                <div class="addthis_sharing_toolbox pull-right"></div>
+                <div class="clearfix"></div>
+                <!-- Render Breadcrumb !-->
+                <style type='text/css'>
+	#XCw_3534 td {
+		padding-left: 2px;
+		padding-right: 3px;
+	}
+</style>
+                <div id='XCw_3535'>
+                    <table cellpadding='2' cellspacing='0' border='0' id='XCw_3534' style='font-size:12px;line-height:17.5px;'>
+                        <tr>
+                            <td style='white-space:nowrap;' valign='top'><a href='/'>HOME</a></td><td valign='top' style='white-space:nowrap;'>-&gt;</td><td  style='white-space: nowrap;'  valign='top'><a href='/martech'>MarTech</a></td><td valign='top' style='white-space:nowrap;'>-&gt;</td><td  style='white-space: nowrap;'  valign='top'><a href='/channel/facts-figures'>Facts &amp; Figures</a></td><td valign='top' style='white-space:nowrap;'>-&gt;</td><td  valign='top'><a href='http://www.chiefmarketer.com/ways-data-and-martech-can-help-communications-leaders/'>Ways Data and Martech Can Help Communications Leaders</a></td></tr>
+                    </table>
+                    <span id='XCw_3536'></span>
+                </div>
+                <script type='text/javascript'><!--
+	function fXCw_3537() {
+		var width = jQuery(window).width();
+		if (width < 640)
+			jQuery("#XCw_3535").fadeOut(100);
+		else
+			jQuery("#XCw_3535").fadeIn(100);
+	//	jQuery("#XCw_3536").html(width);
+	}
+	jQuery(document).ready(function() {
+		jQuery(window).resize(function() {
+			fXCw_3537();
+		} );
+		fXCw_3537();
+	} );
+//!--></script>
+                <!-- end of Breadcrumb !-->
+                <article class="article single">
+
+                    <header>
+                        <!-- title -->
+                        <h1 class="title text-primary">Ways Data and Martech Can Help Communications Leaders</h1>
+
+                        <!-- Time -->
+                        <div class="date-author">
+                            Posted on <time datetime="2017-02-16T09:12:03+00:00" pubdate="pubdate">February 16, 2017</time>
+                            by <span class='author'>Dave Hawley</span>
+
+                        </div>
+                    </header>
+
+
+
+                    <div class="content clearfix">
+
+
+
+                        <div id="tps_slideContainer_221664" class="theiaPostSlider_slides"><div>
+
+                            <p><a href="http://cdn.chiefmarketer.com/wp-content/uploads/2015/12/idea-tech-technology-plan-strategy-3001.jpg"><img class="alignright size-medium wp-image-199342" src="http://cdn.chiefmarketer.com/wp-content/uploads/2015/12/idea-tech-technology-plan-strategy-3001-300x200.jpg" alt="idea-tech-technology-plan-strategy-300" width="300" height="200" /></a>Today’s martech and data explosion holds the key for chief communications officers to gain the data-driven insights, projections and authority that their C-suite counterparts already enjoy.</p>
+                            <p>A <a href="http://www.prweek.com/article/1414934/study-comms-heads-struggle-gain-ceos-favor" target="_blank">recent survey</a> from <a href="http://www.apcoworldwide.com/" target="_blank">APCO Worldwide</a> reveals that CCOs are an underrepresented voice in business strategy — a factor they consider to be one of their biggest challenges.</p>
+                            <p>Other marketing executives have long had access to data and martech tools that help them do their jobs better. Gartner <a href="mailto:http://www.gartner.com/webinar/1871515" target="_blank">projects</a> that CMOs will spend more on technology than CIOs by next year. These days marketers are increasingly as quantitative as they are creative.</p>
+                            <p>In 2017, we’ll see CCOs begin to become much more like their marketing counterparts. Just as marketers have taken risks by adopting new technologies, such as automation and A/B testing, communications leaders will begin to make strides to do the same. By investing in technologies that give communications teams more access to data they’ll be in a better position to partner with CEOs and make a more substantial impact on business-critical decisions.</p>
+                            <p>Early indicators, such as social media, show how communications leaders can use data to increase their influence over business decisions. Social media has helped communications teams see firsthand how they can use technology to track key performance indicators (KPIs) such as brand awareness, share of voice and audience sentiment and also use data to increase their influence internally. APCO’s survey shows that 89% of communications leaders have access to the CEO and 62 percent credit their increase in significance to the rise of social media.</p>
+                            <p>Thanks to social media, communications teams have been able to set KPIs to quantify their contribution to the organization, a strategy that Tina-Marie Adams, managing director at APCO Chicago, says is effective.</p>
+                            <p>“Our clients who have been serving in a company’s senior-most comms position have pursued a seat at the table by relating to the business goals and setting [KPIs],” says Adams. However, social media KPIs alone won’t help communications leaders expand their influence with the CEO. APCO’s survey shows that 79% of respondents report that the CEO views them as important. But only 26% believe their opinions matter when the company makes &#8220;business-critical decisions.&#8221;</p>
+                            <p><strong>Perception gulf</strong></p>
+                            <p>Survey results, like we see in APCO’s study, may seem unexpected to communications leaders who know that their efforts to increase brand awareness, for example, are crucial to helping the organization meet their business goals — even though quantifying the exact impact has long been a challenge. However, to be heard, CCOs need to be able to show, rather than tell, their CXO colleagues how they’re impacting business goals. CMOs, CIOs, CTOs and CFOs all have access to data to back their claims and inform their strategy.</p>
+                            <p>Marketing leaders have only recently used technology and data to earn credibility and influence within organizations. With digital customer data, they can show the direct impact of their campaigns and programs. According to <a href="http://www.heidrick.com/~/media/Publications%2520and%2520Reports/The_Evolved_CMO_in_2016_CMOs_broaden_their_influence_and_leadership.pdf" target="_blank">recent research</a> from Heidrick &amp; Struggles, in partnership with Forrester, CMOs have evolved their roles within the organization by taking on the challenges of data and business technology realignment. Because of this, 31% of CMOs with CX responsibilities also own business strategy development today.</p>
+                            <p>The result of all this technology advancement and adoption is that next year we’ll see the rise of the data-driven CCO. As communications teams adopt technologies that let them take risks, track KPIs, and analyze data, we’ll see more organizations benefit- giving CCOs more input into decisions critical for the business.</p>
+                            <p><em><a href="https://www.linkedin.com/in/davehawley/" target="_blank">Dave Hawley</a> is vice president of marketing at <a href="http://dynamicsignal.com/" target="_blank">Dynamic Signal</a>. </em></p>
+                            <p><strong>Related Articles: </strong></p>
+                            <p><a href="http://www.chiefmarketer.com/nestle-toll-house-bakes-personalization-into-its-baking-web-site/" target="_blank">Nestle Toll House Bakes Personalization Into Its Website</a></p>
+                            <p><a href="http://www.chiefmarketer.com/3-ways-to-reap-the-benefits-of-marketing-automation-in-2017/" target="_blank">3 Ways to Reap the Benefits of Marketing Automation in 2017</a></p>
+                            <p><a href="http://www.chiefmarketer.com/amazon-and-paypal-in-online-payment-talks/" target="_blank">Amazon and PayPal in Online Payment Talks</a></p>
+                            <p>&nbsp;</p>
+
+                        </div></div><div class="theiaPostSlider_footer _footer"></div><p><!-- END THEIA POST SLIDER --></p>
+
+                        <script type='text/javascript'>
+
+                var tpsInstance;
+                var tpsOptions = {"slideContainer":"#tps_slideContainer_221664","nav":[".theiaPostSlider_nav"],"navText":"%{currentSlide} of %{totalSlides}","helperText":"Use your &leftarrow; &rightarrow; (arrow) keys to browse","defaultSlide":0,"transitionEffect":"slide","transitionSpeed":400,"keyboardShortcuts":true,"scrollAfterRefresh":true,"numberOfSlides":1,"slides":[],"useSlideSources":true,"themeType":"font","prevText":"Prev","nextText":"Next","buttonWidth":"0","buttonWidth_post":"0","postUrl":"http:\/\/www.chiefmarketer.com\/ways-data-and-martech-can-help-communications-leaders\/","postId":221664,"refreshAds":false,"refreshAdsEveryNSlides":1,"adRefreshingMechanism":"javascript","siteUrl":"http:\/\/www.chiefmarketer.com","loopSlides":false,"scrollTopOffset":"0","prevFontIcon":"<span aria-hidden=\"true\" class=\"tps-icon-chevron-circle-left\"><\/span>","nextFontIcon":"<span aria-hidden=\"true\" class=\"tps-icon-chevron-circle-right\"><\/span>"};
+
+                    (function ($) {
+                        $(document).ready(function () {
+
+                            tpsInstance = new tps.createSlideshow(tpsOptions);
+                        });
+                    }(jQuery));
+                </script>
+
+                    </div>
+
+
+
+
+
+
+                </article>
+
+                <div class="clearfix"></div>
+                <div class="addthis_sharing_toolbox pull-left" style="margin-bottom:20px;"></div>
+                <div class="clearfix"></div>
+
+                <h2 class="sr-only">More</h2>
+                <!--partner content-->
+                <style type="text/css">
+    #pisces-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; -webkit-overflow-scrolling:touch; overflow-y:scroll; }
+    #pisces-container > iframe, #pisces-container > object, #pisces-container > embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+</style>
+
+                <script type="text/javascript" src="http://apps.decisionbriefs.com/widgets/placement/display/marketing/529f8f31af538a0e38000000?l=5&tpl=picses-article&at=article&ch=43&brand=chiefmarketer"></script>
+                <!--newsletter signup-->
+                <style type="text/css">
+    #email-signup-form {
+        max-width: 600px;
+        margin: 20px auto;
+        border: 1px solid #4d4d4d;
+        background: #EEEEEE;
+        padding: 0 10px 10px;
+    }
+    #email-signup-form h3 {
+        background: none repeat scroll 0 0 #4d4d4d;
+        color: #fff;
+        font-size: 1.2em;
+        line-height: 1.25;
+        margin: 0 -10px 20px;
+        padding: 3px 5px;
+    }
+</style>
+                <div id="email-signup-form" class="clearfix">
+                    <h3>Get Content Like This Delivered to Your Inbox</h3>
+                    <form action="/newsletter-signup/" name="form-subs" method="post" class="form form-inline">
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <input class="form-control" type="text" placeholder="Email Address" name="email_address" />
+                        </div>
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <input class="form-control" type="text" placeholder="Company" name="company_name" />
+                        </div>
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <button type="submit" class="btn btn-default" style="color:#fff;">Subscribe</button>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label><input type="checkbox" name="nl[]" value="CM-01" checked="checked" /> Chief Business Marketer</label>
+                            <!-- <label><input type="checkbox" name="nl[]" value="CM-02" checked="checked" /> Chief Data Marketer</label> -->
+                            <label><input type="checkbox" name="nl[]" value="CM-04" checked="checked" /> Chief Direct Marketer</label>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <!-- <label><input type="checkbox" name="nl[]" value="CM-11" checked="checked" /> Chief Marketer Tip Sheet</label> -->
+                            <label><input type="checkbox" name="nl[]" value="CM-14" checked="checked" /> Chief PROMO Marketer</label>
+                            <label><input type="checkbox" name="nl[]" value="CM-13" checked="checked" /> Chief Marketer Tech Talk</label>
+                            <label><input type="checkbox" name="nl[]" value="CM-05" checked="checked" /> Chief Marketer This Week</label>
+                        </div>
+                    </form>
+                </div>
+                <!-- Start widget template -->
+                <div class="module color brand-danger">
+                    <div class="module-title-bar striped">
+                        <h2 class="title">Related Posts</h2>
+                    </div>
+                    <div class="content">
+                        <div class="post-list auto-columnize" id="XCw_3538">
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/bettvrwithage-90x70.gif" class="img-thumbnail pull-left wp-post-image" alt="Jake Kahana spent six months researching what seniors might really want from a VR experience." style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/using-vr-to-reach-a-new-market-the-elderly/">Using VR to Reach a New Market: The Elderly</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-04-28T16:09:59+00:00" pubdate="pubdate" >April 28, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/beth-negus-viveiros/">Beth Negus Viveiros</a></span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/marketingtechnology/">MarTech</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/email-icon-640-90x70.gif" class="img-thumbnail pull-left wp-post-image" alt="email-icon-640" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/email-marketers-want-automation-capabilities-from-esps-survey/">Email Marketers Want Automation Capabilities from ESPs: Survey</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-04-24T16:37:39+00:00" pubdate="pubdate" >April 24, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/beth-negus-viveiros/">Beth Negus Viveiros</a></span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/topic/email/">Email</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/mobile-advertisng-3-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="mobile advertising" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/4-ways-to-turn-mobile-marketing-into-a-customer-service/">4 Ways to Turn Mobile Marketing into a Customer Service</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-04-12T14:53:05+00:00" pubdate="pubdate" >April 12, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic"></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/south-african-burger-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="McDonald&#039;s" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/mcdonalds-to-track-eating-habits/">McDonald&#8217;s to Track Eating Habits</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-04-12T09:07:42+00:00" pubdate="pubdate" >April 12, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic"></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/jen-levinson-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="Jen Levinson" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/behind-the-scenes-of-marriotts-snapisodes-with-amanda-moore/">Behind the Scenes of Marriott’s Snapisodes with Amanda Moore</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-04-10T11:52:38+00:00" pubdate="pubdate" >April 10, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic"></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/automation-robot-hand-keyboard-640-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="Stock Market Robot Trading" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/putting-chatbots-in-the-marketing-ai-conversation/">Putting Chatbots in the Marketing &#038; AI Conversation</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-04-04T14:08:39+00:00" pubdate="pubdate" >April 4, 2017</time>
+                                        by <span class='author'>Vince Lynch</span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/topic/ai/">AI</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/anthony-padilla-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="Axe Hair Creators" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/unilever-vp-piyush-jain-talks-axe-hair-and-influencers/">Unilever VP Piyush Jain Talks AXE, Hair and Influencers</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-04-03T12:11:30+00:00" pubdate="pubdate" >April 3, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic"></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/03/Dunkin-Donuts-and-Waze-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="dunkin&#039; donuts and waze" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/need-a-cup-of-dunkin-coffee-order-ahead-with-waze/">Need a Cup of Dunkin’ Coffee? Order Ahead with Waze</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-03-29T12:41:36+00:00" pubdate="pubdate" >March 29, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic"></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/03/international-globes-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="global ball toy" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/mobile-forward-design-the-next-step-after-responsive-design/">Mobile Forward Design: The Next Step After Responsive Design</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-03-28T13:34:04+00:00" pubdate="pubdate" >March 28, 2017</time>
+                                        by <span class='author'>Benjamin S. Sargent</span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/topic/mobile/">Mobile</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/03/Marketing-technology-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="marketing technology" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/why-marketers-struggle-with-data-driven-customer-strategies">Why Marketers Struggle with Data-Driven Customer Strategies</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-03-22T10:02:14+00:00" pubdate="pubdate" >March 22, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic"></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/03/scribble-pattern-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="Abstract scribble lines seamless pattern design" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/why-b2b-marketers-need-ar-and-vr-solutions/">Why B2B Marketers Need AR and VR Solutions</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-03-21T19:19:45+00:00" pubdate="pubdate" >March 21, 2017</time>
+                                        by <span class='author'>Gavin Finn</span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/topic/virtual-reality/">Virtual Reality</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/03/globe-people-640-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="vector flat illustration of society members with group of people" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/facebook-likes-intercontinental-data-and-lots-of-it/">Facebook Likes Intercontinental Data—And Lots of It</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-03-21T17:23:08+00:00" pubdate="pubdate" >March 21, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/beth-negus-viveiros/">Beth Negus Viveiros</a></span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/marketingtechnology/">MarTech</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/03/music-artists-group-photo-90x70.jpeg" class="img-thumbnail pull-left wp-post-image" alt="Shell Best Day of My Life Video" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/shell-pivots-from-tv-to-social-responsibility-storytelling/">Shell Pivots from TV to Social Responsibility Storytelling</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-03-21T10:04:18+00:00" pubdate="pubdate" >March 21, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/topic/social-responsibility-storytelling/">Social Responsibility Storytelling</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/03/sweepstakes-marketing.300x200-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="sweepstakes marketing" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/a-primer-in-sweepstakes-marketing/">A Primer in Sweepstakes Marketing</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-03-13T09:44:40+00:00" pubdate="pubdate" >March 13, 2017</time>
+                                        by <span class='author'>Bruce Hollander</span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/topic/sweepstakes-marketing/">Sweepstakes Marketing</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/03/wish-300-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="Wish.com tries to keep global users in mind with its site design." style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/how-wish-com-goes-global-in-mobile/">How Wish.com Goes Global in Mobile</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-03-08T16:39:35+00:00" pubdate="pubdate" >March 8, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/beth-negus-viveiros/">Beth Negus Viveiros</a></span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/topic/ecommerce-4/">Ecommerce</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/02/mobile.marketing.300x200-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="Adobe Mobile Maturity Survey" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/mobile-budgets-up-leadership-teams-in-place-adobe-mobile-maturity-survey/">Mobile Budgets Up, Leadership Teams in Place: Adobe Mobile Maturity Survey</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-03-01T09:00:26+00:00" pubdate="pubdate" >March 1, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic"></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/02/freeminum-game.300x200-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="freemium games" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/beware-the-legal-traps-hiding-in-freemium-games/">Beware the Legal Traps Hiding in Freemium Games</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-02-27T09:01:57+00:00" pubdate="pubdate" >February 27, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/joseph-lewczak/">Joseph Lewczak</a></span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/topic/games-contests/">Games &amp; Contests</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/02/tech-data-300-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="Businessman working with digital virtual screen" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/10-seo-tips-for-site-redesigns/">10 SEO Tips for Site Redesigns</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-02-27T08:02:46+00:00" pubdate="pubdate" >February 27, 2017</time>
+                                        by <span class='author'>Alex Berg</span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/topic/search-3/">Search</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2016/06/dog-phone-telephone-300-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="dog on the phone" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/why-its-critical-for-marketers-to-embrace-voice-in-2017/">Why It’s Critical for Marketers to Embrace Voice in 2017</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-02-24T09:04:37+00:00" pubdate="pubdate" >February 24, 2017</time>
+                                        by <span class='author'>Irv Shapiro</span>
+
+                                        <span class="topic"></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/02/virtual-reality.200-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="virtual reality" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/audi-uses-vr-for-a-deep-experiential-dive-into-the-q5/">Audi Uses VR for a Deep Experiential Dive into the Q5</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-02-23T11:00:36+00:00" pubdate="pubdate" >February 23, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/topic/virtual-reality/">Virtual Reality</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/02/Instagram-Stories.300x200-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="How to Use Instagram Stories" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/14-brands-show-us-how-to-use-instagram/">14 Brands Show Us How to Use Instagram</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-02-22T10:29:53+00:00" pubdate="pubdate" >February 22, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic"></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/02/people-heads-300-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="Human profile head in dialogue. Simply flat design. Vector illustration." style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/3-way-to-automatically-reduce-customer-churn/">3 Ways to Automatically Reduce Customer Churn</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-02-16T11:47:45+00:00" pubdate="pubdate" >February 16, 2017</time>
+                                        by <span class='author'>Janet Choi</span>
+
+                                        <span class="topic"></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/02/marriott-mobile-app.300x200-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="mobile apps" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/marriotts-mobile-strategy-rings-up-1-7-billion-bookings-annually/">Marriott’s Mobile Strategy Rings up $1.7 Billion Bookings Annually</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-02-14T12:02:39+00:00" pubdate="pubdate" >February 14, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic">- <a href="http://www.chiefmarketer.com/topic/mobile-apps/">Mobile apps</a></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/02/Nestle-toll-house-cookies.300x200-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="Nestle Toll House" style="margin-right: 0.5em; max-width:90px; max-height:70px;" />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/nestle-toll-house-bakes-personalization-into-its-baking-web-site/">Nestlé Toll House Bakes Personalization into its Baking Web Site</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-02-13T11:31:26+00:00" pubdate="pubdate" >February 13, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic"></span>
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                        </div>
+                    </div>
+                    <!-- If you want a 'See more' link here,
+                    you could have $queryRelated->query converted into a query string
+                    in order to use index.php?query_string and send the user
+                    to a customized archive based on archive.php -->
+                    <!--
+                      Remove "read more" from related content...
+                  !-->
+
+                    <div class="actions" id='XCw_3539'>
+                        <!--
+                            <a href="#" class="btn btn-danger">Read More <i class="fa fa-chevron-circle-right"></i></a>
+                        !-->
+                        <a href='#' class='btn btn-danger XCw_3630'>NEXT</a> <span id='XCw_3631'></span> <a href='#' class='btn btn-danger XCw_3630'>PREV</a>
+                    </div>
+
+                </div>
+                <script type='text/javascript'><!--
+    jQuery(document).ready(function () {
+        var ids = {"article_div":"XCw_3538","actions_div":"XCw_3539","btn_class":"XCw_3630","page_span":"XCw_3631"};
+        var current_offset = 0;
+        var limit = 6;
+        var args = {"post_type":"post","posts_per_page":24,"post__not_in":[221664],"tax_query":{"0":{"taxonomy":"category","field":"term_id","terms":[54084,53232]},"1":{"taxonomy":"division","field":"term_id","terms":[53232]},"relation":"AND"}};
+
+        function perform_action(action) {
+            // go previous...
+            if (action == 'prev') {
+                current_offset -= limit;
+                if (current_offset < 0)
+                    current_offset = 0;
+                show_next();
+            } else if (action == 'next') {
+                var total = jQuery("#" + ids['article_div'] + " article").length;
+                if (current_offset + limit < total)
+                    current_offset += limit;
+                show_next();
+            }
+        }
+
+        var show_next_i = 0;
+
+        function show_next() {
+            var delay = 100;
+            var art_id = "#" + ids['article_div'] + " article";
+            jQuery(art_id).each(function () {
+                var visible = Number(jQuery(this).attr("visible"));
+                if (visible > 0) {
+                    jQuery(this).fadeOut(delay).attr("visible", 0);
+                }
+            });
+
+            if (show_next_i++ == 0) {
+                //	alert("Show Next I" + show_next_i + " " + art_id);
+                window.setTimeout(function () {
+                    show_next_i = 0;
+                    // show the visible ones...
+                    var i = 0;
+                    var to = current_offset + limit;
+                    //	var delay = 100;
+                    jQuery(art_id).each(function () {
+                        if (i >= current_offset && i < to) {
+                            var visible = Number(jQuery(this).attr("visible"));
+                            if (visible <= 0) {
+                                jQuery(this).attr("visible", 1);
+                                jQuery(this).fadeIn(delay);
+                            }
+                        }
+                        i++;
+                    });
+                }, (delay + 10));
+            }
+
+            //	jQuery("#" + ids['page_span']).html(
+            //		"Offset: " +	current_offset
+            //	);
+        }
+
+
+        jQuery("#" + ids['actions_div'] + " ." + ids['btn_class']).each(function () {
+            jQuery(this).click(function () {
+                perform_action(String(jQuery(this).html()).toLowerCase());
+                return false;
+            });
+        });
+        jQuery("#" + ids['article_div'] + " article")
+            .attr("visible", 0)
+            .hide();
+
+        show_next();
+    });
+    //!--></script>
+
+                <div id="disqus_thread">
+                </div>
+
+                <script type="text/javascript">
+var disqus_url = 'http://www.chiefmarketer.com/ways-data-and-martech-can-help-communications-leaders/';
+var disqus_identifier = '221664 http://www.chiefmarketer.com/?p=221664';
+var disqus_container_id = 'disqus_thread';
+var disqus_shortname = 'chief-marketer';
+var disqus_title = "Ways Data and Martech Can Help Communications Leaders";
+var disqus_config_custom = window.disqus_config;
+var disqus_config = function () {
+    /*
+    All currently supported events:
+    onReady: fires when everything is ready,
+    onNewComment: fires when a new comment is posted,
+    onIdentify: fires when user is authenticated
+    */
+
+
+    this.language = '';
+
+    if (disqus_config_custom) {
+        disqus_config_custom.call(this);
+    }
+};
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div id="tabs-8" class="widget widget_tabs">		<div class="module tabs">
+
+                    <div class="striped striped-gray">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li class="active">
+                                <a href="#tab-pane-1" role="tab" data-toggle="tab">
+                                    <h2 class="h4">Featured</h2>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#tab-pane-2" role="tab" data-toggle="tab">
+                                    <h2 class="h4">Trending Now</h2>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab-pane-1">
+                                <div class="post-list no-c-paginator" max="4">
+                                    <div class="no-c-container active"> 								<article class="article thumblist no-c-paginator-item">
+                                        <!-- thumbnail -->
+                                        <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/cannabis-marketers-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="cannabis marketers" style="margin-right: 0.5em;" />
+                                        <header>
+                                            <!-- terms -->
+                                            <!-- title -->
+                                            <h3 class="title"><a href="http://www.chiefmarketer.com/blog/social-fans-rewarded-with-bags-of-weed/">Social Fans Rewarded with Bags of Weed</a></h3>
+
+                                            <!-- Time -->
+                                            <div class="date-author">
+                                                by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                                <span class="topic"></span>
+                                            </div>
+                                        </header>
+
+                                        <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                    </article>
+                                        <article class="article thumblist no-c-paginator-item">
+                                            <!-- thumbnail -->
+                                            <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/influencer-marketing1-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="influencer marketing" style="margin-right: 0.5em;" />
+                                            <header>
+                                                <!-- terms -->
+                                                <!-- title -->
+                                                <h3 class="title"><a href="http://www.chiefmarketer.com/ftc-warns-90-instagram-influencers/">FTC Warns 90 Instagram Influencers</a></h3>
+
+                                                <!-- Time -->
+                                                <div class="date-author">
+                                                    by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                                    <span class="topic"></span>
+                                                </div>
+                                            </header>
+
+                                            <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                        </article>
+                                        <article class="article thumblist no-c-paginator-item">
+                                            <!-- thumbnail -->
+                                            <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/chief-vintage-thunder-black-md-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="Indian Motorcycle" style="margin-right: 0.5em;" />
+                                            <header>
+                                                <!-- terms -->
+                                                <!-- title -->
+                                                <h3 class="title"><a href="http://www.chiefmarketer.com/a-ride-with-indian-motorcycles-marketing-strategy/">A Ride with Indian Motorcycle&#8217;s Marketing Strategy</a></h3>
+
+                                                <!-- Time -->
+                                                <div class="date-author">
+                                                    by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                                    <span class="topic"></span>
+                                                </div>
+                                            </header>
+
+                                            <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                        </article>
+                                        <article class="article thumblist no-c-paginator-item">
+                                            <!-- thumbnail -->
+                                            <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/adding-consumer-value-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="brand value" style="margin-right: 0.5em;" />
+                                            <header>
+                                                <!-- terms -->
+                                                <!-- title -->
+                                                <h3 class="title"><a href="http://www.chiefmarketer.com/in-a-seismic-shift-brands-find-ways-to-add-value-to-one-off-products/">In a Seismic Shift, Brands Find Ways to Add Value to One-Off Products</a></h3>
+
+                                                <!-- Time -->
+                                                <div class="date-author">
+                                                    by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                                    <span class="topic"></span>
+                                                </div>
+                                            </header>
+
+                                            <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                        </article>
+                                    </div> 													</div>
+
+
+                            </div>
+                            <div class="tab-pane" id="tab-pane-2">
+                                <div class="post-list no-c-paginator" max="4">
+                                    <div class="no-c-container active "> 								<article class="article thumblist no-c-paginator-item">
+                                        <!-- thumbnail -->
+                                        <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/adidas-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="adidas" style="margin-right: 0.5em;" />
+                                        <header>
+                                            <!-- terms -->
+                                            <!-- title -->
+                                            <h3 class="title"><a href="http://www.chiefmarketer.com/blog/why-didnt-adidas-learn-from-past-gaffes/">Why Didn’t Adidas Learn from Past Gaffes?</a></h3>
+
+                                            <!-- Time -->
+                                            <div class="date-author">
+                                                <time datetime="2017-04-20T09:34:03+00:00" pubdate="pubdate" >April 20, 2017</time>
+                                                by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                                <span class="topic"></span>
+                                            </div>
+                                        </header>
+
+                                        <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                    </article>
+                                        <article class="article thumblist no-c-paginator-item">
+                                            <!-- thumbnail -->
+                                            <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/malteserscmyk-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="Maltesers" style="margin-right: 0.5em;" />
+                                            <header>
+                                                <!-- terms -->
+                                                <!-- title -->
+                                                <h3 class="title"><a href="http://www.chiefmarketer.com/maltesers-foosball-helps-mars-engage-teens/">Maltesers Foosball Helps Mars Engage Teens</a></h3>
+
+                                                <!-- Time -->
+                                                <div class="date-author">
+                                                    <time datetime="2017-04-20T12:41:15+00:00" pubdate="pubdate" >April 20, 2017</time>
+                                                    by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                                    <span class="topic">- <a href="http://www.chiefmarketer.com/topic/brand-activation/">Brand Activation</a></span>
+                                                </div>
+                                            </header>
+
+                                            <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                        </article>
+                                        <article class="article thumblist no-c-paginator-item">
+                                            <!-- thumbnail -->
+                                            <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/wii-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="Nintendo Wii" style="margin-right: 0.5em;" />
+                                            <header>
+                                                <!-- terms -->
+                                                <!-- title -->
+                                                <h3 class="title"><a href="http://www.chiefmarketer.com/radio-station-behind-hold-your-wee-for-a-wii-promotion-shuts-down/">Radio Station Behind “Hold your Wee for a Wii” Promotion Shuts Down</a></h3>
+
+                                                <!-- Time -->
+                                                <div class="date-author">
+                                                    <time datetime="2017-04-19T11:34:36+00:00" pubdate="pubdate" >April 19, 2017</time>
+                                                    by <span class="author"><a href="http://www.chiefmarketer.com/author/jchun/">Joon Chun</a></span>
+
+                                                    <span class="topic"></span>
+                                                </div>
+                                            </header>
+
+                                            <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                        </article>
+                                    </div>  <div class="no-c-container "> 								<article class="article thumblist no-c-paginator-item">
+                                    <!-- thumbnail -->
+                                    <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/reserve_card_art_highres-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="Chase Reserve Card" style="margin-right: 0.5em;" />
+                                    <header>
+                                        <!-- terms -->
+                                        <!-- title -->
+                                        <h3 class="title"><a href="http://www.chiefmarketer.com/take-a-page-from-chases-loyalty-playbook/">Take a Page from Chase’s Loyalty Playbook</a></h3>
+
+                                        <!-- Time -->
+                                        <div class="date-author">
+                                            <time datetime="2017-04-18T09:53:58+00:00" pubdate="pubdate" >April 18, 2017</time>
+                                            by <span class="author"><a href="http://www.chiefmarketer.com/author/gina-fleck/">Gina Fleck</a></span>
+
+                                            <span class="topic"></span>
+                                        </div>
+                                    </header>
+
+                                    <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                </article>
+                                    <article class="article thumblist no-c-paginator-item">
+                                        <!-- thumbnail -->
+                                        <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/pop-your-bubble-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="Pop Your Bubble" style="margin-right: 0.5em;" />
+                                        <header>
+                                            <!-- terms -->
+                                            <!-- title -->
+                                            <h3 class="title"><a href="http://www.chiefmarketer.com/blog/kind-snacks-says-its-time-to-pop-your-social-bubble/">Kind Snacks Says its Time to Pop Your Social Bubble</a></h3>
+
+                                            <!-- Time -->
+                                            <div class="date-author">
+                                                <time datetime="2017-04-18T15:35:05+00:00" pubdate="pubdate" >April 18, 2017</time>
+                                                by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                                <span class="topic"></span>
+                                            </div>
+                                        </header>
+
+                                        <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                    </article>
+                                    <article class="article thumblist no-c-paginator-item">
+                                        <!-- thumbnail -->
+                                        <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/mindy-kaling-90x70.gif" class="img-thumbnail pull-left wp-post-image" alt="Mindy Kaling" style="margin-right: 0.5em;" />
+                                        <header>
+                                            <!-- terms -->
+                                            <!-- title -->
+                                            <h3 class="title"><a href="http://www.chiefmarketer.com/mcdonalds-launches-unbranded-campaign/">McDonald’s Launches Unbranded Campaign</a></h3>
+
+                                            <!-- Time -->
+                                            <div class="date-author">
+                                                <time datetime="2017-04-18T11:28:34+00:00" pubdate="pubdate" >April 18, 2017</time>
+                                                by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                                <span class="topic"></span>
+                                            </div>
+                                        </header>
+
+                                        <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                    </article>
+                                </div>  <div class="no-c-container "> 								<article class="article thumblist no-c-paginator-item">
+                                    <!-- thumbnail -->
+                                    <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/kiss-the-kia-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="Kiss the Kia" style="margin-right: 0.5em;" />
+                                    <header>
+                                        <!-- terms -->
+                                        <!-- title -->
+                                        <h3 class="title"><a href="http://www.chiefmarketer.com/local-kiss-the-kia-contest-goes-viral/">Local Kiss the Kia Contest Goes Viral</a></h3>
+
+                                        <!-- Time -->
+                                        <div class="date-author">
+                                            <time datetime="2017-04-18T10:58:56+00:00" pubdate="pubdate" >April 18, 2017</time>
+                                            by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                            <span class="topic"></span>
+                                        </div>
+                                    </header>
+
+                                    <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                </article>
+                                    <article class="article thumblist no-c-paginator-item">
+                                        <!-- thumbnail -->
+                                        <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/hilton-640-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="hilton-640" style="margin-right: 0.5em;" />
+                                        <header>
+                                            <!-- terms -->
+                                            <!-- title -->
+                                            <h3 class="title"><a href="http://www.chiefmarketer.com/redesigned-website-boosts-hiltons-mobile-search/">Redesigned Website Boosts Hilton’s Mobile Search</a></h3>
+
+                                            <!-- Time -->
+                                            <div class="date-author">
+                                                <time datetime="2017-04-17T14:39:07+00:00" pubdate="pubdate" >April 17, 2017</time>
+                                                by <span class="author"><a href="http://www.chiefmarketer.com/author/beth-negus-viveiros/">Beth Negus Viveiros</a></span>
+
+                                                <span class="topic">- <a href="http://www.chiefmarketer.com/topic/mobile/">Mobile</a></span>
+                                            </div>
+                                        </header>
+
+                                        <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                    </article>
+                                    <article class="article thumblist no-c-paginator-item">
+                                        <!-- thumbnail -->
+                                        <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/warren-buffett-cherry-coke-90x70.jpg" class="img-thumbnail pull-left wp-post-image" alt="Warren Buffet and Cherry Coke" style="margin-right: 0.5em;" />
+                                        <header>
+                                            <!-- terms -->
+                                            <!-- title -->
+                                            <h3 class="title"><a href="http://www.chiefmarketer.com/warren-buffetts-likeness-appears-on-cherry-coke-cans/">Warren Buffett&#8217;s Likeness Appears on Cherry Coke Cans</a></h3>
+
+                                            <!-- Time -->
+                                            <div class="date-author">
+                                                <time datetime="2017-04-13T09:28:28+00:00" pubdate="pubdate" >April 13, 2017</time>
+                                                by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                                <span class="topic"></span>
+                                            </div>
+                                        </header>
+
+                                        <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                    </article>
+                                </div>  <div class="no-c-container "> 								<article class="article thumblist no-c-paginator-item">
+                                    <!-- thumbnail -->
+                                    <img width="90" height="70" src="http://cdn.chiefmarketer.com/wp-content/uploads/2017/04/south-african-burger-90x70.png" class="img-thumbnail pull-left wp-post-image" alt="McDonald&#039;s" style="margin-right: 0.5em;" />
+                                    <header>
+                                        <!-- terms -->
+                                        <!-- title -->
+                                        <h3 class="title"><a href="http://www.chiefmarketer.com/mcdonalds-to-track-eating-habits/">McDonald&#8217;s to Track Eating Habits</a></h3>
+
+                                        <!-- Time -->
+                                        <div class="date-author">
+                                            <time datetime="2017-04-12T09:07:42+00:00" pubdate="pubdate" >April 12, 2017</time>
+                                            by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                            <span class="topic"></span>
+                                        </div>
+                                    </header>
+
+                                    <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                                </article>
+                                </div>
+
+                                    <div class="actions">
+                                        <a href="http://www.chiefmarketer.com/hot-topics-archives/" class="btn btn-primary">View More</a>
+                                    </div>
+
+                                    <!--<div class="actions">
+                                        <button class="btn btn-primary prev-item" disabled="disabled"><i class="fa fa-chevron-circle-left"></i> Prev</button>
+                                        <button class="btn btn-primary next-item">Next <i class="fa fa-chevron-circle-right"></i></button>
+                                    </div>-->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div><div id="cadtop-2" class="widget widget_cadtop"><div class="ad toprightboombox">
+                <!-- Chiefmarketer.com/toprightboombox -->
+                <div id='div-gpt-ad-1412707179812-0' style='width:300px; height:250px;'>
+                </div>
+            </div></div><div id="videos_widget-2" class="widget widget_videos_widget"><!-- Start widget template -->
+                <div class="module basic type-large-thumb shows-video">
+                    <div class="module-title-bar">
+                        <h2 class="title">Chief Marketer Videos</h2>
+                    </div>
+                    <div class="content">
+                        <div class="post-list">
+                            <article class="article large-thumb">
+
+                                <!-- Video -->
+                                <div class="video-container">
+                                    <iframe width="500" height="281" src="https://www.youtube.com/embed/FiQ-k6RRsyY?feature=oembed" frameborder="0" allowfullscreen></iframe>    </div>
+
+                                <header>
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        <time datetime="2017-02-01T16:13:37+00:00" pubdate="pubdate" >February 1, 2017</time>
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                        <span class="topic"></span>
+                                    </div>
+
+                                    <div class="excerpt">
+                                        <p>Ashley Schacher, Director, Events &amp; Sponsorships, Pernod Ricard, on why it makes sense for big brands like MasterCard to stick with campaigns that work. #PROMONext</p>
+                                    </div>
+                                </header>
+
+                            </article>                    </div>
+                    </div>
+                    <div class="actions">
+                        <a href="http://www.chiefmarketer.com/videos/" class="btn btn-primary">View More <i class="fa fa-chevron-circle-right"></i></a>
+                    </div>
+                </div>
+                <script type="text/javascript">
+    /*
+    jQuery(window).load(function() {
+        jQuery('.video-container').fitVids();
+    });
+    */
+</script></div><div id="awards-2" class="widget widget_awards"><!-- Start widget template -->
+                <div class="module basic awards-module" style="padding-bottom:0;">
+                    <div class="module-title-bar">
+                        <h2 class="title">Chief Marketer Awards</h2>
+                    </div>
+
+                    <!--marc awards -->
+                    <div class="content" style="padding:0; white-space: nowrap; overflow:hidden; text-align:center;">
+                        <div style="text-align:center; display: inline-block; width: 45%; white-space: normal; vertical-align:top;">
+                            <div style="height: 90px; display: inline-block;">
+                                <a href="/marc-awards-winners/"><img src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/build/img/awards-marc.jpg" /></a>
+                            </div>
+                            <span c-scroll interval="4000" delay="0" class="list-unstyled awards-company-list" style="display:block;height:85px;overflow:hidden;">
+                                    <a c-scroll-item class="text-danger ng-hide zoomInRight" href="http://www.chiefmarketer.com/marcawards/inbound-lead-acquisitiongeneration/">
+                        Tableau Software                    </a>
+                                    <a c-scroll-item class="text-danger ng-hide zoomInRight" href="http://www.chiefmarketer.com/marcawards/lead-nurturing/">
+                        Marketo                    </a>
+                                    <a c-scroll-item class="text-danger ng-hide zoomInRight" href="http://www.chiefmarketer.com/marcawards/analytics-measurement-attribution/">
+                        Chicago Board Options Exchange                    </a>
+                                    <a c-scroll-item class="text-danger ng-hide zoomInRight" href="http://www.chiefmarketer.com/marcawards/conversion-optimization/">
+                        Marriott Rewards                    </a>
+                                    <a c-scroll-item class="text-danger ng-hide zoomInRight" href="http://www.chiefmarketer.com/marcawards/globallocal/">
+                        Lionbridge Technologies                    </a>
+                                    <a c-scroll-item class="text-danger ng-hide zoomInRight" href="http://www.chiefmarketer.com/marcawards/interactivityengagement/">
+                        Lincoln Financial                    </a>
+                                    <a c-scroll-item class="text-danger ng-hide zoomInRight" href="http://www.chiefmarketer.com/marcawards/content-marketing/">
+                        Asante SNAP                    </a>
+                                    <a c-scroll-item class="text-danger ng-hide zoomInRight" href="http://www.chiefmarketer.com/marcawards/channel-integrationmessaging/">
+                        Xerox Corporation                    </a>
+                                    <a c-scroll-item class="text-danger ng-hide zoomInRight" href="http://www.chiefmarketer.com/marcawards/personalization/">
+                        PCH.com                    </a>
+                                    <a c-scroll-item class="text-danger ng-hide zoomInRight" href="http://www.chiefmarketer.com/marcawards/targeting/">
+                        TalkTalk Business                    </a>
+                            </span>
+                        </div>
+
+                        <!-- pro awards -->
+                        <div style="text-align:center; display: inline-block; width: 45%; white-space: normal; vertical-align:top;">
+                            <div style="height: 90px; display: inline-block;">
+                                <a href="http://www.pro-awards.com"><img src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/build/img/awards-pro.jpg"/></a>
+                            </div>
+                            <span c-scroll interval="4000" delay="500" class="list-unstyled awards-company-list" style="display:block;height:85px;overflow:hidden;">
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/pro-awards-winners/gold-best-campaign-budget-250000-2015">
+                            Denny’s - Gold                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/pro-awards-winners/gold-best-sampling-or-trial-recruitment-campaign-2016/">
+                            Garnier - Gold                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/pro-awards-winners/best-promotion-targeting-specific-demographic-gold">
+                            MillerCoors Foster’s - Gold                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/pro-awards-winners/gold-best-cause-based-campaign-2015">
+                            Ford Motor Co. - Gold                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/pro-awards-winners/gold-best-use-of-content-marketing-2016/">
+                            Jack Daniel’s Tennessee Whiskey - Gold                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/pro-awards-winners/gold-best-cross-channel-campaign-2015">
+                            Cottonelle - Gold                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/pro-awards-winners/best-sampling-trial-recruitment-promotion-gold">
+                            Microsoft Windows - Gold                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/pro-awards-winners/gold-best-use-shopper-marketing-2015">
+                            Intel Corp. - Gold                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/pro-awards-winners/gold-best-mobile-campaign-2015">
+                            Kingsford Charcoal - Gold                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/pro-awards-winners/gold-best-multiculturallifestyle-campaign-2015">
+                            Pernod Ricard USA - Gold                        </a>
+                                    </span>
+                        </div>
+                    </div>
+                </div></div><div id="top_shops-2" class="widget widget_top_shops"><!-- Start widget template -->
+                <div class="module basic awards-module" style="padding-bottom: 0;">
+                    <div class="module-title-bar">
+                        <h2 class="title">Chief Marketer Top Shops</h2>
+                    </div>
+                    <div class="content" style="padding:0; white-space: nowrap; overflow:hidden; text-align:center;">
+
+                        <div style="text-align:center; display: inline-block; width: 45%; white-space: normal; vertical-align:top;">
+                            <div style="height: 100px; display: inline-block;">
+                                <a href="/top-shops-2017"><img src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/build/img/Promo-Top-Shops-Logo-2017.png" /></a>
+                            </div>
+                            <span c-scroll interval="4000" delay="1000" class="list-unstyled awards-company-list" style="display:block;height:85px;overflow:hidden;">
+                                        <a class="ng-hide zoomInRight" c-scroll-item href="http://www.chiefmarketer.com/promo-top-shops-2017/the-strategic-agency">
+                          The Strategic Agency                      </a>
+                                        <a class="ng-hide zoomInRight" c-scroll-item href="http://www.chiefmarketer.com/promo-top-shops-2017/allied-integrating-marketing">
+                          Allied Integrated Marketing                      </a>
+                                        <a class="ng-hide zoomInRight" c-scroll-item href="http://www.chiefmarketer.com/promo-top-shops-2017/upshot">
+                          Upshot                      </a>
+                                        <a class="ng-hide zoomInRight" c-scroll-item href="http://www.chiefmarketer.com/promo-top-shops-2017/marketinglab">
+                          MarketingLab                      </a>
+                                        <a class="ng-hide zoomInRight" c-scroll-item href="http://www.chiefmarketer.com/promo-top-shops-2017/c3-agency">
+                          C3 Agency                      </a>
+                                        <a class="ng-hide zoomInRight" c-scroll-item href="http://www.chiefmarketer.com/topshops/switch-liberate-brand-2016/">
+                          Switch                      </a>
+                                        <a class="ng-hide zoomInRight" c-scroll-item href="http://www.chiefmarketer.com/promo-top-shops-2017/the-marketing-store-form">
+                          The Marketing Store                      </a>
+                                        <a class="ng-hide zoomInRight" c-scroll-item href="http://www.chiefmarketer.com/promo-top-shops-2017/jack-morton-worldwide">
+                          Jack Morton Worldwide                      </a>
+                                        <a class="ng-hide zoomInRight" c-scroll-item href="http://www.chiefmarketer.com/promo-top-shops-2017/team-epic">
+                          Team Epic, LLC                      </a>
+                                        <a class="ng-hide zoomInRight" c-scroll-item href="http://www.chiefmarketer.com/topshops/don-jagoda-associates-2016/">
+                          Don Jagoda Associates                      </a>
+                                  </span>
+                        </div>
+
+
+                        <div style="text-align:center; display: inline-block; width: 45%; white-space: normal; vertical-align:top;">
+                            <div style="height: 100px; display: inline-block;">
+                                <a href="/top-shops-2017"><img src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/build/img/B2B-Top-Shops-Logo-2017.png"/></a>
+                            </div>
+                            <span c-scroll interval="4000" class="list-unstyled awards-company-list" style="display:block;height:85px; overflow:hidden;">
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/b2b-top-shops-2017/borenstein-group">
+                            Borenstein Group, Inc.                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/b2b-top-shops-2017/nfusion">
+                            nFusion                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/b2b-top-shops-2017/quarry">
+                            Quarry                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/b2b-top-shops-2017/integrous-marketing">
+                            Integrous Marketing                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/b2b-top-shops-2017/eric-mower-associates">
+                            Eric Mower + Associates, Group B2B                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/b2b-top-shops-2017/Sonnhalter">
+                            Sonnhalter                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/b2b-top-shops-2017/leo-events">
+                            LEO Events                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/topshops/bizmark-2016/">
+                            BizMark                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/b2b-top-shops-2017/metis-communications">
+                            Metis Communications                        </a>
+                                            <a c-scroll-item class="ng-hide zoomInRight text-danger" href="http://www.chiefmarketer.com/b2b-top-shops/2017-gage">
+                            Gage                        </a>
+                                    </span>
+                        </div>
+                    </div>
+                </div></div><div id="blog_widget-2" class="widget widget_blog_widget"><!-- Start widget template -->
+                <div class="module basic">
+                    <div class="module-title-bar">
+                        <h2 class="title">Blogs & Opinion</h2>
+                    </div>
+                    <div class="content">
+                        <div class="post-list">
+
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img src='http://cdn.chiefmarketer.com/wp-content/uploads/2014/10/Beth_Negus_2013.v2-90x70.jpg' class='img-thumbnail pull-left' style='margin-right:0.5em; height:70px' />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/blog/everyone-wants-to-be-groot-the-guardians-marketing-blitz/">Everyone Wants to be Groot—The Guardians Marketing Blitz</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/beth-negus-viveiros/">Beth Negus Viveiros</a></span>
+
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+
+                            <article class="article thumblist">
+                                <!-- thumbnail -->
+                                <img src='http://cdn.chiefmarketer.com/wp-content/uploads/2014/10/POdell-90x70.jpg' class='img-thumbnail pull-left' style='margin-right:0.5em; height:70px' />
+                                <header>
+                                    <!-- title -->
+                                    <h3 class="title"><a href="http://www.chiefmarketer.com/blog/social-fans-rewarded-with-bags-of-weed/">Social Fans Rewarded with Bags of Weed</a></h3>
+
+                                    <!-- Time -->
+                                    <div class="date-author">
+                                        by <span class="author"><a href="http://www.chiefmarketer.com/author/patricia-odell/">Patty Odell</a></span>
+
+                                    </div>
+                                </header>
+
+                                <div class="clearfix"></div><!-- to clear the thumbnail's left floating -->
+                            </article>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <a href="http://www.chiefmarketer.com/blog/" class="btn btn-primary">Read More <i class="fa fa-chevron-circle-right"></i></a>
+                    </div>
+                </div>
+            </div><div id="jobs_widget-2" class="widget widget_jobs_widget">
+                <!-- Start widget template -->
+                <div class="module basic">
+                    <pre style='display:none;'></pre>	<pre style='display:none;'></pre>        <div class="module-title-bar">
+                    <h2 class="title">Chief Marketer Job Board</h2>
+                </div>
+                    <div class="content">
+                        <div class="post-list">
+                            <article class="article list-type">
+                                <header>
+                                    <h3 class="title"><a href="http://jobs.chiefmarketer.com/jobseeker/job/34599885/region-marketing-manager-general-imaging-ultrasound/general-electric/?site_id=15648">Region Marketing Manager, General Imaging Ultrasound - General Electric - Wauwatosa</a></h3>
+                                </header>
+                            </article>
+                            <article class="article list-type">
+                                <header>
+                                    <h3 class="title"><a href="http://jobs.chiefmarketer.com/jobseeker/job/34599739/global-product-marketing-manager/general-electric/?site_id=15648">Global Product Marketing Manager - General Electric - Salt Lake City</a></h3>
+                                </header>
+                            </article>
+                            <article class="article list-type">
+                                <header>
+                                    <h3 class="title"><a href="http://jobs.chiefmarketer.com/jobseeker/job/34599722/product-marketing-manager-8211-apm-enablement/general-electric/?site_id=15648">Product Marketing Manager &#8211; APM Enablement - General Electric - Atlanta</a></h3>
+                                </header>
+                            </article>
+                            <article class="article list-type">
+                                <header>
+                                    <h3 class="title"><a href="http://jobs.chiefmarketer.com/jobseeker/job/34599578/technical-solution-marketing-manager/general-electric/?site_id=15648">Technical Solution Marketing Manager - General Electric - San Ramon</a></h3>
+                                </header>
+                            </article>
+                            <article class="article list-type">
+                                <header>
+                                    <h3 class="title"><a href="http://jobs.chiefmarketer.com/jobseeker/job/34599197/sr-product-marketing-manager-8211-predix-solutions/general-electric/?site_id=15648">Sr. Product Marketing Manager &#8211; Predix Solutions - General Electric - San Ramon</a></h3>
+                                </header>
+                            </article>
+
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <a href="http://www.careerwebsite.com/r/login/login.cfm?site_id=15648&goto=%2Fr%2Fjobs%2Fpost%2Fpost%2Ecfm%3Fsite_id%3D15648" class="btn btn-primary">Post a Job <i class="fa fa-plus"></i></a>
+                        <a href="http://jobs.chiefmarketer.com/home/index.cfm?site_id=15648" class="btn btn-primary">Search Jobs <i class="fa fa-search"></i></a>
+                    </div>
+                </div>
+            </div><div id="cadbottom-3" class="widget widget_cadbottom"><div class="ad bottomrightboombox">
+                <!-- Chiefmarketer.com/bottomrightboombox -->
+                <div id='div-gpt-ad-1412707264338-0'>
+                </div>
+            </div></div>                </div>
+        </div>
+        <aside class="navbar navbar-default navbar-static-top navbar-footer striped">
+            <div class="container-fluid">
+                <ul id="menu-footer-nav" class="nav navbar-nav"><li><a href='/advertising-marketing-services/'>Advertise</a></li>
+                    <li><a href='/access-intelligence-privacy-policy/'>Privacy Policy</a></li>
+                    <li><a href='/contact-us/'>Contact Us</a></li>
+                    <li><a href='/sitemap'>Sitemap</a></li>
+                    <li><a href='http://www.chiefmarketer.com/subscribe'>Subscribe</a></li>
+                </ul>        <p class="navbar-text navbar-right">
+                &copy; 2017 Access Intelligence, LLC – All Rights Reserved.
+            </p>
+            </div>
+        </aside>    </div>
+
+</section>
+
+<!-- Chiefmarketer.com/bottomstickyleaderboard -->
+<div id='div-gpt-ad-1412709926816-0'></div>
+<script>
+		t_log_action(
+			'view', //action
+			'58a5b0644170e226428b45b8', //entity label or id
+			'cmwp_post', //entity collection
+			'', //owner
+			null, //distribution id
+			'', //channel
+			'', //widget
+			null, //campaign_id
+			null, //meta
+			null //value
+		);
+
+		wp_gated_init_track_downloads('58a5b0644170e226428b45b8','cmwp_post');
+
+</script>
+<script type="text/javascript">
+        // <![CDATA[
+        var disqus_shortname = 'chief-marketer';
+        (function () {
+            var nodes = document.getElementsByTagName('span');
+            for (var i = 0, url; i < nodes.length; i++) {
+                if (nodes[i].className.indexOf('dsq-postid') != -1 && nodes[i].parentNode.tagName == 'A') {
+                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('data-dsqidentifier'));
+                    url = nodes[i].parentNode.href.split('#', 1);
+                    if (url.length == 1) { url = url[0]; }
+                    else { url = url[1]; }
+                    nodes[i].parentNode.href = url + '#disqus_thread';
+                }
+            }
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+        // ]]>
+        </script>
+<script type='text/javascript' src='http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/js/custom_script.js?ver=1.1'></script>
+<script type='text/javascript' src='http://cdn.chiefmarketer.com/wp-content/plugins/aicms-popup/aicms-popup.js?ver=4.1'></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>
+<script src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/build/js/client-app-jquery-libs.min.js"></script>
+<script src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/build/js/client-app-libs.min.js"></script>
+<script src="http://cdn.chiefmarketer.com/wp-content/themes/chem-theme/client-app/build/js/client-app.min.js"></script>
+<script>
+
+	/*!
+	 * Bowser - a browser detector
+	 * https://github.com/ded/bowser
+	 * MIT License | (c) Dustin Diaz 2014
+	 */
+	!function(e,t){typeof module!="undefined"&&module.exports?module.exports.browser=t():typeof define=="function"?define(t):this[e]=t()}("bowser",function(){function t(t){function n(e){var n=t.match(e);return n&&n.length>1&&n[1]||""}var r=n(/(ipod|iphone|ipad)/i).toLowerCase(),i=/like android/i.test(t),s=!i&&/android/i.test(t),o=n(/version\/(\d+(\.\d+)?)/i),u=/tablet/i.test(t),a=!u&&/[^-]mobi/i.test(t),f;/opera|opr/i.test(t)?f={name:"Opera",opera:e,version:o||n(/(?:opera|opr)[\s\/](\d+(\.\d+)?)/i)}:/windows phone/i.test(t)?f={name:"Windows Phone",windowsphone:e,msie:e,version:n(/iemobile\/(\d+(\.\d+)?)/i)}:/msie|trident/i.test(t)?f={name:"Internet Explorer",msie:e,version:n(/(?:msie |rv:)(\d+(\.\d+)?)/i)}:/chrome|crios|crmo/i.test(t)?f={name:"Chrome",chrome:e,version:n(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)}:r?(f={name:r=="iphone"?"iPhone":r=="ipad"?"iPad":"iPod"},o&&(f.version=o)):/sailfish/i.test(t)?f={name:"Sailfish",sailfish:e,version:n(/sailfish\s?browser\/(\d+(\.\d+)?)/i)}:/seamonkey\//i.test(t)?f={name:"SeaMonkey",seamonkey:e,version:n(/seamonkey\/(\d+(\.\d+)?)/i)}:/firefox|iceweasel/i.test(t)?(f={name:"Firefox",firefox:e,version:n(/(?:firefox|iceweasel)[ \/](\d+(\.\d+)?)/i)},/\((mobile|tablet);[^\)]*rv:[\d\.]+\)/i.test(t)&&(f.firefoxos=e)):/silk/i.test(t)?f={name:"Amazon Silk",silk:e,version:n(/silk\/(\d+(\.\d+)?)/i)}:s?f={name:"Android",version:o}:/phantom/i.test(t)?f={name:"PhantomJS",phantom:e,version:n(/phantomjs\/(\d+(\.\d+)?)/i)}:/blackberry|\bbb\d+/i.test(t)||/rim\stablet/i.test(t)?f={name:"BlackBerry",blackberry:e,version:o||n(/blackberry[\d]+\/(\d+(\.\d+)?)/i)}:/(web|hpw)os/i.test(t)?(f={name:"WebOS",webos:e,version:o||n(/w(?:eb)?osbrowser\/(\d+(\.\d+)?)/i)},/touchpad\//i.test(t)&&(f.touchpad=e)):/bada/i.test(t)?f={name:"Bada",bada:e,version:n(/dolfin\/(\d+(\.\d+)?)/i)}:/tizen/i.test(t)?f={name:"Tizen",tizen:e,version:n(/(?:tizen\s?)?browser\/(\d+(\.\d+)?)/i)||o}:/safari/i.test(t)?f={name:"Safari",safari:e,version:o}:f={},/(apple)?webkit/i.test(t)?(f.name=f.name||"Webkit",f.webkit=e,!f.version&&o&&(f.version=o)):!f.opera&&/gecko\//i.test(t)&&(f.name=f.name||"Gecko",f.gecko=e,f.version=f.version||n(/gecko\/(\d+(\.\d+)?)/i)),s||f.silk?f.android=e:r&&(f[r]=e,f.ios=e);var l="";r?(l=n(/os (\d+([_\s]\d+)*) like mac os x/i),l=l.replace(/[_\s]/g,".")):s?l=n(/android[ \/-](\d+(\.\d+)*)/i):f.windowsphone?l=n(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i):f.webos?l=n(/(?:web|hpw)os\/(\d+(\.\d+)*)/i):f.blackberry?l=n(/rim\stablet\sos\s(\d+(\.\d+)*)/i):f.bada?l=n(/bada\/(\d+(\.\d+)*)/i):f.tizen&&(l=n(/tizen[\/\s](\d+(\.\d+)*)/i)),l&&(f.osversion=l);var c=l.split(".")[0];if(u||r=="ipad"||s&&(c==3||c==4&&!a)||f.silk)f.tablet=e;else if(a||r=="iphone"||r=="ipod"||s||f.blackberry||f.webos||f.bada)f.mobile=e;return f.msie&&f.version>=10||f.chrome&&f.version>=20||f.firefox&&f.version>=20||f.safari&&f.version>=6||f.opera&&f.version>=10||f.ios&&f.osversion&&f.osversion.split(".")[0]>=6?f.a=e:f.msie&&f.version<10||f.chrome&&f.version<20||f.firefox&&f.version<20||f.safari&&f.version<6||f.opera&&f.version<10||f.ios&&f.osversion&&f.osversion.split(".")[0]<6?f.c=e:f.x=e,f}var e=!0,n=t(typeof navigator!="undefined"?navigator.userAgent:"");return n._detect=t,n})
+
+	/*!
+	 * toParam() - Forms URLs with objects for POST data
+	 * Object -> String
+	 * Similar to [url]http://api.jquery.com/jQuery.param/[/url]
+	 * Source from [url]http://stackoverflow.com/questions/1714786/querystring-encoding-of-a-javascript-object/1714899#1714899[/url]
+	 *
+	 * @param object
+	 * @param [prefix]
+	 * @returns {string}
+	 */
+	function toParam(e,t){var n=[];var r;var i;for(i in e){r=e[i];i=t?t+"["+i+"]":i;if(r===null){r=encodeURIComponent(i)+"="}else if(typeof r!=="object"){r=encodeURIComponent(i)+"="+encodeURIComponent(r)}else{r=toParam(r,i)}n.push(r)}return n.join("&")}
+
+
+	if ( ! (bowser.msie && bowser.version <= 8 ) && !(bowser.android || bowser.ios) ) {
+		jQuery('.content-wrap > .sidebar, .content-wrap > .content-main').css({
+			'overflow-y':'hidden'
+		});
+		jQuery('.content-wrap > .sidebar, .content-wrap > .content-main').perfectScrollbar({suppressScrollX: true });
+	}
+	if ( bowser.android || bowser.ios ) {
+		//jQuery('.content-wrap > .sidebar, .content-wrap > .content-main').perfectScrollbar({suppressScrollX: true, wheelSpeed: 7});
+		//jQuery('.content-wrap > .sidebar, .content-wrap > .content-main').css({
+		//	'overflow-y':'scroll'
+		//});
+	}
+</script>
+<!-- Google Ads -->
+<!-- Careful: uses bowser.js -->
+<script type='text/javascript'>
+
+
+	var cmAds = {
+		slots: [],
+		reloadAds: function () {
+			clearTimeout(this.timer);
+			this.timer = setTimeout(function () {
+				googletag.pubads().refresh(this.slots);
+			}, 400);
+		}
+	};
+
+
+
+	var googletag = googletag || {};
+	googletag.cmd = googletag.cmd || [];
+
+
+	(function() {
+		var gads = document.createElement('script');
+		gads.async = true;
+		gads.type = 'text/javascript';
+		var useSSL = 'https:' == document.location.protocol;
+		gads.src = (useSSL ? 'https:' : 'http:') +
+		'//www.googletagservices.com/tag/js/gpt.js';
+		var node = document.getElementsByTagName('script')[0];
+		node.parentNode.insertBefore(gads, node);
+	})();
+
+	googletag.cmd.push(function() {
+		var mapping = googletag.sizeMapping()
+			.addSize([960, 200], [970, 90])
+			.addSize([700, 200], [728, 90])
+			.addSize([0, 0], [300, 50])
+			//.addSize([0, 0], [970, 90])
+			.build();
+
+		cmAds.slots.push(googletag.defineSlot('/987/Chiefmarketer.com/topbillboard', [970, 90], 'div-gpt-ad-1412707091094-0')
+			.defineSizeMapping(mapping)
+			.addService(googletag.pubads()));
+
+		cmAds.slots.push(googletag.defineSlot('/987/Chiefmarketer.com/toprightboombox', [300, 250], 'div-gpt-ad-1412707179812-0')
+			.addService(googletag.pubads()));
+
+		cmAds.slots.push(googletag.defineSlot('/987/Chiefmarketer.com/bottomrightboombox', [300, 250], 'div-gpt-ad-1412707264338-0')
+			.addService(googletag.pubads()));
+
+		//if ( !(bowser.android || bowser.ios) )
+			cmAds.slots.push(googletag.defineSlot('/987/Chiefmarketer.com/bottomstickyleaderboard', [1,1], 'div-gpt-ad-1412709926816-0')
+				.defineSizeMapping(mapping)
+				.addService(googletag.pubads()));
+
+		cmAds.slots.push(googletag.defineOutOfPageSlot('/987/Chiefmarketer.com/bottomslider', 'div-gpt-ad-1428591499083-0')
+			.addService(googletag.pubads()));
+
+googletag.pubads().setTargeting('path', '/ways-data-and-martech-can-help-communic').setTargeting('category', ['facts-figures', 'martech', 'technology']);
+
+		googletag.pubads().enableSingleRequest();
+		googletag.enableServices();
+	});
+
+	googletag.cmd.push(function() {
+		googletag.display('div-gpt-ad-1412707264338-0'); //bottomrightboombox
+		googletag.display('div-gpt-ad-1412707091094-0'); //topbillboard
+		googletag.display('div-gpt-ad-1412707179812-0'); //toprightboombox
+
+		//if ( !(bowser.android || bowser.ios) )
+			googletag.display('div-gpt-ad-1412709926816-0'); //bottomstickyleaderboard
+	});
+
+	jQuery(window).on('resize', cmAds.reloadAds);
+
+</script>
+<!-- Chiefmarketer.com/bottomslider -->
+<div id='div-gpt-ad-1428591499083-0' style='width:1px; height:1px;'>
+    <script type='text/javascript'>
+jQuery(document).ready(function(e) {
+	jQuery('body').css('overflow', 'visible');
+	googletag.cmd.push(function() { googletag.display('div-gpt-ad-1428591499083-0'); });
+});
+</script>
+</div>
+
+<!-- Toggle sidebar -->
+<script>
+	jQuery('#toggle-sidebar').on('click', function(e) {
+		jQuery('#sidebar').toggleClass('open');
+		jQuery('#wrapper').toggleClass('sidebarOpen');
+	});
+</script>
+
+<!-- Show delayed images -->
+<script>
+	jQuery('img[delayedsrc]').each(function(){
+		jQuery(this).attr('src', jQuery(this).attr('delayedsrc'));
+	});
+</script>
+
+
+<script>
+function partnerContentEvent(category,action,label,value)
+{
+	//ga('send','event',category,action,label,value);
+}
+</script>
+
+<!-- AddThis -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-54407f9b3f4b35c3"></script>
+
+
+
+
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"7b3e015db0","applicationID":"2261186","transactionName":"Y1xQYEQEDBBYBhVaDVoWc1dCDA0NFhYIXQVYXA==","queueTime":0,"applicationTime":2053,"atts":"TxtTFgweHx4=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using memcached
+Database Caching 87/266 queries in 0.297 seconds using memcached
+Object Caching 9191/9801 objects using memcached
+Content Delivery Network via Amazon Web Services: CloudFront: cdn.chiefmarketer.com
+
+ Served from: www.chiefmarketer.com @ 2017-05-02 02:36:14 by W3 Total Cache -->

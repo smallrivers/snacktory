@@ -1826,6 +1826,14 @@ public class ArticleTextExtractor {
                 if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: a hack for http://jdsupra.com/");
             }
 
+            if (authorName.isEmpty()) { // a hack for http://www.chiefmarketer.com
+                result = doc.select("span[class=author]").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.text());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: a hack for http://jdsupra.com/");
+                }
+            }
+
             // other hacks
             if (authorName.isEmpty()) {
                 try {
@@ -2049,6 +2057,18 @@ public class ArticleTextExtractor {
             authorDesc = bestMatch.text();
             if(DEBUG_AUTHOR_DESC_EXTRACTION){
                 System.out.println("AUTHOR_DESC: #author_d");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // Special case for chiefmarketer.com
+        matches = doc.select("p em a");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.parents().first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: p em a");
                 System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
             }
             return SHelper.innerTrim(authorDesc);
