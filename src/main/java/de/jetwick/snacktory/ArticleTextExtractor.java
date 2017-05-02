@@ -2772,17 +2772,15 @@ public class ArticleTextExtractor {
         } catch(URISyntaxException ex){
 	    logger.info(ex.toString());
             return null;
-        } catch(IllegalArgumentException ex){
-            // Handles case: java.lang.IllegalArgumentException: Not a valid domain name: '221.214.182.123'
-            return null;
         } catch(java.lang.IllegalStateException ex){
             // Handles case: java.lang.IllegalStateException: Not under a public suffix: developer.team
-	    logger.info(ex.toString());
+            logger.info(ex.toString());
             return null;
         } catch(java.lang.IllegalArgumentException ex){ //happens when url is: http://<IP address>
-	    logger.info(ex.toString());
-	    return null;
-	}
+            // Handles case: java.lang.IllegalArgumentException: Not a valid domain name: '221.214.182.123'
+            logger.info(ex.toString());
+            return null;
+        }
 	
     }
 
