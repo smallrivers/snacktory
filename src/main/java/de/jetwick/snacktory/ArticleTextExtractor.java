@@ -1866,6 +1866,12 @@ public class ArticleTextExtractor {
                         if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body [class=post-single-content box mark-links entry-content] em");
                     }
 
+                    // a hack for https://thefinancialbrand.com
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("p[class=contrib-byline]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: p[class=contrib-byline]");
+                    }
+
                     // hack for mycustomer.com/
                     if(matches == null || matches.size() == 0){
                         matches = doc.select("*[class*=field-name-field-computed-username]");
@@ -2069,6 +2075,18 @@ public class ArticleTextExtractor {
             authorDesc = bestMatch.text();
             if(DEBUG_AUTHOR_DESC_EXTRACTION){
                 System.out.println("AUTHOR_DESC: p em a");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // https://thefinancialbrand.com
+        matches = doc.select("p[class=contrib-byline]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: p[class=contrib-byline]");
                 System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
             }
             return SHelper.innerTrim(authorDesc);

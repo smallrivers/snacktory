@@ -2675,6 +2675,19 @@ public class ArticleTextExtractorTest {
         assertEquals("Dave Hawley is vice president of marketing at Dynamic Signal.", res.getAuthorDescription());
     }
 
+    @Test
+    public void testTheFinancialBrand() throws Exception {
+        // https://thefinancialbrand.com/65025/banking-lending-digital-marketing-trends/
+        JResult res = new JResult();
+        res.setUrl("https://thefinancialbrand.com/65025/banking-lending-digital-marketing-trends/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("thefinancialbrand.html")));
+        assertEquals("https://thefinancialbrand.com/65025/banking-lending-digital-marketing-trends/", res.getCanonicalUrl());
+        assertEquals("Improve Lending Results With Digital Marketing", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("The Digital Banking Report, \"2017 Financial Marketing Trends\" highlights the need to use data analytics and digital channels for marketing products and services."));
+        assertEquals("Scott Gordon", res.getAuthorName());
+        assertEquals("By Scott Gordon, Senior Director, Digital Marketing at Experian", res.getAuthorDescription());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
