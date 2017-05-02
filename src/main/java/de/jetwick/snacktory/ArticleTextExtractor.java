@@ -1786,6 +1786,12 @@ public class ArticleTextExtractor {
                 }
             }
 
+            // globalbankingandfinance.com
+            if (authorName.isEmpty()) {
+                authorName = SHelper.innerTrim(doc.select("div[class=the-content post-content clearfix] p strong em").text());
+                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: div[class=the-content post-content clearfix] p strong em");
+            }
+
             // fortune.com
             if (authorName.isEmpty()) {
                 authorName = SHelper.innerTrim(doc.select("head meta[property=author]").attr("content"));
@@ -1976,6 +1982,18 @@ public class ArticleTextExtractor {
             return SHelper.innerTrim(authorDesc);
         }
 
+        // Special case for globalbankingandfinance.com
+        matches = doc.select("div[class=the-content post-content clearfix] p strong em");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: div[class=the-content post-content clearfix] p strong em");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
         // Special case for fortune.com
         matches = doc.select("meta[property=article:author]");
         if (matches!= null && matches.size() > 0){
@@ -2019,6 +2037,18 @@ public class ArticleTextExtractor {
             authorDesc = bestMatch.text();
             if(DEBUG_AUTHOR_DESC_EXTRACTION){
                 System.out.println("AUTHOR_DESC: *[id*=user-biography]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // Special case for mediapost.com
+        matches = doc.select("#author_d");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: #author_d");
                 System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
             }
             return SHelper.innerTrim(authorDesc);

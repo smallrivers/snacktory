@@ -2635,6 +2635,33 @@ public class ArticleTextExtractorTest {
         assertEquals("https://patch.com/users/home-advisor", res.getAuthorDescription());
     }
 
+    @Test
+    public void testGlobalBankingAndFinance() throws Exception {
+        // http://www.globalbankingandfinance.com/the-digital-disruptors-can-devops-save-the-banks/
+        JResult res = new JResult();
+        res.setUrl("http://www.globalbankingandfinance.com/the-digital-disruptors-can-devops-save-the-banks/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("globalbankingandfinance.html")));
+        assertEquals("https://www.globalbankingandfinance.com/the-digital-disruptors-can-devops-save-the-banks/", res.getCanonicalUrl());
+        assertEquals("THE DIGITAL DISRUPTORS: CAN DEVOPS SAVE THE BANKS? – Global Banking And Finance Review Magazine – Financial & Business Insights", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Traditional banks are facing huge competition from digital disruptors."));
+        compareDates("2015-03-17 06:05:21", res.getDate());
+        assertEquals("Nigel Beighton, VP of Technology", res.getAuthorName());
+        assertEquals("By Nigel Beighton, VP of Technology, Rackspace", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testMediaPost() throws Exception {
+        // https://www.mediapost.com/publications/article/297175/never-mind-alexa-why-ai-obsession-echoes-past-hyp.html
+        JResult res = new JResult();
+        res.setUrl("https://www.mediapost.com/publications/article/297175/never-mind-alexa-why-ai-obsession-echoes-past-hyp.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("mediapost.html")));
+        assertEquals("https://www.mediapost.com/publications/article/297175/never-mind-alexa-why-ai-obsession-echoes-past-hyp.html", res.getCanonicalUrl());
+        assertEquals("Never Mind Alexa: Why AI Obsession Echoes Past Hype Cycles 03/16/2017", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("For a moment in early 2013, it looked like Google Glass was going to change everything."));
+        assertEquals("David Honig", res.getAuthorName());
+        assertEquals("DAVID HONIG, Vice President Strategy, Corporate Partnerships, Dynamic Signal", res.getAuthorDescription());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
         Date wantedDate = null;
         SimpleDateFormat[] dateFormats = {
