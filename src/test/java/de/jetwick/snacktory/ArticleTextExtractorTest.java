@@ -1,11 +1,11 @@
 package de.jetwick.snacktory;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -2562,7 +2562,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Why DBAs Need Networking Skills", res.getTitle());
         assertTrue(res.getText().startsWith("The cloud threatens everyone."));
         assertTrue(res.getText().endsWith("Remember, kids, the cloud isn’t a threat, it’s an opportunity."));
-        compareDates("2016-09-09 11:30:00", res.getDate());
+        compareDates("2016-09-09 07:30:00 -04:00", res.getDate());
         assertEquals("Thomas LaRock", res.getAuthorName());
         assertEquals("Thomas LaRock", res.getAuthorDescription());
     }
@@ -2576,7 +2576,7 @@ public class ArticleTextExtractorTest {
         assertEquals("https://www.ge.com/digital/blog/devops-no-royal-use-we", res.getCanonicalUrl());
         assertEquals( "DevOps: No Royal in This Use of “We”", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("This is the first in a series of posts from the technical staff that GE Software had on the ground at Cloud Foundry Summit."));
-        compareDates("2015-07-13 04:00:00", res.getDate());
+        compareDates("2015-07-13 00:00:00 -04:00", res.getDate());
         assertEquals("Denny Bulcao", res.getAuthorName());
         assertEquals("Senior Technical Writer at GE", res.getAuthorDescription());
     }
@@ -2717,22 +2717,16 @@ public class ArticleTextExtractorTest {
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
-        Date wantedDate = null;
-        SimpleDateFormat[] dateFormats = {
-            new SimpleDateFormat("yyyy-MM-dd"),
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ssz"),
+
+        String[] dateFormats = {
+                "yyyy-MM-dd",
+                "yyyy-MM-dd HH:mm:ss",
+                "yyyy-MM-dd HH:mm:ssz",
+                "yyyy-MM-dd HH:mm:ss Z",
+                "yyyy-MM-dd HH:mm:ss XXX",
         };
 
-        for(SimpleDateFormat dateFormat : dateFormats)
-        {
-            try {
-                wantedDate = dateFormat.parse(wanted);
-            } catch(ParseException ex) {
-                continue;
-            }
-        }
-
+        Date wantedDate = DateUtils.parseDateStrictly(wanted, dateFormats);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         assertEquals(formatter.format(wantedDate), formatter.format(extracted));
     }

@@ -1777,7 +1777,6 @@ public class ArticleTextExtractor {
                     System.out.println("AUTHOR: [class=kasten_titel]");
             }
 
-            // www.einnews.com
             // http://www.einnews.com/pr_news/339534444/rackspace-reaches-openstack-leadership-milestone-six-years-and-one-billion-server-hours
             if (authorName.isEmpty()) {
                 result = doc.select("p[class=contact]").first();
@@ -1787,7 +1786,6 @@ public class ArticleTextExtractor {
                 }
             }
 
-            // www.einnews.com
             // http://www.einnews.com/pr_news/336348008/hybrid-cloud-computing-industry-global-market-to-grow-at-cagr-34-4-between-2016-2022
             if (authorName.isEmpty()) {
                 result = doc.select("p:contains(Media Contact) strong").first();
@@ -2886,22 +2884,24 @@ public class ArticleTextExtractor {
             String host = new URI(url).getHost(); // Returns null if url is just an IP
             if (host != null) {
                 return InternetDomainName.from(host);
-            } else {
+	    }
+	    else {
                 logger.info("bad url: " + url);
                 return null;
             }
         } catch (URISyntaxException ex) {
             logger.info(ex.toString());
             return null;
-        } catch(IllegalArgumentException ex){
-            // Handles case: java.lang.IllegalArgumentException: Not a valid domain name: '221.214.182.123'
-            logger.info(ex.toString());
-            return null;
-        } catch (java.lang.IllegalStateException ex) {
+        } catch(java.lang.IllegalStateException ex){
             // Handles case: java.lang.IllegalStateException: Not under a public suffix: developer.team
             logger.info(ex.toString());
             return null;
+        } catch(java.lang.IllegalArgumentException ex){ //happens when url is: http://<IP address>
+            // Handles case: java.lang.IllegalArgumentException: Not a valid domain name: '221.214.182.123'
+            logger.info(ex.toString());
+            return null;
         }
+
     }
 
     // Returns the portion of this domain name that is one level beneath the public suffix.
