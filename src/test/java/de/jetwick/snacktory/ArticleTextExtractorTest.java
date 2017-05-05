@@ -313,6 +313,21 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testNytContentExtraction() throws Exception {
+        // https://www.nytimes.com/2016/07/21/business/daily-stock-market-activity.html
+        JResult res = new JResult();
+        res.setUrl("https://www.nytimes.com/2016/07/21/business/daily-stock-market-activity.html");
+        extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("nyt3.html")));
+        assertEquals("https://www.nytimes.com/2016/07/21/business/daily-stock-market-activity.html", res.getCanonicalUrl());
+        assertEquals("Wall St. Gains as Earnings Cheer Traders", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Stocks took another modest step further into record territory Wednesday after several companies reported profits that were stronger than expected."));
+        assertTrue(res.getText(), res.getText().endsWith("and the dollar rose to 106.96 Japanese yen from 106.11 yen."));
+        assertEquals("The Associated Press", res.getAuthorName());
+        assertEquals("THE ASSOCIATED PRESS", res.getAuthorDescription());
+        compareDates("2016-07-20", res.getDate());
+    }
+
+    @Test
     public void testHuffingtonpost() throws Exception {
         // http://www.huffingtonpost.com/2010/08/13/federal-reserve-pursuing_n_681540.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("huffingtonpost.html")));
