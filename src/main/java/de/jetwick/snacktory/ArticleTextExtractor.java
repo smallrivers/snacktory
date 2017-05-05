@@ -1819,6 +1819,12 @@ public class ArticleTextExtractor {
                 if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: head meta[property=article:author]");
             }
 
+            // Originally the general checks like opengraph, twitter, etc used to stay at top but,
+            // with added support for bunch of new domains like huffingtonpost, fortune the sequence
+            // of checks really plays a big role.
+            // e.g.  e.g. For huffingtonpost.com if general case is at top it will not give us the
+            // accurate result so sequence need to be adjusted.
+            // Please make sure all the tests are passing if you change the sequenc
             if (authorName.isEmpty()) {  // for "opengraph"
                 authorName = SHelper.innerTrim(doc.select("head meta[property=article:author]").attr("content"));
                 if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"opengraph\"");
