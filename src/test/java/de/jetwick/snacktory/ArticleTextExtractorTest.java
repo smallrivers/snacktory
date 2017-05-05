@@ -74,7 +74,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Gadhafi asks Obama to end NATO bombing", res.getTitle());
         assertEquals("/2011/WORLD/africa/04/06/libya.war/t1larg.libyarebel.gi.jpg", res.getImageUrl());
         assertTrue("cnn:" + res.getText(), res.getText().startsWith("Tripoli, Libya (CNN) -- As rebel and pro-government forces in Libya maneuvered on the battlefield Wedn"));
-        assertEquals("By the CNN Wire Staff", res.getAuthorName());
+        assertEquals("the CNN Wire Staff", res.getAuthorName());
     }
 
     @Test
@@ -890,7 +890,7 @@ public class ArticleTextExtractorTest {
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("huffingtonpost2.html")));
         assertEquals("Millions of Consumers Abandon Hashtag for Backslash", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("In a special Silicon Valley \"Tech Report,\" sources confirmed Monday that millions of "));
-        assertEquals("By Rebekah Iliff", res.getAuthorName());
+        assertEquals("Rebekah Iliff", res.getAuthorName());
         assertEquals("Chief Strategy Officer, AirPR", res.getAuthorDescription());
         // Mon, 05 May 2014 16:04:09 -0400 (sailthru.date?)
         compareDates("2014-05-06 15:59:46 -0400", res.getDate());
@@ -1846,7 +1846,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("I recently read an article in Fortune"));
         assertTrue(res.getText(), res.getText().endsWith("A version of the article first appeared on AirPR."));
         compareDates("2016-03-16", res.getDate());
-        assertEquals("By Leta Soza |", res.getAuthorName());
+        assertEquals("Leta Soza", res.getAuthorName());
     }
 
     @Test
@@ -2645,7 +2645,7 @@ public class ArticleTextExtractorTest {
         assertEquals("THE DIGITAL DISRUPTORS: CAN DEVOPS SAVE THE BANKS? – Global Banking And Finance Review Magazine – Financial & Business Insights", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Traditional banks are facing huge competition from digital disruptors."));
         compareDates("2015-03-17 06:05:21", res.getDate());
-        assertEquals("Nigel Beighton, VP of Technology", res.getAuthorName());
+        assertEquals("Nigel Beighton", res.getAuthorName());
         assertEquals("By Nigel Beighton, VP of Technology, Rackspace", res.getAuthorDescription());
     }
 

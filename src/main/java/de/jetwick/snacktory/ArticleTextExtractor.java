@@ -87,9 +87,12 @@ public class ArticleTextExtractor {
     private static final int MAX_LINK_SIZE = 512;
 
     private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
-        Pattern.compile("By\\S*(.*)[\\.,].*"),
-        Pattern.compile("Door:\\S*(.*)"),
-        Pattern.compile("Über\\S*(.*)[\\.,:].*")
+            // Prefix (By|Door|Über) may followed by
+            // any non word characters (blank space, &nbsp, etc) followed by
+            // actual authorName (word characters and space) may followed by
+            // followed by symbols lile (comma, fullstop) may followed by
+            // any character
+            Pattern.compile("(By|Door|Über)[^\\w]*(?<authorName>[\\w\\s]*)[\\.,]?.*", Pattern.UNICODE_CHARACTER_CLASS)
     );
 
     private static final List<Pattern> BAD_CANONICAL_PATTERNS = Arrays.asList(
@@ -1951,7 +1954,7 @@ public class ArticleTextExtractor {
         for (Pattern pattern : CLEAN_AUTHOR_PATTERNS) {
             Matcher matcher = pattern.matcher(authorName);
             if(matcher.matches()){
-                authorName = SHelper.innerTrim(matcher.group(1));
+                authorName = SHelper.innerTrim(matcher.group("authorName"));
                 break;
             }
         }
