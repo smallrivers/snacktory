@@ -1,5 +1,6 @@
 package de.jetwick.snacktory;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -2636,6 +2637,20 @@ public class ArticleTextExtractorTest {
         compareDates("2016-08-15 00:00:00", res.getDate());
         assertEquals("Kelly Byrd", res.getAuthorName());
         assertEquals("By Kelly Byrd, PR Engineer,", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testToday() throws Exception {
+        // http://www.today.com/video/michael-phelps-on-conserving-water-and-his-april-fools-comeback-prank-923578947587
+        JResult res = new JResult();
+        res.setUrl("http://www.today.com/video/michael-phelps-on-conserving-water-and-his-april-fools-comeback-prank-923578947587");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("today.html")));
+        assertEquals(StringUtils.EMPTY, res.getText());
+        assertEquals("http://www.today.com/video/michael-phelps-on-conserving-water-and-his-april-fools-comeback-prank-923578947587", res.getCanonicalUrl());
+        assertEquals("Michael Phelps on conserving water and his April Fools’ comeback prank", res.getTitle());
+        assertEquals(StringUtils.EMPTY, res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        compareDates("2017-04-18 14:54:56", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
