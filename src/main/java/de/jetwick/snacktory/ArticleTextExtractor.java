@@ -181,6 +181,10 @@ public class ArticleTextExtractor {
                 "*[class*=js-carousel-pane]",
                 "*[id=feature-photos-model]"
             ));
+        aMap.put("today.com", Arrays.asList(
+                "[class*=j-video-feeds]",
+                    "[class=player-closedcaption]"
+            ));
 
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
@@ -1562,6 +1566,22 @@ public class ArticleTextExtractor {
         if (elems.size() > 0) {
             Element el = elems.get(0);
             dateStr = el.text();
+            if (dateStr != null) {
+                if (DEBUG_DATE_EXTRACTION) {
+                    System.out.println("RULE-time[pubdate]");
+                }
+                Date d = parseDate(dateStr);
+                if (d != null) {
+                    return d;
+                }
+            }
+        }
+
+        // http://www.today.com/video/michael-phelps-on-conserving-water-and-his-april-fools-comeback-prank-923578947587
+        elems = doc.select("[itemprop=uploadDate]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.attr("content");
             if (dateStr != null) {
                 if (DEBUG_DATE_EXTRACTION) {
                     System.out.println("RULE-time[pubdate]");
