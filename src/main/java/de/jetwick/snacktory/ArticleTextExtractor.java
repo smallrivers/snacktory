@@ -1806,6 +1806,19 @@ public class ArticleTextExtractor {
                 }
             }
 
+            if (authorName.isEmpty()) {  // for "schema.org creativework"
+                authorName = SHelper.innerTrim(doc.select("[itemtype=http://schema.org/Person]meta[itemprop=author]").attr("content"));
+                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\" [itemtype=http://schema.org/Person]meta[itemprop=author]");
+            }
+
+            if (authorName.isEmpty()) {  // for "schema.org creativework"
+                result = doc.select("[itemtype=http://schema.org/Person]span[itemprop=author]").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.text());
+                }
+                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\" [itemtype=http://schema.org/Person]span[itemprop=author]");
+            }
+
             if (authorName.isEmpty()) {  // for "opengraph"
                 authorName = SHelper.innerTrim(doc.select("head meta[property=article:author]").attr("content"));
                 if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"opengraph\"");
@@ -1813,10 +1826,6 @@ public class ArticleTextExtractor {
             if (authorName.isEmpty()) { // OpenGraph twitter:creator tag
                 authorName = SHelper.innerTrim(doc.select("head meta[property=twitter:creator]").attr("content"));
                 if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: OpenGraph twitter:creator tag");
-            }
-            if (authorName.isEmpty()) {  // for "schema.org creativework"
-                authorName = SHelper.innerTrim(doc.select("meta[itemprop=author], span[itemprop=author]").attr("content"));
-                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\"");
             }
 
             if (authorName.isEmpty()) {  // a hack for http://jdsupra.com/
@@ -2005,6 +2014,18 @@ public class ArticleTextExtractor {
             authorDesc = bestMatch.text();
             if(DEBUG_AUTHOR_DESC_EXTRACTION){
                 System.out.println("AUTHOR_DESC: *[id*=user-biography]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // Special case for washingtonpost
+        matches = doc.select("[class=pb-author-bio]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: [class=pb-author-bio]");
                 System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
             }
             return SHelper.innerTrim(authorDesc);

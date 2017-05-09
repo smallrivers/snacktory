@@ -2653,6 +2653,22 @@ public class ArticleTextExtractorTest {
         compareDates("2017-04-18 14:54:56", res.getDate());
     }
 
+    @Test
+    public void testAuthorExtractionSchemaOrg() throws Exception {
+        // https://www.washingtonpost.com/news/powerpost/wp/2017/01/12/trump-names-rudy-giuliani-as-cybersecurity-adviser/?utm_term=.17818c6b675c
+        JResult res = new JResult();
+        res.setUrl("https://www.washingtonpost.com/news/powerpost/wp/2017/01/12/trump-names-rudy-giuliani-as-cybersecurity-adviser/?utm_term=.17818c6b675c");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("washingtonpost_1.html")));
+        assertTrue(res.getText(), res.getText().startsWith("President-elect Donald Trump named former New York mayor Rudolph W. Giuliani as an informal adviser on cybersecurity, according to the presidential transition office."));
+        assertEquals("https://www.washingtonpost.com/news/powerpost/wp/2017/01/12/trump-names-rudy-giuliani-as-cybersecurity-adviser/", res.getCanonicalUrl());
+        assertEquals("Trump names Rudy Giuliani as cybersecurity adviser", res.getTitle());
+        // Author name should not prefixed with work 'By' - change is already in review
+        // https://github.com/skyshard/snacktory/pull/21
+        assertEquals("By Abby Phillip", res.getAuthorName());
+        assertEquals("Abby Phillip is a national political reporter covering the White House for The Washington Post. She can be reached at abby.phillip@washpost.com.", res.getAuthorDescription());
+        compareDates("2017-01-12", res.getDate());
+    }
+
     public static void compareDates(String wanted, Date extracted) throws Exception {
 
         String[] dateFormats = {
