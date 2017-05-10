@@ -8,10 +8,7 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -78,7 +75,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Gadhafi asks Obama to end NATO bombing", res.getTitle());
         assertEquals("/2011/WORLD/africa/04/06/libya.war/t1larg.libyarebel.gi.jpg", res.getImageUrl());
         assertTrue("cnn:" + res.getText(), res.getText().startsWith("Tripoli, Libya (CNN) -- As rebel and pro-government forces in Libya maneuvered on the battlefield Wedn"));
-        assertEquals("By the CNN Wire Staff", res.getAuthorName());
+        assertEquals("the CNN Wire Staff", res.getAuthorName());
     }
 
     @Test
@@ -912,7 +909,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Rebekah Iliff", res.getAuthorName());
         assertEquals("Chief Strategy Officer, AirPR", res.getAuthorDescription());
         // Mon, 05 May 2014 16:04:09 -0400 (sailthru.date?)
-        compareDates("2014-05-05 20:04:09", res.getDate());
+        compareDates("2014-05-06 15:59:46 -0400", res.getDate());
     }
 
     @Test
@@ -1017,9 +1014,11 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://fortune.com/2015/05/11/rackspaces-support-other-cloud/");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("fortune.html")));
-        assertEquals("Will Rackspace support Google's or Amazon's clouds? - Fortune", res.getTitle());
+        assertEquals("Will Rackspace support Google's or Amazon's clouds?", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Rackspace, a true cloud computing pioneer, is starting to sound like a company that will"));
-        compareDates("2015-05-11 23:01:19", res.getDate());
+        compareDates("2015-05-11 00:00:00", res.getDate());
+        assertEquals("Barb Darrow", res.getAuthorName());
+        assertEquals("http://fortune.com/author/barb-darrow/", res.getAuthorDescription());
     }
 
     @Test
@@ -1863,7 +1862,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("I recently read an article in Fortune"));
         assertTrue(res.getText(), res.getText().endsWith("A version of the article first appeared on AirPR."));
         compareDates("2016-03-16", res.getDate());
-        assertEquals("By Leta Soza |", res.getAuthorName());
+        assertEquals("Leta Soza", res.getAuthorName());
     }
 
     @Test
@@ -2640,6 +2639,99 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testPatch() throws Exception {
+        // https://patch.com/new-york/kingspark/s/futh4/how-much-does-it-really-cost-to-remodel-your-bathroom
+        JResult res = new JResult();
+        res.setUrl("https://patch.com/new-york/kingspark/s/futh4/how-much-does-it-really-cost-to-remodel-your-bathroom");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("patch.html")));
+        assertEquals("https://patch.com/us/across-america/how-much-does-it-really-cost-renovate-your-bathroom", res.getCanonicalUrl());
+        assertEquals("How Much Does It Really Cost to Remodel Your Bathroom?", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("In every home makeover show, there’s one room that gets the most “oohs” and “aahs.”"));
+        assertEquals("HomeAdvisor", res.getAuthorName());
+        assertEquals("https://patch.com/users/home-advisor", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testGlobalBankingAndFinance() throws Exception {
+        // http://www.globalbankingandfinance.com/the-digital-disruptors-can-devops-save-the-banks/
+        JResult res = new JResult();
+        res.setUrl("http://www.globalbankingandfinance.com/the-digital-disruptors-can-devops-save-the-banks/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("globalbankingandfinance.html")));
+        assertEquals("https://www.globalbankingandfinance.com/the-digital-disruptors-can-devops-save-the-banks/", res.getCanonicalUrl());
+        assertEquals("THE DIGITAL DISRUPTORS: CAN DEVOPS SAVE THE BANKS? – Global Banking And Finance Review Magazine – Financial & Business Insights", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Traditional banks are facing huge competition from digital disruptors."));
+        compareDates("2015-03-17 06:05:21", res.getDate());
+        assertEquals("Nigel Beighton", res.getAuthorName());
+        assertEquals("By Nigel Beighton, VP of Technology, Rackspace", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testMediaPost() throws Exception {
+        // https://www.mediapost.com/publications/article/297175/never-mind-alexa-why-ai-obsession-echoes-past-hyp.html
+        JResult res = new JResult();
+        res.setUrl("https://www.mediapost.com/publications/article/297175/never-mind-alexa-why-ai-obsession-echoes-past-hyp.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("mediapost.html")));
+        assertEquals("https://www.mediapost.com/publications/article/297175/never-mind-alexa-why-ai-obsession-echoes-past-hyp.html", res.getCanonicalUrl());
+        assertEquals("Never Mind Alexa: Why AI Obsession Echoes Past Hype Cycles 03/16/2017", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("For a moment in early 2013, it looked like Google Glass was going to change everything."));
+        assertEquals("David Honig", res.getAuthorName());
+        assertEquals("DAVID HONIG, Vice President Strategy, Corporate Partnerships, Dynamic Signal", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testChiefMarketer() throws Exception {
+        // http://www.chiefmarketer.com/ways-data-and-martech-can-help-communications-leaders/
+        JResult res = new JResult();
+        res.setUrl("http://www.chiefmarketer.com/ways-data-and-martech-can-help-communications-leaders/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("chiefmarketer.html")));
+        assertEquals("http://www.chiefmarketer.com/ways-data-and-martech-can-help-communications-leaders/", res.getCanonicalUrl());
+        assertEquals("Ways Data and Martech Can Help Communications Leaders", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Today’s martech and data explosion holds the key for chief communications officers to gain the data-driven insights, projections and authority that their C-suite counterparts already enjoy."));
+        assertEquals("Dave Hawley", res.getAuthorName());
+        assertEquals("Dave Hawley is vice president of marketing at Dynamic Signal.", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testTheFinancialBrand() throws Exception {
+        // https://thefinancialbrand.com/65025/banking-lending-digital-marketing-trends/
+        JResult res = new JResult();
+        res.setUrl("https://thefinancialbrand.com/65025/banking-lending-digital-marketing-trends/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("thefinancialbrand.html")));
+        assertEquals("https://thefinancialbrand.com/65025/banking-lending-digital-marketing-trends/", res.getCanonicalUrl());
+        assertEquals("Improve Lending Results With Digital Marketing", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("The Digital Banking Report, \"2017 Financial Marketing Trends\" highlights the need to use data analytics and digital channels for marketing products and services."));
+        assertEquals("Scott Gordon", res.getAuthorName());
+        assertEquals("By Scott Gordon, Senior Director, Digital Marketing at Experian", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testEINNews() throws Exception {
+        // http://www.einnews.com/pr_news/339534444/rackspace-reaches-openstack-leadership-milestone-six-years-and-one-billion-server-hours
+        JResult res = new JResult();
+        res.setUrl("http://www.einnews.com/pr_news/339534444/rackspace-reaches-openstack-leadership-milestone-six-years-and-one-billion-server-hours");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("einnews.html")));
+        assertEquals("http://www.einnews.com/pr_news/339534444/rackspace-reaches-openstack-leadership-milestone-six-years-and-one-billion-server-hours", res.getCanonicalUrl());
+        assertEquals("Rackspace Reaches OpenStack Leadership Milestone, Six Years and One Billion Server Hours", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("/EINPresswire.com/ -- SAN FRANCISCO, CA--(Marketwired - August 11, 2016) - Rackspace® (NYSE: RAX) today announced from"));
+        compareDates("2016-08-11 17:15:00", res.getDate());
+        assertEquals("Christina Weaver 210-312-4593", res.getAuthorName());
+        assertEquals("Media Contact: Christina Weaver 210-312-4593 christina.weaver@rackspace.com", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testEINNews1() throws Exception {
+        // http://www.einnews.com/pr_news/336348008/hybrid-cloud-computing-industry-global-market-to-grow-at-cagr-34-4-between-2016-2022
+        JResult res = new JResult();
+        res.setUrl("http://www.einnews.com/pr_news/336348008/hybrid-cloud-computing-industry-global-market-to-grow-at-cagr-34-4-between-2016-2022");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("einnews_1.html")));
+        assertEquals("http://www.einnews.com/pr_news/336348008/hybrid-cloud-computing-industry-global-market-to-grow-at-cagr-34-4-between-2016-2022", res.getCanonicalUrl());
+        assertEquals("Hybrid Cloud Computing Industry Global Market to grow at CAGR 34.4% between 2016 – 2022", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Hybrid Cloud Computing Industry Global Market to grow at CAGR 34.4% between 2016 – 2022"));
+        compareDates("2016-07-22 15:26:09", res.getDate());
+        assertEquals("Norah Trent wiseguyreports +1 646 845 9349 / +44 208 133 9349", res.getAuthorName());
+        assertEquals("Norah Trent wiseguyreports +1 646 845 9349 / +44 208 133 9349 email us here", res.getAuthorDescription());
+    }
+
     public void testToday() throws Exception {
         // http://www.today.com/video/michael-phelps-on-conserving-water-and-his-april-fools-comeback-prank-923578947587
         JResult res = new JResult();
@@ -2662,9 +2754,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("President-elect Donald Trump named former New York mayor Rudolph W. Giuliani as an informal adviser on cybersecurity, according to the presidential transition office."));
         assertEquals("https://www.washingtonpost.com/news/powerpost/wp/2017/01/12/trump-names-rudy-giuliani-as-cybersecurity-adviser/", res.getCanonicalUrl());
         assertEquals("Trump names Rudy Giuliani as cybersecurity adviser", res.getTitle());
-        // Author name should not prefixed with work 'By' - change is already in review
-        // https://github.com/skyshard/snacktory/pull/21
-        assertEquals("By Abby Phillip", res.getAuthorName());
+        assertEquals("Abby Phillip", res.getAuthorName());
         assertEquals("Abby Phillip is a national political reporter covering the White House for The Washington Post. She can be reached at abby.phillip@washpost.com.", res.getAuthorDescription());
         compareDates("2017-01-12", res.getDate());
     }

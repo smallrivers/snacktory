@@ -87,9 +87,12 @@ public class ArticleTextExtractor {
     private static final int MAX_LINK_SIZE = 512;
 
     private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
-        Pattern.compile("By\\S*(.*)[\\.,].*"),
-        Pattern.compile("Door:\\S*(.*)"),
-        Pattern.compile("Über\\S*(.*)[\\.,:].*")
+            // Prefix (By|Door|Über) may followed by
+            // any non word characters (blank space, &nbsp, etc) followed by
+            // actual authorName (word characters and space) may followed by
+            // followed by symbols lile (comma, fullstop) may followed by
+            // any character
+            Pattern.compile("(By|Door|Über)[^\\w]*(?<authorName>[\\w\\s]*)[\\.,]?.*", Pattern.UNICODE_CHARACTER_CLASS)
     );
 
     private static final List<Pattern> BAD_CANONICAL_PATTERNS = Arrays.asList(
@@ -100,7 +103,7 @@ public class ArticleTextExtractor {
         Pattern.compile("https{0,1}://www.cnbc.com/press-releases/$")
     );
 
-    // TODO: Replace this ugly list with a function that remove all the 
+    // TODO: Replace this ugly list with a function that remove all the
     // non numeric characters (except puntuaction, AM/PM and TZ)
     private static final List<Pattern> CLEAN_DATE_PATTERNS = Arrays.asList(
         Pattern.compile("Published ([A-Zaz]* \\d{1,2}, \\d{4}).*", Pattern.CASE_INSENSITIVE), // sys-con.com
@@ -330,7 +333,7 @@ public class ArticleTextExtractor {
         return extractContent(res, html, formatter, true, 0);
     }
 
-    public JResult extractContent(JResult res, String html, OutputFormatter formatter, 
+    public JResult extractContent(JResult res, String html, OutputFormatter formatter,
                                   Boolean extractimages, int maxContentSize) throws Exception {
         if (html.isEmpty())
             throw new IllegalArgumentException("html string is empty!?");
@@ -338,8 +341,8 @@ public class ArticleTextExtractor {
         // http://jsoup.org/cookbook/extracting-data/selector-syntax
         JResult result =  extractContent(res, Jsoup.parse(html, res.getUrl()), formatter, extractimages, maxContentSize);
 
-        // Do a sanity check, if the result content contains HTML tags most likely it is a bad 
-        // extraction, this may happen due to malformed HTML; try again using HTML cleaned with a 
+        // Do a sanity check, if the result content contains HTML tags most likely it is a bad
+        // extraction, this may happen due to malformed HTML; try again using HTML cleaned with a
         // different library.
         if(hasHTMLTags(result.getText())){
             TagNode node = cleaner.clean(html);
@@ -348,7 +351,7 @@ public class ArticleTextExtractor {
         return result;
     }
 
-    public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, 
+    public JResult extractContent(JResult res, Document doc, OutputFormatter formatter,
                                   Boolean extractimages, int maxContentSize) throws Exception {
         Document origDoc = doc.clone();
         JResult result = extractContent(res, doc, formatter, extractimages, maxContentSize, true);
@@ -360,7 +363,7 @@ public class ArticleTextExtractor {
     }
 
     // main workhorse
-    public JResult extractContent(JResult res, Document doc, OutputFormatter formatter, 
+    public JResult extractContent(JResult res, Document doc, OutputFormatter formatter,
                                   Boolean extractimages, int maxContentSize, boolean cleanScripts) throws Exception {
         if (doc == null)
             throw new NullPointerException("missing document");
@@ -468,7 +471,7 @@ public class ArticleTextExtractor {
 
         // Sanity checks in author description.
         String authorDescSnippet = getSnippet(res.getAuthorDescription());
-        if (getSnippet(res.getText()).equals(authorDescSnippet) || 
+        if (getSnippet(res.getText()).equals(authorDescSnippet) ||
              getSnippet(res.getDescription()).equals(authorDescSnippet)) {
             res.setAuthorDescription("");
         } else {
@@ -506,7 +509,7 @@ public class ArticleTextExtractor {
         return res;
     }
 
-    private boolean processBestElement(JResult res, Boolean extractimages, 
+    private boolean processBestElement(JResult res, Boolean extractimages,
                                        int maxContentSize, Element bestMatchElement){
         if (extractimages) {
             List<ImageResult> images = new ArrayList<ImageResult>();
@@ -612,7 +615,7 @@ public class ArticleTextExtractor {
     // Returns a TreeMap of nodes sorted by their weight.
     private TreeMap<ElementKey, ElementDebug> getBestMatchElements(Collection<Element> nodes){
 
-        // Sorted list of nodes. The list is sorted first by weight (from more to less), 
+        // Sorted list of nodes. The list is sorted first by weight (from more to less),
         // if two nodes have the same weight then sort by position (from 0 to N)
         TreeMap<ElementKey, ElementDebug> sortedResults = new TreeMap<ElementKey, ElementDebug>(
             new Comparator<ElementKey>() {
@@ -660,14 +663,14 @@ public class ArticleTextExtractor {
             if (DEBUG_WEIGHTS){
                 if(currentWeight>MIN_WEIGHT_TO_SHOW_IN_LOG){
                     elementValue.logEntries = logEntries;
-                    
+
                 }
             }
             sortedResults.put(elementKey, elementValue);
             position++;
         }
 
-        
+
         if (DEBUG_WEIGHTS){
 
             if (sortedResults.size()>0)
@@ -782,7 +785,7 @@ public class ArticleTextExtractor {
                         InternetDomainName baseUrlDomain = getTopPrivateDomain(baseURL);
                         InternetDomainName urlDomain = getTopPrivateDomain(url);
                         // if it point to an external domain, don't use the canonical
-                        if (baseUrlDomain!=null && urlDomain!=null 
+                        if (baseUrlDomain!=null && urlDomain!=null
                             && !baseUrlDomain.toString().equals(urlDomain.toString())){
                             return baseURL;
                         }
@@ -1797,6 +1800,24 @@ public class ArticleTextExtractor {
                     System.out.println("AUTHOR: [class=kasten_titel]");
             }
 
+            // http://www.einnews.com/pr_news/339534444/rackspace-reaches-openstack-leadership-milestone-six-years-and-one-billion-server-hours
+            if (authorName.isEmpty()) {
+                result = doc.select("p[class=contact]").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.ownText());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: p[class=contact]");
+                }
+            }
+
+            // http://www.einnews.com/pr_news/336348008/hybrid-cloud-computing-industry-global-market-to-grow-at-cagr-34-4-between-2016-2022
+            if (authorName.isEmpty()) {
+                result = doc.select("p:contains(Media Contact) strong").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.parent().ownText());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: p strong");
+                }
+            }
+
             // meta tag approaches, get content
             if (authorName.isEmpty()) {
                 result = doc.select("head meta[name=author]").first();
@@ -1819,10 +1840,38 @@ public class ArticleTextExtractor {
                 if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\" [itemtype=http://schema.org/Person]span[itemprop=author]");
             }
 
+            // globalbankingandfinance.com
+            if (authorName.isEmpty()) {
+                authorName = SHelper.innerTrim(doc.select("div[class=the-content post-content clearfix] p strong em").text());
+                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: div[class=the-content post-content clearfix] p strong em");
+            }
+
+            // fortune.com
+            if (authorName.isEmpty()) {
+                authorName = SHelper.innerTrim(doc.select("head meta[property=author]").attr("content"));
+                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: head meta[property=article:author]");
+            }
+
+            // Originally the general checks like opengraph, twitter, etc used to stay at top but,
+            // with added support for bunch of new domains like huffingtonpost, fortune the sequence
+            // of checks really plays a big role.
+            // e.g.  e.g. For huffingtonpost.com if general case is at top it will not give us the
+            // accurate result so sequence need to be adjusted.
+            // Please make sure all the tests are passing if you change the sequenc
             if (authorName.isEmpty()) {  // for "opengraph"
                 authorName = SHelper.innerTrim(doc.select("head meta[property=article:author]").attr("content"));
                 if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"opengraph\"");
             }
+
+            // hack for huffingtonpost.com, patch.com
+            if (authorName.isEmpty()) {
+                result = doc.select("span [class$=author-name]").first();
+                if(result != null) {
+                    authorName = SHelper.innerTrim(result.text());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: span [class*=author-name]");
+                }
+            }
+
             if (authorName.isEmpty()) { // OpenGraph twitter:creator tag
                 authorName = SHelper.innerTrim(doc.select("head meta[property=twitter:creator]").attr("content"));
                 if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: OpenGraph twitter:creator tag");
@@ -1831,6 +1880,14 @@ public class ArticleTextExtractor {
             if (authorName.isEmpty()) {  // a hack for http://jdsupra.com/
                 authorName = SHelper.innerTrim(doc.select("*[class*=author_name]").text());
                 if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: a hack for http://jdsupra.com/");
+            }
+
+            if (authorName.isEmpty()) { // a hack for http://www.chiefmarketer.com
+                result = doc.select("span[class=author]").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.text());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: a hack for http://jdsupra.com/");
+                }
             }
 
             // other hacks
@@ -1865,6 +1922,12 @@ public class ArticleTextExtractor {
                         if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body [class=post-single-content box mark-links entry-content] em");
                     }
 
+                    // a hack for https://thefinancialbrand.com
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("p[class=contrib-byline]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: p[class=contrib-byline]");
+                    }
+
                     // hack for mycustomer.com/
                     if(matches == null || matches.size() == 0){
                         matches = doc.select("*[class*=field-name-field-computed-username]");
@@ -1879,12 +1942,6 @@ public class ArticleTextExtractor {
                     if(matches == null || matches.size() == 0){
                         matches = doc.select("body [title*=author]");
                         if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: body [title*=author]");
-                    }
-
-                    // a hack for huffington post
-                    if(matches == null || matches.size() == 0){
-                        matches = doc.select(".staff_info dl a[href]");
-                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: .staff_info dl a[href]");
                     }
 
                     // a hack for http://sports.espn.go.com/
@@ -1932,7 +1989,7 @@ public class ArticleTextExtractor {
         for (Pattern pattern : CLEAN_AUTHOR_PATTERNS) {
             Matcher matcher = pattern.matcher(authorName);
             if(matcher.matches()){
-                authorName = SHelper.innerTrim(matcher.group(1));
+                authorName = SHelper.innerTrim(matcher.group("authorName"));
                 break;
             }
         }
@@ -1959,15 +2016,27 @@ public class ArticleTextExtractor {
             return SHelper.innerTrim(authorDesc);
         }
 
+        // patch.com
+        matches = doc.select("span[class=article-shared] a");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.attr("href");
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: span[class=article-shared] a");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
         // Special case for huffingtonpost.com
-        matches = doc.select(".byline span[class*=teaser]");
+        matches = doc.select("span[class=author-card__microbio]");
         if (matches!= null && matches.size() > 0){
             Element bestMatch = matches.first(); // assume it is the first.
             authorDesc = bestMatch.text();
             if(DEBUG_AUTHOR_DESC_EXTRACTION){
-                System.out.println("AUTHOR_DESC: .byline span[class*=teaser]");
+                System.out.println("AUTHOR_DESC: span[class=author-card__microbio]");
                 System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
-            } 
+            }
             return SHelper.innerTrim(authorDesc);
         }
 
@@ -1978,6 +2047,42 @@ public class ArticleTextExtractor {
             authorDesc = bestMatch.text();
             if(DEBUG_AUTHOR_DESC_EXTRACTION){
                 System.out.println("AUTHOR_DESC: body [class=author-function]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // Special case for globalbankingandfinance.com
+        matches = doc.select("div[class=the-content post-content clearfix] p strong em");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: div[class=the-content post-content clearfix] p strong em");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // Special case for washingtonpost
+        matches = doc.select("[class=pb-author-bio]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: [class=pb-author-bio]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // Special case for fortune.com
+        matches = doc.select("meta[property=article:author]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.attr("content");
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: meta[property=article:author].content");
                 System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
             }
             return SHelper.innerTrim(authorDesc);
@@ -2019,13 +2124,37 @@ public class ArticleTextExtractor {
             return SHelper.innerTrim(authorDesc);
         }
 
-        // Special case for washingtonpost
-        matches = doc.select("[class=pb-author-bio]");
+        // Special case for mediapost.com
+        matches = doc.select("#author_d");
         if (matches!= null && matches.size() > 0){
             Element bestMatch = matches.first(); // assume it is the first.
             authorDesc = bestMatch.text();
             if(DEBUG_AUTHOR_DESC_EXTRACTION){
-                System.out.println("AUTHOR_DESC: [class=pb-author-bio]");
+                System.out.println("AUTHOR_DESC: #author_d");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // Special case for chiefmarketer.com
+        matches = doc.select("p em a");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.parents().first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: p em a");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // https://thefinancialbrand.com
+        matches = doc.select("p[class=contrib-byline]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: p[class=contrib-byline]");
                 System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
             }
             return SHelper.innerTrim(authorDesc);
@@ -2033,7 +2162,7 @@ public class ArticleTextExtractor {
 
         try {
             // If not author desc found, try to found a section where the author name
-            // is defined. 
+            // is defined.
             authorName = authorName.trim();
             if(authorName.length()>8){
                 Elements nodes = doc.select(":containsOwn(" + authorName + ")");
@@ -2247,7 +2376,7 @@ public class ArticleTextExtractor {
 
         if(logEntries!=null){
             if(childrenCount==0){
-                logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight) 
+                logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight)
                                 + " -- NO CHILDREN INCLUDED");
             } else {
                 logEntries.add("       ======> CHILDREN WEIGHT:" + String.format("%3d", childrenWeight));
@@ -2256,7 +2385,7 @@ public class ArticleTextExtractor {
         weight+=childrenWeight;
 
         //
-        // Visit grandchildren, This section visits the grandchildren 
+        // Visit grandchildren, This section visits the grandchildren
         // of the node and calculate their weights.
         //
         int grandChildrenCount = 0;
@@ -2286,9 +2415,9 @@ public class ArticleTextExtractor {
         for (Element child : rootEl.children()) {
 
             // If the node looks negative don't include it in the weights
-            // instead penalize the grandparent. This is done to try to 
+            // instead penalize the grandparent. This is done to try to
             // avoid giving weigths to navigation nodes, etc.
-            if (NEGATIVE.matcher(child.id()).find() || 
+            if (NEGATIVE.matcher(child.id()).find() ||
                 NEGATIVE.matcher(child.className()).find()){
                 //logEntries.add(" grandChildrenWeight-=30");
                 grandChildrenWeight-=30;
@@ -2326,7 +2455,7 @@ public class ArticleTextExtractor {
                 }
             }
             if (currentGrandChildrenCount > 0) {
-                granChildrenLogEntries.add("\t ---------------------------------------------"); 
+                granChildrenLogEntries.add("\t ---------------------------------------------");
             }
         }
 
@@ -2337,7 +2466,7 @@ public class ArticleTextExtractor {
                 logEntries.append(granChildrenLogEntries);
                 logEntries.add("       ======> GRAND-CH WEIGHT:" + String.format("%3d", grandChildrenWeight));
             } else {
-                logEntries.add("       ======> GRAND-CH WEIGHT:" + String.format("%3d", grandChildrenWeight) 
+                logEntries.add("       ======> GRAND-CH WEIGHT:" + String.format("%3d", grandChildrenWeight)
                                 + " -- NO GRANDCHILDREN INCLUDED");
             }
         }
@@ -2350,7 +2479,7 @@ public class ArticleTextExtractor {
                 logEntries.append(greatGranChildrenLogEntries);
                 logEntries.add("       ======> GREAT-CH WEIGHT:" + String.format("%3d", greatGrandChildrenWeight));
             } else {
-                logEntries.add("       ======> GREAT-CH WEIGHT:" + String.format("%3d", greatGrandChildrenWeight) 
+                logEntries.add("       ======> GREAT-CH WEIGHT:" + String.format("%3d", greatGrandChildrenWeight)
                                 + " -- NO GREAT GRANDCHILDREN INCLUDED");
             }
         }
@@ -2361,7 +2490,7 @@ public class ArticleTextExtractor {
             int captionWeight = 30;
             weight+=captionWeight;
             if(logEntries!=null)
-                logEntries.add("\t CAPTION WEIGHT:" 
+                logEntries.add("\t CAPTION WEIGHT:"
                                + String.format("%3d", captionWeight));
         }
 
@@ -2371,7 +2500,7 @@ public class ArticleTextExtractor {
                     int h1h2h3Weight = 20;
                     weight += h1h2h3Weight;
                     if(logEntries!=null)
-                        logEntries.add("  h1;h2;h3;h4;h5;h6 WEIGHT:" 
+                        logEntries.add("  h1;h2;h3;h4;h5;h6 WEIGHT:"
                                        + String.format("%3d", h1h2h3Weight));
                     // headerEls.add(subEl);
                 } else if ("table;li;td;th".contains(subEl.tagName())) {
@@ -2402,7 +2531,7 @@ public class ArticleTextExtractor {
             int childOwnTextWeight = Math.max(50, ownTextLength / 10);
             /*
             if(logEntries!=null)
-                logEntries.add("    GRANDCHILD TEXT WEIGHT:" 
+                logEntries.add("    GRANDCHILD TEXT WEIGHT:"
                                + String.format("%3d", childOwnTextWeight));
             */
             grandchildWeight += childOwnTextWeight;
@@ -2413,7 +2542,7 @@ public class ArticleTextExtractor {
             grandchildWeight += h2h1Weight;
             /*
             if(logEntries!=null)
-                logEntries.add("   GRANDCHILD H1/H2 WEIGHT:" 
+                logEntries.add("   GRANDCHILD H1/H2 WEIGHT:"
                                + String.format("%3d", h2h1Weight));
             */
         } else if (grandchild.tagName().equals("div") || grandchild.tagName().equals("p")) {
@@ -2421,14 +2550,14 @@ public class ArticleTextExtractor {
             grandchildWeight+=calcChildWeight;
             /*
             if(logEntries!=null)
-                logEntries.add("   GRANDCHILD CHILD WEIGHT:" 
+                logEntries.add("   GRANDCHILD CHILD WEIGHT:"
                                + String.format("%3d", calcChildWeight));
             */
         }
 
         /*
         if(logEntries!=null)
-            logEntries.add("\t GRANDCHILD WEIGHT:" 
+            logEntries.add("\t GRANDCHILD WEIGHT:"
                            + String.format("%3d", grandchildWeight));
         */
         return grandchildWeight;
@@ -2803,15 +2932,15 @@ public class ArticleTextExtractor {
     public static InternetDomainName getDomain(String url) {
         try {
             String host = new URI(url).getHost(); // Returns null if url is just an IP
-	    if (host != null) { 
-		return InternetDomainName.from(host);
+            if (host != null) {
+                return InternetDomainName.from(host);
 	    }
 	    else {
-		logger.info("bad url: " + url);
-		return null;
-	    }
-        } catch(URISyntaxException ex){
-	    logger.info(ex.toString());
+                logger.info("bad url: " + url);
+                return null;
+            }
+        } catch (URISyntaxException ex) {
+            logger.info(ex.toString());
             return null;
         } catch(java.lang.IllegalStateException ex){
             // Handles case: java.lang.IllegalStateException: Not under a public suffix: developer.team
@@ -2822,10 +2951,10 @@ public class ArticleTextExtractor {
             logger.info(ex.toString());
             return null;
         }
-	
+
     }
 
-    // Returns the portion of this domain name that is one level beneath the public suffix. 
+    // Returns the portion of this domain name that is one level beneath the public suffix.
     // For example, for x.adwords.google.co.uk it returns google.co.uk, since co.uk is a public suffix.
     // See: http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/net/InternetDomainName.html#topPrivateDomain()
     public static InternetDomainName getTopPrivateDomain(String url) {
@@ -2852,7 +2981,7 @@ public class ArticleTextExtractor {
     }
 
     /**
-     * Truncate a Java string so that its UTF-8 representation will not 
+     * Truncate a Java string so that its UTF-8 representation will not
      * exceed the specified number of bytes.
      *
      * For discussion of why you might want to do this, see
