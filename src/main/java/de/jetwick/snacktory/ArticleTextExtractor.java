@@ -215,6 +215,10 @@ public class ArticleTextExtractor {
         aMap.put("blog.linkedin.com", Arrays.asList(
                 "[class=full-content]"
             ));
+        aMap.put("computerweekly.com", Arrays.asList(
+                "[class*=main-article-chapter]"
+        ));
+
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -250,8 +254,8 @@ public class ArticleTextExtractor {
                 + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext|story-primary|^newsContent$|dcontainer");
-        setHighlyPositive("theme-main|news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article|^article_text$");
+                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext|story-primary|^newsContent$|dcontainer|announcement-details");
+        setHighlyPositive("theme-main|news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article|^article_text$|main-article-chapter|post-body");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate|slider|^sectioncolumns$|ad-container");
@@ -906,6 +910,20 @@ public class ArticleTextExtractor {
                 if(d!=null){
                     return d;
                 }
+            }
+        }
+
+        // http://www.adweek.com
+        elems = doc.select("[id=post-time]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.ownText();
+            Date parsedDate = parseDate(dateStr);
+            if (DEBUG_DATE_EXTRACTION) {
+                System.out.println("RULE-name=dc.date");
+            }
+            if (parsedDate != null) {
+                return parsedDate;
             }
         }
 
@@ -1593,6 +1611,23 @@ public class ArticleTextExtractor {
             }
         }
 
+        // blog.trello.com/trello-atlassian
+        elems = doc.select("[class=byline-date]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.ownText();
+            if (dateStr != null) {
+                if (DEBUG_DATE_EXTRACTION) {
+                    System.out.println("RULE-[class=byline-date]");
+                }
+                Date d = parseDate(dateStr);
+                if (d != null) {
+                    return d;
+                }
+            }
+        }
+
+
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
 
@@ -2137,7 +2172,7 @@ public class ArticleTextExtractor {
         }
 
         // Special case for chiefmarketer.com
-        matches = doc.select("p em a");
+        matches = doc.select("[class=content clearfix] p em a");
         if (matches!= null && matches.size() > 0){
             Element bestMatch = matches.parents().first(); // assume it is the first.
             authorDesc = bestMatch.text();
@@ -2155,6 +2190,22 @@ public class ArticleTextExtractor {
             authorDesc = bestMatch.text();
             if(DEBUG_AUTHOR_DESC_EXTRACTION){
                 System.out.println("AUTHOR_DESC: p[class=contrib-byline]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // http://www.computerweekly.com
+        matches = doc.select("div [class*=main-article-author-contact] a");
+        if (matches!= null && matches.size() > 0){
+
+            List<String> descs = new ArrayList<String>();
+            for (Element element: matches) {
+                descs.add(element.attr("href"));
+            }
+            authorDesc = StringUtils.join(descs, ", ");
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: [class*=main-article-author-contact] a");
                 System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
             }
             return SHelper.innerTrim(authorDesc);
