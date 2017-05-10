@@ -813,10 +813,24 @@ public class ArticleTextExtractorTest {
     public void testAdweek() throws Exception {
         // http://www.adweek.com/prnewser/5-digital-data-metricstools-that-pr-pros-need-to-know/97735?red=pr
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("adweek.html")));
-        assertEquals("5 Digital Metrics/Tools That PR Pros Need to Know", res.getTitle());
-        assertTrue(res.getText(), res.getText().contains("Cision provides a proprietary"));
-        assertTrue(res.getText(), res.getText().contains("Moz’s Domain Authority."));
-        assertTrue(res.getText(), res.getText().contains("Google Authorship and Google Analytics."));
+        assertEquals("5 Digital Metrics/Tools That PR Pros Need to Know – Adweek", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Measurement: it is, as our own Shawn Paul Wood put it in yesterday’s “Top 5 PR Industry Debate Topics” post, the “pachyderm in the room.”"));
+        assertTrue(res.getText(), res.getText().endsWith("Do we agree? How familiar are we with the data and tools Sullivan described?"));
+        compareDates("2014-08-01 00:00:00", res.getDate());
+        assertEquals("Patrick Coffee| August 1", res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+    }
+
+    @Test
+    public void testAdweek1() throws Exception {
+        // http://www.adweek.com/digital/3-avenues-of-influence-beyond-media-coverage/?red=pr
+        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("adweek1.html")));
+        assertEquals("3 Avenues of Influence Beyond Media Coverage – Adweek", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Today we bring you a guest post by Jennifer Donovan, founder of San Francisco’s Nova Communications. Follow her on Twitter."));
+        assertTrue(res.getText(), res.getText().endsWith("She can be reached at jennifer@nova-comms.com or @jendonovansf"));
+        compareDates("2014-07-01 00:00:00", res.getDate());
+        assertEquals("Guest| July 1", res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
     }
 
     @Test
@@ -2732,6 +2746,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Norah Trent wiseguyreports +1 646 845 9349 / +44 208 133 9349 email us here", res.getAuthorDescription());
     }
 
+    @Test
     public void testToday() throws Exception {
         // http://www.today.com/video/michael-phelps-on-conserving-water-and-his-april-fools-comeback-prank-923578947587
         JResult res = new JResult();
@@ -2743,6 +2758,49 @@ public class ArticleTextExtractorTest {
         assertEquals(StringUtils.EMPTY, res.getAuthorName());
         assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
         compareDates("2017-04-18 14:54:56", res.getDate());
+    }
+
+    @Test
+    public void testBusinessMoney() throws Exception {
+        // http://www.business-money.com/announcements/catalyst-achieves-300m-funding-milestone
+        JResult res = new JResult();
+        res.setUrl("http://www.business-money.com/announcements/catalyst-achieves-300m-funding-milestone");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("business-money.html")));
+        assertEquals("http://www.business-money.com/announcements/catalyst-achieves-300m-funding-milestone", res.getCanonicalUrl());
+        assertEquals("Catalyst achieves £300m funding milestone", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Catalyst achieves £300m funding milestone Catalyst"));
+        assertTrue(res.getText(), res.getText().endsWith("to successfully achieve our growth aspirations.”  "));
+        assertEquals(StringUtils.EMPTY, res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+    }
+
+    @Test
+    public void testComputerWeekly() throws Exception {
+        // http://www.computerweekly.com/blog/CW-Developer-Network/Crayon-warns-of-black-hole-of-risk-in-software-audits
+        JResult res = new JResult();
+        res.setUrl("http://www.computerweekly.com/blog/CW-Developer-Network/Crayon-warns-of-black-hole-of-risk-in-software-audits");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("computer_weekly.html")));
+        assertTrue(res.getText(), res.getText().startsWith("IT consultancy Crayon has commissioned a new survey through the venerably anal"));
+        assertTrue(res.getText(), res.getText().endsWith("quest for intelligent cloud optimisation and reduced total cost of ownership."));
+        assertEquals("http://www.computerweekly.com/blog/CW-Developer-Network/Crayon-warns-of-black-hole-of-risk-in-software-audits", res.getCanonicalUrl());
+        assertEquals("Crayon warns of 'black hole of risk' in software audits", res.getTitle());
+        assertEquals("Adrian Bridgwater", res.getAuthorName());
+        assertEquals("https://twitter.com/ABridgwater, https://www.linkedin.com/in/adrianbridgwater, mailto:adrianbridgwater@gmail.com", res.getAuthorDescription());
+    }
+
+    @Test
+    public void testTrello() throws Exception {
+        // http://blog.trello.com/trello-atlassian
+        JResult res = new JResult();
+        res.setUrl("http://blog.trello.com/trello-atlassian");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("trello.html")));
+        assertTrue(res.getText(), res.getText().startsWith("Today we’re excited to announce a new chapter in Trello’s story, and a new chapter for the story of the future of work."));
+        assertTrue(res.getText(), res.getText().endsWith("Trello Power-Ups For JIRA, Bitbucket, And Confluence Cloud (Plus A Cooler HipChat Integration)"));
+        assertEquals("http://blog.trello.com/trello-atlassian", res.getCanonicalUrl());
+        assertEquals("Trello Is Being Acquired By Atlassian", res.getTitle());
+        assertEquals("Michael Pryor", res.getAuthorName());
+        assertEquals("Michael Pryor", res.getAuthorDescription());
+        compareDates("2017-01-09", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
