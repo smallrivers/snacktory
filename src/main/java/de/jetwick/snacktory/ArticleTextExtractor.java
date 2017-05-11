@@ -183,7 +183,14 @@ public class ArticleTextExtractor {
             ));
         aMap.put("today.com", Arrays.asList(
                 "[class*=j-video-feeds]",
-                    "[class=player-closedcaption]"
+                "[class=player-closedcaption]"
+            ));
+        aMap.put("bizjournals.com", Arrays.asList(
+                "[class=breadcrumbs]",
+                "[class*=module module--padded]",
+                "[class=module module--ruled]",
+                "[class^=promo]",
+                "[class=item item--flag]"
             ));
 
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
@@ -217,6 +224,12 @@ public class ArticleTextExtractor {
             ));
         aMap.put("computerweekly.com", Arrays.asList(
                 "[class*=main-article-chapter]"
+        ));
+        aMap.put("nytimes.com", Arrays.asList(
+                "[class*=theme-main]"
+        ));
+        aMap.put("bizjournals.com", Arrays.asList(
+                "article[class=detail]"
         ));
 
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
@@ -255,12 +268,12 @@ public class ArticleTextExtractor {
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
                 + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext|story-primary|^newsContent$|dcontainer|announcement-details");
-        setHighlyPositive("theme-main|news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article|^article_text$|main-article-chapter|post-body");
+        setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article|^article_text$|main-article-chapter|post-body");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate|slider|^sectioncolumns$|ad-container");
         setHighlyNegative("policy-blk|followlinkedinsignin|^signupbox$");
-        setToRemove("feedback-prompt|story-footer|visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup|outbrain|^wnStoryBodyGraphic");
+        setToRemove("feedback-prompt|story-footer|visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup|outbrain|^wnStoryBodyGraphic|articleadditionalcontent|most-popular|shatner-box");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -2210,6 +2223,23 @@ public class ArticleTextExtractor {
             }
             return SHelper.innerTrim(authorDesc);
         }
+
+        // https://www.wsj.com
+        matches = doc.select("ul[class=author-info] li a");
+        if (matches!= null && matches.size() > 0){
+
+            List<String> descs = new ArrayList<String>();
+            for (Element element: matches) {
+                descs.add(element.attr("href"));
+            }
+            authorDesc = StringUtils.join(descs, ", ");
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: ul[class=author-info] li");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
 
         try {
             // If not author desc found, try to found a section where the author name

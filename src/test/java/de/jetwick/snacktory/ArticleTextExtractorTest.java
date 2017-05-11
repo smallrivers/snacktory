@@ -329,6 +329,21 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testNytContentExtraction1() throws Exception {
+        // https://www.nytimes.com/2017/05/10/opinion/comey-trump-deep-throat.html
+        JResult res = new JResult();
+        res.setUrl("https://www.nytimes.com/2017/05/10/opinion/comey-trump-deep-throat.html");
+        extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("nyt4.html")));
+        assertEquals("https://www.nytimes.com/2017/05/10/opinion/comey-trump-deep-throat.html", res.getCanonicalUrl());
+        assertEquals("In Firing Comey, Did Trump Unleash the Next Deep Throat?", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Once again, Donald Trump has done something that no president before him dared to do."));
+        assertTrue(res.getText(), res.getText().endsWith("the presidency itself — never fully recovered."));
+        assertEquals("Beverly Gage", res.getAuthorName());
+        assertEquals("Beverly Gage is a professor of American political history at Yale. She is the author of “The Day Wall Street Exploded: A Story of America in Its First Age of Terror” and is writing a biography of the former F.B.I. director J. Edgar Hoover.", res.getAuthorDescription());
+        compareDates("2017-05-10 00:00:00", res.getDate());
+    }
+
+    @Test
     public void testHuffingtonpost() throws Exception {
         // http://www.huffingtonpost.com/2010/08/13/federal-reserve-pursuing_n_681540.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("huffingtonpost.html")));
@@ -404,6 +419,17 @@ public class ArticleTextExtractorTest {
         assertTrue(article.getText(), article.getText().startsWith("The Obama administration has paid out less than a third of the nearly $230 billion"));
         assertEquals("http://si.wsj.net/public/resources/images/OB-JO747_stimul_D_20100814113803.jpg", article.getImageUrl());
         assertEquals("LOUISE RADNOFSKY", article.getAuthorName());
+    }
+
+    @Test
+    public void testWallstreetjournal1() throws Exception {
+        // https://www.wsj.com/articles/the-10-point-1484784884
+        JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wsj1.html")));
+        assertTrue(article.getText(), article.getText().startsWith("Good evening from Davos, Switzerland, and the second day of the World Economic Forum,"));
+        assertTrue(article.getText(), article.getText().endsWith("CLICK HERE to sign up for this briefing by email."));
+        assertEquals("Gerard Baker", article.getAuthorName());
+        assertEquals("https://www.wsj.com/news/author/7836, https://www.wsj.com/news/author/7836, http://twitter.com/gerardtbaker, mailto:gerard.baker@wsj.com", article.getAuthorDescription());
+        compareDates("2017-01-19 00:14:00", article.getDate());
     }
 
     @Test
@@ -1594,7 +1620,7 @@ public class ArticleTextExtractorTest {
         // http://www.prnewswire.com/news-releases/encyclopaedia-britannica-accelerates-its-digital-transformation-with-salesforce-300187911.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("prnewswire2.html")));
         assertEquals("Encyclopaedia Britannica Accelerates Its Digital Transformation with Salesforce -- SAN FRANCISCO, Dec. 4, 2015 /PRNewswire/ --", res.getTitle());
-        assertTrue(res.getText(), res.getText().startsWith("SAN FRANCISCO, Dec. 4, 2015 /PRNewswire/"));
+        assertTrue(res.getText(), res.getText().startsWith("Salesforce Customer Success Platform helps Encyclopaedia Britannica "));
         assertTrue(res.getText(), res.getText().contains("240 years"));
         compareDates("2015-12-04", res.getDate());
     }
@@ -1785,6 +1811,21 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("Austin Business Journal Rackspace Inc., the San Antonio-based Web"));
         assertTrue(res.getText(), res.getText().endsWith("for the Austin Business Journal."));
         compareDates("2014-10-21 12:48:00", res.getDate());
+    }
+
+    @Test
+    public void testBizJournal1() throws Exception {
+        // http://www.bizjournals.com/sanfrancisco/subscriber-only/2017/04/21/san-francisco-tech-employers.html
+        JResult res = new JResult();
+        res.setUrl("http://www.bizjournals.com/sanfrancisco/subscriber-only/2017/04/21/san-francisco-tech-employers.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("bizjournals1.html")));
+        assertEquals("San Francisco Tech Employers", res.getTitle());
+        assertEquals("http://www.bizjournals.com/sanfrancisco/subscriber-only/2017/04/21/san-francisco-tech-employers.html", res.getCanonicalUrl());
+        assertTrue(res.getText(), res.getText().startsWith("San Francisco Tech Employers"));
+        assertTrue(res.getText(), res.getText().endsWith("Sundar Pichai, CEO"));
+        assertEquals("Locally Researched : Jean Lee", res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        compareDates("2017-04-21 00:00:00", res.getDate());
     }
 
     @Test
@@ -2815,6 +2856,19 @@ public class ArticleTextExtractorTest {
         assertEquals("Abby Phillip", res.getAuthorName());
         assertEquals("Abby Phillip is a national political reporter covering the White House for The Washington Post. She can be reached at abby.phillip@washpost.com.", res.getAuthorDescription());
         compareDates("2017-01-12", res.getDate());
+    }
+
+    @Test
+    public void testMetronews() throws Exception {
+        // http://www.metronews.ca/news/toronto/2017/01/30/police-investigate-sex-assault-complaint-by-former-b-c-councillor-s-daughter.html
+        JResult res = new JResult();
+        res.setUrl("http://www.metronews.ca/news/toronto/2017/01/30/police-investigate-sex-assault-complaint-by-former-b-c-councillor-s-daughter.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("metronews.html")));
+        assertEquals("http://www.metronews.ca/news/toronto/2017/01/30/police-investigate-sex-assault-complaint-by-former-b-c-councillor-s-daughter.html", res.getCanonicalUrl());
+        assertEquals("Police investigate sex-assault complaint by former B.C. councillor's daughter", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("BRAMPTON, Ont. — A criminal investigation is underway stemming from allegations of sexual and physical assault made in a complaint to police by the daughter of a former municipal councillor in British Columbia."));
+        assertTrue(res.getText(), res.getText().endsWith("the investigation and/or prosecution of serious criminal offences.\""));
+        compareDates("2017-01-30 20:31:24 -05:00", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
