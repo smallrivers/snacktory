@@ -184,7 +184,14 @@ public class ArticleTextExtractor {
             ));
         aMap.put("today.com", Arrays.asList(
                 "[class*=j-video-feeds]",
-                    "[class=player-closedcaption]"
+                "[class=player-closedcaption]"
+            ));
+        aMap.put("bizjournals.com", Arrays.asList(
+                "[class=breadcrumbs]",
+                "[class*=module module--padded]",
+                "[class=module module--ruled]",
+                "[class^=promo]",
+                "[class=item item--flag]"
             ));
 
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
@@ -216,6 +223,16 @@ public class ArticleTextExtractor {
         aMap.put("blog.linkedin.com", Arrays.asList(
                 "[class=full-content]"
             ));
+        aMap.put("computerweekly.com", Arrays.asList(
+                "[class*=main-article-chapter]"
+        ));
+        aMap.put("nytimes.com", Arrays.asList(
+                "[class*=theme-main]"
+        ));
+        aMap.put("bizjournals.com", Arrays.asList(
+                "article[class=detail]"
+        ));
+
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -251,13 +268,13 @@ public class ArticleTextExtractor {
                 + "a(d|ll|gegate|rchive|ttachment)|(pag(er|ination))|popup|print|"
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
-                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext|story-primary|^newsContent$|dcontainer");
-        setHighlyPositive("theme-main|news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article|^article_text$");
+                + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext|story-primary|^newsContent$|dcontainer|announcement-details");
+        setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article|^article_text$|main-article-chapter|post-body");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate|slider|^sectioncolumns$|ad-container");
         setHighlyNegative("policy-blk|followlinkedinsignin|^signupbox$");
-        setToRemove("feedback-prompt|story-footer|visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup|outbrain|^wnStoryBodyGraphic");
+        setToRemove("feedback-prompt|story-footer|visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup|outbrain|^wnStoryBodyGraphic|articleadditionalcontent|most-popular|shatner-box");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -907,6 +924,20 @@ public class ArticleTextExtractor {
                 if(d!=null){
                     return d;
                 }
+            }
+        }
+
+        // http://www.adweek.com
+        elems = doc.select("[id=post-time]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.ownText();
+            Date parsedDate = parseDate(dateStr);
+            if (DEBUG_DATE_EXTRACTION) {
+                System.out.println("RULE-name=dc.date");
+            }
+            if (parsedDate != null) {
+                return parsedDate;
             }
         }
 
@@ -1594,6 +1625,23 @@ public class ArticleTextExtractor {
             }
         }
 
+        // blog.trello.com/trello-atlassian
+        elems = doc.select("[class=byline-date]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.ownText();
+            if (dateStr != null) {
+                if (DEBUG_DATE_EXTRACTION) {
+                    System.out.println("RULE-[class=byline-date]");
+                }
+                Date d = parseDate(dateStr);
+                if (d != null) {
+                    return d;
+                }
+            }
+        }
+
+
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
 
@@ -1822,6 +1870,19 @@ public class ArticleTextExtractor {
                 }
             }
 
+            if (authorName.isEmpty()) {  // for "schema.org creativework"
+                authorName = SHelper.innerTrim(doc.select("[itemtype=http://schema.org/Person]meta[itemprop=author]").attr("content"));
+                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\" [itemtype=http://schema.org/Person]meta[itemprop=author]");
+            }
+
+            if (authorName.isEmpty()) {  // for "schema.org creativework"
+                result = doc.select("[itemtype=http://schema.org/Person]span[itemprop=author]").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.text());
+                }
+                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\" [itemtype=http://schema.org/Person]span[itemprop=author]");
+            }
+
             // globalbankingandfinance.com
             if (authorName.isEmpty()) {
                 authorName = SHelper.innerTrim(doc.select("div[class=the-content post-content clearfix] p strong em").text());
@@ -1857,10 +1918,6 @@ public class ArticleTextExtractor {
             if (authorName.isEmpty()) { // OpenGraph twitter:creator tag
                 authorName = SHelper.innerTrim(doc.select("head meta[property=twitter:creator]").attr("content"));
                 if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: OpenGraph twitter:creator tag");
-            }
-            if (authorName.isEmpty()) {  // for "schema.org creativework"
-                authorName = SHelper.innerTrim(doc.select("meta[itemprop=author], span[itemprop=author]").attr("content"));
-                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\"");
             }
 
             if (authorName.isEmpty()) {  // a hack for http://jdsupra.com/
@@ -2050,6 +2107,18 @@ public class ArticleTextExtractor {
             return SHelper.innerTrim(authorDesc);
         }
 
+        // Special case for washingtonpost
+        matches = doc.select("[class=pb-author-bio]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: [class=pb-author-bio]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
         // Special case for fortune.com
         matches = doc.select("meta[property=article:author]");
         if (matches!= null && matches.size() > 0){
@@ -2111,7 +2180,7 @@ public class ArticleTextExtractor {
         }
 
         // Special case for chiefmarketer.com
-        matches = doc.select("p em a");
+        matches = doc.select("[class=content clearfix] p em a");
         if (matches!= null && matches.size() > 0){
             Element bestMatch = matches.parents().first(); // assume it is the first.
             authorDesc = bestMatch.text();
@@ -2133,6 +2202,39 @@ public class ArticleTextExtractor {
             }
             return SHelper.innerTrim(authorDesc);
         }
+
+        // http://www.computerweekly.com
+        matches = doc.select("div [class*=main-article-author-contact] a");
+        if (matches!= null && matches.size() > 0){
+
+            List<String> descs = new ArrayList<String>();
+            for (Element element: matches) {
+                descs.add(element.attr("href"));
+            }
+            authorDesc = StringUtils.join(descs, ", ");
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: [class*=main-article-author-contact] a");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // https://www.wsj.com
+        matches = doc.select("ul[class=author-info] li a");
+        if (matches!= null && matches.size() > 0){
+
+            List<String> descs = new ArrayList<String>();
+            for (Element element: matches) {
+                descs.add(element.attr("href"));
+            }
+            authorDesc = StringUtils.join(descs, ", ");
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: ul[class=author-info] li");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
 
         try {
             // If not author desc found, try to found a section where the author name
