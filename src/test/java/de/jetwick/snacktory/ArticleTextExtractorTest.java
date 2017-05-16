@@ -346,6 +346,21 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testNytContentExtraction2() throws Exception {
+        // https://www.nytimes.com/2017/05/13/business/dealbook/whats-next-for-comey-probably-not-a-normal-job.html
+        JResult res = new JResult();
+        res.setUrl("https://www.nytimes.com/2017/05/13/business/dealbook/whats-next-for-comey-probably-not-a-normal-job.html");
+        extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("nyt5.html")));
+        assertEquals("https://www.nytimes.com/2017/05/13/business/dealbook/whats-next-for-comey-probably-not-a-normal-job.html", res.getCanonicalUrl());
+        assertEquals("What’s Next for Comey? Probably Not ‘a Normal Job’", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Few can boast of a résumé like James B. Comey’s: top federal prosecutor, chief lawyer for both the world’s largest defense contractor and the world’s biggest hedge fund, and most recently director of the Federal Bureau of Investigation."));
+        assertTrue(res.getText(), res.getText().endsWith("He may not be in any rush. Mr. Comey’s overall assets range from $5 million to $14 million, according to his most recent financial disclosure form."));
+        assertEquals("Matthew Goldstein and Alexandra Stevenson", res.getAuthorName());
+        assertEquals("https://www.nytimes.com/by/matthew-goldstein", res.getAuthorDescription());
+        compareDates("2017-05-13 00:00:00", res.getDate());
+    }
+
+    @Test
     public void testHuffingtonpost() throws Exception {
         // http://www.huffingtonpost.com/2010/08/13/federal-reserve-pursuing_n_681540.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("huffingtonpost.html")));
