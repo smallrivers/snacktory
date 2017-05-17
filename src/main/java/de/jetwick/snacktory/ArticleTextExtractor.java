@@ -1766,9 +1766,9 @@ public class ArticleTextExtractor {
 
         Date date = null;
         try {
-            logger.debug("BEFORE clean: dateStr="+dateString+"|");
+            logger.debug("BEFORE clean: dateString="+dateString+"|");
             dateString = cleanDate(dateString);
-            logger.debug("AFTER clean: dateStr="+dateString+"|");
+            logger.debug("AFTER clean: dateString="+dateString+"|");
             date = DateUtils.parseDate(dateString, Constants.DEFAULT_TIMEZONE, parsePatterns);
             if (date == null || !SHelper.isValidDate(date)){
                 logger.debug("Invalid date found:" + date);
