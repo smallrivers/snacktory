@@ -2027,7 +2027,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("When marketing executives consider inbound marketing"));
         compareDates("2016-04-07 00:00:00", res.getDate());
         assertTrue(res.getText(), res.getText().startsWith("When marketing executives consider inbound marketing"));
-        assertEquals("Tom Goodmanson is president and CEO of Calabrio", res.getAuthorName());
+        assertEquals("Tom Goodmanson", res.getAuthorName());
         assertEquals("Tom Goodmanson is president and CEO of Calabrio, a provider of customer engagement and analytics technology. LinkedIn: Tom Goodmanson", res.getAuthorDescription());
     }
 
@@ -2634,7 +2634,7 @@ public class ArticleTextExtractorTest {
         JResult res = new JResult();
         res.setUrl("http://www.marketingprofs.com/articles/2015/28657/unlock-mobile-advertising-by-measuring-the-real-world");
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("author_name_ignore_pattern.html")));
-        assertEquals("John Busby is SVP of customer insights at Marchex", res.getAuthorName());
+        assertEquals("John Busby", res.getAuthorName());
         assertEquals("John Busby is SVP of customer insights at Marchex, a mobile advertising technology company. LinkedIn: John Busby Twitter: @JohnMBusby", res.getAuthorDescription());
     }
 

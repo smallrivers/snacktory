@@ -2006,8 +2006,8 @@ public class ArticleTextExtractor {
 
                     // a hack for http://marketingprofs.com/
                     if(matches == null || matches.size() == 0){
-                        matches = doc.select("*[id*=contentbios]");
-                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: *[id*=contentbios]");
+                        matches = doc.select("span[itemprop=author]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: span[itemprop=author]");
                     }
 
                     // select the best element from them
