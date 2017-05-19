@@ -555,6 +555,21 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testPolitico1() throws Exception {
+        // http://www.politico.com/story/2017/05/12/senate-trump-russia-probe-comey-firing-238340
+        JResult res = new JResult();
+        res.setUrl("http://www.politico.com/story/2017/05/12/senate-trump-russia-probe-comey-firing-238340");
+        extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("politico1.html")));
+        assertEquals("http://www.politico.com/story/2017/05/12/senate-trump-russia-probe-comey-firing-238340", res.getCanonicalUrl());
+        assertEquals("Senate panel investigating Russia outraged by Comey firing - POLITICO", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("The Senate Intelligence Committee is starting to examine potential ties between President Donald Trump’s associates and the Russian government,"));
+        assertTrue(res.getText(), res.getText().endsWith("Austin Wright contributed to this report."));
+        assertEquals("Ali Watkins", res.getAuthorName());
+        assertEquals("http://www.politico.com/staff/ali-watkins", res.getAuthorDescription());
+        compareDates("2017-05-12 18:45:51", res.getDate());
+    }
+
+    @Test
     public void testNinjablog() throws Exception {
         //String url = "http://www.ninjatraderblog.com/im/2010/10/seo-marketing-facts-about-google-instant-and-ranking-your-website/";
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("ninjatraderblog.html")));
@@ -2884,6 +2899,21 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("BRAMPTON, Ont. — A criminal investigation is underway stemming from allegations of sexual and physical assault made in a complaint to police by the daughter of a former municipal councillor in British Columbia."));
         assertTrue(res.getText(), res.getText().endsWith("the investigation and/or prosecution of serious criminal offences.\""));
         compareDates("2017-01-30 20:31:24 -05:00", res.getDate());
+    }
+
+    @Test
+    public void testAirpr() throws Exception {
+        // http://blog.airpr.com/media-monitoring/
+        JResult res = new JResult();
+        res.setUrl("http://blog.airpr.com/media-monitoring/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("airpr.html")));
+        assertEquals("http://blog.airpr.com/media-monitoring/", res.getCanonicalUrl());
+        assertEquals("From Media Monitoring to Media Intelligence", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("For public relations professionals, media monitoring can be both tedious and exciting."));
+        assertTrue(res.getText(), res.getText().endsWith("Hungry for more? Read “How to prove PR value to your CEO” next…"));
+        assertEquals("Kelly Byrd May 3, 2017", res.getAuthorName());
+        assertEquals("Kelly Byrd May 3, 2017", res.getAuthorDescription());
+        compareDates("2017-05-03 06:12:16 -07:00", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {
