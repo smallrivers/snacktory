@@ -1,8 +1,8 @@
 package de.jetwick.snacktory;
 
 import com.google.common.net.InternetDomainName;
+import de.jetwick.snacktory.utils.Configuration;
 import de.jetwick.snacktory.utils.DateUtils;
-import de.jetwick.snacktory.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.HtmlCleaner;
@@ -1769,7 +1769,8 @@ public class ArticleTextExtractor {
             logger.debug("BEFORE clean: dateString="+dateString+"|");
             dateString = cleanDate(dateString);
             logger.debug("AFTER clean: dateString="+dateString+"|");
-            date = DateUtils.parseDate(dateString, Constants.DEFAULT_TIMEZONE, parsePatterns);
+            date = DateUtils.parseDate(dateString,
+                    Configuration.getInstance().getDefaultTimezone(), parsePatterns);
             if (date == null || !SHelper.isValidDate(date)){
                 logger.debug("Invalid date found:" + date);
             }

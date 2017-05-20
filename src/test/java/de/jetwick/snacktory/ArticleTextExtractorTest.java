@@ -1,7 +1,7 @@
 package de.jetwick.snacktory;
 
+import de.jetwick.snacktory.utils.Configuration;
 import de.jetwick.snacktory.utils.DateUtils;
-import de.jetwick.snacktory.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -2926,7 +2926,7 @@ public class ArticleTextExtractorTest {
                 "yyyy-MM-dd HH:mm:ss Z",
                 "yyyy-MM-dd HH:mm:ss XXX",
         };
-        Date expectedDate = DateUtils.parseDate(expectedDateString, Constants.DEFAULT_TIMEZONE, patterns);
+        Date expectedDate = DateUtils.parseDate(expectedDateString, Configuration.getInstance().getDefaultTimezone(), patterns);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         assertEquals(dateFormat.format(expectedDate), dateFormat.format(actual));
     }
