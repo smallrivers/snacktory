@@ -2074,6 +2074,21 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testSysCon() throws Exception {
+        // http://redhat.sys-con.com/node/4068643
+        JResult res = new JResult();
+        res.setUrl("http://redhat.sys-con.com/node/4068643");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("sys-con1.html")));
+        assertEquals("http://redhat.sys-con.com/node/4068643", res.getCanonicalUrl());
+        assertEquals("[session] Dovetailing #DevOps | @DevOpsSummit @CAinc #IoT #AI #ML #DX", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Optimizing Alignment - Dovetailing DevOps and the Cloud"));
+        assertTrue(res.getText(), res.getText().endsWith("a SYS-CON Events company."));
+        assertEquals("Elizabeth White", res.getAuthorName());
+        assertEquals("http://elizabethwhite.sys-con.com/", res.getAuthorDescription());
+        compareDates("2017-05-14 00:00:00", res.getDate());
+    }
+
+    @Test
     public void testRiaBiz() throws Exception {
         // http://www.riabiz.com/a/4974745007161344/in-a-six-month-mark-reality-check-walt-bettinger-recasts-schwabs-retail-robo-advice-as-a-tool----but-a-handy-one
         JResult res = new JResult();
@@ -2914,6 +2929,36 @@ public class ArticleTextExtractorTest {
         assertEquals("Kelly Byrd May 3, 2017", res.getAuthorName());
         assertEquals("Kelly Byrd May 3, 2017", res.getAuthorDescription());
         compareDates("2017-05-03 06:12:16 -07:00", res.getDate());
+    }
+
+    @Test
+    public void testSltrib() throws Exception {
+        // http://www.sltrib.com/home/5252884-155/vivint-smart-home-links-with-best
+        JResult res = new JResult();
+        res.setUrl("http://www.sltrib.com/home/5252884-155/vivint-smart-home-links-with-best");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("sltrib.html")));
+        assertEquals("http://www.sltrib.com/home/5252884-155/vivint-smart-home-links-with-best", res.getCanonicalUrl());
+        assertEquals("Vivint Smart Home links with Best Buy", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Vivint Smart Home is opening mini-stores within 400 Best Buy outlets nationwide as part of a new strategic partnership,"));
+        assertTrue(res.getText(), res.getText().endsWith("Warriors in Vivint Smart Home Arena."));
+        assertEquals("TOM HARVEY", res.getAuthorName());
+        assertEquals("https://www.facebook.com/saltlaketribune", res.getAuthorDescription());
+        compareDates("2017-05-04 16:54:01", res.getDate());
+    }
+
+    @Test
+    public void testTheRivardReport() throws Exception {
+        // http://therivardreport.com/san-antonio-space-scientists-prepare-for-jupiter-contact-1/
+        JResult res = new JResult();
+        res.setUrl("http://therivardreport.com/san-antonio-space-scientists-prepare-for-jupiter-contact-1/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("therivardreport.html")));
+        assertEquals("https://therivardreport.com/san-antonio-space-scientists-prepare-for-jupiter-contact-1/", res.getCanonicalUrl());
+        assertEquals("San Antonio Space Scientists Prepare for Jupiter ContactRivard Report", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("As the countdown began on Aug. 5, 2011 at the Kennedy Space Center in Florida,"));
+        assertTrue(res.getText(), res.getText().endsWith("Artistic depiction of Juno. Photo courtesy of NASA."));
+        assertEquals("Cherise Rohr-Allegrini", res.getAuthorName());
+        assertEquals("Cherise Rohr-Allegrini, PhD, MPH, is the San Antonio Program Director for The Immunization Partnership. She is a scientist and epidemiologist with extensive experience in tropical diseases abroad and public health in Texas. She writes on health and science topics. She can be contacted at cjrohr31@hotmail.com.", res.getAuthorDescription());
+        compareDates("2016-07-02 05:01:58", res.getDate());
     }
 
     public static void compareDates(String wanted, Date extracted) throws Exception {

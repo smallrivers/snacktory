@@ -193,6 +193,10 @@ public class ArticleTextExtractor {
                 "[class=item item--flag]"
             ));
 
+        aMap.put("therivardreport.com", Arrays.asList(
+                "h2:contains(Related Stories:) ~ p" // All the `p` tags after the text `Related Stories:`
+        ));
+
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -231,6 +235,10 @@ public class ArticleTextExtractor {
         aMap.put("bizjournals.com", Arrays.asList(
                 "article[class=detail]"
         ));
+        aMap.put("sltrib.com", Arrays.asList(
+                "#main-content > div.row"
+        ));
+
 
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
@@ -273,7 +281,7 @@ public class ArticleTextExtractor {
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate|slider|^sectioncolumns$|ad-container");
         setHighlyNegative("policy-blk|followlinkedinsignin|^signupbox$");
-        setToRemove("feedback-prompt|story-footer|story-meta-footer|related-combined-coverage|visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup|outbrain|^wnStoryBodyGraphic|articleadditionalcontent|most-popular|shatner-box|story-supplement|global-magazine-recent");
+        setToRemove("feedback-prompt|story-footer|story-meta-footer|related-combined-coverage|visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup|outbrain|^wnStoryBodyGraphic|articleadditionalcontent|most-popular|shatner-box|story-supplement|global-magazine-recent|nocontent");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -1857,6 +1865,15 @@ public class ArticleTextExtractor {
                 }
             }
 
+            // http://redhat.sys-con.com/node/4068643
+            if (authorName.isEmpty()) {
+                result = doc.select("table[class=storyauthor] td").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.text());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: table[class=storyauthor] td");
+                }
+            }
+
             // http://www.einnews.com/pr_news/336348008/hybrid-cloud-computing-industry-global-market-to-grow-at-cagr-34-4-between-2016-2022
             if (authorName.isEmpty()) {
                 result = doc.select("p:contains(Media Contact) strong").first();
@@ -2256,6 +2273,12 @@ public class ArticleTextExtractor {
 
         // http://www.politico.com/story/2017/05/12/senate-trump-russia-probe-comey-firing-238340
         matches = doc.select("[class=vcard] a");
+        if (matches!= null && matches.size() > 0){
+            return SHelper.innerTrim(matches.first().attr("href"));
+        }
+
+        // http://redhat.sys-con.com/node/4068643
+        matches = doc.select("table[class=storyauthor] td a");
         if (matches!= null && matches.size() > 0){
             return SHelper.innerTrim(matches.first().attr("href"));
         }
