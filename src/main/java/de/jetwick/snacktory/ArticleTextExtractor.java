@@ -241,19 +241,23 @@ public class ArticleTextExtractor {
         aMap.put("sltrib.com", Arrays.asList(
                 "#main-content > div.row"
         ));
-        aMap.put("wayfair.com", Arrays.asList(
-                "[class*=page_type_article]"
-        ));
 
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
     // Define custom rules to select css nodes per domain in the OutputFormatter
     // TODO: Load this from yaml/settings file
-    private static final Map<String, String> OUTPUT_FORMATTER_PER_DOMAIN;
+    private static final Map<String, OutputFormatter> OUTPUT_FORMATTER_PER_DOMAIN;
     static {
-        Map<String, String> aMap = new LinkedHashMap<String, String>();
-        aMap.put("drimble.nl", "p, ol, em, ul, li, h2");
+        Map<String, OutputFormatter> aMap = new LinkedHashMap<String, OutputFormatter>();
+
+        OutputFormatter formatter = new OutputFormatter();
+        formatter.setNodesToKeepCssSelector("p, ol, em, ul, li, h2");
+        aMap.put("drimble.nl",  formatter);
+
+        formatter = new OutputFormatter(OutputFormatter.MIN_FIRST_PARAGRAPH_TEXT, 25);
+        aMap.put("publicnet.co.uk",  formatter);
+
         OUTPUT_FORMATTER_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -3007,13 +3011,7 @@ public class ArticleTextExtractor {
      *  Check if there are any domain specific OutputFormatters
      */
     private OutputFormatter getOutputFormatterPerDomain(String domainName){
-        String cssSelectorList = OUTPUT_FORMATTER_PER_DOMAIN.get(domainName);
-        if (cssSelectorList!=null){
-            OutputFormatter formatter = new OutputFormatter();
-            formatter.setNodesToKeepCssSelector(cssSelectorList);
-            return formatter;
-        }
-        return null;
+        return OUTPUT_FORMATTER_PER_DOMAIN.get(domainName);
     }
 
     private void removeScriptsAndStyles(Document doc) {

@@ -2996,6 +2996,22 @@ public class ArticleTextExtractorTest {
         compareDates("2014-07-04 00:00:00", res.getDate());
     }
 
+    @Test
+    public void testPublicNet() throws Exception {
+        // http://www.publicnet.co.uk/default/2017/05/12/social-media-how-it-can-be-used-to-protect-against-cyber-criminals/
+        JResult res = new JResult();
+        res.setUrl("http://www.publicnet.co.uk/default/2017/05/12/social-media-how-it-can-be-used-to-protect-against-cyber-criminals/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("publicnet.html")));
+        assertEquals("http://www.publicnet.co.uk/default/2017/05/12/social-media-how-it-can-be-used-to-protect-against-cyber-criminals/", res.getCanonicalUrl());
+        assertEquals("SOCIAL MEDIA: HOW IT CAN BE USED TO PROTECT AGAINST CYBER CRIMINALS", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Joe Kim explains how social media can help public service IT professionals better understand potential cyber threats out there."));
+        assertTrue(res.getText(), res.getText().endsWith("Joe Kim is CTO at SolarWinds"));
+        assertEquals(StringUtils.EMPTY, res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        compareDates("2017-05-12 00:00:00", res.getDate());
+    }
+
+
     public static void compareDates(String expectedDateString, Date actual) {
         String[] patterns = {
                 "yyyy-MM-dd",
