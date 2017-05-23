@@ -193,10 +193,12 @@ public class ArticleTextExtractor {
                 "[class^=promo]",
                 "[class=item item--flag]"
             ));
-
         aMap.put("therivardreport.com", Arrays.asList(
                 "h2:contains(Related Stories:) ~ p" // All the `p` tags after the text `Related Stories:`
-        ));
+            ));
+        aMap.put("inforisktoday", Arrays.asList(
+                "p:has(b):contains(See Also:)"
+            ));
 
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
@@ -269,6 +271,7 @@ public class ArticleTextExtractor {
     private static final int MAX_LOG_LENGTH = 200;
     private static final int MIN_WEIGHT_TO_SHOW_IN_LOG = 10;
 
+    private static final Pattern DOMAIN_WITHOUT_TLD = Pattern.compile("(www\\.)?([^\\.]+).*");
 
     public ArticleTextExtractor() {
         setUnlikely("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
@@ -440,6 +443,7 @@ public class ArticleTextExtractor {
         // check for domain specific rules
         removeNodesPerDomain(doc, res.getDomain());
         removeNodesPerDomain(doc, res.getTopPrivateDomain());
+        removeNodesPerDomain(doc, extractDomainNameWithoutTld(res.getTopPrivateDomain()));
 
         // first evaluate if there is any domain specific rules.
         Element bestMatchElement = getBestMatchElementPerURL(doc, res.getUrl());
@@ -868,6 +872,26 @@ public class ArticleTextExtractor {
             }
         }
         return null;
+    }
+
+    /**
+     * Removes `www.` and tld section from top level domain name
+     *
+     * www.airpr.com -> airpr
+     * airpr.com -> airpr
+     *
+     * @param domain {@link String}: Top Level domain name
+     * @return: Domain name without tld and `www.`
+     */
+    protected String extractDomainNameWithoutTld(String domain) {
+
+        if (domain != null) {
+            Matcher macher = DOMAIN_WITHOUT_TLD.matcher(domain);
+            if (macher.matches()) {
+                return macher.group(2);
+            }
+        }
+        return StringUtils.EMPTY;
     }
 
     protected String extractDescription(Document doc) {
@@ -1861,6 +1885,15 @@ public class ArticleTextExtractor {
                 }
             }
 
+            // http://www.inforisktoday.asia/blogs/biometrics-for-children-dont-share-p-2169
+            if (authorName.isEmpty()) {
+                result = doc.select("a[class=author-link]").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.ownText());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: p[class=contact]");
+                }
+            }
+
             // http://redhat.sys-con.com/node/4068643
             if (authorName.isEmpty()) {
                 result = doc.select("table[class=storyauthor] td").first();
@@ -2092,6 +2125,30 @@ public class ArticleTextExtractor {
             authorDesc = bestMatch.attr("href");
             if(DEBUG_AUTHOR_DESC_EXTRACTION){
                 System.out.println("AUTHOR_DESC: span[class=article-shared] a");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // http://www.inforisktoday.asia/blogs/biometrics-for-children-dont-share-p-2169
+        matches = doc.select("section[class=about-the-author]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: section[class=about-the-author]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // http://www.inforisktoday.com/interviews/5-trends-to-sway-cybersecuritys-future-i-2153
+        matches = doc.select("a[class=author-link]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.ownText();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: a[class=author-link]");
                 System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
             }
             return SHelper.innerTrim(authorDesc);

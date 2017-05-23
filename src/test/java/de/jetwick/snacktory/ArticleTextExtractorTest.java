@@ -2386,7 +2386,25 @@ public class ArticleTextExtractorTest {
         // but just a text node of the parent.
         assertTrue(res.getText(), res.getText().startsWith("Other key trends are the growth of cloud computing"));
         assertTrue(res.getText(), res.getText().endsWith("Intelligence at the Brookings Institution."));
+        assertEquals("Eric Chabrow", res.getAuthorName());
+        assertEquals("Eric Chabrow", res.getAuthorDescription());
         compareDates("2014-01-11", res.getDate());
+    }
+
+    @Test
+    public void testInfoRiskToday1() throws Exception {
+        // http://www.inforisktoday.asia/blogs/biometrics-for-children-dont-share-p-2169
+        JResult res = new JResult();
+        res.setUrl("http://www.inforisktoday.asia/blogs/biometrics-for-children-dont-share-p-2169");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("inforisktoday1.html")));
+        assertEquals("http://www.inforisktoday.asia/blogs/biometrics-for-children-dont-share-p-2169", res.getCanonicalUrl());
+        assertEquals("Biometrics for Children: Don't Share - InfoRiskToday", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Warning to parents and guardians: Beware of collecting, storing or sharing your child's biometric details,"));
+        assertFalse(res.getText(), res.getText().contains("See Also: 2017 Predictions on Data Security: Insights on Important Trends in Security for the Banking Industry"));
+        assertTrue(res.getText(), res.getText().endsWith("as they would their Social Security card or birth certificate."));
+        assertEquals("Mathew J. Schwartz", res.getAuthorName());
+        assertEquals("About the Author Mathew J. Schwartz Executive Editor, DataBreachToday & Europe Schwartz is an award-winning journalist with two decades of experience in magazines, newspapers and electronic media. He has covered the information security and privacy sector throughout his career. Before joining Information Security Media Group in 2014, where he now serves as the Executive Editor, DataBreachToday and for European news coverage, Schwartz was the information security beat reporter for InformationWeek and a frequent contributor to DarkReading, amongst other publications. He lives in Scotland.", res.getAuthorDescription());
+        compareDates("2016-06-29 00:00:00", res.getDate());
     }
 
     @Test
