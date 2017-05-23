@@ -2981,6 +2981,21 @@ public class ArticleTextExtractorTest {
         compareDates("2016-07-02 05:01:58", res.getDate());
     }
 
+    @Test
+    public void testWayFair() throws Exception {
+        // https://www.wayfair.com/ideas-and-advice/top-10-kitchen-dining-tables-S4709.html
+        JResult res = new JResult();
+        res.setUrl("https://www.wayfair.com/ideas-and-advice/top-10-kitchen-dining-tables-S4709.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("wayfair.html"), 1391348, "UTF-8"));
+        assertEquals("https://www.wayfair.com/ideas-and-advice/top-10-kitchen-dining-tables-S4709.html", res.getCanonicalUrl());
+        assertEquals("Our \"It\" List Dining Tables", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("As the centerpiece of any dining room"));
+        assertTrue(res.getText(), res.getText().endsWith("Take your pick from these finds that are as affordable as they are beautiful."));
+        assertEquals(StringUtils.EMPTY, res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        compareDates("2014-07-04 00:00:00", res.getDate());
+    }
+
     public static void compareDates(String expectedDateString, Date actual) {
         String[] patterns = {
                 "yyyy-MM-dd",

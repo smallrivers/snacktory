@@ -241,7 +241,9 @@ public class ArticleTextExtractor {
         aMap.put("sltrib.com", Arrays.asList(
                 "#main-content > div.row"
         ));
-
+        aMap.put("wayfair.com", Arrays.asList(
+                "[class*=page_type_article]"
+        ));
 
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
@@ -287,6 +289,8 @@ public class ArticleTextExtractor {
         setHighlyNegative("policy-blk|followlinkedinsignin|^signupbox$");
         setToRemove("feedback-prompt|story-footer|story-meta-footer|related-combined-coverage|visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup|outbrain|^wnStoryBodyGraphic|articleadditionalcontent|most-popular|shatner-box|story-supplement|global-magazine-recent|nocontent");
     }
+
+    private static final Pattern WAYFAIR_DATE_PATTERN = Pattern.compile("\"display_date\":\"([^\"]+)\"");
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
         this.unlikelyStr = unlikelyStr;
@@ -955,6 +959,24 @@ public class ArticleTextExtractor {
                 Date d = parseDate(dateStr);
                 if(d!=null){
                     return d;
+                }
+            }
+        }
+
+        // https://www.wayfair.com/ideas-and-advice/top-10-kitchen-dining-tables-S4709.html
+        elems = doc.select("script[type=text/javascript]");
+        for (Element e : elems) {
+            if (e.toString().contains("display_date")) {
+                Matcher matcher = WAYFAIR_DATE_PATTERN.matcher(e.toString());
+                if(matcher.find()) {
+                    dateStr = matcher.group(1);
+                    Date parsedDate = parseDate(dateStr);
+                    if (DEBUG_DATE_EXTRACTION) {
+                        System.out.println("RULE-script[type=text/javascript]");
+                    }
+                    if (parsedDate != null) {
+                        return parsedDate;
+                    }
                 }
             }
         }
@@ -1794,6 +1816,7 @@ public class ArticleTextExtractor {
             "hh:mm a '-' d MMM yy", //11:45 AM - 7 Aug 15
             "MMM dd',' yyyy hh:mma", // July 12, 2016  6:31am
             "dd.MM.yy", // 22.09.16
+            "yyyy-MM-dd HH:mm:ss.SSSS Z"
         };
 
         Date date = null;
