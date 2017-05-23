@@ -1,12 +1,14 @@
 package de.jetwick.snacktory;
 
+import de.jetwick.snacktory.utils.Configuration;
+import de.jetwick.snacktory.utils.DateUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -2961,19 +2963,17 @@ public class ArticleTextExtractorTest {
         compareDates("2016-07-02 05:01:58", res.getDate());
     }
 
-    public static void compareDates(String wanted, Date extracted) throws Exception {
-
-        String[] dateFormats = {
+    public static void compareDates(String expectedDateString, Date actual) {
+        String[] patterns = {
                 "yyyy-MM-dd",
                 "yyyy-MM-dd HH:mm:ss",
                 "yyyy-MM-dd HH:mm:ssz",
                 "yyyy-MM-dd HH:mm:ss Z",
                 "yyyy-MM-dd HH:mm:ss XXX",
         };
-
-        Date wantedDate = DateUtils.parseDateStrictly(wanted, dateFormats);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        assertEquals(formatter.format(wantedDate), formatter.format(extracted));
+        Date expectedDate = DateUtils.parseDate(expectedDateString, Configuration.getInstance().getDefaultTimezone(), patterns);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        assertEquals(dateFormat.format(expectedDate), dateFormat.format(actual));
     }
 
     /**
