@@ -42,6 +42,8 @@ public class ArticleTextExtractor {
     // Helper function to try to determine whether the input text contains html tags
     //private Pattern HTML_PATTERN = Pattern.compile(".*\\<[^>]{0,15}>.*");
     private Pattern HTML_PATTERN = Pattern.compile(".*<\\s{0,5}[(?:div|p|b|a|li)]\\s{0,5}>.*");
+    ;
+
     public boolean hasHTMLTags(String text){
         Matcher matcher = HTML_PATTERN.matcher(text);
         return matcher.matches();
@@ -279,7 +281,7 @@ public class ArticleTextExtractor {
 
     private static final Pattern DOMAIN_WITHOUT_TLD = Pattern.compile("(www\\.)?([^\\.]+).*");
     private static final Pattern COMPUTER_WEEKLY_DATE_PATTERN = Pattern.compile("<a[^>]*>([^<]*)</a>");
-    private static final Pattern WAYFAIR_DATE_PATTERN = Pattern.compile("\"display_date\":\"([^\"]+)\"");
+    private static final Pattern WAYFAIR_DATE_PATTERN = Pattern.compile("\"(.*?)date(.*?)\"\\s*:\\s*\"([^\"]*?)\"", Pattern.CASE_INSENSITIVE);
 
     public ArticleTextExtractor() {
         setUnlikely("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
@@ -892,6 +894,7 @@ public class ArticleTextExtractor {
      *
      * www.airpr.com -> airpr
      * airpr.com -> airpr
+     * www.test.airpr.com -> Won't work, always expect a topLevelPrivateDomain
      *
      * @param domain {@link String}: Top Level domain name
      * @return: Domain name without tld and `www.`
@@ -899,9 +902,9 @@ public class ArticleTextExtractor {
     protected String extractDomainNameWithoutTld(String domain) {
 
         if (domain != null) {
-            Matcher macher = DOMAIN_WITHOUT_TLD.matcher(domain);
-            if (macher.matches()) {
-                return macher.group(2);
+            Matcher matcher = DOMAIN_WITHOUT_TLD.matcher(domain);
+            if (matcher.matches()) {
+                return matcher.group(2);
             }
         }
         return StringUtils.EMPTY;
@@ -995,8 +998,8 @@ public class ArticleTextExtractor {
         for (Element e : elems) {
             if (e.toString().contains("display_date")) {
                 Matcher matcher = WAYFAIR_DATE_PATTERN.matcher(e.toString());
-                if(matcher.find()) {
-                    dateStr = matcher.group(1);
+                while(matcher.find()) {
+                    dateStr = matcher.group(3);
                     Date parsedDate = parseDate(dateStr);
                     if (DEBUG_DATE_EXTRACTION) {
                         System.out.println("RULE-script[type=text/javascript]");
