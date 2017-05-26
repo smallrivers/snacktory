@@ -281,7 +281,7 @@ public class ArticleTextExtractor {
 
     private static final Pattern DOMAIN_WITHOUT_TLD = Pattern.compile("(www\\.)?([^\\.]+).*");
     private static final Pattern COMPUTER_WEEKLY_DATE_PATTERN = Pattern.compile("<a[^>]*>([^<]*)</a>");
-    private static final Pattern WAYFAIR_DATE_PATTERN = Pattern.compile("\"(.*?)date(.*?)\"\\s*:\\s*\"([^\"]*?)\"", Pattern.CASE_INSENSITIVE);
+    private static final Pattern DATE_PATTERN = Pattern.compile("\"(ptime|publish(ed)?[_\\-]?(date|time)?|(date|time)?[_\\-]?publish(ed)?|posted[_\\-]?on|display[_\\-]?(date|time)?)\"\\s*:\\s*\"(?<dateStr>[^\"]*?)\"", Pattern.CASE_INSENSITIVE);
 
     public ArticleTextExtractor() {
         setUnlikely("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
@@ -982,24 +982,6 @@ public class ArticleTextExtractor {
                 Matcher matcher = COMPUTER_WEEKLY_DATE_PATTERN.matcher(e.toString());
                 if(matcher.find()) {
                     dateStr = matcher.group(1);
-                    Date parsedDate = parseDate(dateStr);
-                    if (DEBUG_DATE_EXTRACTION) {
-                        System.out.println("RULE-script[type=text/javascript]");
-                    }
-                    if (parsedDate != null) {
-                        return parsedDate;
-                    }
-                }
-            }
-        }
-
-        // https://www.wayfair.com/ideas-and-advice/top-10-kitchen-dining-tables-S4709.html
-        elems = doc.select("script[type=text/javascript]");
-        for (Element e : elems) {
-            if (e.toString().contains("display_date")) {
-                Matcher matcher = WAYFAIR_DATE_PATTERN.matcher(e.toString());
-                while(matcher.find()) {
-                    dateStr = matcher.group(3);
                     Date parsedDate = parseDate(dateStr);
                     if (DEBUG_DATE_EXTRACTION) {
                         System.out.println("RULE-script[type=text/javascript]");
@@ -1725,6 +1707,21 @@ public class ArticleTextExtractor {
             }
         }
 
+        // https://www.wayfair.com/ideas-and-advice/top-10-kitchen-dining-tables-S4709.html
+        elems = doc.select("script[type=text/javascript], script[type=application/ld+json");
+        for (Element e : elems) {
+            Matcher matcher = DATE_PATTERN.matcher(e.toString());
+            while(matcher.find()) {
+                dateStr = matcher.group("dateStr");
+                Date parsedDate = parseDate(dateStr);
+                if (DEBUG_DATE_EXTRACTION) {
+                    System.out.println("RULE-script[type=text/javascript]");
+                }
+                if (parsedDate != null) {
+                    return parsedDate;
+                }
+            }
+        }
 
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;

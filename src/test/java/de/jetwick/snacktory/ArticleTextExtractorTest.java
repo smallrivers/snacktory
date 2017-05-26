@@ -1108,7 +1108,7 @@ public class ArticleTextExtractorTest {
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("fortune.html")));
         assertEquals("Will Rackspace support Google's or Amazon's clouds?", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Rackspace, a true cloud computing pioneer, is starting to sound like a company that will"));
-        compareDates("2015-05-11 00:00:00", res.getDate());
+        compareDates("2015-05-11 23:01:19", res.getDate());
         assertEquals("Barb Darrow", res.getAuthorName());
         assertEquals("http://fortune.com/author/barb-darrow/", res.getAuthorDescription());
     }
@@ -3078,7 +3078,6 @@ public class ArticleTextExtractorTest {
         assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
         compareDates("2017-05-12 00:00:00", res.getDate());
     }
-
 
     public static void compareDates(String expectedDateString, Date actual) {
         String[] patterns = {
