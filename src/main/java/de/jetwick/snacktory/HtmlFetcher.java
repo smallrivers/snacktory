@@ -15,29 +15,24 @@
  */
 package de.jetwick.snacktory;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.FileNotFoundException;
+import de.jetwick.snacktory.utils.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.net.ssl.*;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.URL;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.net.ssl.*;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 
 /**
  * Class to fetch articles. This class is thread safe.
@@ -88,6 +83,7 @@ public class HtmlFetcher {
     private AtomicInteger cacheCounter = new AtomicInteger(0);
     private int maxTextLength = -1;
     private ArticleTextExtractor extractor = new ArticleTextExtractor();
+    private static final HostnameVerifier DEFAULT_HOSTNAME_VERIFIER = HttpsURLConnection.getDefaultHostnameVerifier();
     private Set<String> furtherResolveNecessary = new LinkedHashSet<String>() {
         {
             add("bit.ly");
@@ -500,7 +496,15 @@ public class HtmlFetcher {
                     sslc.init(null, trustManagerArray, null);
                     HttpsURLConnection hConnSecure = (HttpsURLConnection) hConn;
                     hConnSecure.setDefaultSSLSocketFactory(sslc.getSocketFactory());
-                    hConnSecure.setDefaultHostnameVerifier(new NullHostnameVerifier());
+
+                    String topLevelDomain = extractor.extractTopPrivateDomain(urlAsStr);
+                    if (Configuration.getInstance().getDomainsNeedSNIEnabled().contains(topLevelDomain)) {
+                        logger.info("Enabling SSL Hostname Verification for " + topLevelDomain);
+                        hConnSecure.setHostnameVerifier(DEFAULT_HOSTNAME_VERIFIER);
+                    } else {
+                        logger.info("Skipping SSL Hostname Verification for " + topLevelDomain);
+                        hConnSecure.setDefaultHostnameVerifier(new NullHostnameVerifier());
+                    }
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
