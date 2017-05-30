@@ -2986,6 +2986,38 @@ public class ArticleTextExtractorTest {
         compareDates("2017-05-03 06:12:16 -07:00", res.getDate());
     }
 
+    @Test
+    public void testApnews() throws Exception {
+        // https://www.apnews.com/amp/0290dd1b2048498783f3d7d0ea28a10d
+        JResult res = new JResult();
+        res.setUrl("https://www.apnews.com/amp/0290dd1b2048498783f3d7d0ea28a10d");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("apnews.html")));
+        assertEquals("https://www.apnews.com/0290dd1b2048498783f3d7d0ea28a10d", res.getCanonicalUrl());
+        assertEquals("Deputies fatally shoot man who reportedly shot at neighbor", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("KNOXVILLE, Tenn. (AP) — Knox County Sheriff's Office deputies shot"));
+        assertTrue(res.getText(), res.getText().endsWith("Information from: Knoxville News Sentinel, http://www.knoxnews.com"));
+        assertEquals(StringUtils.EMPTY, res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        // @Todo
+        // Date extraction will work correctly once https://github.com/skyshard/snacktory/pull/32 is merged
+        //compareDates("2017-05-24 21:50:34", res.getDate());
+    }
+
+    @Test
+    public void testApnews1() throws Exception {
+        // https://www.apnews.com/b823ddc6905d454dacc65fd107730f95/Playmate-tastes-shame,-ordered-to-clean-up-urban-grit
+        JResult res = new JResult();
+        res.setUrl("https://www.apnews.com/b823ddc6905d454dacc65fd107730f95/Playmate-tastes-shame,-ordered-to-clean-up-urban-grit");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("apnews1.html")));
+        assertEquals("https://www.apnews.com/b823ddc6905d454dacc65fd107730f95", res.getCanonicalUrl());
+        assertEquals("Playmate tastes shame, ordered to clean up urban grit", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("LOS ANGELES (AP) — Dani Mathers earned fame posing as a nude model."));
+        assertTrue(res.getText(), res.getText().endsWith("where people might be naked or expect privacy."));
+        assertEquals("BRIAN MELLEY", res.getAuthorName());
+        assertEquals("By BRIAN MELLEY", res.getAuthorDescription());
+        compareDates("2017-05-25 00:00:00", res.getDate());
+    }
+
     public static void compareDates(String expectedDateString, Date actual) {
         String[] patterns = {
                 "yyyy-MM-dd",

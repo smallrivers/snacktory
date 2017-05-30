@@ -2039,6 +2039,12 @@ public class ArticleTextExtractor {
                         if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: span[itemprop=author]");
                     }
 
+                    // a hack for http://apnews.com/
+                    if(matches == null || matches.size() == 0){
+                        matches = doc.select("[class=mobile] h6");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: [class=mobile] h6");
+                    }
+
                     // select the best element from them
                     if(matches != null){
                         Element bestMatch = getBestMatchElement(matches);
