@@ -42,6 +42,8 @@ public class ArticleTextExtractor {
     // Helper function to try to determine whether the input text contains html tags
     //private Pattern HTML_PATTERN = Pattern.compile(".*\\<[^>]{0,15}>.*");
     private Pattern HTML_PATTERN = Pattern.compile(".*<\\s{0,5}[(?:div|p|b|a|li)]\\s{0,5}>.*");
+    ;
+
     public boolean hasHTMLTags(String text){
         Matcher matcher = HTML_PATTERN.matcher(text);
         return matcher.matches();
@@ -193,6 +195,12 @@ public class ArticleTextExtractor {
                 "[class^=promo]",
                 "[class=item item--flag]"
             ));
+        aMap.put("therivardreport.com", Arrays.asList(
+                "h2:contains(Related Stories:) ~ p" // All the `p` tags after the text `Related Stories:`
+            ));
+        aMap.put("inforisktoday", Arrays.asList(
+                "p:has(b):contains(See Also:)"
+            ));
 
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
@@ -232,16 +240,26 @@ public class ArticleTextExtractor {
         aMap.put("bizjournals.com", Arrays.asList(
                 "article[class=detail]"
         ));
+        aMap.put("sltrib.com", Arrays.asList(
+                "#main-content > div.row"
+        ));
 
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
     // Define custom rules to select css nodes per domain in the OutputFormatter
     // TODO: Load this from yaml/settings file
-    private static final Map<String, String> OUTPUT_FORMATTER_PER_DOMAIN;
+    private static final Map<String, OutputFormatter> OUTPUT_FORMATTER_PER_DOMAIN;
     static {
-        Map<String, String> aMap = new LinkedHashMap<String, String>();
-        aMap.put("drimble.nl", "p, ol, em, ul, li, h2");
+        Map<String, OutputFormatter> aMap = new LinkedHashMap<String, OutputFormatter>();
+
+        OutputFormatter formatter = new OutputFormatter();
+        formatter.setNodesToKeepCssSelector("p, ol, em, ul, li, h2");
+        aMap.put("drimble.nl",  formatter);
+
+        formatter = new OutputFormatter(OutputFormatter.MIN_FIRST_PARAGRAPH_TEXT, 25);
+        aMap.put("publicnet.co.uk",  formatter);
+
         OUTPUT_FORMATTER_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
 
@@ -261,7 +279,9 @@ public class ArticleTextExtractor {
     private static final int MAX_LOG_LENGTH = 200;
     private static final int MIN_WEIGHT_TO_SHOW_IN_LOG = 10;
 
+    private static final Pattern DOMAIN_WITHOUT_TLD = Pattern.compile("(www\\.)?([^\\.]+).*");
     private static final Pattern COMPUTER_WEEKLY_DATE_PATTERN = Pattern.compile("<a[^>]*>([^<]*)</a>");
+    private static final Pattern DATE_PATTERN = Pattern.compile("\"(ptime|publish(ed)?[_\\-]?(date|time)?|(date|time)?[_\\-]?publish(ed)?|posted[_\\-]?on|display[_\\-]?(date|time)?)\"\\s*:\\s*\"(?<dateStr>[^\"]*?)\"", Pattern.CASE_INSENSITIVE);
 
     public ArticleTextExtractor() {
         setUnlikely("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
@@ -275,7 +295,7 @@ public class ArticleTextExtractor {
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate|slider|^sectioncolumns$|ad-container");
         setHighlyNegative("policy-blk|followlinkedinsignin|^signupbox$");
-        setToRemove("feedback-prompt|story-footer|story-meta-footer|related-combined-coverage|visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup|outbrain|^wnStoryBodyGraphic|articleadditionalcontent|most-popular|shatner-box|form-errors|theme-summary|story-supplement|global-magazine-recent");
+        setToRemove("feedback-prompt|story-footer|story-meta-footer|related-combined-coverage|visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup|outbrain|^wnStoryBodyGraphic|articleadditionalcontent|most-popular|shatner-box|form-errors|theme-summary|story-supplement|global-magazine-recent|nocontent");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -438,6 +458,7 @@ public class ArticleTextExtractor {
         // check for domain specific rules
         removeNodesPerDomain(doc, res.getDomain());
         removeNodesPerDomain(doc, res.getTopPrivateDomain());
+        removeNodesPerDomain(doc, extractDomainNameWithoutTld(res.getTopPrivateDomain()));
 
         // first evaluate if there is any domain specific rules.
         Element bestMatchElement = getBestMatchElementPerURL(doc, res.getUrl());
@@ -866,6 +887,27 @@ public class ArticleTextExtractor {
             }
         }
         return null;
+    }
+
+    /**
+     * Removes `www.` and tld section from top level domain name
+     *
+     * www.airpr.com -> airpr
+     * airpr.com -> airpr
+     * www.test.airpr.com -> Won't work, always expect a topLevelPrivateDomain
+     *
+     * @param domain {@link String}: Top Level domain name
+     * @return: Domain name without tld and `www.`
+     */
+    protected String extractDomainNameWithoutTld(String domain) {
+
+        if (domain != null) {
+            Matcher matcher = DOMAIN_WITHOUT_TLD.matcher(domain);
+            if (matcher.matches()) {
+                return matcher.group(2);
+            }
+        }
+        return StringUtils.EMPTY;
     }
 
     protected String extractDescription(Document doc) {
@@ -1665,6 +1707,21 @@ public class ArticleTextExtractor {
             }
         }
 
+        // https://www.wayfair.com/ideas-and-advice/top-10-kitchen-dining-tables-S4709.html
+        elems = doc.select("script[type=text/javascript], script[type=application/ld+json");
+        for (Element e : elems) {
+            Matcher matcher = DATE_PATTERN.matcher(e.toString());
+            while(matcher.find()) {
+                dateStr = matcher.group("dateStr");
+                Date parsedDate = parseDate(dateStr);
+                if (DEBUG_DATE_EXTRACTION) {
+                    System.out.println("RULE-script[type=text/javascript]");
+                }
+                if (parsedDate != null) {
+                    return parsedDate;
+                }
+            }
+        }
 
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
@@ -1786,7 +1843,8 @@ public class ArticleTextExtractor {
             "hh:mm a '-' d MMM yy", //11:45 AM - 7 Aug 15
             "MMM dd',' yyyy hh:mma", // July 12, 2016  6:31am
             "dd.MM.yy", // 22.09.16
-            "dd-MMM-yyyy" // 14-Oct-2016
+            "dd-MMM-yyyy", // 14-Oct-2016
+            "yyyy-MM-dd HH:mm:ss.SSSS Z"
         };
 
         Date date = null;
@@ -1875,6 +1933,24 @@ public class ArticleTextExtractor {
                 if (result != null) {
                     authorName = SHelper.innerTrim(result.ownText());
                     if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: p[class=contact]");
+                }
+            }
+
+            // http://www.inforisktoday.asia/blogs/biometrics-for-children-dont-share-p-2169
+            if (authorName.isEmpty()) {
+                result = doc.select("a[class=author-link]").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.ownText());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: p[class=contact]");
+                }
+            }
+
+            // http://redhat.sys-con.com/node/4068643
+            if (authorName.isEmpty()) {
+                result = doc.select("table[class=storyauthor] td").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.text());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: table[class=storyauthor] td");
                 }
             }
 
@@ -2111,6 +2187,30 @@ public class ArticleTextExtractor {
             return SHelper.innerTrim(authorDesc);
         }
 
+        // http://www.inforisktoday.asia/blogs/biometrics-for-children-dont-share-p-2169
+        matches = doc.select("section[class=about-the-author]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.text();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: section[class=about-the-author]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
+        // http://www.inforisktoday.com/interviews/5-trends-to-sway-cybersecuritys-future-i-2153
+        matches = doc.select("a[class=author-link]");
+        if (matches!= null && matches.size() > 0){
+            Element bestMatch = matches.first(); // assume it is the first.
+            authorDesc = bestMatch.ownText();
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: a[class=author-link]");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return SHelper.innerTrim(authorDesc);
+        }
+
         // Special case for huffingtonpost.com
         matches = doc.select("span[class=author-card__microbio]");
         if (matches!= null && matches.size() > 0){
@@ -2283,6 +2383,12 @@ public class ArticleTextExtractor {
 
         // http://www.politico.com/story/2017/05/12/senate-trump-russia-probe-comey-firing-238340
         matches = doc.select("[class=vcard] a");
+        if (matches!= null && matches.size() > 0){
+            return SHelper.innerTrim(matches.first().attr("href"));
+        }
+
+        // http://redhat.sys-con.com/node/4068643
+        matches = doc.select("table[class=storyauthor] td a");
         if (matches!= null && matches.size() > 0){
             return SHelper.innerTrim(matches.first().attr("href"));
         }
@@ -2935,13 +3041,7 @@ public class ArticleTextExtractor {
      *  Check if there are any domain specific OutputFormatters
      */
     private OutputFormatter getOutputFormatterPerDomain(String domainName){
-        String cssSelectorList = OUTPUT_FORMATTER_PER_DOMAIN.get(domainName);
-        if (cssSelectorList!=null){
-            OutputFormatter formatter = new OutputFormatter();
-            formatter.setNodesToKeepCssSelector(cssSelectorList);
-            return formatter;
-        }
-        return null;
+        return OUTPUT_FORMATTER_PER_DOMAIN.get(domainName);
     }
 
     private void removeScriptsAndStyles(Document doc) {
