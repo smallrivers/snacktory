@@ -1108,7 +1108,7 @@ public class ArticleTextExtractorTest {
         res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("fortune.html")));
         assertEquals("Will Rackspace support Google's or Amazon's clouds?", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Rackspace, a true cloud computing pioneer, is starting to sound like a company that will"));
-        compareDates("2015-05-11 00:00:00", res.getDate());
+        compareDates("2015-05-11 23:01:19", res.getDate());
         assertEquals("Barb Darrow", res.getAuthorName());
         assertEquals("http://fortune.com/author/barb-darrow/", res.getAuthorDescription());
     }
@@ -2097,6 +2097,21 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testSysCon() throws Exception {
+        // http://redhat.sys-con.com/node/4068643
+        JResult res = new JResult();
+        res.setUrl("http://redhat.sys-con.com/node/4068643");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("sys-con1.html")));
+        assertEquals("http://redhat.sys-con.com/node/4068643", res.getCanonicalUrl());
+        assertEquals("[session] Dovetailing #DevOps | @DevOpsSummit @CAinc #IoT #AI #ML #DX", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Optimizing Alignment - Dovetailing DevOps and the Cloud"));
+        assertTrue(res.getText(), res.getText().endsWith("a SYS-CON Events company."));
+        assertEquals("Elizabeth White", res.getAuthorName());
+        assertEquals("http://elizabethwhite.sys-con.com/", res.getAuthorDescription());
+        compareDates("2017-05-14 00:00:00", res.getDate());
+    }
+
+    @Test
     public void testRiaBiz() throws Exception {
         // http://www.riabiz.com/a/4974745007161344/in-a-six-month-mark-reality-check-walt-bettinger-recasts-schwabs-retail-robo-advice-as-a-tool----but-a-handy-one
         JResult res = new JResult();
@@ -2392,7 +2407,25 @@ public class ArticleTextExtractorTest {
         // but just a text node of the parent.
         assertTrue(res.getText(), res.getText().startsWith("Other key trends are the growth of cloud computing"));
         assertTrue(res.getText(), res.getText().endsWith("Intelligence at the Brookings Institution."));
+        assertEquals("Eric Chabrow", res.getAuthorName());
+        assertEquals("Eric Chabrow", res.getAuthorDescription());
         compareDates("2014-01-11", res.getDate());
+    }
+
+    @Test
+    public void testInfoRiskToday1() throws Exception {
+        // http://www.inforisktoday.asia/blogs/biometrics-for-children-dont-share-p-2169
+        JResult res = new JResult();
+        res.setUrl("http://www.inforisktoday.asia/blogs/biometrics-for-children-dont-share-p-2169");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("inforisktoday1.html")));
+        assertEquals("http://www.inforisktoday.asia/blogs/biometrics-for-children-dont-share-p-2169", res.getCanonicalUrl());
+        assertEquals("Biometrics for Children: Don't Share - InfoRiskToday", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Warning to parents and guardians: Beware of collecting, storing or sharing your child's biometric details,"));
+        assertFalse(res.getText(), res.getText().contains("See Also: 2017 Predictions on Data Security: Insights on Important Trends in Security for the Banking Industry"));
+        assertTrue(res.getText(), res.getText().endsWith("as they would their Social Security card or birth certificate."));
+        assertEquals("Mathew J. Schwartz", res.getAuthorName());
+        assertEquals("About the Author Mathew J. Schwartz Executive Editor, DataBreachToday & Europe Schwartz is an award-winning journalist with two decades of experience in magazines, newspapers and electronic media. He has covered the information security and privacy sector throughout his career. Before joining Information Security Media Group in 2014, where he now serves as the Executive Editor, DataBreachToday and for European news coverage, Schwartz was the information security beat reporter for InformationWeek and a frequent contributor to DarkReading, amongst other publications. He lives in Scotland.", res.getAuthorDescription());
+        compareDates("2016-06-29 00:00:00", res.getDate());
     }
 
     @Test
@@ -2984,6 +3017,66 @@ public class ArticleTextExtractorTest {
         assertEquals("Kelly Byrd May 3, 2017", res.getAuthorName());
         assertEquals("Kelly Byrd May 3, 2017", res.getAuthorDescription());
         compareDates("2017-05-03 06:12:16 -07:00", res.getDate());
+    }
+
+    @Test
+    public void testSltrib() throws Exception {
+        // http://www.sltrib.com/home/5252884-155/vivint-smart-home-links-with-best
+        JResult res = new JResult();
+        res.setUrl("http://www.sltrib.com/home/5252884-155/vivint-smart-home-links-with-best");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("sltrib.html")));
+        assertEquals("http://www.sltrib.com/home/5252884-155/vivint-smart-home-links-with-best", res.getCanonicalUrl());
+        assertEquals("Vivint Smart Home links with Best Buy", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Vivint Smart Home is opening mini-stores within 400 Best Buy outlets nationwide as part of a new strategic partnership,"));
+        assertTrue(res.getText(), res.getText().endsWith("Warriors in Vivint Smart Home Arena."));
+        assertEquals("TOM HARVEY", res.getAuthorName());
+        assertEquals("https://www.facebook.com/saltlaketribune", res.getAuthorDescription());
+        compareDates("2017-05-04 16:54:01", res.getDate());
+    }
+
+    @Test
+    public void testTheRivardReport() throws Exception {
+        // http://therivardreport.com/san-antonio-space-scientists-prepare-for-jupiter-contact-1/
+        JResult res = new JResult();
+        res.setUrl("http://therivardreport.com/san-antonio-space-scientists-prepare-for-jupiter-contact-1/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("therivardreport.html")));
+        assertEquals("https://therivardreport.com/san-antonio-space-scientists-prepare-for-jupiter-contact-1/", res.getCanonicalUrl());
+        assertEquals("San Antonio Space Scientists Prepare for Jupiter ContactRivard Report", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("As the countdown began on Aug. 5, 2011 at the Kennedy Space Center in Florida,"));
+        assertTrue(res.getText(), res.getText().endsWith("Artistic depiction of Juno. Photo courtesy of NASA."));
+        assertEquals("Cherise Rohr-Allegrini", res.getAuthorName());
+        assertEquals("Cherise Rohr-Allegrini, PhD, MPH, is the San Antonio Program Director for The Immunization Partnership. She is a scientist and epidemiologist with extensive experience in tropical diseases abroad and public health in Texas. She writes on health and science topics. She can be contacted at cjrohr31@hotmail.com.", res.getAuthorDescription());
+        compareDates("2016-07-02 05:01:58", res.getDate());
+    }
+
+    @Test
+    public void testWayFair() throws Exception {
+        // https://www.wayfair.com/ideas-and-advice/top-10-kitchen-dining-tables-S4709.html
+        JResult res = new JResult();
+        res.setUrl("https://www.wayfair.com/ideas-and-advice/top-10-kitchen-dining-tables-S4709.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("wayfair.html"), 1391348, "UTF-8"));
+        assertEquals("https://www.wayfair.com/ideas-and-advice/top-10-kitchen-dining-tables-S4709.html", res.getCanonicalUrl());
+        assertEquals("Our \"It\" List Dining Tables", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("As the centerpiece of any dining room"));
+        assertTrue(res.getText(), res.getText().endsWith("Take your pick from these finds that are as affordable as they are beautiful."));
+        assertEquals(StringUtils.EMPTY, res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        compareDates("2014-07-04 00:00:00", res.getDate());
+    }
+
+    @Test
+    public void testPublicNet() throws Exception {
+        // http://www.publicnet.co.uk/default/2017/05/12/social-media-how-it-can-be-used-to-protect-against-cyber-criminals/
+        JResult res = new JResult();
+        res.setUrl("http://www.publicnet.co.uk/default/2017/05/12/social-media-how-it-can-be-used-to-protect-against-cyber-criminals/");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("publicnet.html")));
+        assertEquals("http://www.publicnet.co.uk/default/2017/05/12/social-media-how-it-can-be-used-to-protect-against-cyber-criminals/", res.getCanonicalUrl());
+        assertEquals("SOCIAL MEDIA: HOW IT CAN BE USED TO PROTECT AGAINST CYBER CRIMINALS", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Joe Kim explains how social media can help public service IT professionals better understand potential cyber threats out there."));
+        assertTrue(res.getText(), res.getText().endsWith("Joe Kim is CTO at SolarWinds"));
+        assertEquals(StringUtils.EMPTY, res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        compareDates("2017-05-12 00:00:00", res.getDate());
     }
 
     public static void compareDates(String expectedDateString, Date actual) {
