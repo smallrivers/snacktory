@@ -3019,6 +3019,7 @@ public class ArticleTextExtractorTest {
         compareDates("2017-05-03 06:12:16 -07:00", res.getDate());
     }
 
+    @Test
     public void testSltrib() throws Exception {
         // http://www.sltrib.com/home/5252884-155/vivint-smart-home-links-with-best
         JResult res = new JResult();
@@ -3090,10 +3091,9 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().endsWith("Information from: Knoxville News Sentinel, http://www.knoxnews.com"));
         assertEquals(StringUtils.EMPTY, res.getAuthorName());
         assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
-        // @Todo
-        // Date extraction will work correctly once https://github.com/skyshard/snacktory/pull/32 is merged
-        //compareDates("2017-05-24 21:50:34", res.getDate());
+        compareDates("2017-05-24 21:50:34", res.getDate());
     }
+
     @Test
     public void testApnews1() throws Exception {
         // https://www.apnews.com/b823ddc6905d454dacc65fd107730f95/Playmate-tastes-shame,-ordered-to-clean-up-urban-grit

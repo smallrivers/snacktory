@@ -503,6 +503,7 @@ public class HtmlFetcher {
 
                     HttpsURLConnection hConnSecure = (HttpsURLConnection) hConn;
                     hConnSecure.setDefaultSSLSocketFactory(new SSLConnectionSocketFactory(sslContext.getSocketFactory(), sslParameters));
+                    hConnSecure.setDefaultHostnameVerifier(new NullHostnameVerifier());
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
