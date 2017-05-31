@@ -201,6 +201,9 @@ public class ArticleTextExtractor {
         aMap.put("inforisktoday", Arrays.asList(
                 "p:has(b):contains(See Also:)"
             ));
+        aMap.put("nytimes.com", Arrays.asList(
+                "[class*=hidden]"
+            ));
 
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }

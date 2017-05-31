@@ -374,6 +374,7 @@ public class ArticleTextExtractorTest {
         assertEquals("Robert Mueller, Former F.B.I. Director, Is Named Special Counsel for Russia Investigation", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("WASHINGTON — The Justice Department appointed Robert S. Mueller III, a former F.B.I. director,"));
         assertFalse(res.getText(), res.getText().contains("Please verify you're not a robot by clicking the box. Invalid email address."));
+        assertFalse(res.getText(), res.getText().contains("View all New York Times newsletters. See Sample Manage Email Preferences Not you? Privacy Policy"));
         assertTrue(res.getText(), res.getText().endsWith("He’s the embodiment of integrity.”"));
         assertEquals("Rebecca R. Ruiz and Mark Landler", res.getAuthorName());
         assertEquals("https://www.nytimes.com/by/rebecca-r-ruiz", res.getAuthorDescription());
