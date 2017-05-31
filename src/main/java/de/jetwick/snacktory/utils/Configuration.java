@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
-import java.util.Set;
 
 /**
  * Class enables to load the snacktory configuration from external resources
@@ -30,7 +29,6 @@ final public class Configuration {
     }
 
     private String defaultTimezone;
-    private Set<String> domainsNeedSNIEnabled;
 
     private Configuration() {
     }
@@ -45,13 +43,5 @@ final public class Configuration {
 
     public void setDefaultTimezone(String defaultTimezone) {
         this.defaultTimezone = defaultTimezone;
-    }
-
-    public Set<String> getDomainsNeedSNIEnabled() {
-        return domainsNeedSNIEnabled;
-    }
-
-    public void setDomainsNeedSNIEnabled(Set<String> domainsNeedSNIEnabled) {
-        this.domainsNeedSNIEnabled = domainsNeedSNIEnabled;
     }
 }

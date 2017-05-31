@@ -15,7 +15,7 @@
  */
 package de.jetwick.snacktory;
 
-import de.jetwick.snacktory.utils.Configuration;
+import de.jetwick.snacktory.utils.SSLConnectionSocketFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,9 @@ import java.net.Proxy;
 import java.net.URL;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPInputStream;
@@ -83,7 +85,6 @@ public class HtmlFetcher {
     private AtomicInteger cacheCounter = new AtomicInteger(0);
     private int maxTextLength = -1;
     private ArticleTextExtractor extractor = new ArticleTextExtractor();
-    private static final HostnameVerifier DEFAULT_HOSTNAME_VERIFIER = HttpsURLConnection.getDefaultHostnameVerifier();
     private Set<String> furtherResolveNecessary = new LinkedHashSet<String>() {
         {
             add("bit.ly");
@@ -491,20 +492,17 @@ public class HtmlFetcher {
         if(DISABLE_SSL_VERIFICATION){
             if (urlAsStr.toLowerCase().startsWith("https://")){
                 try {
-                    SSLContext sslc = SSLContext.getInstance("TLS");
-                    TrustManager[] trustManagerArray = { new NullX509TrustManager() };
-                    sslc.init(null, trustManagerArray, null);
-                    HttpsURLConnection hConnSecure = (HttpsURLConnection) hConn;
-                    hConnSecure.setDefaultSSLSocketFactory(sslc.getSocketFactory());
+                    List sniHostNames = new ArrayList() {{
+                        add(new SNIHostName(url.getHost()));
+                    }};
+                    SSLParameters sslParameters = new SSLParameters();
+                    sslParameters.setServerNames(sniHostNames);
 
-                    String topLevelDomain = extractor.extractTopPrivateDomain(urlAsStr);
-                    if (Configuration.getInstance().getDomainsNeedSNIEnabled().contains(topLevelDomain)) {
-                        logger.info("Enabling SSL Hostname Verification for " + topLevelDomain);
-                        hConnSecure.setHostnameVerifier(DEFAULT_HOSTNAME_VERIFIER);
-                    } else {
-                        logger.info("Skipping SSL Hostname Verification for " + topLevelDomain);
-                        hConnSecure.setDefaultHostnameVerifier(new NullHostnameVerifier());
-                    }
+                    SSLContext sslContext = SSLContext.getInstance("TLS");
+                    sslContext.init(null, new TrustManager[]{new NullX509TrustManager()}, null);
+
+                    HttpsURLConnection hConnSecure = (HttpsURLConnection) hConn;
+                    hConnSecure.setDefaultSSLSocketFactory(new SSLConnectionSocketFactory(sslContext.getSocketFactory(), sslParameters));
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
