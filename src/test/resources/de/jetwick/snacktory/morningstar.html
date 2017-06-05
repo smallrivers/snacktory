@@ -1,0 +1,995 @@
+<!doctype html>
+<html class="msind no-js">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="apple-touch-icon-precomposed" href="/content/dam/morningstar/ret/content/apple-touch-icon.png">
+    <title>Hackers break into centralized password manager OneLogin</title>
+    <meta name="keywords"
+          content="Business,Technology,Computer and data security,Computing and information technology,Hacking,Technology issues"/>
+    <meta name="description"
+          content="Hackers break into centralized password manager OneLogin, Read most current stock market news, Get stock, fund, etf analyst reports from an independent source you can trust – Morningstar"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <!-- Build MetaData -->
+    <meta name="build" content="3.14.0-SNAPSHOT"/>
+    <meta name="buildTimestamp" content="2017-05-24T13:51:39.039-0500
+"/>
+
+    <meta name="site" content="ms.us"/>
+    <meta name="area" content="News"/>
+    <meta name="assetDomain" content="//www.msmediacom.com/"/>
+    <meta name="adDomain" content="//msmedia.morningstar.com/mstar/"/>
+    <meta name="adRefreshInterval" content="0"/>
+    <meta name="memberDomain" content="members.morningstar.com"/>
+
+
+    <meta name="uimHost" content="https://sso.morningstar.com/sso/"/>
+    <meta name="isAuthor" content="false"/>
+    <meta name="isPublish" content="true"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="language" content="en_US"/>
+    <meta name="google-site-verification" content="2d6RajT7NIVDNOSQK7wUW855uF-dxm-vM0kMJRhJAng"/>
+
+
+    <link rel="stylesheet" href="/etc/designs/morningstar/headlib.min.1495651899039.css" type="text/css">
+    <script type="text/javascript" src="/etc/designs/morningstar/headlib.min.1495651899039.js"></script>
+    <script>
+	var appHN = document.getElementsByTagName("head")[0],
+		appMN = document.createElement('meta'),
+		ua = navigator.userAgent;
+
+	if (/(iPad).*AppleWebKit.*Mobile.*Safari/.test(ua) || /(iPhone).*AppleWebKit.*Mobile.*Safari/.test(ua)) {
+		appMN.name = 'apple-itunes-app';
+		if (/(iPad).*AppleWebKit.*Mobile.*Safari/.test(navigator.userAgent)) {
+			appMN.content = 'app-id=676373222, app-argument=http://www.morningstar.com';
+		} else {
+			appMN.content = 'app-id=310716163, app-argument=http://www.morningstar.com';
+		}
+		appHN.appendChild(appMN);
+	}
+
+    </script>
+    <script src="//assets.adobedtm.com/562c4fa30f42e85424963b17e634e8b4638f5016/satelliteLib-a5e753d69c79c7b0e301c08ff437f7f67740cf60.js"></script>
+    <script src="//www.msmediacom.com/safeframe/js/sf_base_host_boot.js?bv=3.14.0-SNAPSHOT"></script>
+    <meta name="template" value="templatenews"/>
+
+
+    <meta name="cat" content=""/>
+    <meta name="section" content="associated-press"/>
+    <meta name="dcterms.date" content="2017-06-02"/>
+    <!--for Facebook Share-->
+    <meta property="og:title" content="Hackers break into centralized password manager OneLogin"/>
+    <meta property="og:description"
+          content="Hackers break into centralized password manager OneLogin, Read most current stock market news, Get stock, fund, etf analyst reports from an independent source you can trust – Morningstar"/>
+
+
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/etc/designs/morningstar/favicon.ico"/>
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/etc/designs/morningstar/favicon.ico"/>
+
+    <meta name="msvalidate.01" content="985532AEAC3A31F64690C69EFA55EF87"/>
+    <meta name="google-site-verification" content="3Ap-qUhJutF7vuC-6nmHXnqzIMjHjOddiGw-YnZ-6PU"/>
+
+
+    <script>
+	(function () {
+		"use strict";
+
+		var v1Host = 'http://www.morningstar.com',
+			v2Host = 'http://beta.morningstar.com',
+			betaOptInPercentage = '0.1',
+			betaCookieName = 'www_beta',
+			betaCookieDomain = '.morningstar.com',
+			overrideParamName = 'optin-override',
+			betaCookiePath = '/',
+			loc = document.location,
+			currentUrlOrigin = loc.origin,
+			currentRelativeUrl = loc.pathname,
+			betaCookieValue = getCookie(betaCookieName),
+			betaCookie = (betaCookieValue ? true : false),
+			betaOptedIn = (betaCookieValue === '1' ? true : false),
+			relativeUrlsForRewrite = ['/stocks.html', '/funds.html', '/etfs.html', '/cefs.html', '/bonds.html', '/invest-in-retirement.html', '/save-for-retirement.html', '/optimize-your-portfolio.html', '/family-finances.html', '/start-investing.html', '/save-for-college.html', '/minimize-taxes.html', '/tools.html', '/members/login.html'],
+			stocksRegEx = /\/stocks\/[^/]*\/[^/]*\/quote.html/g,
+			fundsRegEx = /\/funds\/[^/]*\/[^/]*\/quote.html/g,
+			cefsRegEx = /\/cefs\/[^/]*\/[^/]*\/quote.html/g,
+			etfsRegEx = /\/etfs\/[^/]*\/[^/]*\/quote.html/g,
+			urlIndex = 0,
+			expiryDate = null,
+			enrollUserInBeta = false,
+			betaOverrideParam = false,
+			queryParameters = getQueryParams(loc.search.toLowerCase()),
+			betaSourceIdKey = 'betaSourceId',
+			betaSourceIdValue = 2,
+			queryStringParam = '?optIn=true',
+			betaReferIds = 'A3841,A3842,A3843,A3844,A3845,A3846,A3789,A3790,A3791,A3806,A3813,A3816,A3822,A3825,A3827,A3830,A3836,A3839,A3847,A3848,A3990,A3991,A3992,A3993,A3994',
+			betaReferIdArray = betaReferIds.toLowerCase().split(','),
+			referIdParamName = 'referid',
+            optinBetaReferId = function () {
+                var retVal = false;
+                if (queryParameters !== null && queryParameters.hasOwnProperty(referIdParamName)) {
+                   if (betaReferIdArray.indexOf(queryParameters[referIdParamName]) > -1) {
+                       retVal = true;
+                   }
+                 }
+                 return retVal;
+		    },
+			isOldIE = function () {
+				var ua = navigator.userAgent,
+					retVal = false,
+					items = /MSIE (\d+\.\d+)/i.exec(ua) || [],
+					i = 0;
+
+				if (items.length > 1) {
+					if (parseFloat(items[1]) < 12) {
+						retVal = true;
+					}
+				}
+				if (ua.toLowerCase().indexOf('trident') > -1) {
+					retVal = true;
+				}
+
+				return retVal;
+			};
+
+		if (validString(v1Host) !== '' && validString(v2Host) !== '' && isOldIE() === false && currentUrlOrigin === v1Host && optinBetaReferId() === false) {
+			if (queryParameters !== null && queryParameters.hasOwnProperty(overrideParamName)) {
+				if (queryParameters[overrideParamName][0] === '1') {
+					betaOverrideParam = true;
+				}
+			}
+			if (betaOverrideParam === true) {
+				enrollUserInBeta = true;
+			} else {
+				if (betaCookie === false) {
+					if (betaOptInPercentage === 1) {
+						enrollUserInBeta = true;
+					}
+					if (!enrollUserInBeta && betaOptInPercentage !== 0 && Math.random() <= betaOptInPercentage) {
+						enrollUserInBeta = true;
+					}
+				}else if (betaOptedIn === true){
+					if ((urlIndex = relativeUrlsForRewrite.indexOf(currentRelativeUrl)) !== -1) {
+						loc.replace(v2Host + relativeUrlsForRewrite[urlIndex]);
+					} else {
+						if (stocksRegEx.test(currentRelativeUrl) || fundsRegEx.test(currentRelativeUrl) || etfsRegEx.test(currentRelativeUrl) || cefsRegEx.test(currentRelativeUrl)) {
+							loc.replace(v2Host + currentRelativeUrl);
+						} else if (currentRelativeUrl === '/') {
+							loc.replace(v2Host);
+						}
+					}
+				}
+			}
+			if (enrollUserInBeta === true) {
+				var optionId = 1,
+					betaOptions = 'sourceId=' + betaSourceIdValue + '&optionId=' + optionId,
+					req = new XMLHttpRequest();
+
+				if (typeof window.localStorage === 'object') {
+					localStorage.setItem(betaSourceIdKey, betaSourceIdValue);
+				}
+				req.addEventListener('load', updateResponse);
+				req.open('POST', '/api/v2/user/options', true);
+				req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+				req.send(betaOptions);
+			} else if (betaCookie === false && betaOptInPercentage !== '0') {
+				expiryDate = new Date();
+				expiryDate.setHours(23, 59, 59);
+				createCookie(betaCookieName, 99, expiryDate, betaCookiePath, betaCookieDomain);
+			}
+		}
+		function updateResponse() {
+			expiryDate = new Date(new Date().getTime() + (182 * 24 * 60 * 60 * 1000));
+			createCookie(betaCookieName, 1, expiryDate, betaCookiePath, betaCookieDomain);
+			betaOptedIn = true;
+			if (betaOptedIn === true) {
+				if ((urlIndex = relativeUrlsForRewrite.indexOf(currentRelativeUrl)) !== -1) {
+					var url = v2Host + relativeUrlsForRewrite[urlIndex];
+					loc.replace(createBetaUrl(url));
+				} else {
+					if (stocksRegEx.test(currentRelativeUrl) || fundsRegEx.test(currentRelativeUrl) || etfsRegEx.test(currentRelativeUrl) || cefsRegEx.test(currentRelativeUrl)) {
+						var url = v2Host + currentRelativeUrl;
+						loc.replace(createBetaUrl(url));
+					} else if (currentRelativeUrl === '/') {
+						loc.replace(createBetaUrl(v2Host));
+					}
+				}
+			}
+		}
+		function createBetaUrl(url) {
+			var newUrl = url;
+			if (getCookie(betaCookieName) === '1') {
+				newUrl += queryStringParam;
+			}
+			return newUrl;
+		}
+		function createCookie(name, value, expires, path, domain) {
+			var cookie = name + '=' + value;
+
+			if (validString(expires) !== '') {
+				cookie += '; expires=' + expires.toUTCString();
+			}
+			if (validString(path) !== '') {
+				cookie += '; path=' + path;
+			}
+			if (validString(domain) !== '') {
+				cookie += '; domain=' + domain;
+			}
+			document.cookie = cookie;
+		}
+		function getCookie(name) {
+			var cookieValue = '',
+				cookie = [],
+				cookies = document.cookie.split(';'),
+				i = 0;
+
+			for (i = 0; i < cookies.length; i = i + 1) {
+				cookie = cookies[i].split('=');
+
+				if (name === (cookie[0] ? cookie[0].trim() : '')) {
+					cookieValue = (cookie[1] ? cookie[1].trim() : '');
+				}
+			}
+
+			return cookieValue;
+		}
+		function getQueryParams(queryString) {
+			var queryParams = {},
+				param = [],
+				params = queryString.substr(1).split('&'),
+				i = 0,
+				key = '',
+				value = '';
+
+			for (i = 0; i < params.length; i = i + 1) {
+				param = params[i].split('=');
+				key = param[0];
+				value = decodeURIComponent(param[1]);
+
+				queryParams[key] = value;
+			}
+
+			return queryParams;
+		}
+		function validString(str) {
+			try {
+				if (typeof str === 'string' && str !== '') {
+					return str;
+				} else {
+					return str.toString();
+				}
+			} catch(e) {
+				return '';
+			}
+		}
+	}());
+
+    </script>
+
+
+</head>
+
+
+<body class="template-templatenews">
+<script>
+	try {
+		if (typeof window.Intl !== 'object' && window.Intl !== null) {
+			var locale = ((location.search || '?').substr(1).split('&').find(function(d) { if (!d){ return ''; } else { return d.startsWith('locale'); }}) || 'locale=en-US').split('=')[1];
+			document.write('<script src="https://cdn.polyfill.io/v2/polyfill.js?features=Intl.~locale.' + locale + '"><' + '/script>');
+		}
+	} catch(e) {
+		if (document.location.href.indexOf('msdebug=true') > -1) {
+			console.log('initialize Intl object failed!');
+		}
+	}
+
+</script>
+<div class="parbase clientcontext">
+    <script type="text/javascript">
+    $CQ(function() {
+        CQ_Analytics.SegmentMgr.loadSegments("/etc/segmentation");
+        CQ_Analytics.ClientContextUtils.init("/etc/clientcontext/ms","/content/morningstarcom/en_us/markets/newsDetail");
+
+
+    });
+
+    </script>
+</div>
+<div class="flyout">
+    <div class="menu-button">
+        <button type="button">Menu</button>
+    </div>
+</div>
+<div class="page-wrapper">
+    <div class="page">
+        <header class="on-page" role="banner">
+
+
+            <div class="inner-wrap">
+                <div class="menu-button">
+                    <button type="button">Menu</button>
+                </div>
+                <div class="mstar-logo">
+                    <a href="/"><img src="/etc/designs/morningstar/images/logo/svg/mstar_logo.svg./24939394.svg"
+                                     alt="Morningstar Logo"/></a>
+                </div>
+                <div class="greeting">
+                    <p data-mod="welcome">Welcome!</p>
+                </div>
+                <div class="membership-ad">
+                    <div class="parsys iparsys Parsys-membership-ad">
+                        <div class="iparys_inherited">
+                            <div class="parsys iparsys Parsys-membership-ad"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="top-links-and-search-and-text-ad-container">
+                    <div class="top-links">
+                        <button type="button">Membership</button>
+                        <ul>
+                            <li class="company-site"><a href="http://www.morningstar.com/company/" target="_blank"
+                                                        rel="nofollow">About Morningstar &gt;</a></li>
+                            <li data-usertype="f,fa,p,pa,d,da" class="logout"><a data-mod="logout"
+                                                                                 href="https://www.morningstar.com/members/logout.html"
+                                                                                 rel="nofollow">Logout</a></li>
+                            <li data-usertype="v" class="login"><a href="https://www.morningstar.com/members/login.html"
+                                                                   rel="nofollow">Login</a></li>
+                            <li data-usertype="v,f,fa,d,da" class="subscribe"><a
+                                    href="http://members.morningstar.com/mk/templates/mkpremium1.html?referid=a3009&vurl=#&HID=HPG_LNK101"
+                                    rel="nofollow">Subscribe</a></li>
+                            <li data-usertype="v" class="register"><a
+                                    href="http://members.morningstar.com/mk/templates/mkvisitor1.html?referid=a3009&vurl=#&HID=HPG_LNK100"
+                                    rel="nofollow">Register</a></li>
+                            <li data-usertype="p,pa" class="premium"><a
+                                    href="http://www.morningstar.com/Cover/PremiumLinks.html" rel="nofollow">Premium</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="site-search">
+                        <button type="button">Site Search</button>
+                        <div class="parsys iparsys iParsys-auto-complete">
+                            <div class="section">
+                                <div class="new"></div>
+                            </div>
+                            <div class="iparys_inherited">
+                                <div class="parsys iparsys iParsys-auto-complete">
+                                    <div class="section">
+
+
+                                        <div class="control-wrapper search header-quote-box" data-mod="auto-complete"
+                                             data-init="false"
+                                             data-maxrecord="12"
+                                             data-allowmultiple="true"
+                                             data-settingpath="/etc/morningstarAssets/scaffolding/autocomplete/us"
+                                             data-culture="en_US">
+                                            <label for="qs0">Search Symbols</label>
+                                            <div class="input-wrapper">
+                                                <input type="search" id="qs0" placeholder="Quote" autocomplete="off"/>
+                                                <div class="search-icon"></div>
+                                                <div class="clear-icon"></div>
+                                                <div class="autocomplete-list autocomplete quote"></div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div data-init="false" class="search control-wrapper section header-site-search"
+                                         data-mod="site-search">
+
+
+                                        <label for="ss0">Search The Site</label>
+                                        <div class="input-wrapper">
+                                            <input type="search" id="ss0" placeholder="Search" autocomplete="off"/>
+                                            <div class="search-icon"></div>
+                                            <div class="clear-icon"></div>
+                                            <input type="hidden" value=""/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="banner-house-ads">
+                    <div class="banner-ad">
+                        <div class="parsys Parsys-banner-ad iparsys">
+                            <div class="iparys_inherited">
+                                <div class="parsys Parsys-banner-ad iparsys"></div>
+                            </div>
+                            <div class="adSafeframe section">
+
+
+                                <div class="ad-728x90" data-mod="safeframe" data-name="sfad0" data-dest="sfad0"
+                                     data-pos="top" data-size="728x90" data-w="728" data-h="90" data-viewidoption="1"
+                                     data-custom="" data-refresh="" data-props="language,section,cat">
+                                    <div id="sfad0"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="house-ad">
+                        <div class="parsys iparsys Parsys-house-ad">
+                            <div class="iparys_inherited">
+                                <div class="parsys iparsys Parsys-house-ad"></div>
+                            </div>
+                            <div class="adSafeframe section">
+
+
+                                <div class="ad-195x90" data-mod="safeframe" data-name="sfad1" data-dest="sfad1"
+                                     data-pos="toprightbutton" data-size="195x90" data-w="195" data-h="90"
+                                     data-viewidoption="2" data-custom="" data-refresh=""
+                                     data-props="language,section,cat">
+                                    <div id="sfad1"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <nav class="responsiveNavigation" role="navigation">
+
+
+                    <ul class="main">
+
+
+                        <li class="">
+
+                            <a data-usertype="v" class="hidden" href="/membership.html">Join</a>
+
+                            <a data-usertype="f,fa,p,pa,d,da" href="/membership.html">Membership</a>
+
+                            <ul class="sub">
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class=""><a href="/">Home</a></li>
+
+                        <li class="">
+
+
+                            <a href="/portfolio.html">Portfolio</a>
+
+                            <ul class="sub">
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="">
+
+
+                            <a href="/stocks.html">Stocks</a>
+
+                            <ul class="sub">
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="">
+
+
+                            <a href="/bonds.html">Bonds</a>
+
+                            <ul class="sub">
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="">
+
+
+                            <a href="/funds.html">Funds</a>
+
+                            <ul class="sub">
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="">
+
+
+                            <a href="/etfs.html">ETFs</a>
+
+                            <ul class="sub">
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="">
+
+
+                            <a href="/cefs.html">CEFs</a>
+
+                            <ul class="sub">
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="is-selected">
+
+
+                            <a href="/markets.html">Markets</a>
+
+                            <ul class="sub">
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="">
+
+
+                            <a href="/tools.html">Tools</a>
+
+                            <ul class="sub">
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="">
+
+
+                            <a href="/invest-in-retirement.html">Personal Finance</a>
+
+                            <ul class="sub">
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="">
+
+
+                            <a href="/discuss.html">Discuss</a>
+
+                            <ul class="sub">
+
+
+                            </ul>
+
+                        </li>
+
+
+                    </ul>
+                </nav>
+
+            </div>
+        </header>
+
+
+        <div class="content" role="main">
+            <div class="content-area-main">
+
+                <div class="content-area-1">
+                    <div class="parsys Parsys-1">
+                        <div class="section newsDetail">
+
+
+                            <section class="news-detail-instance small">
+                                <!--news header-->
+                                <div class="news-detail-header">
+
+                                    <div class="provider-logo primary-section-name">
+                                        <ul class="provider-logo-link-list">
+                                            <li>
+                                                <a href="/news/associated-press.html">News: Associated Press</a>
+                                            </li>
+                                            <li>
+                                                <a href="http://www.ap.org/">
+
+                                                    <img src="http://im.mstar.com/news/ap_toplogo.png">
+
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+
+                                    <h1 class="title">Hackers break into centralized password manager OneLogin</h1>
+
+                                </div>
+                                <!--news toolbar-->
+
+                                <div class="news-detail-toolbar">
+                                    <div class="parsys parsys-toolbar">
+                                        <div class="newsArticleToolbar section">
+
+
+                                            <script type="text/javascript"
+                                                    src="//s7.addthis.com/js/300/addthis_widget.js#pubid=metherd"></script>
+                                            <section class="news-article-toolbar-container"
+                                                     data-isactiveprint="true"
+                                                     data-isactiveshare="true"
+                                                     data-isactivefontsize="true"
+                                            >
+                                                <div class="actions">
+                                                    <a class="news-button print" href="javascript:void(0)">Print</a>
+                                                    <a class="news-button share" href="javascript:void(0)">Share</a>
+                                                    <a class="news-button font-size"
+                                                       href="javascript:void(0)">Font-size</a>
+                                                </div>
+                                                <div class="clear"/>
+                                            </section>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <!--publicationTime-->
+
+                                <div class="news-time-stamp">
+                                    06/02/17 12:02 PM EDT
+                                </div>
+
+                                <!--news content-->
+                                <div class="news-detail-content">
+                                    <block id="Main">
+                                        <p>NEW YORK (AP) — Hackers have gained access to OneLogin, an online password
+                                            manager that offers a single sign-on to multiple websites and services.</p>
+
+                                        <div class="parsys parsys-mid-ad">
+                                            <div class="adSafeframe section">
+
+
+                                                <div class="ad-300x250" data-mod="safeframe" data-name="sfad2"
+                                                     data-dest="sfad2" data-pos="middle" data-size="300x250"
+                                                     data-w="300" data-h="250" data-viewidoption="1" data-custom=""
+                                                     data-refresh="" data-props="language,section,cat">
+                                                    <div id="sfad2"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <p>OneLogin disclosed the hack in a blog post but didn't specify the data
+                                            accessed in the breach.</p>
+                                        <p>Published reports, however, say OneLogin informed customers that the hackers
+                                            appeared to have gotten a way to access encrypted data. Passwords are
+                                            typically stored that way.</p>
+                                        <p>OneLogin didn't immediately respond to an inquiry.</p>
+                                        <p>Password managers help people keep track of passwords for a growing array of
+                                            websites and services that require one. Instead of having to remember
+                                            complex passwords for each one, people can just remember a master password.
+                                            The password service then unlocks other accounts as needed.</p>
+                                        <p>In 2015, rival LastPass said hackers obtained some user information —
+                                            although not actual passwords.</p>
+                                    </block>
+                                </div>
+                                <div class="clear">
+                                    <!--NewsAPIResourceID="urn:publicid:ap.org:f8d53c4370434744a864d4afa5fa8d36"--></div>
+                            </section>
+                        </div>
+                        <div class="newsArticleToolbar section">
+
+
+                            <script type="text/javascript"
+                                    src="//s7.addthis.com/js/300/addthis_widget.js#pubid=metherd"></script>
+                            <section class="news-article-toolbar-container"
+                                     data-isactiveprint="true"
+                                     data-isactiveshare="true"
+                                     data-isactivefontsize="true"
+                            >
+                                <div class="actions">
+                                    <a class="news-button print" href="javascript:void(0)">Print</a>
+                                    <a class="news-button share" href="javascript:void(0)">Share</a>
+                                    <a class="news-button font-size" href="javascript:void(0)">Font-size</a>
+                                </div>
+                                <div class="clear"/>
+                            </section>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="content-area-2">
+                    <div class="parsys Parsys-2">
+                        <div class="adSafeframe section">
+
+
+                            <div class="ad-65-chartextlink" data-mod="safeframe" data-name="sfad3" data-dest="sfad3"
+                                 data-pos="toplink" data-size="65-chartextlink" data-w="300" data-h="50"
+                                 data-viewidoption="2" data-custom="" data-refresh="" data-props="language,section,cat">
+                                <div id="sfad3"></div>
+                            </div>
+                        </div>
+                        <div class="adSafeframe section">
+
+
+                            <div class="ad-300x250" data-mod="safeframe" data-name="sfad4" data-dest="sfad4"
+                                 data-pos="topright" data-size="300x250,300x600" data-w="300" data-h="250"
+                                 data-multisize='true' data-viewidoption="1" data-custom="" data-refresh=""
+                                 data-props="language,section,cat">
+                                <div id="sfad4"></div>
+                            </div>
+                        </div>
+                        <div class="adSafeframe section">
+
+
+                            <div class="ad-65-chartextlink" data-mod="safeframe" data-name="sfad5" data-dest="sfad5"
+                                 data-pos="toplink" data-size="65-chartextlink" data-w="300" data-h="50"
+                                 data-viewidoption="2" data-custom="" data-refresh="" data-props="language,section,cat">
+                                <div id="sfad5"></div>
+                            </div>
+                        </div>
+                        <div class="adSafeframe section">
+
+
+                            <div class="ad-contentmodule" data-mod="safeframe" data-name="sfad6" data-dest="sfad6"
+                                 data-pos="right" data-size="contentmodule" data-w="370" data-h="626"
+                                 data-multisize='true' data-viewidoption="2" data-custom="" data-refresh=""
+                                 data-props="language,section,cat">
+                                <div id="sfad6"></div>
+                            </div>
+                        </div>
+                        <section class="header-footer primary-section ads-container section">
+
+
+                            <header>
+
+
+                                <h1 class="primary-section-name">
+
+
+                                    Sponsored Links
+
+
+                                </h1>
+
+
+                            </header>
+                            <div class="clear-header"></div>
+
+
+                            <div class="sponsor-center">
+                                <div class="parsys ads-parsys">
+                                    <div class="adSafeframe section">
+
+
+                                        <div class="ad-sponsorlink" data-mod="safeframe" data-name="sfad7"
+                                             data-dest="sfad7" data-pos="SC1" data-size="sponsorlink" data-w="300"
+                                             data-h="100" data-viewidoption="2" data-custom="" data-refresh=""
+                                             data-props="language,section,cat">
+                                            <div id="sfad7"></div>
+                                        </div>
+                                    </div>
+                                    <div class="adSafeframe section">
+
+
+                                        <div class="ad-sponsorlink" data-mod="safeframe" data-name="sfad8"
+                                             data-dest="sfad8" data-pos="SC2" data-size="sponsorlink" data-w="300"
+                                             data-h="100" data-viewidoption="2" data-custom="" data-refresh=""
+                                             data-props="language,section,cat">
+                                            <div id="sfad8"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </section>
+                        <section class="header-footer primary-section ads-container section">
+
+
+                            <header>
+
+
+                                <h1 class="primary-section-name">
+
+
+                                    Sponsor Center
+
+
+                                </h1>
+
+
+                            </header>
+                            <div class="clear-header"></div>
+
+
+                            <div class="sponsor-center">
+                                <div class="parsys ads-parsys">
+                                    <div class="adSafeframe section">
+
+
+                                        <div class="ad-120x60" data-mod="safeframe" data-name="sfad9" data-dest="sfad9"
+                                             data-pos="SC1" data-size="120x60" data-w="120" data-h="60"
+                                             data-viewidoption="2" data-custom="" data-refresh=""
+                                             data-props="language,section,cat">
+                                            <div id="sfad9"></div>
+                                        </div>
+                                    </div>
+                                    <div class="adSafeframe section">
+
+
+                                        <div class="ad-120x60" data-mod="safeframe" data-name="sfad10"
+                                             data-dest="sfad10" data-pos="SC2" data-size="120x60" data-w="120"
+                                             data-h="60" data-viewidoption="2" data-custom="" data-refresh=""
+                                             data-props="language,section,cat">
+                                            <div id="sfad10"></div>
+                                        </div>
+                                    </div>
+                                    <div class="adSafeframe section">
+
+
+                                        <div class="ad-120x60" data-mod="safeframe" data-name="sfad11"
+                                             data-dest="sfad11" data-pos="SC3" data-size="120x60" data-w="120"
+                                             data-h="60" data-viewidoption="2" data-custom="" data-refresh=""
+                                             data-props="language,section,cat">
+                                            <div id="sfad11"></div>
+                                        </div>
+                                    </div>
+                                    <div class="adSafeframe section">
+
+
+                                        <div class="ad-120x60" data-mod="safeframe" data-name="sfad12"
+                                             data-dest="sfad12" data-pos="SC4" data-size="120x60" data-w="120"
+                                             data-h="60" data-viewidoption="2" data-custom="" data-refresh=""
+                                             data-props="language,section,cat">
+                                            <div id="sfad12"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </section>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <footer class="footer-component" role="contentinfo">
+
+
+            <div class="foot-ad-parsys adSafeframe">
+                <div class="ad-728x90">
+                    <div class="parsys Parsys-footer-ad">
+                    </div>
+
+                </div>
+            </div>
+            <div class="parsys iparsys Parsys-footer">
+                <div class="iparys_inherited">
+                    <div class="parsys iparsys Parsys-footer"></div>
+                </div>
+                <div class="adSafeframe section">
+
+
+                    <div class="ad-728x90" data-mod="safeframe" data-name="sfad13" data-dest="sfad13" data-pos="bottom"
+                         data-size="728x90" data-w="728" data-h="90" data-viewidoption="2" data-custom=""
+                         data-refresh="" data-props="language,section,cat">
+                        <div id="sfad13"></div>
+                    </div>
+                </div>
+
+                <p class="miscellaneous"><a href="http://news.morningstar.com/Corrections/CorrectionsList.html">Corrections</a>&nbsp;&nbsp;<a
+                        href="http://www.morningstar.com/Cover/Help.html">Help</a>&nbsp;&nbsp;<a
+                        href="http://www.morningstar.com/AboutUs/MediaKit.html">Advertising Opportunities</a>&nbsp;&nbsp;<a
+                        href="http://members.morningstar.com/reprints/rp_home.html">Licensing</a>&nbsp;&nbsp;<a
+                        href="http://www.morningstar.com/topics">Topics</a>&nbsp;&nbsp;<a
+                        href="http://www.morningstaradvisor.com/">MorningstarAdvisor</a>&nbsp;&nbsp;<a
+                        href="http://www.morningstar.com/InvGlossary/">Glossary</a>&nbsp;&nbsp;<a
+                        href="http://news.morningstar.com/rss/rss.html">RSS</a>&nbsp;&nbsp;<a
+                        href="http://www.morningstar.com/products/Store_StoreCoverPage.html">Store</a>&nbsp;&nbsp;<a
+                        href="http://members.morningstar.com/memberstpages/Morningstar_Affiliate.html">Affiliate</a>&nbsp;&nbsp;<a
+                        href="http://corporate.morningstar.com/US/asp/subject.aspx?xmlfile=361.xml">Careers</a>&nbsp;&nbsp;<a
+                        href="http://corporate.morningstar.com/US/asp/home.aspx?xmlfile=202.xml&amp;pgid=hetopcompsite">Company
+                    Site</a></p>
+
+
+                <div class="internationalSites section">
+
+
+                    <div class="international-sites">
+                        <ul>
+                            <li><a class="category">International Sites</a></li>
+                            <li class="hidden"><a href="http://www.morningstar.com.au/">Australia</a></li>
+                            <li class="hidden"><a href="http://www.morningstar.ca/">Canada</a></li>
+                            <li class="hidden"><a href="http://www.cn.morningstar.com/main/default.aspx" rel="nofollow">China</a>
+                            </li>
+                            <li class="hidden"><a href="http://www.morningstar.fr/" rel="nofollow">France</a></li>
+                            <li class="hidden"><a href="http://www.morningstarfonds.de/de/default.aspx?lang=de-DE"
+                                                  rel="nofollow">Germany</a></li>
+                            <li class="hidden"><a href="http://www.hk.morningstar.com/" rel="nofollow">Hong Kong</a>
+                            </li>
+                            <li class="hidden"><a href="http://www.morningstar.it/it/default.aspx?lang=it-IT"
+                                                  rel="nofollow">Italy</a></li>
+                            <li class="hidden"><a href="http://www.morningstar.nl/nl/default.aspx?lang=nl-NL"
+                                                  rel="nofollow">The Netherlands</a></li>
+                            <li class="hidden"><a href="http://www.morningstar.no/" rel="nofollow">Norway</a></li>
+                            <li class="hidden"><a href="http://www.morningstar.es/es/default.aspx?lang=es-ES"
+                                                  rel="nofollow">Spain</a></li>
+                            <li class="hidden"><a href="http://www.morningstar.co.uk/uk/default.aspx">U.K.</a></li>
+                            <li class="hidden"><a href="http://www.morningstar.ch/" rel="nofollow">Switzerland</a></li>
+                            <li class="hidden"><a href="http://www.morningstar.in/" rel="nofollow">India</a></li>
+                            <li class="hidden"><a href="http://www.morningstar.fi/" rel="nofollow">Finland</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p
+                        class="legal">Independent. Insightful. Trusted. Morningstar provides stock market analysis;
+                    equity, mutual fund, and ETF research, ratings, and picks; portfolio tools; and IRA, 401k, and 529
+                    plan research. Our reliable data and analysis can help both experienced enthusiasts and
+                    newcomers.<br/>
+                    <br/>
+                    &copy; Copyright 2016 Morningstar, Inc. All rights reserved. Please read our <a
+                            href="http://www.morningstar.com/AboutUs/copyright.html">Terms of Use</a> and <a
+                            href="http://members.morningstar.com/memberstpages/PrivacyPolicy.html">Privacy Policy. </a>Dow
+                    Jones Industrial Average, S&amp;P 500, Nasdaq, and Morningstar Index (Market Barometer) quotes are
+                    real-time.</p>
+
+
+            </div>
+        </footer>
+
+    </div>
+</div>
+<input type="hidden" id="pageLanguageCode" value="en_US"/>
+
+
+<div id="adsense"><img/></div>
+<script type="text/javascript" src="/etc/morningstarFoundations/v2/clientlibs/msiip-core.min.1495651899039.js"></script>
+<link rel="stylesheet" href="/etc/morningstarFoundations/v2/clientlibs/msiip-user.min.1495651899039.css"
+      type="text/css">
+<script type="text/javascript" src="/etc/designs/morningstar/v2/clientlibs/msiip-user.min.1495651899039.js"></script>
+<script type="text/javascript"
+        src="/etc/morningstarFoundations/v2/clientlibs/msiip-angular.min.1495651899039.js"></script>
+<link rel="stylesheet" href="/etc/designs/morningstar/bodylib.min.1495651899039.css" type="text/css">
+<script type="text/javascript" src="/etc/morningstarFoundations/v2/libs/angular-1.3.15.min.1495651899039.js"></script>
+<script type="text/javascript" src="/etc/designs/morningstar/v2/libs/uim.global-1.0.0.min.1495651899039.js"></script>
+<script type="text/javascript" src="/etc/designs/morningstar/bodylib.min.1495651899039.js"></script>
+<script>
+	try {
+		_satellite.pageBottom();
+	} catch(e) {
+		msind.Debug.log('pageBottom', e);
+	}
+	$(document).ready(function () {
+		// Set build version
+		NS('msind.Data').BuildVersion = '3.14.0-SNAPSHOT';
+	});
+
+</script>
+</body>
+</html>

@@ -3079,6 +3079,36 @@ public class ArticleTextExtractorTest {
         compareDates("2017-05-12 00:00:00", res.getDate());
     }
 
+    @Test
+    public void testMorningStar() throws Exception {
+        // http://www.morningstar.com/news/associated-press/urn:publicid:ap.org:f8d53c4370434744a864d4afa5fa8d36/hackers-break-into-centralized-password-manager-onelogin.html
+        JResult res = new JResult();
+        res.setUrl("http://www.morningstar.com/news/associated-press/urn:publicid:ap.org:f8d53c4370434744a864d4afa5fa8d36/hackers-break-into-centralized-password-manager-onelogin.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("morningstar.html")));
+        assertEquals("http://www.morningstar.com/news/associated-press/urn:publicid:ap.org:f8d53c4370434744a864d4afa5fa8d36/hackers-break-into-centralized-password-manager-onelogin.html", res.getCanonicalUrl());
+        assertEquals("Hackers break into centralized password manager OneLogin", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("NEW YORK (AP) — Hackers have gained access to OneLogin,"));
+        assertTrue(res.getText(), res.getText().endsWith("although not actual passwords."));
+        assertEquals(StringUtils.EMPTY, res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        compareDates("2017-06-02 00:00:00", res.getDate());
+    }
+
+    @Test
+    public void testSfchronicle() throws Exception {
+        // http://www.sfchronicle.com/business/article/Odd-jobs-matchmaker-Thumbtack-gets-big-funds-6541824.php
+        JResult res = new JResult();
+        res.setUrl("http://www.sfchronicle.com/business/article/Odd-jobs-matchmaker-Thumbtack-gets-big-funds-6541824.php");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("sfchronicle.html")));
+        assertEquals("http://www.sfchronicle.com/business/article/Odd-jobs-matchmaker-Thumbtack-gets-big-funds-6541824.php", res.getCanonicalUrl());
+        assertEquals("Odd-jobs matchmaker Thumbtack gets big funds, joins unicorn club - San Francisco Chronicle", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("San Francisco’s Thumbtack, which introduces fix-it folks,"));
+        assertTrue(res.getText(), res.getText().endsWith("Carolyn Said is a San Francisco Chronicle staff writer. E-mail: csaid@sfchronicle.com Twitter: @csaid"));
+        assertEquals("Carolyn Said", res.getAuthorName());
+        assertEquals("Carolyn Said is a San Francisco Chronicle staff writer. E-mail: csaid@sfchronicle.com Twitter: @csaid", res.getAuthorDescription());
+        compareDates("2015-09-30 00:00:00", res.getDate());
+    }
+
     public static void compareDates(String expectedDateString, Date actual) {
         String[] patterns = {
                 "yyyy-MM-dd",
