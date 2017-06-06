@@ -201,6 +201,9 @@ public class ArticleTextExtractor {
         aMap.put("inforisktoday", Arrays.asList(
                 "p:has(b):contains(See Also:)"
             ));
+        aMap.put("nytimes.com", Arrays.asList(
+                "[class*=hidden]"
+            ));
 
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
@@ -242,6 +245,9 @@ public class ArticleTextExtractor {
         ));
         aMap.put("sltrib.com", Arrays.asList(
                 "#main-content > div.row"
+        ));
+        aMap.put("sfchronicle.com", Arrays.asList(
+                "div[class=article-text]"
         ));
 
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
@@ -290,7 +296,7 @@ public class ArticleTextExtractor {
                 + "login|si(debar|gn|ngle)");
         setPositive("(^(body|content|h?entry|main|page|post|text|blog|story|haupt))"
                 + "|arti(cle|kel)|instapaper_body|storybody|short-story|storycontent|articletext|story-primary|^newsContent$|dcontainer|announcement-details");
-        setHighlyPositive("news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article|^article_text$|main-article-chapter|post-body");
+        setHighlyPositive("news-detail-content|news-release-detail|storybody|main-content|articlebody|article_body|article-body|html-view-content|entry__body|^main-article$|^article__content$|^articleContent$|^mainEntityOfPage$|art_body_article|^article_text$|main-article-chapter|post-body");
         setNegative("nav($|igation)|user|com(ment|bx)|(^com-)|contact|"
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate|slider|^sectioncolumns$|ad-container");
