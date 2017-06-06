@@ -502,8 +502,8 @@ public class HtmlFetcher {
                     sslContext.init(null, new TrustManager[]{new NullX509TrustManager()}, null);
 
                     HttpsURLConnection hConnSecure = (HttpsURLConnection) hConn;
-                    hConnSecure.setDefaultSSLSocketFactory(new SSLConnectionSocketFactory(sslContext.getSocketFactory(), sslParameters));
-                    hConnSecure.setDefaultHostnameVerifier(new NullHostnameVerifier());
+                    hConnSecure.setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext.getSocketFactory(), sslParameters));
+                    hConnSecure.setHostnameVerifier(new NullHostnameVerifier());
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
