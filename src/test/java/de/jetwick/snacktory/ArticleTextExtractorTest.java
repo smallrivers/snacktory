@@ -3110,6 +3110,21 @@ public class ArticleTextExtractorTest {
         compareDates("2015-09-30 00:00:00", res.getDate());
     }
 
+    @Test
+    public void testLookout() throws Exception {
+        // https://blog.lookout.com/spectrum-of-mobile-risk
+        JResult res = new JResult();
+        res.setUrl("https://blog.lookout.com/spectrum-of-mobile-risk");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("lookout.html")));
+        assertEquals("https://blog.lookout.com/spectrum-of-mobile-risk", res.getCanonicalUrl());
+        assertEquals("Introducing The Spectrum of Mobile Risk: how to think about the risks facing data from mobility", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Today, Lookout is introducing The Spectrum of Mobile Risk research report,"));
+        assertTrue(res.getText(), res.getText().endsWith("get a copy of the The Spectrum of Mobile Risk research paper today."));
+        assertEquals(StringUtils.EMPTY, res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        compareDates("2017-05-16 00:00:00", res.getDate());
+    }
+
     public static void compareDates(String expectedDateString, Date actual) {
         String[] patterns = {
                 "yyyy-MM-dd",

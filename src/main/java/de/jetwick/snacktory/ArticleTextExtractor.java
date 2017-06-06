@@ -1729,6 +1729,22 @@ public class ArticleTextExtractor {
             }
         }
 
+        // https://blog.lookout.com/spectrum-of-mobile-risk
+        elems = doc.select("p[class*=titlespaced] span[class*=lookout-gray-60-text]");
+        if (elems.size() > 0) {
+            Element el = elems.get(0);
+            dateStr = el.ownText();
+            if (dateStr != null) {
+                if (DEBUG_DATE_EXTRACTION) {
+                    System.out.println("RULE-p[class*=titlespaced] span[class*=lookout-gray-60-text]");
+                }
+                Date d = parseDate(dateStr);
+                if (d != null) {
+                    return d;
+                }
+            }
+        }
+
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
 
