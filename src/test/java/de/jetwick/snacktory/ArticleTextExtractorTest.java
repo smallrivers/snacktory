@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -3125,9 +3126,51 @@ public class ArticleTextExtractorTest {
         compareDates("2017-05-16 00:00:00", res.getDate());
     }
 
+    @Test
+    public void testExtractDateUsingRegex() throws Exception{
+
+        final String DATE = "2017-06-07";
+        final String DATE_HH_MM = "2017-06-07 03:06";
+        final String DATE_HH_MM_SS = "2017-06-07 03:06:12";
+
+        ArticleTextExtractor extractor = new ArticleTextExtractor();
+
+        compareDates(DATE, extractor.extractDateUsingRegex("2017-06-07"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("2017-06-07 03:06"));
+        compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("2017-06-07 03:06:12"));
+
+        compareDates(DATE, extractor.extractDateUsingRegex("2017/06/07"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("2017/06/07 03:06"));
+
+        // @Todo: Need to debug more
+        //compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("20170607 030612"));
+
+        compareDates(DATE, extractor.extractDateUsingRegex("07 Jun 2017 00:00:00"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("07 Jun 2017 03:06"));
+        compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("07 Jun 2017 03:06:12"));
+
+        compareDates(DATE, extractor.extractDateUsingRegex("07 June 2017 00:00:00"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("07 June 2017 03:06"));
+        compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("07 June 2017 03:06:12"));
+
+        compareDates(DATE, extractor.extractDateUsingRegex("Jun 07, 2017 00:00:00"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("Jun 07, 2017 03:06"));
+        compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("Jun 07, 2017 03:06:12"));
+
+        compareDates(DATE, extractor.extractDateUsingRegex("June 07, 2017 00:00:00"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("June 07, 2017 03:06"));
+        compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("June 07, 2017 03:06:12"));
+
+        // This is ambiguous may match MM-dd-yyyy
+        compareDates(DATE, extractor.extractDateUsingRegex("07-06-2017 00:00:00"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("07/06/2017 03:06"));
+        compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("07/06/2017 03:06:12"));
+    }
+
     public static void compareDates(String expectedDateString, Date actual) {
         String[] patterns = {
                 "yyyy-MM-dd",
+                "yyyy-MM-dd HH:mm",
                 "yyyy-MM-dd HH:mm:ss",
                 "yyyy-MM-dd HH:mm:ssz",
                 "yyyy-MM-dd HH:mm:ss Z",
