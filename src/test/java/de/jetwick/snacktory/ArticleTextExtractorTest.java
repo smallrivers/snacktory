@@ -3127,6 +3127,21 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testComputerPartner() throws Exception {
+        // http://www.computerpartner.at/sites/dynamic.pl?id=news20080805131662610
+        JResult res = new JResult();
+        res.setUrl("http://www.computerpartner.at/sites/dynamic.pl?id=news20080805131662610");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("computerpartner.html")));
+        assertEquals("http://www.computerpartner.at/sites/dynamic.pl?id=news20080805131662610", res.getCanonicalUrl());
+        assertEquals("Computerpartner - hpc Consulting nominiert für Constantinus Award 2017", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Mit ihrem innovativen Zeitmessungssystem für das Erzberg-Rodeo schaffte hpc Consulting"));
+        assertTrue(res.getText(), res.getText().endsWith(", meint Anatol Heinrich, Geschäftsführer hpc Consulting."));
+        assertEquals("M. Reisner", res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        compareDates("2017-06-02 00:00:00", res.getDate());
+    }
+
+    @Test
     public void testExtractDateUsingRegex() throws Exception{
 
         final String DATE = "2017-06-07";
