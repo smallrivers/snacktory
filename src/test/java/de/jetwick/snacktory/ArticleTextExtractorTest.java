@@ -7,9 +7,11 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -3111,6 +3113,77 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testLookout() throws Exception {
+        // https://blog.lookout.com/spectrum-of-mobile-risk
+        JResult res = new JResult();
+        res.setUrl("https://blog.lookout.com/spectrum-of-mobile-risk");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("lookout.html")));
+        assertEquals("https://blog.lookout.com/spectrum-of-mobile-risk", res.getCanonicalUrl());
+        assertEquals("Introducing The Spectrum of Mobile Risk: how to think about the risks facing data from mobility", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Today, Lookout is introducing The Spectrum of Mobile Risk research report,"));
+        assertTrue(res.getText(), res.getText().endsWith("get a copy of the The Spectrum of Mobile Risk research paper today."));
+        assertEquals(StringUtils.EMPTY, res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        compareDates("2017-05-16 00:00:00", res.getDate());
+    }
+
+    @Test
+    public void testComputerPartner() throws Exception {
+        // http://www.computerpartner.at/sites/dynamic.pl?id=news20080805131662610
+        JResult res = new JResult();
+        res.setUrl("http://www.computerpartner.at/sites/dynamic.pl?id=news20080805131662610");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("computerpartner.html")));
+        assertEquals("http://www.computerpartner.at/sites/dynamic.pl?id=news20080805131662610", res.getCanonicalUrl());
+        assertEquals("Computerpartner - hpc Consulting nominiert für Constantinus Award 2017", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Mit ihrem innovativen Zeitmessungssystem für das Erzberg-Rodeo schaffte hpc Consulting"));
+        assertTrue(res.getText(), res.getText().endsWith(", meint Anatol Heinrich, Geschäftsführer hpc Consulting."));
+        assertEquals("M. Reisner", res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        compareDates("2017-06-02 00:00:00", res.getDate());
+    }
+
+    @Test
+    public void testExtractDateUsingRegex() throws Exception{
+
+        final String DATE = "2017-06-07";
+        final String DATE_HH_MM = "2017-06-07 03:06";
+        final String DATE_HH_MM_SS = "2017-06-07 03:06:12";
+
+        ArticleTextExtractor extractor = new ArticleTextExtractor();
+
+        compareDates(DATE, extractor.extractDateUsingRegex("2017-06-07"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("2017-06-07 03:06"));
+        compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("2017-06-07 03:06:12"));
+
+        compareDates(DATE, extractor.extractDateUsingRegex("2017/06/07"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("2017/06/07 03:06"));
+
+        // @Todo: Need to debug more
+        //compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("20170607 030612"));
+
+        compareDates(DATE, extractor.extractDateUsingRegex("07 Jun 2017 00:00:00"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("07 Jun 2017 03:06"));
+        compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("07 Jun 2017 03:06:12"));
+
+        compareDates(DATE, extractor.extractDateUsingRegex("07 June 2017 00:00:00"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("07 June 2017 03:06"));
+        compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("07 June 2017 03:06:12"));
+
+        compareDates(DATE, extractor.extractDateUsingRegex("Jun 07, 2017 00:00:00"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("Jun 07, 2017 03:06"));
+        compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("Jun 07, 2017 03:06:12"));
+
+        compareDates(DATE, extractor.extractDateUsingRegex("June 07, 2017 00:00:00"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("June 07, 2017 03:06"));
+        compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("June 07, 2017 03:06:12"));
+
+        // This is ambiguous may match MM-dd-yyyy
+        compareDates(DATE, extractor.extractDateUsingRegex("07-06-2017 00:00:00"));
+        compareDates(DATE_HH_MM, extractor.extractDateUsingRegex("07/06/2017 03:06"));
+        compareDates(DATE_HH_MM_SS, extractor.extractDateUsingRegex("07/06/2017 03:06:12"));
+    }
+
+    @Test
     public void testTheVogue() throws Exception {
         // http://www.teenvogue.com/gallery/back-to-school-awards-2017-best-dorm-decor-ideas
         JResult res = new JResult();
@@ -3129,10 +3202,10 @@ public class ArticleTextExtractorTest {
         compareDates("2017-06-01 08:00:00", res.getDate());
     }
 
-
     public static void compareDates(String expectedDateString, Date actual) {
         String[] patterns = {
                 "yyyy-MM-dd",
+                "yyyy-MM-dd HH:mm",
                 "yyyy-MM-dd HH:mm:ss",
                 "yyyy-MM-dd HH:mm:ssz",
                 "yyyy-MM-dd HH:mm:ss Z",

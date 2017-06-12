@@ -15,6 +15,7 @@
  */
 package de.jetwick.snacktory;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.apache.commons.lang.time.*;
@@ -129,6 +130,7 @@ public class HtmlFetcherIntegrationTest {
     }
 
     @Test
+    @Ignore ("Test fails sporadically")
     public void testYahooMobile() throws Exception {
         JResult res  = new HtmlFetcher().fetchAndExtract("https://m.yahoo.com/w/legobpengine/finance/news/stevia-first-corp-stvf-looks-123500390.html?.intl=us&.lang=en-us", 10000, true);
         assertTrue(res.getTitle(), res.getTitle().startsWith("Stevia First Corp. (STVF) Looks to Disrupt Flavor Industry"));

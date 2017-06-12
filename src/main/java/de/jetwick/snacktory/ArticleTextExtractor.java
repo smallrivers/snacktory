@@ -295,6 +295,41 @@ public class ArticleTextExtractor {
     private static final Pattern COMPUTER_WEEKLY_DATE_PATTERN = Pattern.compile("<a[^>]*>([^<]*)</a>");
     private static final Pattern DATE_PATTERN = Pattern.compile("\"(ptime|publish(ed)?[_\\-]?(date|time)?|(date|time)?[_\\-]?publish(ed)?|posted[_\\-]?on|display[_\\-]?(date|time)?)\"\\s*:\\s*\"(?<dateStr>[^\"]*?)\"", Pattern.CASE_INSENSITIVE);
 
+    private final String MMM_PATTERN = "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|January|February|March|April|May|June|July|August|September|October|November|December)";
+    private final Pattern[] DATE_PATTERNS = new Pattern[] {
+
+            // Covers below patterns (date and time delimiter can .-/:)
+            // "yyyy/MM/dd"
+            // "yyyy/MM/dd HH:mm"
+            // "yyyy/MM/dd HH:mm:ss"
+            Pattern.compile("\\d{4}[\\-./]?\\d{2}[\\-./]?\\d{2}\\s*(\\d{2}[\\-.:]?\\d{2}([\\-.:]?\\d{2})?)?"),
+
+            // Covers below patterns (date and time delimiter can .-/:)
+            // "dd MMM yyyy"
+            // "dd MMM yyyy HH:mm"
+            // "dd MMM yyyy HH:mm:ss"
+            // "dd MMMM yyyy"
+            // "dd MMMM yyyy HH:mm"
+            // "dd MMMM yyyy HH:mm:ss"
+            Pattern.compile("\\d{2} " + MMM_PATTERN + "\\s\\d{4}\\s*(\\d{2}[\\-.:]?\\d{2}([\\-.:]?\\d{2})?)?", Pattern.CASE_INSENSITIVE),
+
+            // Covers below patterns (date and time delimiter can .-/:)
+            // "MMM dd, yyyy"
+            // "MMM dd, yyyy HH:mm"
+            // "MMM dd, yyyy HH:mm:ss"
+            // "MMMM dd, yyyy"
+            // "MMMM dd, yyyy HH:mm"
+            // "MMMM dd, yyyy HH:mm:ss"
+            Pattern.compile( MMM_PATTERN + "\\s\\d{2},\\s\\d{4}\\s*(\\d{2}[\\-.:]?\\d{2}([\\-.:]?\\d{2})?)?", Pattern.CASE_INSENSITIVE),
+
+            // Covers below patterns (date and time delimiter can .-/:)
+            // This is ambiguous to MM-dd-yyyy pattern. Not sure how we can differentiate between two.
+            // "dd-MM-yyyy"
+            // "dd-MM-yyyy HH:mm"
+            // "dd-MM-yyyy HH:mm:ss"
+            Pattern.compile("\\d{2}[\\-./]?\\d{2}[\\-./]?\\d{4}\\s*(\\d{2}[\\-.:]?\\d{2}([\\-.:]?\\d{2})?)?")
+    };
+
     public ArticleTextExtractor() {
         setUnlikely("com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
                 + "header|menu|re(mark|ply)|rss|sh(are|outbox)|sponsor"
@@ -449,16 +484,20 @@ public class ArticleTextExtractor {
         }
         */
 
-        // get date from document, if not present, extract from URL if possible
-        Date docdate = extractDate(doc);
-        if (docdate == null) {
+        // Extract date from document using css selectors
+        Date extractedDate = extractDate(doc);
+        if (extractedDate == null) {
+            // Extract date from url
             String dateStr = SHelper.completeDate(SHelper.estimateDate(res.getUrl()));
             if(DEBUG_DATE_EXTRACTION){ System.out.println("Using SHelper.estimateDate"); }
-            docdate = parseDate(dateStr);
-            res.setDate(docdate);
-        } else {
-            res.setDate(docdate);
+            extractedDate = parseDate(dateStr);
         }
+
+        if(extractedDate == null) {
+            // Regex match to entire article
+            extractedDate = extractDateUsingRegex(doc.toString());
+        }
+        res.setDate(extractedDate);
 
         // now remove the clutter (first try to remove any scripts)
         if (cleanScripts) {
@@ -1737,7 +1776,24 @@ public class ArticleTextExtractor {
 
         if(DEBUG_DATE_EXTRACTION) { System.out.println("No date found!"); }
         return null;
+    }
 
+    public Date extractDateUsingRegex(String document) {
+        String dateStr;
+        for (Pattern pattern : DATE_PATTERNS) {
+            Matcher matcher = pattern.matcher(document);
+            while (matcher.find()) {
+                dateStr = matcher.group();
+                Date parsedDate = parseDate(dateStr);
+                if (DEBUG_DATE_EXTRACTION) {
+                    System.out.println("RULE- REGEX MATCH " + pattern.pattern());
+                }
+                if (parsedDate != null) {
+                    return parsedDate;
+                }
+            }
+        }
+        return null;
     }
 
     private Date extractDateFromSelector(Document doc, String cssSelector)
