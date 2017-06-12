@@ -3110,6 +3110,26 @@ public class ArticleTextExtractorTest {
         compareDates("2015-09-30 00:00:00", res.getDate());
     }
 
+    @Test
+    public void testTheVogue() throws Exception {
+        // http://www.teenvogue.com/gallery/back-to-school-awards-2017-best-dorm-decor-ideas
+        JResult res = new JResult();
+        res.setUrl("http://www.teenvogue.com/gallery/back-to-school-awards-2017-best-dorm-decor-ideas");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("thevogue.html")));
+        assertEquals("http://www.teenvogue.com/gallery/back-to-school-awards-2017-best-dorm-decor-ideas", res.getCanonicalUrl());
+        assertEquals("Back to School Awards 2017: The Best Dorm Decor Ideas", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("This year for our second annual Back to School Awards, we wanted to make sure you were totally covered"));
+        assertTrue(res.getText(), res.getText().contains("Best Starter Kitchen Set"));
+        assertTrue(res.getText(), res.getText().contains("Best Room Spray"));
+        assertTrue(res.getText(), res.getText().contains("Best Value Agenda"));
+        assertTrue(res.getText(), res.getText().contains("Best USB Extendor"));
+        assertTrue(res.getText(), res.getText().endsWith("Want more Teen Vogue ? Make sure to ‘Like’ us on Facebook to stay in the know!"));
+        assertEquals("Hanna Howard", res.getAuthorName());
+        assertEquals("Hanna Howard", res.getAuthorDescription());
+        compareDates("2017-06-01 08:00:00", res.getDate());
+    }
+
+
     public static void compareDates(String expectedDateString, Date actual) {
         String[] patterns = {
                 "yyyy-MM-dd",
