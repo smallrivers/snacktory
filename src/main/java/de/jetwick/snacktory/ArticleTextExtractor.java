@@ -204,6 +204,9 @@ public class ArticleTextExtractor {
         aMap.put("nytimes.com", Arrays.asList(
                 "[class*=hidden]"
             ));
+        aMap.put("teenvogue.com", Arrays.asList(
+                "[class=rendition-social-outer]"
+            ));
 
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
     }
@@ -248,6 +251,9 @@ public class ArticleTextExtractor {
         ));
         aMap.put("sfchronicle.com", Arrays.asList(
                 "div[class=article-text]"
+        ));
+        aMap.put("teenvogue.com", Arrays.asList(
+                "div[class=listicle-wrapper]"
         ));
 
         BEST_ELEMENT_PER_DOMAIN = Collections.unmodifiableMap(aMap);
