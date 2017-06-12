@@ -15,29 +15,26 @@
  */
 package de.jetwick.snacktory;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.FileNotFoundException;
+import de.jetwick.snacktory.utils.SSLConnectionSocketFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.net.ssl.*;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.URL;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.net.ssl.*;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 
 /**
  * Class to fetch articles. This class is thread safe.
@@ -495,12 +492,18 @@ public class HtmlFetcher {
         if(DISABLE_SSL_VERIFICATION){
             if (urlAsStr.toLowerCase().startsWith("https://")){
                 try {
-                    SSLContext sslc = SSLContext.getInstance("TLS");
-                    TrustManager[] trustManagerArray = { new NullX509TrustManager() };
-                    sslc.init(null, trustManagerArray, null);
+                    List sniHostNames = new ArrayList() {{
+                        add(new SNIHostName(url.getHost()));
+                    }};
+                    SSLParameters sslParameters = new SSLParameters();
+                    sslParameters.setServerNames(sniHostNames);
+
+                    SSLContext sslContext = SSLContext.getInstance("TLS");
+                    sslContext.init(null, new TrustManager[]{new NullX509TrustManager()}, null);
+
                     HttpsURLConnection hConnSecure = (HttpsURLConnection) hConn;
-                    hConnSecure.setDefaultSSLSocketFactory(sslc.getSocketFactory());
-                    hConnSecure.setDefaultHostnameVerifier(new NullHostnameVerifier());
+                    hConnSecure.setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext.getSocketFactory(), sslParameters));
+                    hConnSecure.setHostnameVerifier(new NullHostnameVerifier());
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
