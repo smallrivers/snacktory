@@ -2111,6 +2111,14 @@ public class ArticleTextExtractor {
                 }
             }
 
+            if (authorName.isEmpty()) { // hack for http://mspmentor.net
+                result = doc.select("span[class=author-name]").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.ownText());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: span[class=authorname]");
+                }
+            }
+
             // other hacks
             if (authorName.isEmpty()) {
                 try {

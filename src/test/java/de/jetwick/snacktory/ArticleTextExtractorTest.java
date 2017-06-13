@@ -3173,6 +3173,21 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
+    public void testMspmentor() throws Exception {
+        // http://mspmentor.net/managed-services/5-reasons-you-need-media-relations
+        JResult res = new JResult();
+        res.setUrl("http://mspmentor.net/managed-services/5-reasons-you-need-media-relations");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("mspmentor.html")));
+        assertEquals("http://mspmentor.net/managed-services/5-reasons-you-need-media-relations", res.getCanonicalUrl());
+        assertEquals("5 Reasons You Need Media Relations", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Although the sentiment was never accurate, the terms “public relations” and “media relations”"));
+        assertTrue(res.getText(), res.getText().endsWith("a marketing and strategy consulting firm specializing in the channel."));
+        assertEquals("Khali Henderson and Casey Freymuth | BuzzTheory Strategies", res.getAuthorName());
+        assertEquals("Khali Henderson and Casey Freymuth | BuzzTheory Strategies", res.getAuthorDescription());
+        compareDates("2017-05-05 00:00:00", res.getDate());
+    }
+
+    @Test
     public void testExtractDateUsingRegex() throws Exception{
 
         final String DATE = "2017-06-07";
