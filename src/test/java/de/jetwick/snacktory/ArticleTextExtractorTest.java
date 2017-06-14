@@ -3277,6 +3277,36 @@ public class ArticleTextExtractorTest {
         compareDates("2017-06-14 02:31:40", res.getDate());
     }
 
+    @Test
+    public void testHuffingtonpost5() throws Exception {
+        // http://www.huffingtonpost.com/entry/malware-power-grid_us_593fa144e4b0b13f2c6d9285
+        JResult res = new JResult();
+        res.setUrl("http://www.huffingtonpost.com/entry/malware-power-grid_us_593fa144e4b0b13f2c6d9285");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("huffingtonpost5.html")));
+        assertEquals("http://www.huffingtonpost.com/entry/malware-power-grid_us_593fa144e4b0b13f2c6d9285", res.getCanonicalUrl());
+        assertEquals("Cybersecurity Firms Uncover Malware That Could Cause Power Outages Around The Globe", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("June 12 (Reuters) - Two cyber security firms have uncovered malicious software that they"));
+        assertTrue(res.getText(), res.getText().endsWith("it was able to confirm the malware was used in the Ukraine grid attack."));
+        assertEquals("Jim Finkle", res.getAuthorName());
+        assertEquals("By Jim Finkle", res.getAuthorDescription());
+        compareDates("2017-06-13 04:34:36 -0400", res.getDate());
+    }
+
+    @Test
+    public void testYahoo() throws Exception {
+        // https://www.yahoo.com/news/allan-wu-dating-malaysian-beauty-033800005.html
+        JResult res = new JResult();
+        res.setUrl("https://www.yahoo.com/news/allan-wu-dating-malaysian-beauty-033800005.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("yahoo2.html")));
+        assertEquals("https://www.yahoo.com/news/allan-wu-dating-malaysian-beauty-033800005.html", res.getCanonicalUrl());
+        assertEquals("Allan Wu dating Malaysian beauty queen and \"Amazing Race\" contestant?", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Chinese-American hunk Allan Wu, 45 is reportedly going out with beauty queen Lee Yvonne, 29 best known for her title as Miss World Malaysia 2012."));
+        assertTrue(res.getText(), res.getText().endsWith("Singapore-based Allan Wu was formerly married to Mediacorp actress Wong-Li-Lin and have a daughter and son together. The pair divorced in 2013."));
+        assertEquals("The Hive Asia", res.getAuthorName());
+        assertEquals("http://www.thehive.asia/", res.getAuthorDescription());
+        compareDates("2017-06-14 03:38:00", res.getDate());
+    }
+
     public static void compareDates(String expectedDateString, Date actual) {
         String[] patterns = {
                 "yyyy-MM-dd",

@@ -2199,7 +2199,7 @@ public class ArticleTextExtractor {
 
                     // https://www.bloomberg.com/politics/articles/2017-06-14/the-latest-gillespie-wins-gop-nomination-in-governor-s-race
                     if (matches == null || matches.size() == 0){
-                        matches = doc.select("address[class*=byline]");
+                        matches = doc.select("[class*=byline]");
                         if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: address[class*=byline]");
                     }
 
