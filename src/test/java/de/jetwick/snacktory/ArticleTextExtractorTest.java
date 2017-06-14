@@ -3232,6 +3232,51 @@ public class ArticleTextExtractorTest {
         compareDates("2017-06-01 08:00:00", res.getDate());
     }
 
+    @Test
+    public void testWashingtonpostPolitics() throws Exception {
+        // https://www.washingtonpost.com/politics/2017/live-updates/trump-white-house/sessions-to-testify-before-senate-intelligence-committee/cotton-twice-earns-thanks-from-sessions-for-friendly-questioning/?utm_term=.1bebe97e9599
+        JResult res = new JResult();
+        res.setUrl("https://www.washingtonpost.com/politics/2017/live-updates/trump-white-house/sessions-to-testify-before-senate-intelligence-committee/cotton-twice-earns-thanks-from-sessions-for-friendly-questioning/?utm_term=.1bebe97e9599");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("washingtonpost_politics.html")));
+        assertEquals("http://www.washingtonpost.com/politics/2017/live-updates/trump-white-house/sessions-to-testify-before-senate-intelligence-committee/cotton-twice-earns-thanks-from-sessions-for-friendly-questioning/", res.getCanonicalUrl());
+        assertEquals("Cotton twice earns thanks from Sessions for friendly questioning - The Washington Post", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Attorney General Jeff Sessions’s testimony has been marked by some heated moments,"));
+        assertTrue(res.getText(), res.getText().endsWith("and I fear that some people may find that they wish they hadn’t leaked,” Sessions said."));
+        assertEquals("Mark Berman", res.getAuthorName());
+        assertEquals("June 13 by Mark Berman", res.getAuthorDescription());
+        compareDates("2017-06-13 21:18:25", res.getDate());
+    }
+
+    @Test
+    public void testYahooFinance() throws Exception {
+        // https://finance.yahoo.com/news/aac-holdings-inc-present-william-103000626.html
+        JResult res = new JResult();
+        res.setUrl("https://finance.yahoo.com/news/aac-holdings-inc-present-william-103000626.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("finance.yahoo.com.html")));
+        assertEquals("https://finance.yahoo.com/news/aac-holdings-inc-present-william-103000626.html", res.getCanonicalUrl());
+        assertEquals("AAC Holdings, Inc. to Present at William Blair 2017 Growth Conference", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("BRENTWOOD, Tenn., June 13, 2017 /PRNewswire/ -- AAC Holdings, Inc. (AAC) is participating in the William Blair & Company 2017 Growth Stock Conference,"));
+        assertTrue(res.getText(), res.getText().endsWith("To view the original version on PR Newswire, visit:http://www.prnewswire.com/news-releases/aac-holdings-inc-to-present-at-william-blair-2017-growth-conference-300472756.html"));
+        assertEquals("PR Newswire", res.getAuthorName());
+        assertEquals("http://www.prnewswire.com/yahoo/", res.getAuthorDescription());
+        compareDates("2017-06-13 10:30:00", res.getDate());
+    }
+
+    @Test
+    public void testBloomberg1() throws Exception {
+        // https://www.bloomberg.com/politics/articles/2017-06-14/the-latest-gillespie-wins-gop-nomination-in-governor-s-race
+        JResult res = new JResult();
+        res.setUrl("https://www.bloomberg.com/politics/articles/2017-06-14/the-latest-gillespie-wins-gop-nomination-in-governor-s-race");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("bloomberg_1.html")));
+        assertEquals("https://www.bloomberg.com/politics/articles/2017-06-14/the-latest-gillespie-wins-gop-nomination-in-governor-s-race", res.getCanonicalUrl());
+        assertEquals("GOP Picks Gillespie, Democrats Pick Northam to Run for Virginia Governor - Bloomberg", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Richmond, Va. (AP) -- The Latest on Virginia primary races for governor (all times local):"));
+        assertTrue(res.getText(), res.getText().endsWith(", is trying to fend off under-funded but spirited campaigns from avid Trump supporter Corey Stewart and state Sen. Frank Wagner."));
+        assertEquals("THE ASSOCIATED PRESS", res.getAuthorName());
+        assertEquals(res.getAuthorName(), res.getAuthorDescription());
+        compareDates("2017-06-14 02:31:40", res.getDate());
+    }
+
     public static void compareDates(String expectedDateString, Date actual) {
         String[] patterns = {
                 "yyyy-MM-dd",
