@@ -95,7 +95,7 @@ public class ArticleTextExtractor {
             // actual authorName (word characters and space) may followed by
             // followed by symbols lile (comma, fullstop) may followed by
             // any character
-            Pattern.compile("(By|Door|Über)[^\\w]*(?<authorName>[\\w\\s]*)[\\.,]?.*", Pattern.UNICODE_CHARACTER_CLASS)
+            Pattern.compile("(By|Door|Über)[^\\w]*(?<authorName>[\\w\\s]*)[\\.,]?.*", Pattern.UNICODE_CHARACTER_CLASS | Pattern.CASE_INSENSITIVE)
     );
 
     private static final List<Pattern> BAD_CANONICAL_PATTERNS = Arrays.asList(
@@ -2046,7 +2046,7 @@ public class ArticleTextExtractor {
             }
 
             if (authorName.isEmpty()) {  // for "schema.org creativework"
-                result = doc.select("[itemtype$=schema.org/Person]span[itemprop=author], [itemtype$=schema.org/Person]span[itemprop=name]").first();
+                    result = doc.select("[itemtype$=schema.org/Person]span[itemprop=author], [itemtype$=schema.org/Person]span[itemprop=name], [itemtype$=schema.org/Organization] span[itemprop=name]").first();
                 if (result != null) {
                     authorName = SHelper.innerTrim(result.text());
                 }
@@ -2097,11 +2097,11 @@ public class ArticleTextExtractor {
 
             // A generic check against common class names
             // authorname, author-name, article-author-name, etc.
-            if (authorName.isEmpty()) { // a hack for http://www.chiefmarketer.com
+            if (authorName.isEmpty()) {
                 result = doc.select("span[class=author],span[class=authorname],span[class=author-name],span[class=author_name]," +
                         "span[class=article-author-name],span[class=article_author_name]").first();
                 if (result != null) {
-                    authorName = SHelper.innerTrim(result.text());
+                    authorName = SHelper.innerTrim(result.ownText());
                     if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: Generic check for class name having author");
                 }
             }
@@ -2111,6 +2111,14 @@ public class ArticleTextExtractor {
                 if (result != null) {
                     authorName = SHelper.innerTrim(result.ownText());
                     if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: div[class=timedate]");
+                }
+            }
+
+            if (authorName.isEmpty()) { // https://www.washingtonpost.com/politics/2017/live-updates/trump-white-house/sessions-to-testify-before-senate-intelligence-committee/cotton-twice-earns-thanks-from-sessions-for-friendly-questioning/?utm_term=.1bebe97e9599
+                result = doc.select("div[class=post-date]").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.ownText());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: div[class=post-date]");
                 }
             }
 
@@ -2190,6 +2198,12 @@ public class ArticleTextExtractor {
                     if(matches == null || matches.size() == 0){
                         matches = doc.select("[class=mobile] h6");
                         if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: [class=mobile] h6");
+                    }
+
+                    // https://www.bloomberg.com/politics/articles/2017-06-14/the-latest-gillespie-wins-gop-nomination-in-governor-s-race
+                    if (matches == null || matches.size() == 0){
+                        matches = doc.select("[class*=byline]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: address[class*=byline]");
                     }
 
                     // select the best element from them
@@ -2460,6 +2474,12 @@ public class ArticleTextExtractor {
 
         // http://redhat.sys-con.com/node/4068643
         matches = doc.select("table[class=storyauthor] td a");
+        if (matches!= null && matches.size() > 0){
+            return SHelper.innerTrim(matches.first().attr("href"));
+        }
+
+        // https://finance.yahoo.com/news/aac-holdings-inc-present-william-103000626.html
+        matches = doc.select("span[itemprop=name] a");
         if (matches!= null && matches.size() > 0){
             return SHelper.innerTrim(matches.first().attr("href"));
         }
