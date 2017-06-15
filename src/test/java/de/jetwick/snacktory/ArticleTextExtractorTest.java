@@ -1879,7 +1879,7 @@ public class ArticleTextExtractorTest {
         assertEquals("http://www.bizjournals.com/sanfrancisco/subscriber-only/2017/04/21/san-francisco-tech-employers.html", res.getCanonicalUrl());
         assertTrue(res.getText(), res.getText().startsWith("San Francisco Tech Employers"));
         assertTrue(res.getText(), res.getText().endsWith("Sundar Pichai, CEO"));
-        assertEquals("Locally Researched : Jean Lee", res.getAuthorName());
+        assertEquals("Jean Lee", res.getAuthorName());
         assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
         compareDates("2017-04-21 00:00:00", res.getDate());
     }
@@ -3305,6 +3305,81 @@ public class ArticleTextExtractorTest {
         assertEquals("The Hive Asia", res.getAuthorName());
         assertEquals("http://www.thehive.asia/", res.getAuthorDescription());
         compareDates("2017-06-14 03:38:00", res.getDate());
+    }
+
+    @Test
+    public void testNyDailyNews() throws Exception {
+        // http://www.nydailynews.com/newswires/sports/kershaw-wins-bellinger-hits-2-homers-dodgers-top-indians-article-1.3245615
+        JResult res = new JResult();
+        res.setUrl("http://www.nydailynews.com/newswires/sports/kershaw-wins-bellinger-hits-2-homers-dodgers-top-indians-article-1.3245615");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("nydailynews.html")));
+        assertEquals("http://www.nydailynews.com/newswires/sports/kershaw-wins-bellinger-hits-2-homers-dodgers-top-indians-article-1.3245615", res.getCanonicalUrl());
+        assertEquals("Kershaw wins, Bellinger hits 2 homers as Dodgers top Indians", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("CLEVELAND (AP) — Clayton Kershaw extended his unbeaten string and rookie Cody Bellinger hit two home runs,"));
+        assertTrue(res.getText(), res.getText().endsWith("This material may not be published, broadcast, rewritten or redistributed."));
+        assertEquals("The Associated Press", res.getAuthorName());
+        assertEquals("THE ASSOCIATED PRESS", res.getAuthorDescription());
+        compareDates("2017-06-13 22:00:07", res.getDate());
+    }
+
+    @Test
+    public void testFt() throws Exception {
+        // https://www.ft.com/content/d0a5c460-5044-11e7-a1f2-db19572361bb
+        JResult res = new JResult();
+        res.setUrl("https://www.ft.com/content/d0a5c460-5044-11e7-a1f2-db19572361bb");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("ft.html")));
+        assertEquals("https://www.ft.com/content/d0a5c460-5044-11e7-a1f2-db19572361bb", res.getCanonicalUrl());
+        assertEquals("Has Western-style democracy become too expensive for capitalism?", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Much ink has been spilled on the significance of 2016’s one-two populist punches as thrown by Brexit then Trump."));
+        assertTrue(res.getText(), res.getText().endsWith("Michael Power, Strategist, Investec Asset Management Michael Power, Strategist, Investec Asset Management"));
+        assertEquals("Michael Power", res.getAuthorName());
+        assertEquals("by: Michael Power, Investec", res.getAuthorDescription());
+        compareDates("2017-06-14 03:00:32", res.getDate());
+    }
+
+    @Test
+    public void testSdnCioReview() throws Exception {
+        // http://sdn.cioreview.com/cxoinsight/sdn-do-you-really-need-it-nid-24422-cid-147.html
+        JResult res = new JResult();
+        res.setUrl("http://sdn.cioreview.com/cxoinsight/sdn-do-you-really-need-it-nid-24422-cid-147.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("sdn.cioreview.html")));
+        assertEquals("http://sdn.cioreview.com/cxoinsight/sdn-do-you-really-need-it-nid-24422-cid-147.html", res.getCanonicalUrl());
+        assertEquals("SDN: Do You Really Need It?", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Until recently, Software-defined networking SDN was both a buzzword and the subject of some discord in the IT community."));
+        assertTrue(res.getText(), res.getText().endsWith("and cloud technology increase in usage and demand network software actuation for success."));
+        assertEquals("Patrick Hubbard", res.getAuthorName());
+        assertEquals("Patrick Hubbard, Head Geek, SolarWinds", res.getAuthorDescription());
+        compareDates("2017-05-10 00:00:00", res.getDate());
+    }
+
+    @Test
+    public void testPhilly() throws Exception {
+        // http://www.philly.com/archive/john_timpane/Princetons-Tracy-K-Smith-named-US-Poet-Laureate.html
+        JResult res = new JResult();
+        res.setUrl("http://www.philly.com/archive/john_timpane/Princetons-Tracy-K-Smith-named-US-Poet-Laureate.html");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("philly.html")));
+        assertEquals("http://www.philly.com/philly/entertainment/Princetons-Tracy-K-Smith-named-US-Poet-Laureate.html", res.getCanonicalUrl());
+        assertEquals("Princeton's Tracy K. Smith named U.S. Poet Laureate", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("Tracy K. Smith, a professor of creative writing at Princeton University,"));
+        assertTrue(res.getText(), res.getText().endsWith("‘Let’s have this conversation and see what comes out of it that’s of value.”"));
+        assertEquals("John Timpane", res.getAuthorName());
+        assertEquals("John Timpane is the books/fine arts editor/writer for the Inquirer. His beat includes books, social media, dance, theater, art, museums, and classical music. From 1997 to 2008 he was the Commentary page editor.", res.getAuthorDescription());
+        compareDates("2017-06-14 09:39:00 -04:00", res.getDate());
+    }
+
+    @Test
+    public void testFoxNews1() throws Exception {
+        // http://nation.foxnews.com/2017/06/13/sessions-inquisition-comes-empty-trump-unscathed-after-attorney-generals-testimony
+        JResult res = new JResult();
+        res.setUrl("http://nation.foxnews.com/2017/06/13/sessions-inquisition-comes-empty-trump-unscathed-after-attorney-generals-testimony");
+        res = extractor.extractContent(res, c.streamToString(getClass().getResourceAsStream("foxnews1.html")));
+        assertEquals("http://nation.foxnews.com/2017/06/13/sessions-inquisition-comes-empty-trump-unscathed-after-attorney-generals-testimony", res.getCanonicalUrl());
+        assertEquals("The Sessions Inquisition Comes Up Empty: Trump Unscathed After Attorney General's Testimony", res.getTitle());
+        assertTrue(res.getText(), res.getText().startsWith("As disappointed as Democrats were by James Comey’s testimony last week,"));
+        assertTrue(res.getText(), res.getText().endsWith("and vowed to defend himself “against scurrilous and false allegations.”"));
+        assertEquals("Hans A. von Spakovsky | Fox Opinion", res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        compareDates("2017-06-15 00:00:00", res.getDate());
     }
 
     public static void compareDates(String expectedDateString, Date actual) {

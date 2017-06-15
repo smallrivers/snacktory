@@ -72,7 +72,7 @@ public class ArticleTextExtractor {
     private static final Pattern NEGATIVE_STYLE =
             Pattern.compile("hidden|display: ?none|font-size: ?small");
     private static final Pattern IGNORE_AUTHOR_PARTS =
-        Pattern.compile("(?<![a-zA-Z])(by|name|author|posted|twitter|handle|news)(?![a-zA-Z])", Pattern.CASE_INSENSITIVE);
+        Pattern.compile("(?<![a-zA-Z])((by|name|author|posted|twitter|handle|news|locally researched)[:-|]?)(?![a-zA-Z])", Pattern.CASE_INSENSITIVE);
     private static final Set<String> IGNORED_TITLE_PARTS = new LinkedHashSet<String>() {
         {
             add("hacker news");
@@ -206,6 +206,12 @@ public class ArticleTextExtractor {
             ));
         aMap.put("teenvogue.com", Arrays.asList(
                 "[class=rendition-social-outer]"
+            ));
+        aMap.put("philly.com", Arrays.asList(
+                "[class=pad-and-half--top cb]"
+            ));
+        aMap.put("foxnews.com", Arrays.asList(
+                "p:contains(RELATED:) ~ ul"
             ));
 
         NODES_TO_REMOVE_PER_DOMAIN = Collections.unmodifiableMap(aMap);
@@ -2031,6 +2037,14 @@ public class ArticleTextExtractor {
                 }
             }
 
+            if (authorName.isEmpty()) { // http://sdn.cioreview.com/cxoinsight/sdn-do-you-really-need-it-nid-24422-cid-147.html
+                result = doc.select("div#namepost").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.text().split(",")[0]);
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: div#namepost");
+                }
+            }
+
             // meta tag approaches, get content
             if (authorName.isEmpty()) {
                 result = doc.select("head meta[name=author]").first();
@@ -2046,11 +2060,11 @@ public class ArticleTextExtractor {
             }
 
             if (authorName.isEmpty()) {  // for "schema.org creativework"
-                    result = doc.select("[itemtype$=schema.org/Person]span[itemprop=author], [itemtype$=schema.org/Person]span[itemprop=name], [itemtype$=schema.org/Organization] span[itemprop=name]").first();
+                result = doc.select("[itemtype$=schema.org/Person]span[itemprop=author], [itemtype$=schema.org/Person]span[itemprop=name], [itemtype$=schema.org/Organization] span[itemprop=name]").first();
                 if (result != null) {
                     authorName = SHelper.innerTrim(result.text());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\" [itemtype$=schema.org/Person] span[itemprop=author], [itemtype$=schema.org/Person] span[itemprop=name]");
                 }
-                if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\" [itemtype$=schema.org/Person] span[itemprop=author], [itemtype$=schema.org/Person] span[itemprop=name]");
             }
 
             // globalbankingandfinance.com
@@ -2201,6 +2215,18 @@ public class ArticleTextExtractor {
                     if (matches == null || matches.size() == 0){
                         matches = doc.select("[class*=byline]");
                         if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: address[class*=byline]");
+                    }
+
+                    // http://www.nydailynews.com/newswires/sports/kershaw-wins-bellinger-hits-2-homers-dodgers-top-indians-article-1.3245615
+                    if (matches == null || matches.size() == 0){
+                        matches = doc.select("div[itemtype$=schema.org/Person]");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: div[itemtype$=schema.org/Person]");
+                    }
+
+                    // http://nation.foxnews.com/2017/06/13/sessions-inquisition-comes-empty-trump-unscathed-after-attorney-generals-testimony
+                    if (matches == null || matches.size() == 0){
+                        matches = doc.select("p > strong:contains(By)");
+                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: p > strong:contains(By)");
                     }
 
                     // select the best element from them
@@ -2479,6 +2505,12 @@ public class ArticleTextExtractor {
         matches = doc.select("span[itemprop=name] a");
         if (matches!= null && matches.size() > 0){
             return SHelper.innerTrim(matches.first().attr("href"));
+        }
+
+        // http://www.nydailynews.com/newswires/sports/kershaw-wins-bellinger-hits-2-homers-dodgers-top-indians-article-1.3245615
+        matches = doc.select("div[class=ra-credits]");
+        if (matches == null || matches.size() > 0){
+            return SHelper.innerTrim(matches.first().ownText());
         }
 
         try {
