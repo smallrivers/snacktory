@@ -2076,9 +2076,9 @@ public class ArticleTextExtractor {
                 if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"opengraph\"");
             }
 
-            // hack for huffingtonpost.com, patch.com
+            // hack for huffingtonpost.com
             if (authorName.isEmpty()) {
-                result = doc.select("span [class$=author-name]").first();
+                result = doc.select("span[class^=author-card]").first();
                 if(result != null) {
                     authorName = SHelper.innerTrim(result.text());
                     if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: span [class*=author-name]");
@@ -2095,11 +2095,14 @@ public class ArticleTextExtractor {
                 if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: a hack for http://jdsupra.com/");
             }
 
+            // A generic check against common class names
+            // authorname, author-name, article-author-name, etc.
             if (authorName.isEmpty()) { // a hack for http://www.chiefmarketer.com
-                result = doc.select("span[class=author]").first();
+                result = doc.select("span[class=author],span[class=authorname],span[class=author-name],span[class=author_name]," +
+                        "span[class=article-author-name],span[class=article_author_name]").first();
                 if (result != null) {
                     authorName = SHelper.innerTrim(result.text());
-                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: a hack for http://jdsupra.com/");
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: Generic check for class name having author");
                 }
             }
 
@@ -2108,14 +2111,6 @@ public class ArticleTextExtractor {
                 if (result != null) {
                     authorName = SHelper.innerTrim(result.ownText());
                     if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: div[class=timedate]");
-                }
-            }
-
-            if (authorName.isEmpty()) { // hack for http://mspmentor.net
-                result = doc.select("span[class=author-name]").first();
-                if (result != null) {
-                    authorName = SHelper.innerTrim(result.ownText());
-                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: span[class=authorname]");
                 }
             }
 
