@@ -71,8 +71,16 @@ public class ArticleTextExtractor {
 
     private static final Pattern NEGATIVE_STYLE =
             Pattern.compile("hidden|display: ?none|font-size: ?small");
-    private static final Pattern IGNORE_AUTHOR_PARTS =
-        Pattern.compile("(?<![a-zA-Z])(by|name|author|posted|twitter|handle|news)(?![a-zA-Z])", Pattern.CASE_INSENSITIVE);
+    private static final Pattern[] IGNORE_AUTHOR_PARTS = new Pattern[]{
+            // Deliberately keeping patterns separate to make is more readable and maintainable
+
+            // Remove the Prefixes
+            Pattern.compile("(?<![a-zA-Z])(Door|Über|by|name|author|posted|twitter|handle|news|locally researched)(?![a-zA-Z])", Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS),
+            // Remove the Suffixes
+            Pattern.compile("((\\|| - |, ).*)"),
+            // Remove any arbitrary special symbols
+            Pattern.compile("@|:")
+    };
     private static final Set<String> IGNORED_TITLE_PARTS = new LinkedHashSet<String>() {
         {
             add("hacker news");
@@ -88,15 +96,6 @@ public class ArticleTextExtractor {
     private static final int MIN_AUTHOR_NAME_LENGTH = 4;
 
     private static final int MAX_LINK_SIZE = 512;
-
-    private static final List<Pattern> CLEAN_AUTHOR_PATTERNS = Arrays.asList(
-            // Prefix (By|Door|Über) may followed by
-            // any non word characters (blank space, &nbsp, etc) followed by
-            // actual authorName (word characters and space) may followed by
-            // followed by symbols lile (comma, fullstop) may followed by
-            // any character
-            Pattern.compile("(By|Door|Über)[^\\w]*(?<authorName>[\\w\\s]*)[\\.,]?.*", Pattern.UNICODE_CHARACTER_CLASS | Pattern.CASE_INSENSITIVE)
-    );
 
     private static final List<Pattern> BAD_CANONICAL_PATTERNS = Arrays.asList(
         Pattern.compile("https{0,1}://abcnews.go.com/[^/]*/{0,1}$"),
@@ -2081,7 +2080,7 @@ public class ArticleTextExtractor {
                 result = doc.select("span[class^=author-card]").first();
                 if(result != null) {
                     authorName = SHelper.innerTrim(result.text());
-                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: span [class*=author-name]");
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: span[class^=author-card]");
                 }
             }
 
@@ -2212,12 +2211,7 @@ public class ArticleTextExtractor {
                         if(!(bestMatch == null)) {
                             authorName = bestMatch.text();
                             if(authorName.length() < MIN_AUTHOR_NAME_LENGTH){
-                                authorName = bestMatch.text();
-                            }
-
-                            authorName = SHelper.innerTrim(IGNORE_AUTHOR_PARTS.matcher(authorName).replaceAll(""));
-                            if(authorName.indexOf(",") != -1){
-                                authorName = authorName.split(",")[0];
+                                authorName = bestMatch.text().split(",")[0];
                             }
                         }
                     }
@@ -2227,18 +2221,14 @@ public class ArticleTextExtractor {
             }
         }
 
-        if(DEBUG_AUTHOR_EXTRACTION)
+        if(DEBUG_AUTHOR_EXTRACTION) {
             System.out.println("AUTHOR: authorName=" + authorName);
-
-        for (Pattern pattern : CLEAN_AUTHOR_PATTERNS) {
-            Matcher matcher = pattern.matcher(authorName);
-            if(matcher.matches()){
-                authorName = SHelper.innerTrim(matcher.group("authorName"));
-                break;
-            }
         }
 
-        return authorName;
+        for (Pattern pattern:IGNORE_AUTHOR_PARTS) {
+            authorName = pattern.matcher(authorName).replaceAll("");
+        }
+        return SHelper.innerTrim(authorName);
     }
 
     // Returns the author description or null

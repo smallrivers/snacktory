@@ -898,8 +898,8 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("Measurement: it is, as our own Shawn Paul Wood put it in yesterday’s “Top 5 PR Industry Debate Topics” post, the “pachyderm in the room.”"));
         assertTrue(res.getText(), res.getText().endsWith("Do we agree? How familiar are we with the data and tools Sullivan described?"));
         compareDates("2014-08-01 00:00:00", res.getDate());
-        assertEquals("Patrick Coffee| August 1", res.getAuthorName());
-        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
+        assertEquals("Patrick Coffee", res.getAuthorName());
+        assertEquals(res.getAuthorName(), res.getAuthorDescription());
     }
 
     @Test
@@ -910,7 +910,7 @@ public class ArticleTextExtractorTest {
         assertTrue(res.getText(), res.getText().startsWith("Today we bring you a guest post by Jennifer Donovan, founder of San Francisco’s Nova Communications. Follow her on Twitter."));
         assertTrue(res.getText(), res.getText().endsWith("She can be reached at jennifer@nova-comms.com or @jendonovansf"));
         compareDates("2014-07-01 00:00:00", res.getDate());
-        assertEquals("Guest| July 1", res.getAuthorName());
+        assertEquals("Guest", res.getAuthorName());
         assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
     }
 
@@ -1879,7 +1879,7 @@ public class ArticleTextExtractorTest {
         assertEquals("http://www.bizjournals.com/sanfrancisco/subscriber-only/2017/04/21/san-francisco-tech-employers.html", res.getCanonicalUrl());
         assertTrue(res.getText(), res.getText().startsWith("San Francisco Tech Employers"));
         assertTrue(res.getText(), res.getText().endsWith("Sundar Pichai, CEO"));
-        assertEquals("Locally Researched : Jean Lee", res.getAuthorName());
+        assertEquals("Jean Lee", res.getAuthorName());
         assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
         compareDates("2017-04-21 00:00:00", res.getDate());
     }
@@ -3017,7 +3017,7 @@ public class ArticleTextExtractorTest {
         assertEquals("From Media Monitoring to Media Intelligence", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("For public relations professionals, media monitoring can be both tedious and exciting."));
         assertTrue(res.getText(), res.getText().endsWith("Hungry for more? Read “How to prove PR value to your CEO” next…"));
-        assertEquals("Kelly Byrd May 3, 2017", res.getAuthorName());
+        assertEquals("Kelly Byrd May 3", res.getAuthorName());
         assertEquals("Kelly Byrd May 3, 2017", res.getAuthorDescription());
         compareDates("2017-05-03 06:12:16 -07:00", res.getDate());
     }
@@ -3182,7 +3182,7 @@ public class ArticleTextExtractorTest {
         assertEquals("5 Reasons You Need Media Relations", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Although the sentiment was never accurate, the terms “public relations” and “media relations”"));
         assertTrue(res.getText(), res.getText().endsWith("a marketing and strategy consulting firm specializing in the channel."));
-        assertEquals("Khali Henderson and Casey Freymuth | BuzzTheory Strategies", res.getAuthorName());
+        assertEquals("Khali Henderson and Casey Freymuth", res.getAuthorName());
         assertEquals("Khali Henderson and Casey Freymuth | BuzzTheory Strategies", res.getAuthorDescription());
         compareDates("2017-05-05 00:00:00", res.getDate());
     }
