@@ -2510,7 +2510,12 @@ public class ArticleTextExtractor {
         // http://www.nydailynews.com/newswires/sports/kershaw-wins-bellinger-hits-2-homers-dodgers-top-indians-article-1.3245615
         matches = doc.select("div[class=ra-credits]");
         if (matches == null || matches.size() > 0){
-            return SHelper.innerTrim(matches.first().ownText());
+            authorDesc = SHelper.innerTrim(matches.first().ownText());
+            if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                System.out.println("AUTHOR_DESC: div[class=ra-credits].ownText");
+                System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
+            }
+            return authorDesc;
         }
 
         try {
