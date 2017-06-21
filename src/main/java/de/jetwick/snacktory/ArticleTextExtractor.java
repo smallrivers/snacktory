@@ -71,15 +71,16 @@ public class ArticleTextExtractor {
 
     private static final Pattern NEGATIVE_STYLE =
             Pattern.compile("hidden|display: ?none|font-size: ?small");
+    private static final String ELLIPSIS_PATTERN = "…|\\.\\.\\.";
     private static final Pattern[] IGNORE_AUTHOR_PARTS = new Pattern[]{
             // Deliberately keeping patterns separate to make is more readable and maintainable
 
             // Remove the Prefixes
-            Pattern.compile("(?<![a-zA-Z])(Door|Über|by|name|author|posted|twitter|handle|news|locally researched)(?![a-zA-Z])", Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS),
+            Pattern.compile("(?<![a-zA-Z])(Door|Über|by|name|author|posted|twitter|handle|news|locally researched|report(ing|ed)?( by)?|edit(ing|ed)( by)?)(?![a-zA-Z])", Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CHARACTER_CLASS),
             // Remove the Suffixes
             Pattern.compile("((\\|| - |, ).*)"),
             // Remove any arbitrary special symbols
-            Pattern.compile("@|:")
+            Pattern.compile("(" + "@|:|\\(|\\)|" + ELLIPSIS_PATTERN + ")+"),
     };
     private static final Set<String> IGNORED_TITLE_PARTS = new LinkedHashSet<String>() {
         {
@@ -152,7 +153,9 @@ public class ArticleTextExtractor {
             ));
         aMap.put("www.reuters.com", Arrays.asList(
                 "*[class=section main-content]", // odd case the "section main-content" class actually contains only the title.
-                "div[id=specialFeature]"         // remove non-article section
+                "div[id=specialFeature]",        // remove non-article section
+                "div.next-articles",
+                "span.articleLocation"
             ));
         aMap.put("investors.com", Arrays.asList(
                 "*[class=special-report]",
@@ -347,7 +350,7 @@ public class ArticleTextExtractor {
                 + "foot|masthead|(me(dia|ta))|outbrain|promo|related|scroll|(sho(utbox|pping))|"
                 + "sidebar|sponsor|tags|tool|widget|player|disclaimer|toc|infobox|vcard|title|truncate|slider|^sectioncolumns$|ad-container");
         setHighlyNegative("policy-blk|followlinkedinsignin|^signupbox$");
-        setToRemove("feedback-prompt|story-footer|story-meta-footer|related-combined-coverage|visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup|outbrain|^wnStoryBodyGraphic|articleadditionalcontent|most-popular|shatner-box|form-errors|theme-summary|story-supplement|global-magazine-recent|nocontent");
+        setToRemove("feedback-prompt|story-footer|story-meta-footer|related-combined-coverage|visuallyhidden|ad_topjobs|slideshow-overlay__data|next-post-thumbnails|video-desc|related-links|^widget popular$|^widget marketplace$|^widget ad panel$|slideshowOverlay|^share-twitter$|^share-facebook$|^share-google-plus-1$|^inline-list tags$|^tag_title$|article_meta comments|^related-news$|^recomended$|^news_preview$|related--galleries|image-copyright--copyright|^credits$|^photocredit$|^morefromcategory$|^pag-photo-credit$|gallery-viewport-credit|^image-credit$|story-secondary$|carousel-body|slider_container|widget_stories|post-thumbs|^custom-share-links|socialTools|trendingStories|^metaArticleData$|jcarousel-container|module-video-slider|jcarousel-skin-tango|^most-read-content$|^commentBox$|^faqModal$|^widget-area|login-panel|^copyright$|relatedSidebar|shareFooterCntr|most-read-container|email-signup|outbrain|^wnStoryBodyGraphic|articleadditionalcontent|most-popular|shatner-box|form-errors|theme-summary|story-supplement|global-magazine-recent|nocontent|hidden-print|externallinks");
     }
 
     public ArticleTextExtractor setUnlikely(String unlikelyStr) {
@@ -2059,10 +2062,20 @@ public class ArticleTextExtractor {
             }
 
             if (authorName.isEmpty()) {  // for "schema.org creativework"
-                result = doc.select("[itemtype$=schema.org/Person]span[itemprop=author], [itemtype$=schema.org/Person]span[itemprop=name], [itemtype$=schema.org/Organization] span[itemprop=name]").first();
+                result = doc.select("[itemtype$=schema.org/Person] [itemprop=author], [itemtype$=schema.org/Person] [itemprop=name]").first();
                 if (result != null) {
                     authorName = SHelper.innerTrim(result.text());
-                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\" [itemtype$=schema.org/Person] span[itemprop=author], [itemtype$=schema.org/Person] span[itemprop=name]");
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\" [itemtype$=schema.org/Person] [itemprop=author], [itemtype$=schema.org/Person] [itemprop=name]");
+                }
+            }
+
+            // Separating out checks for Person and Organization so that we should pick
+            // [itemtype$=schema.org/Person] over [itemtype$=schema.org/Organization] in case both are present
+            if (authorName.isEmpty()) {  // for "schema.org creativework"
+                result = doc.select("[itemtype$=schema.org/Organization] [itemprop=name]").first();
+                if (result != null) {
+                    authorName = SHelper.innerTrim(result.text());
+                    if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: for \"schema.org creativework\" [itemtype$=schema.org/Organization] [itemprop=name]");
                 }
             }
 
@@ -2114,7 +2127,7 @@ public class ArticleTextExtractor {
                 result = doc.select("span[class=author],span[class=authorname],span[class=author-name],span[class=author_name]," +
                         "span[class=article-author-name],span[class=article_author_name]").first();
                 if (result != null) {
-                    authorName = SHelper.innerTrim(result.ownText());
+                    authorName = SHelper.innerTrim(result.text());
                     if(DEBUG_AUTHOR_EXTRACTION && !authorName.isEmpty()) System.out.println("AUTHOR: Generic check for class name having author");
                 }
             }
@@ -2226,17 +2239,35 @@ public class ArticleTextExtractor {
                     }
 
                     // http://nation.foxnews.com/2017/06/13/sessions-inquisition-comes-empty-trump-unscathed-after-attorney-generals-testimony
-                    if (matches == null || matches.size() == 0){
+                    if (matches == null || matches.size() == 0) {
                         matches = doc.select("p > strong:contains(By)");
-                        if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: p > strong:contains(By)");
+                        if (DEBUG_AUTHOR_EXTRACTION && matches != null && matches.size() > 0)
+                            System.out.println("AUTHOR: p > strong:contains(By)");
+                    }
+
+                    // http://www.upi.com/Entertainment_News/TV/2017/06/19/Star-Trek-Discovery-gets-a-premiere-date-Sept-24/8671497893578/
+                    // http://www.upi.com/Defense-News/2017/06/19/King-Aerospace-recieves-EO-5-aircraft-contract/2311497885914/
+                    if (matches == null || matches.size() == 0) {
+                        matches = doc.select("div.meta");
+                        if (DEBUG_AUTHOR_EXTRACTION && matches != null && matches.size() > 0)
+                            System.out.println("AUTHOR: div.meta");
+                    }
+
+                    // Regex match should be very last option in cases like
+                    // http://www.reuters.com/article/us-mexico-oil-ninth-idUSKBN19A2M9
+                    // http://www.reuters.com/article/us-safrica-mining-idUSKBN19A2PY
+                    if (matches == null || matches.size() == 0) {
+                        matches = doc.select(":containsOwn(reporting by), :containsOwn(reported by), :containsOwn(edited by), :containsOwn(editing by)");
+                        if (DEBUG_AUTHOR_EXTRACTION && matches != null && matches.size() > 0)
+                            System.out.println("AUTHOR: :containsOwn(reporting by), :containsOwn(reported by), :containsOwn(edited by), :containsOwn(editing by)");
                     }
 
                     // select the best element from them
-                    if(matches != null){
+                    if (matches != null) {
                         Element bestMatch = getBestMatchElement(matches);
-                        if(!(bestMatch == null)) {
+                        if (!(bestMatch == null)) {
                             authorName = bestMatch.text();
-                            if(authorName.length() < MIN_AUTHOR_NAME_LENGTH){
+                            if (authorName.length() < MIN_AUTHOR_NAME_LENGTH) {
                                 authorName = bestMatch.text().split(",")[0];
                             }
                         }
@@ -2249,6 +2280,11 @@ public class ArticleTextExtractor {
 
         if(DEBUG_AUTHOR_EXTRACTION) {
             System.out.println("AUTHOR: authorName=" + authorName);
+        }
+
+        // Remove date patterns if any
+        for (Pattern pattern:DATE_PATTERNS) {
+            authorName = pattern.matcher(authorName).replaceAll("");
         }
 
         for (Pattern pattern:IGNORE_AUTHOR_PARTS) {
@@ -2518,9 +2554,9 @@ public class ArticleTextExtractor {
             if(authorName.length()>8){
                 Elements nodes = doc.select(":containsOwn(" + authorName + ")");
                 Element bestMatch = getBestMatchElement(nodes);
-                if (bestMatch != null){
+                if (bestMatch != null) {
                     authorDesc = bestMatch.text();
-                    if(DEBUG_AUTHOR_DESC_EXTRACTION){
+                    if (DEBUG_AUTHOR_DESC_EXTRACTION) {
                         System.out.println("AUTHOR_DESC: containsOwn");
                         System.out.println("AUTHOR: AUTHOR_DESC=" + authorDesc);
                     }
