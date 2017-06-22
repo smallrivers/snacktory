@@ -921,9 +921,9 @@ public class ArticleTextExtractor {
                 if (child.tagName().equals("p") && ownTextLength > 50)
                     pEls.add(child);
 
-                if (child.className().toLowerCase().equals("caption"))
+                if (child.className().equalsIgnoreCase("caption"))
                     caption = child;
-            } else if (child.tagName().toLowerCase().equals("strong")) {
+            } else if (child.tagName().equalsIgnoreCase("strong")) {
                 weight -= 100;
             }
         }
