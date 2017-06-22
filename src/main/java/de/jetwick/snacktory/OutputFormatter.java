@@ -22,31 +22,23 @@ public class OutputFormatter {
 
     public static final int MIN_FIRST_PARAGRAPH_TEXT = 50; // Min size of first paragraph
     public static final int MIN_PARAGRAPH_TEXT = 30;       // Min size of any other paragraphs
-    private static final List<String> NODES_TO_REPLACE = Arrays.asList("strong", "b", "i");
     private Pattern unlikelyPattern = Pattern.compile("display\\:none|visibility\\:hidden");
     private final int minFirstParagraphText;
     private final int minParagraphText;
-    private final List<String> nodesToReplace;
     private String nodesToKeepCssSelector = "p, ol, small, blockquote";
     private static final String textListNodesSelector = "div, p, ol, small, blockquote";
 
     public OutputFormatter() {
-        this(MIN_FIRST_PARAGRAPH_TEXT, MIN_PARAGRAPH_TEXT, NODES_TO_REPLACE);
+        this(MIN_FIRST_PARAGRAPH_TEXT, MIN_PARAGRAPH_TEXT);
     }
 
     public OutputFormatter(int minParagraphText) {
-        this(minParagraphText, minParagraphText, NODES_TO_REPLACE);
+        this(minParagraphText, minParagraphText);
     }
 
     public OutputFormatter(int minFirstParagraphText, int minParagraphText) {
-        this(minFirstParagraphText, minParagraphText, NODES_TO_REPLACE);
-    }
-
-    public OutputFormatter(int minFirstParagraphText, int minParagraphText,
-                           List<String> nodesToReplace) {
         this.minFirstParagraphText = minFirstParagraphText;
         this.minParagraphText = minParagraphText;
-        this.nodesToReplace = nodesToReplace;
     }
 
     /**
