@@ -3391,8 +3391,8 @@ public class ArticleTextExtractorTest {
         assertEquals("The Sessions Inquisition Comes Up Empty: Trump Unscathed After Attorney General's Testimony", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("As disappointed as Democrats were by James Comey’s testimony last week,"));
         assertTrue(res.getText(), res.getText().endsWith("and vowed to defend himself “against scurrilous and false allegations.”"));
-        assertEquals("Hans A. von Spakovsky", res.getAuthorName());
-        assertEquals("By Hans A. von Spakovsky | Fox News Opinion", res.getAuthorDescription());
+        assertEquals(StringUtils.EMPTY, res.getAuthorName());
+        assertEquals(StringUtils.EMPTY, res.getAuthorDescription());
         compareDates("2017-06-15 00:00:00", res.getDate());
     }
 

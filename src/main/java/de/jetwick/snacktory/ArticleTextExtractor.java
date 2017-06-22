@@ -2238,13 +2238,6 @@ public class ArticleTextExtractor {
                         if(DEBUG_AUTHOR_EXTRACTION && matches!=null && matches.size()>0) System.out.println("AUTHOR: div[itemtype$=schema.org/Person]");
                     }
 
-                    // http://nation.foxnews.com/2017/06/13/sessions-inquisition-comes-empty-trump-unscathed-after-attorney-generals-testimony
-                    if (matches == null || matches.size() == 0) {
-                        matches = doc.select("p > strong:contains(By)");
-                        if (DEBUG_AUTHOR_EXTRACTION && matches != null && matches.size() > 0)
-                            System.out.println("AUTHOR: p > strong:contains(By)");
-                    }
-
                     // http://www.upi.com/Entertainment_News/TV/2017/06/19/Star-Trek-Discovery-gets-a-premiere-date-Sept-24/8671497893578/
                     // http://www.upi.com/Defense-News/2017/06/19/King-Aerospace-recieves-EO-5-aircraft-contract/2311497885914/
                     if (matches == null || matches.size() == 0) {
