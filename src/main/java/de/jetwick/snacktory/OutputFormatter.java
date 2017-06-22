@@ -228,10 +228,10 @@ public class OutputFormatter {
         for(Element element : topNode.select(textListNodesSelector)) {
             if("div".equals(element.tagName())) {
                 if(element.children().isEmpty() && element.hasText()) {
-                    texts.add(element.text().trim());
+                    texts.add(SHelper.trimAll(element.text()));
                 }
             } else if(element.hasText()) {
-                texts.add(element.text().trim());
+                texts.add(SHelper.trimAll(element.text()));
             }
         }
         return texts;

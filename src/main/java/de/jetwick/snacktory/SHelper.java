@@ -36,6 +36,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import org.jsoup.nodes.Element;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  *
  * @author Peter Karich
@@ -44,6 +46,8 @@ public class SHelper {
 
     public static final String UTF8 = "UTF-8";
     private static final Pattern SPACE = Pattern.compile(" ");
+    // &nbsp;
+    private static final Pattern NON_BREAKING_SPACE = Pattern.compile(String.valueOf((char) 160));
 
     public static String replaceSpaces(String url) {
         if (!url.isEmpty()) {
@@ -67,13 +71,25 @@ public class SHelper {
     }
 
     /**
+     * trim all whitespace characters (&bnsp; included) for the given string.
+     */
+    public static String trimAll(final String str) {
+        if (str == null) {
+            return null;
+        } else {
+            return StringUtils.trim(
+                  NON_BREAKING_SPACE.matcher(str).replaceAll(""));
+        }
+    }
+
+    /**
      * remove more than two spaces or newlines
      */
     public static String innerTrim(String str) {
         if (str.isEmpty())
             return "";
 
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         boolean previousSpace = false;
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);

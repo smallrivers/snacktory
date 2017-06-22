@@ -143,4 +143,12 @@ public class SHelperTest {
         assertEquals("2001/11/01", SHelper.completeDate("2001/11"));
         assertEquals("2001/11/02", SHelper.completeDate("2001/11/02"));
     }
+
+    @Test
+    public void testTrimAll() {
+        assertNull(SHelper.trimAll(null));
+        assertEquals("", SHelper.trimAll(" "));
+        assertEquals("abc", SHelper.trimAll(" abc "));
+        assertEquals("abc", SHelper.trimAll("abc" + (char) 160));
+    }
 }
