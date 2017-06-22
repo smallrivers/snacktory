@@ -92,8 +92,8 @@ public class SHelper {
         final StringBuilder sb = new StringBuilder();
         boolean previousSpace = false;
         for (int i = 0; i < str.length(); i++) {
-            char c = str.charAt(i);
-            if (c == ' ' || (int) c == 9 || c == '\n') {
+            final char c = str.charAt(i);
+            if (c == ' ' || c == 9 || c == '\n' || c == 160) {
                 previousSpace = true;
                 continue;
             }

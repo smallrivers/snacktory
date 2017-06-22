@@ -626,7 +626,7 @@ public class ArticleTextExtractorTest {
     public void testWikipedia3() throws Exception {
         // http://en.wikipedia.org/wiki/Muhammad
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wikipedia_muhammad.html")));
-        assertTrue(article.getText(), article.getText().startsWith("Muhammad (c. 570 – c. 8 June 632);[1] also transliterated as Mohammad, Mohammed, or Muhammed; Arabic: محمد‎, full name: Abū al-Qāsim Muḥammad"));
+        assertTrue(article.getText(), article.getText().startsWith("Muhammad (c. 570 – c. 8 June 632);[1] also transliterated as Mohammad, Mohammed, or Muhammed; Arabic: محمد‎, full name: Abū al-Qāsim Muḥammad"));
     }
 
     @Test
@@ -909,7 +909,7 @@ public class ArticleTextExtractorTest {
         // http://www.entrepreneur.com/article/237402
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("entrepreneur.html")));
         assertEquals("7 Big Changes in the PR Landscape Every Business Should Know About", res.getTitle());
-        assertTrue(res.getText(), res.getText().startsWith("At least three times a week, I get emails from entrepreneurs or small-business owners asking for advice on public relations."));
+        assertTrue(res.getText(), res.getText().startsWith("At least three times a week, I get emails from entrepreneurs or small-business owners asking for advice on public relations."));
         assertEquals("Rebekah Iliff", res.getAuthorName());
         assertEquals("Chief Strategy Officer for AirPR", res.getAuthorDescription());
     }
