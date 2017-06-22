@@ -349,7 +349,7 @@ public class ArticleTextExtractorTest {
     public void testTechcrunch2() throws Exception {
         // http://techcrunch.com/2010/08/13/gantto-takes-on-microsoft-project-with-web-based-project-management-application/
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("techcrunch2.html")));
-        assertEquals("Gantto Takes On Microsoft Project With Web-Based Project Management Application", article.getTitle());
+        assertEquals("Gantto Takes On Microsoft Project With Web-Based Project Management Application", article.getTitle());
         assertTrue(article.getText(), article.getText().startsWith("Y Combinator-backed Gantto is launching"));
         assertEquals("http://i0.wp.com/tctechcrunch2011.files.wordpress.com/2010/08/gantto.jpg?resize=680%2C680", article.getImageUrl());
         assertEquals("Leena Rao", article.getAuthorName());
@@ -1001,7 +1001,7 @@ public class ArticleTextExtractorTest {
     public void testForbes() throws Exception {
         // http://fortune.com/2015/05/11/rackspaces-support-other-cloud/
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("forbes.html")));
-        assertEquals("Does Rackspace’s future lie in supporting someone else’s cloud?", res.getTitle());
+        assertEquals("Does Rackspace’s future lie in supporting someone else’s cloud?", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Rackspace, a true cloud computing pioneer, is starting to sound like a company that will"));
     }
 

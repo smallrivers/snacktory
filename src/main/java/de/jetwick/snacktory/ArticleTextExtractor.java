@@ -406,7 +406,7 @@ public class ArticleTextExtractor {
                 }
             }
         }
-        return title;
+        return SHelper.trimAll(title);
     }
 
     protected String extractCanonicalUrl(Document doc) {
