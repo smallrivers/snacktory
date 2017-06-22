@@ -78,7 +78,7 @@ public class SHelper {
             return null;
         } else {
             return StringUtils.trim(
-                  NON_BREAKING_SPACE.matcher(str).replaceAll(""));
+                  NON_BREAKING_SPACE.matcher(str).replaceAll(" "));
         }
     }
 

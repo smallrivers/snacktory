@@ -150,5 +150,6 @@ public class SHelperTest {
         assertEquals("", SHelper.trimAll(" "));
         assertEquals("abc", SHelper.trimAll(" abc "));
         assertEquals("abc", SHelper.trimAll("abc" + (char) 160));
+        assertEquals("abc def", SHelper.trimAll("abc" + (char) 160 + "def"));
     }
 }
