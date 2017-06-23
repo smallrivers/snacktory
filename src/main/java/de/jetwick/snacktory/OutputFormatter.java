@@ -22,30 +22,23 @@ public class OutputFormatter {
 
     public static final int MIN_FIRST_PARAGRAPH_TEXT = 50; // Min size of first paragraph
     public static final int MIN_PARAGRAPH_TEXT = 30;       // Min size of any other paragraphs
-    private static final List<String> NODES_TO_REPLACE = Arrays.asList("strong", "b", "i");
     private Pattern unlikelyPattern = Pattern.compile("display\\:none|visibility\\:hidden");
-    protected final int minFirstParagraphText;
-    protected final int minParagraphText;
-    protected final List<String> nodesToReplace;
-    protected String nodesToKeepCssSelector = "p, ol";
+    private final int minFirstParagraphText;
+    private final int minParagraphText;
+    private String nodesToKeepCssSelector = "p, ol, small, blockquote";
+    private static final String textListNodesSelector = "div, p, ol, small, blockquote";
 
     public OutputFormatter() {
-        this(MIN_FIRST_PARAGRAPH_TEXT, MIN_PARAGRAPH_TEXT, NODES_TO_REPLACE);
+        this(MIN_FIRST_PARAGRAPH_TEXT, MIN_PARAGRAPH_TEXT);
     }
 
     public OutputFormatter(int minParagraphText) {
-        this(minParagraphText, minParagraphText, NODES_TO_REPLACE);
+        this(minParagraphText, minParagraphText);
     }
 
     public OutputFormatter(int minFirstParagraphText, int minParagraphText) {
-        this(minFirstParagraphText, minParagraphText, NODES_TO_REPLACE);
-    }
-
-    public OutputFormatter(int minFirstParagraphText, int minParagraphText, 
-                           List<String> nodesToReplace) {
         this.minFirstParagraphText = minFirstParagraphText;
         this.minParagraphText = minParagraphText;
-        this.nodesToReplace = nodesToReplace;
     }
 
     /**
@@ -76,28 +69,15 @@ public class OutputFormatter {
             return str;
 
         // no subelements
-        if (str.isEmpty() || (!topNode.text().isEmpty() 
+        if (str.isEmpty() || (!topNode.text().isEmpty()
             && str.length() <= topNode.ownText().length())
             || countOfP == 0 || lowTextRatio){
             str = topNode.text();
         }
 
-        // if jsoup failed to parse the whole html now parse this smaller 
+        // if jsoup failed to parse the whole html now parse this smaller
         // snippet again to avoid html tags disturbing our text:
         return Jsoup.parse(str).text();
-    }
-
-    /**
-     * Takes an element and returns a list of texts extracted from the P tags
-     */
-    public List<String> getTextList(Element topNode) {
-        List<String> texts = new ArrayList<String>();
-        for(Element element : topNode.select(this.nodesToKeepCssSelector)) {
-            if(element.hasText()) {
-                texts.add(element.text());
-            }
-        }
-        return texts;
     }
 
     /**
@@ -130,7 +110,7 @@ public class OutputFormatter {
             }
 
             String text = node2Text(e);
-            if (text.isEmpty() || text.length() < getMinParagraph(paragraphWithTextIndex) 
+            if (text.isEmpty() || text.length() < getMinParagraph(paragraphWithTextIndex)
                 || text.length() > SHelper.countLetters(text) * 2){
                 continue;
             }
@@ -184,9 +164,7 @@ public class OutputFormatter {
 
         String style = e.attr("style");
         String clazz = e.attr("class");
-        if (unlikelyPattern.matcher(style).find() || unlikelyPattern.matcher(clazz).find())
-            return true;
-        return false;
+        return (unlikelyPattern.matcher(style).find() || unlikelyPattern.matcher(clazz).find());
     }
 
     void appendTextSkipHidden(Element e, StringBuilder accum, int indent) {
@@ -200,7 +178,7 @@ public class OutputFormatter {
                 accum.append(txt);
             } else if (child instanceof Element) {
                 Element element = (Element) child;
-                if (accum.length() > 0 && element.isBlock() 
+                if (accum.length() > 0 && element.isBlock()
                     && !lastCharIsWhitespace(accum))
                     accum.append(" ");
                 else if (element.tagName().equals("br"))
@@ -231,7 +209,24 @@ public class OutputFormatter {
     protected String node2Text(Element el) {
         StringBuilder sb = new StringBuilder(200);
         appendTextSkipHidden(el, sb, 0);
-        return sb.toString();
+        return sb.toString().trim();
+    }
+
+    /**
+     * Takes an element and returns a list of texts extracted from the P tags
+     */
+    public List<String> getTextList(Element topNode) {
+        List<String> texts = new ArrayList<String>();
+        for(Element element : topNode.select(textListNodesSelector)) {
+            if("div".equals(element.tagName())) {
+                if(element.children().isEmpty() && element.hasText()) {
+                    texts.add(SHelper.trimAll(element.text()));
+                }
+            } else if(element.hasText()) {
+                texts.add(SHelper.trimAll(element.text()));
+            }
+        }
+        return texts;
     }
 
     public OutputFormatter setUnlikelyPattern(String unlikelyPattern) {

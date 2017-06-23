@@ -132,11 +132,6 @@ public class ArticleTextExtractor {
         this.formatter = formatter;
     }
 
-    /**
-     * @param html extracts article text from given html string. wasn't tested
-     * with improper HTML, although jSoup should be able to handle minor stuff.
-     * @returns extracted article, all HTML tags stripped
-     */
     public JResult extractContent(Document doc) throws Exception {
         return extractContent(new JResult(), doc, formatter, true, true, true, 0);
     }
@@ -149,6 +144,11 @@ public class ArticleTextExtractor {
         return extractContent(res, doc, formatter, true, true, true, 0);
     }
 
+    /**
+     * @param html extracts article text from given html string. wasn't tested
+     * with improper HTML, although jSoup should be able to handle minor stuff.
+     * @returns extracted article, all HTML tags stripped
+     */
     public JResult extractContent(String html) throws Exception {
         return extractContent(html, 0);
     }
@@ -292,8 +292,8 @@ public class ArticleTextExtractor {
         }
 
         // init elements and get the one with highest weight (see getWeight for strategy)
-        Collection<Element> nodes = getNodes(doc);
-        Element bestMatchElement = getBestMatchElement(nodes);
+        final Collection<Element> nodes = getNodes(doc);
+        final Element bestMatchElement = getBestMatchElement(nodes);
 
         // do extraction from the best element
         if (bestMatchElement != null) {
@@ -921,9 +921,9 @@ public class ArticleTextExtractor {
                 if (child.tagName().equals("p") && ownTextLength > 50)
                     pEls.add(child);
 
-                if (child.className().toLowerCase().equals("caption"))
+                if (child.className().equalsIgnoreCase("caption"))
                     caption = child;
-            } else if (child.tagName().toLowerCase().equals("strong")) {
+            } else if (child.tagName().equalsIgnoreCase("strong")) {
                 weight -= 100;
             }
         }

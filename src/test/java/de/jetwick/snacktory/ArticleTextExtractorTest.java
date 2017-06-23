@@ -71,7 +71,7 @@ public class ArticleTextExtractorTest {
     @Test
     public void testData6() throws Exception {
         JResult res = extractor.extractContent(readFileAsString("test_data/6.html"));
-        assertTrue("data6:" + res.getText(), res.getText().equals("Acting Governor of Balkh province, Atta Mohammad Noor, said that differences between leaders of the National Unity Government (NUG) – namely President Ashraf Ghani and CEO Abdullah Abdullah— have paved the ground for mounting insecurity. To watch the whole news bulletin, click here: Hundreds of worried relatives gathered outside Kabul hospitals on Tuesday desperate for news of loved ones following the deadly suicide bombing earlier in the day."));
+        assertEquals("Acting Governor of Balkh province, Atta Mohammad Noor, said that differences between leaders of the National Unity Government (NUG) – namely President Ashraf Ghani and CEO Abdullah Abdullah— have paved the ground for mounting insecurity. To watch the whole news bulletin, click here: Hundreds of worried relatives gathered outside Kabul hospitals on Tuesday desperate for news of loved ones following the deadly suicide bombing earlier in the day.", res.getText());
     }
 
     @Test
@@ -349,7 +349,7 @@ public class ArticleTextExtractorTest {
     public void testTechcrunch2() throws Exception {
         // http://techcrunch.com/2010/08/13/gantto-takes-on-microsoft-project-with-web-based-project-management-application/
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("techcrunch2.html")));
-        assertEquals("Gantto Takes On Microsoft Project With Web-Based Project Management Application", article.getTitle());
+        assertEquals("Gantto Takes On Microsoft Project With Web-Based Project Management Application", article.getTitle());
         assertTrue(article.getText(), article.getText().startsWith("Y Combinator-backed Gantto is launching"));
         assertEquals("http://i0.wp.com/tctechcrunch2011.files.wordpress.com/2010/08/gantto.jpg?resize=680%2C680", article.getImageUrl());
         assertEquals("Leena Rao", article.getAuthorName());
@@ -626,7 +626,7 @@ public class ArticleTextExtractorTest {
     public void testWikipedia3() throws Exception {
         // http://en.wikipedia.org/wiki/Muhammad
         JResult article = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("wikipedia_muhammad.html")));
-        assertTrue(article.getText(), article.getText().startsWith("Muhammad (c. 570 – c. 8 June 632);[1] also transliterated as Mohammad, Mohammed, or Muhammed; Arabic: محمد‎, full name: Abū al-Qāsim Muḥammad"));
+        assertTrue(article.getText(), article.getText().startsWith("Muhammad (c. 570 – c. 8 June 632);[1] also transliterated as Mohammad, Mohammed, or Muhammed; Arabic: محمد‎, full name: Abū al-Qāsim Muḥammad"));
     }
 
     @Test
@@ -788,35 +788,35 @@ public class ArticleTextExtractorTest {
 
     @Test
     public void testTextList() throws Exception {
-        JResult res = extractor.extractContent(readFileAsString("test_data/1.html"));
-        String text = res.getText();
-        List<String> textList = res.getTextList();
+        final JResult res = extractor.extractContent(readFileAsString("test_data/1.html"));
+        final String text = res.getText();
+        final List<String> textList = res.getTextList();
         assertEquals(25, textList.size());
         assertTrue(textList.get(0).startsWith(text.substring(0, 15)));
-        assertTrue(textList.get(24).endsWith(text.substring(text.length() - 15, text.length())));
+        assertEquals(textList.get(24), text.substring(text.length() - 87, text.length()));
     }
 
     @Test
     public void testMurraySenateGov() throws Exception {
         // Test http://www.murray.senate.gov/public/index.cfm/newsreleases?ContentRecord_id=28da79eb-bca4-421e-9358-cec1c064def0
         // Was not fully extracted by version 1.2.3
-        JResult res = extractor.extractContent(readFileAsString("test_data/murray_senate_gov.html"));
-        String text = res.getText();
+        final JResult res = extractor.extractContent(readFileAsString("test_data/murray_senate_gov.html"));
+        final String text = res.getText();
         // logger.info("text: " + text);
-        List<String> textList = res.getTextList();
+        final List<String> textList = res.getTextList();
         // logger.info("textList:\n-" + StringUtils.join(textList, "\n-"));
         assertEquals(4, textList.size());
         assertTrue(textList.get(0).startsWith(text.substring(0, 15)));
-        assertTrue(textList.get(3).endsWith(text.substring(text.length() - 15, text.length())));
+        assertEquals(textList.get(3), text.substring(text.length() - 472, text.length()));
     }
 
     @Test
     public void testLeFigaroSport() throws Exception {
         // Test http://sport24.lefigaro.fr/football/coupe-du-monde/2014-bresil/fil-info/ronaldo-ecourte-l-entrainement-700221
-        JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("lefigaro.html")));
-        String text = res.getText();
-        assertThat(res.getText(), startsWith("Cristiano Ronaldo a quitté l’entraînement de la sélection portugaise plus tôt que ses coéquipiers ce mercredi. L’attaquant du Real Madrid a rejoint les vestiaires avec une poche de glace sur un genou, comme il l’a déjà fait à plusieurs reprises depuis son arrivée au Brésil."));
-        List<String> textList = res.getTextList();
+        final JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("lefigaro.html")));
+        final String text = res.getText();
+        assertThat(text, startsWith("Cristiano Ronaldo a quitté l’entraînement de la sélection portugaise plus tôt que ses coéquipiers ce mercredi. L’attaquant du Real Madrid a rejoint les vestiaires avec une poche de glace sur un genou, comme il l’a déjà fait à plusieurs reprises depuis son arrivée au Brésil."));
+        final List<String> textList = res.getTextList();
         assertEquals(2, textList.size());
         assertTrue(textList.get(0).startsWith(text.substring(0, 15)));
         assertTrue(textList.get(1).endsWith(text.substring(text.length() - 15, text.length())));
@@ -909,7 +909,7 @@ public class ArticleTextExtractorTest {
         // http://www.entrepreneur.com/article/237402
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("entrepreneur.html")));
         assertEquals("7 Big Changes in the PR Landscape Every Business Should Know About", res.getTitle());
-        assertTrue(res.getText(), res.getText().startsWith("At least three times a week, I get emails from entrepreneurs or small-business owners asking for advice on public relations."));
+        assertTrue(res.getText(), res.getText().startsWith("At least three times a week, I get emails from entrepreneurs or small-business owners asking for advice on public relations."));
         assertEquals("Rebekah Iliff", res.getAuthorName());
         assertEquals("Chief Strategy Officer for AirPR", res.getAuthorDescription());
     }
@@ -1001,7 +1001,7 @@ public class ArticleTextExtractorTest {
     public void testForbes() throws Exception {
         // http://fortune.com/2015/05/11/rackspaces-support-other-cloud/
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("forbes.html")));
-        assertEquals("Does Rackspace’s future lie in supporting someone else’s cloud?", res.getTitle());
+        assertEquals("Does Rackspace’s future lie in supporting someone else’s cloud?", res.getTitle());
         assertTrue(res.getText(), res.getText().startsWith("Rackspace, a true cloud computing pioneer, is starting to sound like a company that will"));
     }
 
