@@ -44,16 +44,21 @@ import org.apache.commons.lang.StringUtils;
  */
 public class SHelper {
 
-    public static final String UTF8 = "UTF-8";
+    private static final String UTF8 = "UTF-8";
     private static final Pattern SPACE = Pattern.compile(" ");
     // &nbsp;
     private static final Pattern NON_BREAKING_SPACE = Pattern.compile(String.valueOf((char) 160));
 
+    /**
+     * Remove control characters [\r\n\t] from the specified url and replace spaces with %20
+     * @param url url to clean
+     * @return cleaned url
+     */
     public static String replaceSpaces(String url) {
         if (!url.isEmpty()) {
-            url = url.trim();
+            url = url.trim().replaceAll("([\r\n\t])", "");
             if (url.contains(" ")) {
-                Matcher spaces = SPACE.matcher(url);
+                final Matcher spaces = SPACE.matcher(url);
                 url = spaces.replaceAll("%20");
             }
         }

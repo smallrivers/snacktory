@@ -1106,6 +1106,14 @@ public class ArticleTextExtractorTest {
         assertEquals("Thu Feb 19 00:00:00 UTC 2015", res.getDate().toString());
     }
 
+    @Test
+    public void testKhaleejtimesCom() throws Exception {
+        // https://www.khaleejtimes.com/business/local/ai-investments-in-uae-to-touch-dh33-billion-in-2017
+        final JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("khaleejtimes_com.html")));
+        assertEquals("AI investments in UAE to touch Dh33 billion in 2017", res.getTitle());
+        assertEquals("https://www.khaleejtimes.com/storyimage/KT/20171001/ARTICLE/171009970/AR/0/AR-171009970.jpg&NCS_modified=&imageversion=1by1&exif=.jpg", res.getImageUrl());
+    }
+
     /**
      * @param filePath the name of the file to open. Not sure if it can accept
      * URLs or just filenames. Path handling could be better, and buffer sizes
