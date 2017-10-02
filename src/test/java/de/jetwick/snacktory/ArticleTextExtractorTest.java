@@ -252,7 +252,7 @@ public class ArticleTextExtractorTest {
     public void testHeise() throws Exception {
         // http://www.heise.de/newsticker/meldung/Internet-Explorer-9-jetzt-mit-schnellster-JavaScript-Engine-1138062.html
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("heise.html")));
-        assertEquals("", res.getImageUrl());
+        assertEquals("/icons/ho/heise_min.gif", res.getImageUrl());
         assertEquals("heise online - Internet Explorer 9 jetzt mit schnellster JavaScript-Engine", res.getTitle());
         assertTrue(res.getText().startsWith("Microsoft hat heute eine siebte Platform Preview des Internet Explorer veröffentlicht. In den nur dr"));
     }
@@ -301,7 +301,7 @@ public class ArticleTextExtractorTest {
         // http://www.facebook.com/ejdionne/posts/10150154175658687
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("facebook.html")));
         assertTrue(res.getText(), res.getText().startsWith("In my column tomorrow, I urge President Obama to end the spectacle of"));
-        assertEquals("", res.getImageUrl());
+        assertEquals("http://profile.ak.fbcdn.net/hprofile-ak-snc4/41782_97057113686_1357_q.jpg", res.getImageUrl());
         assertEquals("In my column...", res.getTitle());
     }
 
@@ -310,7 +310,7 @@ public class ArticleTextExtractorTest {
         // http://www.facebook.com/permalink.php?story_fbid=214289195249322&id=101149616624415 
         JResult res = extractor.extractContent(c.streamToString(getClass().getResourceAsStream("facebook2.html")));
         assertTrue(res.getText(), res.getText().startsWith("Sommer is the best time to wear Jetwick T-Shirts!"));
-        assertEquals("", res.getImageUrl());
+        assertEquals("http://profile.ak.fbcdn.net/hprofile-ak-snc4/41800_101149616624415_7882236_q.jpg", res.getImageUrl());
         assertEquals("Sommer is the best...", res.getTitle());
     }
 
