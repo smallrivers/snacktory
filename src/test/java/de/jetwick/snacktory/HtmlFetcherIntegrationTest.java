@@ -39,15 +39,6 @@ public class HtmlFetcherIntegrationTest {
         res = new HtmlFetcher().fetchAndExtract("http://www.google.com/url?sa=x&q=http://www.taz.de/1/politik/asien/artikel/1/anti-atomkraft-nein-danke/&ct=ga&cad=caeqargbiaaoataaoabaltmh7qrialaawabibwrllurf&cd=d5glzns5m_4&usg=afqjcnetx___sph8sjwhjwi-_mmdnhilra&utm_source=twitterfeed&utm_medium=twitter", 10000, true);
         assertTrue(res.getUrl(), res.getUrl().startsWith("http://www.taz.de/!"));
 //        System.out.println("google redirect:" + res.getUrl());
-
-        // Two levels of redirection:
-        // http://on.fb.me/IKFRtL --> http://www.facebook.com --> https://www.facebook.com
-        res = new HtmlFetcher().fetchAndExtract("http://on.fb.me/IKFRtL", 10000, true);
-        assertEquals("https://www.facebook.com/", res.getUrl());
-
-        // Redirection.
-        res = new HtmlFetcher().fetchAndExtract("http://www.azcentral.com/videos/news/12-news/arizona-midday/2014/11/26/19550567/", 10000, true);
-        assertEquals("http://www.azcentral.com/videos/news/12-news/arizona-midday/2014/11/26/19550567/", res.getUrl());
     }
 
     @Test
@@ -77,16 +68,6 @@ public class HtmlFetcherIntegrationTest {
         assertEquals("科学・ＩＴニュース：読売新聞(YOMIURI ONLINE)", res.getTitle());
     }
 
-    @Test
-    public void testHashbang() throws Exception {
-        JResult res = new HtmlFetcher().fetchAndExtract("http://www.facebook.com/democracynow", 10000, true);
-        assertTrue(res.getTitle(), res.getTitle().startsWith("Democracy Now!"));
-
-        // not available anymore
-        //       res = new HtmlFetcher().fetchAndExtract("http://twitter.com/#!/th61/status/57141697720745984", 10000, true);
-        //       assertTrue(res.getTitle(), res.getTitle().startsWith("Twitter / TH61: “@AntiAtomPiraten:"));
-    }
-
     public void testImage() throws Exception {
         JResult res = new HtmlFetcher().fetchAndExtract("http://grfx.cstv.com/schools/okla/graphics/auto/20110505_schedule.jpg", 10000, true);
         assertEquals("http://grfx.cstv.com/schools/okla/graphics/auto/20110505_schedule.jpg", res.getImageUrl());
@@ -113,13 +94,7 @@ public class HtmlFetcherIntegrationTest {
         assertTrue(str, str.startsWith("<?xml version="));
     }
 
-    @Test
-    public void testYahooMobile() throws Exception {
-        JResult res  = new HtmlFetcher().fetchAndExtract("https://m.yahoo.com/w/legobpengine/finance/news/stevia-first-corp-stvf-looks-123500390.html?.intl=us&.lang=en-us", 10000, true);
-        assertTrue(res.getTitle(), res.getTitle().startsWith("Stevia First Corp. (STVF) Looks to Disrupt Flavor Industry"));
-    }
-
-    /* FIXME: This test fails with a java.io.IOException: Invalid Http response 
+    /* FIXME: This test fails with a java.io.IOException: Invalid Http response
     @Test
     public void testWeixin() throws Exception {
         JResult res  = new HtmlFetcher().fetchAndExtract("http://mp.weixin.qq.com/s?3rd=MzA3MDU4NTYzMw%3D%3D&__biz=MzA4MTQ0Njc2Nw%3D%3D&idx=4&mid=207614885&scene=6&sn=eda80bb13406fb31cb25f70d12e6e7dc", 10000, true);
