@@ -1229,7 +1229,10 @@ public class ArticleTextExtractor {
     private Document removeScriptsAndStyles(Document doc) {
         Elements scripts = doc.getElementsByTag("script");
         for (Element item : scripts) {
-            item.remove();
+            // Keep schema.org script tag
+            if (! "application/ld+json".equals(item.attr("type"))) {
+                item.remove();
+            }
         }
         Elements noscripts = doc.getElementsByTag("noscript");
         for (Element item : noscripts) {
