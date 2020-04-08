@@ -400,7 +400,12 @@ public class ArticleTextExtractor {
             return title;
         }
 
+        // If we find the title from the first h1 and it's part of the document main <title> without (website) prefix
+        String h1_first = SHelper.innerTrim(doc.select("h1:first-of-type").text());
         title = cleanTitle(doc.title());
+        if (!h1_first.isEmpty() && title.startsWith(h1_first)) {
+            return h1_first;
+        }
         if (!title.isEmpty()) {
             return title;
         }
@@ -415,7 +420,7 @@ public class ArticleTextExtractor {
             return title;
         }
 
-        title = SHelper.innerTrim(doc.select("h1:first-of-type").text());
+        title = h1_first;
         return title;
     }
 
