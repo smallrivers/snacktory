@@ -391,21 +391,31 @@ public class ArticleTextExtractor {
 
     protected String extractTitle(Document doc) {
         String title = SHelper.innerTrim(doc.select("head meta[property=og:title]").attr("content"));
-        if (title.isEmpty()) {
-            title = SHelper.innerTrim(doc.select("head meta[name=twitter:title]").attr("content"));
-            if (title.isEmpty()) {
-                title = cleanTitle(doc.title());
-                if (title.isEmpty()) {
-                    title = SHelper.innerTrim(doc.select("head title").text());
-                    if (title.isEmpty()) {
-                        title = SHelper.innerTrim(doc.select("head meta[name=title]").attr("content"));
-                        if (title.isEmpty()) {
-                            title = SHelper.innerTrim(doc.select("h1:first-of-type").text());
-                        }
-                    }
-                }
-            }
+        if (!title.isEmpty()) {
+            return title;
         }
+
+        title = SHelper.innerTrim(doc.select("head meta[name=twitter:title]").attr("content"));
+        if (!title.isEmpty()) {
+            return title;
+        }
+
+        title = cleanTitle(doc.title());
+        if (!title.isEmpty()) {
+            return title;
+        }
+
+        title = SHelper.innerTrim(doc.select("head title").text());
+        if (!title.isEmpty()) {
+            return title;
+        }
+
+        title = SHelper.innerTrim(doc.select("head meta[name=title]").attr("content"));
+        if (!title.isEmpty()) {
+            return title;
+        }
+
+        title = SHelper.innerTrim(doc.select("h1:first-of-type").text());
         return title;
     }
 
