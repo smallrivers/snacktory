@@ -389,39 +389,46 @@ public class ArticleTextExtractor {
             return data.substring(0, 50);
     }
 
+    private static String safe_first_text(Element el) {
+        if (el != null)
+            return SHelper.innerTrim(el.text());
+        else
+            return "";
+    }
+
     protected String extractTitle(Document doc) {
+        // Let's first pick a reasonable candidate among explicit HTML tags
         String title = SHelper.innerTrim(doc.select("head meta[property=og:title]").attr("content"));
+        if (title.isEmpty()) {
+            title = SHelper.innerTrim(doc.select("head meta[name=twitter:title]").attr("content"));
+        }
+        if (title.isEmpty()) {
+            title = cleanTitle(doc.title());
+        }
+        if (title.isEmpty()) {
+            title = SHelper.innerTrim(doc.select("head title").text());
+        }
+
+        // Some of those reasonable candidates still have prefixes: websites, names, project and such
+        // But those prefixes aren't present within the pages, in particular they aren't in the headers tags like h1
+        // Let's try to see if we have a long match with the earlier titles
+        String h1 = safe_first_text(doc.select("h1").first());
+        // But for that we need at least one candidate title to compare it to
         if (!title.isEmpty()) {
+            if (!h1.isEmpty() && title.toLowerCase().startsWith(h1.toLowerCase())) {
+                return h1;
+            }
+
             return title;
         }
 
-        title = SHelper.innerTrim(doc.select("head meta[name=twitter:title]").attr("content"));
-        if (!title.isEmpty()) {
-            return title;
-        }
-
-        // If we find the title from the first h1 and it's part of the document main <title> without (website) prefix
-        String h1_first = SHelper.innerTrim(doc.select("h1:first-of-type").text());
-        title = cleanTitle(doc.title());
-        if (!h1_first.isEmpty() && title.startsWith(h1_first)) {
-            return h1_first;
-        }
-        if (!title.isEmpty()) {
-            return title;
-        }
-
-        title = SHelper.innerTrim(doc.select("head title").text());
-        if (!title.isEmpty()) {
-            return title;
-        }
-
+        // At this point we resort to heuristics since everything else failed
         title = SHelper.innerTrim(doc.select("head meta[name=title]").attr("content"));
         if (!title.isEmpty()) {
             return title;
         }
 
-        title = h1_first;
-        return title;
+        return h1;
     }
 
     protected String extractCanonicalUrl(Document doc) {
