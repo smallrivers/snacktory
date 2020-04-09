@@ -389,7 +389,7 @@ public class ArticleTextExtractor {
             return data.substring(0, 50);
     }
 
-    private static String safe_first_text(Element el) {
+    private static String safeFirstText(Element el) {
         if (el != null)
             return SHelper.innerTrim(el.text());
         else
@@ -412,7 +412,7 @@ public class ArticleTextExtractor {
         // Some of those reasonable candidates still have prefixes: websites, names, project and such
         // But those prefixes aren't present within the pages, in particular they aren't in the headers tags like h1
         // Let's try to see if we have a long match with the earlier titles
-        String h1 = safe_first_text(doc.select("h1").first());
+        String h1 = safeFirstText(doc.select("h1").first());
         // But for that we need at least one candidate title to compare it to
         if (!title.isEmpty()) {
             if (!h1.isEmpty() && title.toLowerCase().startsWith(h1.toLowerCase())) {
