@@ -33,7 +33,7 @@ public class Converter {
     public final static String UTF8 = "UTF-8";
     public final static String ISO = "ISO-8859-1";
     public final static int K2 = 2048;
-    private int maxBytes = 1000000 / 2;
+    private int maxBytes = 10 * 1024 * 1024;
     private String encoding;
     private String url;
 

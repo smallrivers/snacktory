@@ -44,15 +44,6 @@ public class ArticleTextExtractorTest {
     }
 
     @Test
-    public void testData2() throws Exception {
-        // http://benjaminste.in/post/1223476561/hey-guys-whatcha-doing
-        JResult res = extractor.extractContent(readFileAsString("test_data/2.html"));
-        assertEquals("BenjaminSte.in", res.getTitle());
-        assertTrue(res.getText(), res.getText().startsWith("This month is the 15th anniversary of my last CD."));
-        assertTrue(res.getKeywords().isEmpty());
-    }
-
-    @Test
     public void testData3() throws Exception {
         JResult res = extractor.extractContent(readFileAsString("test_data/3.html"));
         assertTrue("data3:" + res.getText(), res.getText().startsWith("October 2010 Silicon Valley proper is mostly suburban sprawl. At first glance it "));
