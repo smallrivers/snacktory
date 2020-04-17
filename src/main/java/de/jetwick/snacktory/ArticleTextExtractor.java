@@ -342,7 +342,7 @@ public class ArticleTextExtractor {
             // extract links from the same best element
             final String fullhtml = bestMatchElement.toString();
             final Elements children = bestMatchElement.select("a[href]"); // a with href = link
-            Integer lastlinkpos = 0;
+            int lastlinkpos = 0;
             for (Element child : children) {
                 final String linkstr = child.toString();
                 final int linkpos = fullhtml.indexOf(linkstr, lastlinkpos);
